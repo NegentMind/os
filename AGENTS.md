@@ -15,9 +15,6 @@ Este archivo no la duplica.
 | Ruta | Qué es | Git |
 |---|---|---|
 | `os/` | **Monorepo privado**: specs/ strategy/ skills/ brand/ media/ web/ social/ + docs raíz | `NegentMind/os` · **privado** (origen de todo) |
-| `negentmind/` | Espejo archivado → `os/specs/` | `NegentMind/negentmind` · archivado |
-| `strategy/` | Espejo archivado → `os/strategy/` | `NegentMind/strategy` · archivado |
-| `skills/` | Espejo archivado → `os/skills/` | `NegentMind/skills` · archivado |
 | `.github/` | Perfil + gobernanza (único público activo; espejo en `os/github-profile/`) | `NegentMind/.github` · público |
 | `social/` | Hub social (mcp-hub) + configuración | local (sin repo; `.env` con secretos, no commitear) |
 | `old/` | Respaldo del 2026-09-28: copias con `.git` de los 3 repos + bundles. Nunca se sube a ningún sitio | ninguno |
