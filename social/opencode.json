@@ -1,0 +1,66 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "social-hub": {
+      "type": "local",
+      "command": ["node", "mcp-hub/dist/index.js"],
+      "enabled": true,
+      "timeout": 120000,
+      "description": "PRIMARIO. Hub propio v0.9 full (17 redes + scheduler + inbox + media + compose + tests 63). 19 tools social_*. Autonomo."
+    },
+    "buffer": {
+      "type": "remote",
+      "url": "https://mcp.buffer.com/mcp",
+      "enabled": true,
+      "timeout": 60000,
+      "description": "COMPANION temporal (OAuth conectado: Threads). Apagar cuando BUFFER_ACCESS_TOKEN este configurado y social_post provider buffer funcione."
+    },
+    "bluesky": {
+      "type": "local",
+      "command": ["npx", "-y", "atproto-mcp"],
+      "enabled": false,
+      "timeout": 60000,
+      "description": "LEGACY fallback. Superseded por social-hub (Bluesky full API). Solo reactivar con orden explicita. Repo: cameronrye/atproto-mcp"
+    },
+    "linkedin": {
+      "type": "local",
+      "command": ["uvx", "mcp-server-linkedin"],
+      "enabled": false,
+      "timeout": 120000,
+      "description": "LEGACY fallback. Superseded por social-hub (LinkedIn browser). Solo reactivar con orden explicita. Repo: stickerdaniel/linkedin-mcp-server"
+    },
+    "reddit": {
+      "type": "local",
+      "command": ["npx", "-y", "reddit-mcp-buddy"],
+      "enabled": false,
+      "timeout": 60000,
+      "description": "LEGACY fallback. Superseded por social-hub (Reddit API+OAuth). Solo reactivar con orden explicita. Paquete: reddit-mcp-buddy"
+    },
+    "youtube-transcript": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--from",
+        "git+https://github.com/jkawamoto/mcp-youtube-transcript",
+        "mcp-youtube-transcript"
+      ],
+      "enabled": false,
+      "timeout": 60000,
+      "description": "LEGACY fallback. Superseded por social-hub (social_transcript). Solo reactivar con orden explicita. Repo: jkawamoto/mcp-youtube-transcript"
+    },
+    "twitter-free": {
+      "type": "local",
+      "command": ["python", "vendors/twitter-mcp/server.py"],
+      "enabled": false,
+      "timeout": 120000,
+      "description": "LEGACY fallback. Superseded por social-hub (X 11 tools browser, Playwright npm). setup.ps1/vendors obsoletos. Solo reactivar con orden explicita. Repo: Miles0sage/twitter-mcp"
+    },
+    "twitter-isteam": {
+      "type": "local",
+      "command": ["npx", "-y", "@isteam/twitter-mcp"],
+      "enabled": false,
+      "timeout": 60000,
+      "description": "DESHABILITADO (requiere API X de pago). No activar sin orden explicita aunque el hub falle. Repo: isteamhq/twitter-mcp"
+    }
+  }
+}
