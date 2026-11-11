@@ -14,21 +14,21 @@ Este archivo no la duplica.
 
 | Ruta | Qué es | Git |
 |---|---|---|
-| `negentmind/` | Monorepo público de los 9 holones. Hoy es **solo documentación**: cada holón es `README.md` + `README_ES.md` + `LICENSE`, sin código | `NegentMind/negentmind` · público |
-| `.github/` | Perfil de la organización + gobernanza | `NegentMind/.github` · público |
-| `strategy/` | Definición maestra de negocio y evidencia de mercado | `NegentMind/strategy` · **privado** |
-| `skills/` | Instrumentos del diagnóstico (entrevista, mapa, propuesta, cold, OCR) | `NegentMind/skills` · **privado** |
+| `os/` | **Monorepo privado**: specs/ strategy/ skills/ brand/ media/ web/ social/ + docs raíz | `NegentMind/os` · **privado** (origen de todo) |
+| `negentmind/` | Espejo archivado → `os/specs/` | `NegentMind/negentmind` · archivado |
+| `strategy/` | Espejo archivado → `os/strategy/` | `NegentMind/strategy` · archivado |
+| `skills/` | Espejo archivado → `os/skills/` | `NegentMind/skills` · archivado |
+| `.github/` | Perfil + gobernanza (único público activo; espejo en `os/github-profile/`) | `NegentMind/.github` · público |
 | `social/` | Hub social (mcp-hub) + configuración | local (sin repo; `.env` con secretos, no commitear) |
 | `old/` | Respaldo del 2026-09-28: copias con `.git` de los 3 repos + bundles. Nunca se sube a ningún sitio | ninguno |
 | `.tools/` | `i18n-holons.py` (ver abajo) | local |
 | `.opencode/` | **Sistema de ingeniería de VantaDB.** No es de Negent Mind | local |
-| `web/` | Sitio EXP-WEB03 (prueba, un archivo). Identidad v1 aplicada | — |
+| `web/` | Next.js + Supabase + Cloudflare Pages (marketing + app con login) | versionado en `os/` |
 | `.playwright-mcp/` | Artefactos de capturas | local |
 
 Identidad v1 (ruptura total 2026-11-11): Void `#08090C` · Bone `#EDEAE3` · Pulse `#8B7CFF`. Contacto: `negent@negentmind.com` · `negentmind.com` (pendiente compra).
 
-Los tres repos están en `main`, siguen a `origin/main`, y los tres estaban limpios al
-momento de escribir esto. Un solo autor.
+Activos: `os/` y `.github` en `main` (un solo autor). Archivados: `negentmind`, `strategy`, `skills` (espejos de `os/`, historial preservado).
 
 ### Los dos documentos de `.github/`
 
