@@ -1,27 +1,27 @@
 ﻿# Negent Mind — Workspace
 
-<div align="right"><a href="./README_EN.md">English</a> | Español</div>
-
 Infraestructura determinista y memoria persistente para agentes autónomos de IA.
-
----
-
-### Repositorios del Ecosistema
-
-| Directorio / Componente | Enlace en GitHub | Descripción |
-|---|---|---|
-| **`VantaDB`** | [`ness-e/Vantadb`](https://github.com/ness-e/Vantadb) | Motor de memoria embebida en Rust (`v0.7.0`) con HNSW + BM25 y ACID. |
-| **`negentmind/`** | [`NegentMind/negentmind`](https://github.com/NegentMind/negentmind) | Especificaciones técnicas de arquitectura y módulos RFC. |
-| **`.github/`** | [`NegentMind/.github`](https://github.com/NegentMind/.github) | Perfil institucional, manifiesto y gobernanza de la organización. |
-| **`strategy/`** | `NegentMind/strategy` (privado) | Evidencia de mercado, análisis competitivo y modelo de negocio. |
-| **`skills/`** | `NegentMind/skills` (privado) | Instrumentos del diagnóstico: entrevista, mapa de caos, propuesta, cold email, OCR. |
-
----
-
-### Documentos Directos
-
-* 📖 [Especificación de Arquitectura (`SPECIFICATION_ES.md`)](./negentmind/SPECIFICATION_ES.md)
-* ⚡ [Catálogo de Auditoría de VantaDB (`FEATURES-SOLICITADAS-VANTADB.md`)](./FEATURES-SOLICITADAS-VANTADB.md)
-* 🏛️ [Perfil Institucional Publicado](./.github/profile/README_ES.md)
-
 Contacto: `negent@negentmind.com` · `negentmind.com` (dominio pendiente de compra).
+
+## Qué hay aquí
+
+| Ruta | Qué es |
+|---|---|
+| `os/` | **Monorepo privado** (`NegentMind/os`): specs, strategy, skills, brand, media, web, social + docs raíz. Origen de todo. |
+| `.github/` | Perfil + gobernanza (único público activo, `NegentMind/.github`). |
+| `brand/` | Casa de la marca: plataforma, tablero, checklist, exports. |
+| `media/` | Fábrica de imagen y video (Remotion, HyperFrames, OpenMontage). |
+| `web/` | Sitio + app con login (Next.js 15 + React 19 + Supabase). Ver `web/README.md`. |
+| `social/` | Hub social + automatización (Postiz, n8n) + 7 redes. |
+| `.tools/` | Scripts del workspace (`i18n-holons.py`, `gen-skills.py`, `drift-check.py`). |
+| `.opencode/` | Sistema de ingeniería de VantaDB. No es de Negent Mind: no tocar. |
+
+Lee primero **`AGENTS.md`**: es la única instrucción para agentes del workspace
+(unifica las anteriores de raíz, `brand/` y `social/`).
+
+## Documentos directos
+
+* ⚡ [Catálogo de auditoría de VantaDB (`FEATURES-SOLICITADAS-VANTADB.md`)](./FEATURES-SOLICITADAS-VANTADB.md)
+* 🏛️ [Perfil institucional publicado](./.github/profile/README_ES.md)
+
+Identidad v1: Void `#08090C` · Bone `#EDEAE3` · Pulse `#8B7CFF` (dark-first).
