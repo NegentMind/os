@@ -4,6 +4,7 @@ import type { HalftoneKind } from "@/components/nm/HalftoneCanvas";
 
 type Cell = boolean | "partial";
 type Tone = "bone" | "fog" | "pulse";
+type PhaseTone = "shipped" | "build" | "rfc";
 
 export const en = {
   meta: {
@@ -18,8 +19,8 @@ export const en = {
     links: [
       { href: "#system", label: "System" },
       { href: "#modules", label: "Modules" },
+      { href: "#roadmap", label: "Roadmap" },
       { href: "#engine", label: "Engine" },
-      { href: "#proof", label: "Proof" },
       { href: "#faq", label: "FAQ" },
     ],
     cta: "GitHub",
@@ -36,16 +37,16 @@ export const en = {
       { num: "2", lbl: "Retrieval Engines — HNSW + BM25" },
       { num: "2.0", lbl: "Apache License" },
     ],
-    subTags: "VANTADB · APACHE-2.0 · RUST · LOCAL-FIRST",
+    subTags: "OPEN-SOURCE CAPABILITY INFRA · VANTADB · APACHE-2.0 · LOCAL-FIRST",
     subLink: "see the engine ↓",
     canvasAria: "Liquid silk shader field",
   },
   ticker: {
     items: [
+      "CAPABILITY INFRASTRUCTURE",
+      "6 NAMED SYSTEMS",
       "EMBEDDED MEMORY ENGINE",
-      "BM25 + HNSW → RRF",
-      "MVCC SNAPSHOT ISOLATION",
-      "WAL + CRC32C · FJALL LSM",
+      "SPECS BEFORE CODE",
       "APACHE-2.0 · LOCAL-FIRST",
     ],
   },
@@ -169,19 +170,119 @@ export const en = {
       live: boolean;
     }[],
   },
+  roadmap: {
+    label: "[ 04 / THE ROADMAP ]",
+    title: "Six systems. One in build.",
+    qual: "the rest are written, not promised.",
+    sub: "Every module takes the same path: a public RFC, a public review, and only then a repository. The order is deliberate — each layer builds on the one below.",
+    railLabel: "PIPELINE",
+    progressLabel: "SCROLL",
+    items: [
+      {
+        num: "R/00",
+        phase: "IN BUILD",
+        phaseTone: "build",
+        name: "VantaDB",
+        role: "STORAGE LAYER",
+        body: "The only code in the organization today: an embedded Rust engine — hybrid HNSW + BM25 retrieval fused by RRF, MVCC isolation, WAL durability. v0.9.0, Apache-2.0.",
+      },
+      {
+        num: "R/01",
+        phase: "RFC",
+        phaseTone: "rfc",
+        name: "Cardinal",
+        role: "CONTEXT LAYER",
+        body: "Context & working memory. Bitemporal episodic state — what an agent knew, and when it became true — with provenance tracking and token budgeting. Written as RFC-01.",
+      },
+      {
+        num: "R/02",
+        phase: "RFC",
+        phaseTone: "rfc",
+        name: "Meta",
+        role: "AUDIT LAYER",
+        body: "Verification & metacognition. Deterministic execution traces and signed attestation logs, so an agent's actions can be audited — not just logged. Written as RFC-02.",
+      },
+      {
+        num: "R/03",
+        phase: "RFC",
+        phaseTone: "rfc",
+        name: "Iris",
+        role: "PERCEPTION LAYER",
+        body: "Perception & ingestion. Local-first pipelines that turn unstructured multimodal documents into vector-indexed, verifiable nodes. Written as RFC-03.",
+      },
+      {
+        num: "R/04",
+        phase: "RFC",
+        phaseTone: "rfc",
+        name: "Execute",
+        role: "EXECUTION LAYER",
+        body: "Deterministic tool execution. Sandboxed action boundaries with explicit retry policies — no probabilistic retry loops. Written as RFC-04.",
+      },
+      {
+        num: "R/05",
+        phase: "RFC",
+        phaseTone: "rfc",
+        name: "Sage",
+        role: "ADAPTATION LAYER",
+        body: "Correction feedback. Persistent human-in-the-loop signals so agents stop repeating mistakes that were already corrected. Specified under RFC-04.",
+      },
+    ] as {
+      num: string;
+      phase: string;
+      phaseTone: PhaseTone;
+      name: string;
+      role: string;
+      body: string;
+    }[],
+  },
+  work: {
+    label: "[ 05 / THE WORK ]",
+    title: "How things get built here.",
+    qual: "spec first, code second.",
+    sub: "The method is the message: written specifications, public review, honest status labels. This is the only pipeline a module can take.",
+    method: {
+      title: "The specification pipeline",
+      steps: [
+        {
+          name: "Write the spec",
+          detail:
+            "Every capability starts as a formal RFC — problem, specification, dependencies — published before a line of code exists.",
+        },
+        {
+          name: "Public review",
+          detail:
+            "RFCs are reviewed in the open. Comments, objections and benchmarks decide whether a module earns a repository.",
+        },
+        {
+          name: "Then the repo",
+          detail:
+            "No phantom repositories: a codebase is only instantiated once its RFC is approved. Status labels stay honest.",
+        },
+      ],
+    },
+    founder: {
+      title: "One founder, working in the open.",
+      body: "Negent Mind is independent and founder-led. No venture backing, no team page to inflate — the shipped engine, the written RFCs and this roadmap are the full extent of the work, stated at honest scale.",
+    },
+    contact: {
+      title: "A direct line.",
+      body: "Questions about the architecture, the RFCs or contributing — one inbox, read by the person who wrote the code.",
+      email: "negent@negentmind.com",
+    },
+    metrics: [
+      { label: "Named systems", value: "6", unit: "", tone: "bone" },
+      { label: "Module in build", value: "1", unit: "", tone: "pulse" },
+      { label: "Public RFCs", value: "4", unit: "", tone: "fog" },
+      { label: "License", value: "Apache-2.0", unit: "", tone: "fog" },
+    ] as { label: string; value: string; unit: string; tone: Tone }[],
+  },
   engine: {
-    label: "[ 04 / FLAGSHIP ENGINE ]",
+    label: "[ 06 / FLAGSHIP ENGINE ]",
     title: "VantaDB.",
     qual: "memory that stays when the session ends.",
     sub: "The first shipped module — an embedded persistent-memory engine for agents. Hybrid retrieval, transactional state, zero servers. Scroll through the pipeline.",
     h3: "Five lines. Persistent memory.",
     body: "The Python SDK mirrors the Rust core. Put a payload with its embedding, query it by meaning and by term, get it back when the next session opens.",
-    counters: [
-      { label: "Servers to run", value: "0", unit: "" },
-      { label: "Processes it embeds in", value: "1", unit: "" },
-      { label: "Engine version", value: "v0.9.0", unit: "", tone: "fog" },
-      { label: "License", value: "Apache-2.0", unit: "", tone: "pulse" },
-    ] as { label: string; value: string; unit: string; tone?: Tone }[],
     cta: "Read the source",
     replayAria: "Replay terminal session",
     board: {
@@ -225,13 +326,13 @@ export const en = {
     },
   },
   proof: {
-    mechIndex: "05 / MECHANISM",
+    mechIndex: "07 / MECHANISM",
     mechTitle: "Noise in. Signal out.",
     mechLede:
       "This field is live fractal noise. Scroll and it converges to order; move the pointer and order follows it. What you see is the product: stochastic output, deterministically resolved.",
     mechChrome: "LIVE FIELD — SCROLL SCRUBS ORDER",
     fig1: "Fig. 01 — Fractal noise field, scroll-scrubbed · live entropy",
-    proofIndex: "05 / PROOF",
+    proofIndex: "07 / PROOF",
     proofTitle: "Measured, not claimed.",
     proofLede:
       "No testimonials, no customers invented, no benchmarks borrowed. These numbers are computed here, now, from the field above.",
@@ -246,7 +347,7 @@ export const en = {
     traceAria: "Live trace of the field's measured Shannon entropy",
   },
   boundary: {
-    label: "06 / THE BOUNDARY",
+    label: "08 / THE BOUNDARY",
     title: "Positioned by what it is not.",
     items: [
       {
@@ -268,7 +369,7 @@ export const en = {
     footnote: "The alternative today is a markdown file or someone else's server.",
   },
   landscape: {
-    label: "[ 07 / THE LANDSCAPE ]",
+    label: "[ 09 / THE LANDSCAPE ]",
     title: "Same job, different architectures.",
     qual: "architecture, not quality.",
     sub: "These are not competitors so much as different shapes for the same need — where VantaDB's engine sits among them.",
@@ -282,7 +383,7 @@ export const en = {
     legend: "● yes · ◐ partial · — no · architecture comparison, not a benchmark",
   },
   oss: {
-    label: "[ 08 / OPEN SOURCE ]",
+    label: "[ 10 / OPEN SOURCE ]",
     title: "Built in public.",
     qual: "join in.",
     sub: "Negent Mind is an independent open-source organization. The engine is Apache-2.0: read it, fork it, embed it in your agent — and help decide what gets built next.",
@@ -323,9 +424,17 @@ export const en = {
     ],
   },
   faq: {
-    label: "[ 09 / THE INQUIRY ]",
+    label: "[ 11 / THE INQUIRY ]",
     title: "Asked, answered.",
     items: [
+      {
+        q: "What is Negent Mind exactly?",
+        a: "An independent open-source organization building capability infrastructure for AI agents — memory, perception, verification, execution. VantaDB, the embedded memory engine, is its first shipped module; the other five systems are public specifications.",
+      },
+      {
+        q: "How do decisions get made?",
+        a: "Through the RFC pipeline. Every capability is written as a specification, reviewed in public, and only gets a repository once approved. There is no private roadmap — what you see on this page is what exists.",
+      },
       {
         q: "Is VantaDB ready for production?",
         a: "It is at v0.9.0 and in build. The core engine — storage, hybrid retrieval, MVCC transactions — is implemented. Treat it like any young embedded database: pin the version, run your own workload, report what breaks.",
@@ -333,14 +442,6 @@ export const en = {
       {
         q: "Why embedded instead of a service?",
         a: "Agent memory is data, not infrastructure. Embedded means no ops surface, no network hop, nothing leaving the machine, and it works offline. The same reason SQLite wins where a database server would be overhead.",
-      },
-      {
-        q: "What are the named systems?",
-        a: "The capability modules on the roadmap — Cardinal, Meta, Iris, Execute, Sage. Each exists today only as a specification RFC; VantaDB is the only shipped module. Status labels are honest, not marketing.",
-      },
-      {
-        q: "How does an RFC become code?",
-        a: "The specification pipeline: a module is written as a formal RFC first, reviewed in public, and only gets a repository once the RFC is approved. No phantom repos.",
       },
       {
         q: "What does it cost?",

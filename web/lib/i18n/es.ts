@@ -14,8 +14,8 @@ export const es: Dict = {
     links: [
       { href: "#system", label: "Sistema" },
       { href: "#modules", label: "Módulos" },
+      { href: "#roadmap", label: "Hoja de ruta" },
       { href: "#engine", label: "Motor" },
-      { href: "#proof", label: "Prueba" },
       { href: "#faq", label: "FAQ" },
     ],
     cta: "GitHub",
@@ -32,16 +32,16 @@ export const es: Dict = {
       { num: "2", lbl: "Motores de recuperación — HNSW + BM25" },
       { num: "2.0", lbl: "Licencia Apache" },
     ],
-    subTags: "VANTADB · APACHE-2.0 · RUST · LOCAL-FIRST",
+    subTags: "INFRA DE CAPACIDADES OPEN-SOURCE · VANTADB · APACHE-2.0 · LOCAL-FIRST",
     subLink: "ver el motor ↓",
     canvasAria: "Campo de shader de seda líquida",
   },
   ticker: {
     items: [
+      "INFRAESTRUCTURA DE CAPACIDADES",
+      "6 SISTEMAS CON NOMBRE",
       "MOTOR DE MEMORIA EMBEBIDO",
-      "BM25 + HNSW → RRF",
-      "AISLAMIENTO MVCC POR SNAPSHOT",
-      "WAL + CRC32C · FJALL LSM",
+      "SPECS ANTES QUE CÓDIGO",
       "APACHE-2.0 · LOCAL-FIRST",
     ],
   },
@@ -156,19 +156,112 @@ export const es: Dict = {
       },
     ],
   },
+  roadmap: {
+    label: "[ 04 / LA HOJA DE RUTA ]",
+    title: "Seis sistemas. Uno en construcción.",
+    qual: "el resto está escrito, no prometido.",
+    sub: "Cada módulo toma el mismo camino: un RFC público, una revisión pública y solo entonces un repositorio. El orden es deliberado — cada capa se apoya en la anterior.",
+    railLabel: "PIPELINE",
+    progressLabel: "SCROLL",
+    items: [
+      {
+        num: "R/00",
+        phase: "EN CONSTRUCCIÓN",
+        phaseTone: "build",
+        name: "VantaDB",
+        role: "CAPA DE ALMACENAMIENTO",
+        body: "El único código de la organización hoy: un motor Rust embebido — recuperación híbrida HNSW + BM25 fusionada por RRF, aislamiento MVCC, durabilidad WAL. v0.9.0, Apache-2.0.",
+      },
+      {
+        num: "R/01",
+        phase: "RFC",
+        phaseTone: "rfc",
+        name: "Cardinal",
+        role: "CAPA DE CONTEXTO",
+        body: "Contexto y memoria de trabajo. Estado episódico bitemporal — qué sabía un agente y cuándo se volvió cierto — con trazado de procedencia y presupuesto de tokens. Escrito como RFC-01.",
+      },
+      {
+        num: "R/02",
+        phase: "RFC",
+        phaseTone: "rfc",
+        name: "Meta",
+        role: "CAPA DE AUDITORÍA",
+        body: "Verificación y metacognición. Trazas de ejecución deterministas y logs de atestación firmados, para que las acciones de un agente puedan auditarse — no solo registrarse. Escrito como RFC-02.",
+      },
+      {
+        num: "R/03",
+        phase: "RFC",
+        phaseTone: "rfc",
+        name: "Iris",
+        role: "CAPA DE PERCEPCIÓN",
+        body: "Percepción e ingesta. Pipelines local-first que convierten documentos multimodales no estructurados en nodos indexados por vectores y verificables. Escrito como RFC-03.",
+      },
+      {
+        num: "R/04",
+        phase: "RFC",
+        phaseTone: "rfc",
+        name: "Execute",
+        role: "CAPA DE EJECUCIÓN",
+        body: "Ejecución determinista de herramientas. Límites de acción en sandbox con políticas de reintento explícitas — sin bucles de reintento probabilísticos. Escrito como RFC-04.",
+      },
+      {
+        num: "R/05",
+        phase: "RFC",
+        phaseTone: "rfc",
+        name: "Sage",
+        role: "CAPA DE ADAPTACIÓN",
+        body: "Feedback de corrección. Señales persistentes de humano-en-el-bucle para que los agentes dejen de repetir errores ya corregidos. Especificado dentro de RFC-04.",
+      },
+    ],
+  },
+  work: {
+    label: "[ 05 / EL TRABAJO ]",
+    title: "Cómo se construye aquí.",
+    qual: "primero la spec, después el código.",
+    sub: "El método es el mensaje: especificaciones escritas, revisión pública, etiquetas de estado honestas. Este es el único pipeline que un módulo puede tomar.",
+    method: {
+      title: "El pipeline de especificación",
+      steps: [
+        {
+          name: "Escribir la spec",
+          detail:
+            "Cada capacidad empieza como un RFC formal — problema, especificación, dependencias — publicado antes de que exista una línea de código.",
+        },
+        {
+          name: "Revisión pública",
+          detail:
+            "Los RFCs se revisan a la vista. Comentarios, objeciones y benchmarks deciden si un módulo se gana un repositorio.",
+        },
+        {
+          name: "Después el repo",
+          detail:
+            "Sin repositorios fantasma: el código solo se instancia cuando su RFC se aprueba. Las etiquetas de estado se mantienen honestas.",
+        },
+      ],
+    },
+    founder: {
+      title: "Un fundador, trabajando a la vista.",
+      body: "Negent Mind es independiente y dirigida por su fundador. Sin capital de riesgo, sin página de equipo que inflar — el motor entregado, los RFCs escritos y esta hoja de ruta son toda la extensión del trabajo, declarada a escala honesta.",
+    },
+    contact: {
+      title: "Una línea directa.",
+      body: "Preguntas sobre la arquitectura, los RFCs o cómo contribuir — un solo buzón, leído por la persona que escribió el código.",
+      email: "negent@negentmind.com",
+    },
+    metrics: [
+      { label: "Sistemas con nombre", value: "6", unit: "", tone: "bone" },
+      { label: "Módulo en construcción", value: "1", unit: "", tone: "pulse" },
+      { label: "RFCs públicos", value: "4", unit: "", tone: "fog" },
+      { label: "Licencia", value: "Apache-2.0", unit: "", tone: "fog" },
+    ],
+  },
   engine: {
-    label: "[ 04 / MOTOR INSIGNIA ]",
+    label: "[ 06 / MOTOR INSIGNIA ]",
     title: "VantaDB.",
     qual: "memoria que permanece cuando la sesión termina.",
     sub: "El primer módulo entregado — un motor de memoria persistente embebido para agentes. Recuperación híbrida, estado transaccional, cero servidores. Desplázate por el pipeline.",
     h3: "Cinco líneas. Memoria persistente.",
     body: "El SDK de Python refleja el núcleo Rust. Escribe un payload con su embedding, consúltalo por significado y por término, recupéralo cuando se abra la siguiente sesión.",
-    counters: [
-      { label: "Servidores que levantar", value: "0", unit: "" },
-      { label: "Procesos donde se embebe", value: "1", unit: "" },
-      { label: "Versión del motor", value: "v0.9.0", unit: "", tone: "fog" },
-      { label: "Licencia", value: "Apache-2.0", unit: "", tone: "pulse" },
-    ],
     cta: "Lee el código",
     replayAria: "Repetir sesión de terminal",
     board: {
@@ -212,13 +305,13 @@ export const es: Dict = {
     },
   },
   proof: {
-    mechIndex: "05 / MECANISMO",
+    mechIndex: "07 / MECANISMO",
     mechTitle: "Entra ruido. Sale señal.",
     mechLede:
       "Este campo es ruido fractal en vivo. Desplázate y converge a orden; mueve el puntero y el orden lo sigue. Lo que ves es el producto: salida estocástica, resuelta determinísticamente.",
     mechChrome: "CAMPO EN VIVO — EL SCROLL BARRE EL ORDEN",
     fig1: "Fig. 01 — Campo de ruido fractal, barrido por scroll · entropía en vivo",
-    proofIndex: "05 / PRUEBA",
+    proofIndex: "07 / PRUEBA",
     proofTitle: "Medido, no afirmado.",
     proofLede:
       "Sin testimonios, sin clientes inventados, sin benchmarks prestados. Estos números se calculan aquí, ahora, desde el campo de arriba.",
@@ -233,7 +326,7 @@ export const es: Dict = {
     traceAria: "Trazo en vivo de la entropía de Shannon medida en el campo",
   },
   boundary: {
-    label: "06 / EL LÍMITE",
+    label: "08 / EL LÍMITE",
     title: "Posicionado por lo que no es.",
     items: [
       {
@@ -255,7 +348,7 @@ export const es: Dict = {
     footnote: "La alternativa hoy es un archivo markdown o el servidor de otro.",
   },
   landscape: {
-    label: "[ 07 / EL PANORAMA ]",
+    label: "[ 09 / EL PANORAMA ]",
     title: "Mismo trabajo, distintas arquitecturas.",
     qual: "arquitectura, no calidad.",
     sub: "No son tanto competidores como formas distintas para la misma necesidad — dónde se sitúa el motor de VantaDB entre ellas.",
@@ -269,7 +362,7 @@ export const es: Dict = {
     legend: "● sí · ◐ parcial · — no · comparación de arquitectura, no un benchmark",
   },
   oss: {
-    label: "[ 08 / CÓDIGO ABIERTO ]",
+    label: "[ 10 / CÓDIGO ABIERTO ]",
     title: "Construido en público.",
     qual: "súmate.",
     sub: "Negent Mind es una organización open source independiente. El motor es Apache-2.0: léelo, haz fork, embébelo en tu agente — y ayuda a decidir qué se construye después.",
@@ -310,9 +403,17 @@ export const es: Dict = {
     ],
   },
   faq: {
-    label: "[ 09 / LA CONSULTA ]",
+    label: "[ 11 / LA CONSULTA ]",
     title: "Preguntado, respondido.",
     items: [
+      {
+        q: "¿Qué es exactamente Negent Mind?",
+        a: "Una organización open source independiente que construye infraestructura de capacidades para agentes IA — memoria, percepción, verificación, ejecución. VantaDB, el motor de memoria embebido, es su primer módulo entregado; los otros cinco sistemas son especificaciones públicas.",
+      },
+      {
+        q: "¿Cómo se toman las decisiones?",
+        a: "A través del pipeline de RFCs. Cada capacidad se escribe como especificación, se revisa en público y solo obtiene un repositorio cuando se aprueba. No hay roadmap privado — lo que ves en esta página es lo que existe.",
+      },
       {
         q: "¿VantaDB está lista para producción?",
         a: "Está en v0.9.0 y en construcción. El núcleo del motor — almacenamiento, recuperación híbrida, transacciones MVCC — está implementado. Trátala como cualquier base de datos embebida joven: fija la versión, corre tu propia carga de trabajo y reporta lo que se rompa.",
@@ -320,14 +421,6 @@ export const es: Dict = {
       {
         q: "¿Por qué embebida en vez de un servicio?",
         a: "La memoria de un agente son datos, no infraestructura. Embebida significa sin superficie de operaciones, sin salto de red, nada saliendo de la máquina, y funciona offline. La misma razón por la que SQLite gana donde un servidor de base de datos sería exceso.",
-      },
-      {
-        q: "¿Qué son los sistemas con nombre?",
-        a: "Los módulos de capacidad del roadmap — Cardinal, Meta, Iris, Execute, Sage. Cada uno existe hoy solo como RFC de especificación; VantaDB es el único módulo entregado. Las etiquetas de estado son honestas, no marketing.",
-      },
-      {
-        q: "¿Cómo se convierte un RFC en código?",
-        a: "El pipeline de especificación: un módulo se escribe primero como RFC formal, se revisa en público, y solo obtiene un repositorio cuando el RFC se aprueba. Sin repos fantasma.",
       },
       {
         q: "¿Cuánto cuesta?",

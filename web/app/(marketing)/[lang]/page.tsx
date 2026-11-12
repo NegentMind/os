@@ -5,6 +5,9 @@ import { SilkHero } from "@/components/nm/SilkHero";
 import { Ticker } from "@/components/nm/Ticker";
 import { Immersive } from "@/components/nm/Immersive";
 import { HolonGrid } from "@/components/nm/HolonGrid";
+import { NumberedRows } from "@/components/nm/NumberedRows";
+import { RoadmapRail } from "@/components/nm/RoadmapRail";
+import { WorkSection } from "@/components/nm/WorkSection";
 import { FlowBoard } from "@/components/nm/FlowBoard";
 import { Marquee } from "@/components/nm/Marquee";
 import { OssCards } from "@/components/nm/OssCards";
@@ -13,7 +16,6 @@ import { SiteHeader } from "@/components/nm/SiteHeader";
 import { SiteFooter } from "@/components/nm/SiteFooter";
 import { Reveal } from "@/components/nm/Reveal";
 import { TerminalDemo } from "@/components/nm/TerminalDemo";
-import { InstrumentCounter } from "@/components/nm/InstrumentCounter";
 import { Faq } from "@/components/nm/Faq";
 import { getDictionary, isLocale } from "@/lib/i18n";
 
@@ -77,26 +79,13 @@ export default async function Home({
               <p className="secsub">{d.org.sub}</p>
             </div>
             <Reveal>
-              <div className="border-linedark border-t">
-                {d.org.problems.map((p, i) => (
-                  <div
-                    key={p.name}
-                    className="border-linedark grid gap-2 border-b py-6 sm:grid-cols-[180px_1fr] sm:gap-8"
-                  >
-                    <p className="font-mono text-[11px] tracking-[0.14em] text-fog uppercase">
-                      {String(i + 1).padStart(2, "0")}
-                    </p>
-                    <div>
-                      <h3 className="font-display text-lg font-bold tracking-[0.04em] text-bone uppercase sm:text-xl">
-                        {p.name}
-                      </h3>
-                      <p className="mt-2 max-w-[62ch] text-sm leading-relaxed text-fog text-pretty sm:text-base">
-                        {p.detail}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <NumberedRows
+                items={d.org.problems.map((p, i) => ({
+                  num: String(i + 1).padStart(2, "0"),
+                  title: p.name,
+                  body: p.detail,
+                }))}
+              />
             </Reveal>
           </div>
         </section>
@@ -126,7 +115,47 @@ export default async function Home({
           </div>
         </section>
 
-        {/* 04 — FLAGSHIP ENGINE: flow board pinned (nice-squash Flow) */}
+        {/* 04 — THE ROADMAP: rail scroll (strand) */}
+        <section
+          id="roadmap"
+          aria-labelledby="roadmap-h"
+          className="nmsec scroll-mt-24"
+        >
+          <Crosshairs />
+          <div className="nmsec-inner nmsec-pad">
+            <div className="sechead split">
+              <div>
+                <p className="lbl">{d.roadmap.label}</p>
+                <h2 className="h2" id="roadmap-h">
+                  {d.roadmap.title}
+                  <span className="qual">{d.roadmap.qual}</span>
+                </h2>
+              </div>
+              <p className="secsub">{d.roadmap.sub}</p>
+            </div>
+            <RoadmapRail dict={d.roadmap} />
+          </div>
+        </section>
+
+        {/* 05 — THE WORK: método, métricas, founder, contacto */}
+        <section id="work" aria-labelledby="work-h" className="nmsec scroll-mt-24">
+          <Crosshairs />
+          <div className="nmsec-inner nmsec-pad">
+            <div className="sechead split">
+              <div>
+                <p className="lbl">{d.work.label}</p>
+                <h2 className="h2" id="work-h">
+                  {d.work.title}
+                  <span className="qual">{d.work.qual}</span>
+                </h2>
+              </div>
+              <p className="secsub">{d.work.sub}</p>
+            </div>
+            <WorkSection dict={d.work} />
+          </div>
+        </section>
+
+        {/* 06 — FLAGSHIP ENGINE: flow board pinned (nice-squash Flow) */}
         <section
           id="engine"
           aria-labelledby="engine-h"
@@ -156,16 +185,6 @@ export default async function Home({
                   <p className="mt-4 max-w-[58ch] text-sm leading-relaxed text-fog text-pretty sm:text-base">
                     {d.engine.body}
                   </p>
-                  <div className="mt-8 grid grid-cols-2 gap-6">
-                    {d.engine.counters.map((c) => (
-                      <InstrumentCounter
-                        key={c.label}
-                        label={c.label}
-                        value={c.value}
-                        tone={c.tone}
-                      />
-                    ))}
-                  </div>
                   <Button
                     asChild
                     variant="outline"
@@ -187,49 +206,47 @@ export default async function Home({
           </div>
         </section>
 
-        {/* 05 — MECHANISM + PROOF: medición en vivo */}
-        <section className="nmsec" aria-label="Mechanism and proof">
+        {/* 07 — MECHANISM + PROOF: medición en vivo */}
+        <section id="proof" className="nmsec scroll-mt-24" aria-label="Mechanism and proof">
           <Crosshairs />
           <div className="nmsec-inner nmsec-pad">
             <DescentSection dict={d.proof} />
           </div>
         </section>
 
-        {/* 06 — BOUNDARY (panel Pulse) */}
+        {/* 08 — BOUNDARY (panel Pulse) */}
         <section
           id="not"
           aria-labelledby="not-h"
-          className="mt-24 scroll-mt-24 bg-pulse text-void sm:mt-32"
+          className="accent-panel mt-24 scroll-mt-24 sm:mt-32"
         >
-          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-            <p className="font-mono text-[11px] tracking-[0.14em] uppercase">
-              {d.boundary.label}
-            </p>
-            <h2
-              id="not-h"
-              className="font-display mt-4 text-3xl font-bold tracking-[0.02em] uppercase sm:text-5xl"
-            >
+          <span className="accent-panel__cross accent-panel__cross--tl" aria-hidden="true" />
+          <span className="accent-panel__cross accent-panel__cross--tr" aria-hidden="true" />
+          <span className="accent-panel__cross accent-panel__cross--bl" aria-hidden="true" />
+          <span className="accent-panel__cross accent-panel__cross--br" aria-hidden="true" />
+          <div className="accent-panel__inner">
+            <div className="accent-panel__top">
+              <span>{d.boundary.label}</span>
+              <span>{d.boundary.footnote}</span>
+            </div>
+            <h2 id="not-h" className="accent-panel__title">
               {d.boundary.title}
             </h2>
-            <div className="mt-12 grid gap-10 md:grid-cols-3">
-              {d.boundary.items.map((n) => (
-                <div key={n.name} className="border-t-2 border-[#14161c]/70 pt-5">
-                  <h3 className="font-display text-lg font-bold tracking-[0.04em] uppercase">
-                    {n.name}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-pretty">
-                    {n.detail}
-                  </p>
+            <div className="accent-panel__grid">
+              {d.boundary.items.map((n, i) => (
+                <div key={n.name} className="accent-panel__item">
+                  <span className="accent-panel__item-num">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="accent-panel__item-title">{n.name}</h3>
+                  <p className="accent-panel__item-body">{n.detail}</p>
                 </div>
               ))}
             </div>
-            <p className="font-mono mt-14 text-[11px] tracking-[0.14em] uppercase">
-              {d.boundary.footnote}
-            </p>
           </div>
         </section>
 
-        {/* 07 — THE LANDSCAPE */}
+        {/* 09 — THE LANDSCAPE */}
         <section
           id="compare"
           aria-labelledby="compare-h"
@@ -309,7 +326,7 @@ export default async function Home({
           </div>
         </section>
 
-        {/* 08 — OPEN SOURCE: price-cards (mondragon2) */}
+        {/* 10 — OPEN SOURCE: price-cards (mondragon2) */}
         <section
           id="oss"
           aria-labelledby="oss-h"
@@ -364,7 +381,7 @@ export default async function Home({
         {/* Marquee tipográfico (mondragon2) */}
         <Marquee />
 
-        {/* 09 — FAQ */}
+        {/* 11 — FAQ */}
         <section id="faq" aria-labelledby="faq-h" className="nmsec scroll-mt-24">
           <Crosshairs />
           <div className="nmsec-inner nmsec-pad">

@@ -8,8 +8,8 @@ export function FlipText({ text }: { text: string }) {
           key={i}
           style={{ ["--i" as string]: i } as React.CSSProperties}
         >
-          <span>{c === " " ? " " : c}</span>
-          <span aria-hidden>{c === " " ? " " : c}</span>
+          <span>{c === " " ? " " : c}</span>
+          <span aria-hidden>{c === " " ? " " : c}</span>
         </span>
       ))}
     </span>

@@ -78,7 +78,9 @@ typography:
     s19: "19px"
     s20: "20px"
     s22: "22px"
+    s24: "24px"
     s26: "26px"
+    s28: "28px"
     s31: "31px"
     s34: "34px"
     s40: "40px"
@@ -116,7 +118,7 @@ components:
 
 ## Overview
 
-Home de **Negent Mind** (la organización, no solo VantaDB): híbrido por zonas — cada zona conserva la estética de la plantilla de la que se extrajo. Hero = seda líquida WebGL (mondragon2, hiper-cromática). Cuerpo = instrumentos halftone + board blueprint + escultura de puntos (nice-squash, monocromo Bone). Cards Bone sobre Void + nav pill + price-cards (mondragon2). Wordmark gigante (ox). Pulse cierra.
+Home de **Negent Mind** (la organización, no solo VantaDB): híbrido por zonas — cada zona conserva la estética de la plantilla de la que se extrajo. Hero = seda líquida WebGL (mondragon2, hiper-cromática). Cuerpo = instrumentos halftone + board blueprint + escultura de puntos (nice-squash, monocromo Bone). Cards Bone sobre Void + nav pill + price-cards (mondragon2). Rail de roadmap (strand), filas numeradas invert (sequenceone), panel de acento (arccheo), nav por luminancia (noveq). Wordmark gigante (ox). Pulse cierra. La estructura es org-first: 11 secciones y VantaDB ocupa solo la 06 (FLAGSHIP ENGINE).
 
 ## Colors
 
@@ -172,6 +174,11 @@ Home de **Negent Mind** (la organización, no solo VantaDB): híbrido por zonas 
 - `nm/SectionHeading`: índice de sección mono + H2 display + lede opcional (uso interno en `DescentSection`; las secciones nuevas usan `.sechead`).
 - `nm/Reveal`: una sola entrada por viewport (`whileInView`, expo-out 0.6s).
 - `nm/SiteFooter`: wordmark gigante `footer-word` (patrón portado de `templates/ox`, ~17vw) + links centrados + meta row; sitemap sin rutas inventadas.
+- `nm/RoadmapRail` (estructura portada de `templates/strand` "Scroll Progress Section"; mecánica reconstruida con el patrón de la casa): espina vertical con relleno `--p` por scroll, hitos `R/00–R/05` alternados con chip `IN BUILD`/`RFC` (Pulse para build, outline para rfc). Reduced-motion: `--p:1` + todos `.is-on`.
+- `nm/WorkSection`: zona 05 — bento hairline (método RFC 01–03, métricas verificables, founder, contacto). Solo constantes honestas.
+- `nm/NumberedRows` (micro-interacción portada de `templates/sequenceone`): fill fade + inversión de tinta en hover/focus (Bone→Void), `tabIndex` para paridad de teclado.
+- `nm/useLuminance` (portado de `templates/noveq` `runtime.ts`): sonda de luminancia bajo el nav — `elementsFromPoint` + cadena de backgrounds, umbral 0.55, fallback `scrollY>60`. `SiteHeader` lo expone como `data-tone`; en estado transparente sobre superficie clara la tinta flipea a Void.
+- Zona 08 `.accent-panel` (estructura portada de `templates/arccheo` FAQ Section): panel Pulse full-bleed, cruces de esquina `+` (firma arccheo), top row mono + hairline, items con regla 2px superior.
 
 ## i18n
 

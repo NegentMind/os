@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { FlipText } from "@/components/nm/FlipText";
+import { useLuminance } from "@/components/nm/useLuminance";
 import { LOCALES, type Dict, type Locale } from "@/lib/i18n";
 
 /*
@@ -22,6 +23,8 @@ export function SiteHeader({
 }) {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const navRef = useRef<HTMLElement>(null);
+  const tone = useLuminance(navRef);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -34,7 +37,11 @@ export function SiteHeader({
     pathname.replace(/^\/(en|es)(?=\/|$)/, `/${l}`) || `/${l}`;
 
   return (
-    <header className={`nm-nav${scrolled ? " pill" : ""}`}>
+    <header
+      ref={navRef}
+      className={`nm-nav${scrolled ? " pill" : ""}`}
+      data-tone={tone}
+    >
       <div className="nm-nav-inner">
         <Link
           href={`/${lang}`}
