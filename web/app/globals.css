@@ -109,6 +109,27 @@ input[type="number"] {
   font-variant-numeric: tabular-nums;
 }
 
+/* Ticker: un solo marquee en la página. */
+@keyframes nm-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: nm-ticker 36s linear infinite;
+  will-change: transform;
+}
+
+/* Display hueco: reserva para lo no resuelto (el caos se dibuja vacío). */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-bone);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

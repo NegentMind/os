@@ -13,15 +13,20 @@ export function SiteFooter() {
             aria-label="Mapa del sitio"
             className="font-mono mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs tracking-[0.14em] text-fog uppercase"
           >
-            <Link href="/" className="transition-colors hover:text-bone">
-              Home
+            <Link href="#product" className="transition-colors hover:text-bone">
+              Engine
             </Link>
-            <Link href="/login" className="transition-colors hover:text-bone">
-              Login
+            <Link href="#roadmap" className="transition-colors hover:text-bone">
+              Roadmap
             </Link>
-            <Link href="/app" className="transition-colors hover:text-bone">
-              App
-            </Link>
+            <a
+              href="https://github.com/ness-e/Vantadb"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-bone"
+            >
+              VantaDB
+            </a>
             <a
               href="https://github.com/NegentMind"
               target="_blank"
@@ -31,6 +36,14 @@ export function SiteFooter() {
               GitHub
             </a>
             <a
+              href="https://github.com/NegentMind/negentmind"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-bone"
+            >
+              Specs
+            </a>
+            <a
               href="mailto:negent@negentmind.com"
               className="transition-colors hover:text-bone"
             >
@@ -38,7 +51,8 @@ export function SiteFooter() {
             </a>
           </nav>
           <p className="font-mono mt-6 text-[11px] tracking-[0.08em] text-fog">
-            © 2026 NegentMind · Privacy and Terms pending publication.
+            © 2026 Negent Mind · Apache-2.0 · Privacy and Terms pending
+            publication.
           </p>
         </div>
         <p

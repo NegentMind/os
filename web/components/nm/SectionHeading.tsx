@@ -7,15 +7,16 @@ import { cn } from "@/lib/utils";
 type Props = {
   index: string;
   title: ReactNode;
-  lede?: string;
+  lede?: ReactNode;
+  id?: string;
   className?: string;
 };
 
 /**
- * Section heading: the heading carries its own weight (no kicker).
- * `index` is a scale/depth readout, not decoration — the descent order.
+ * Encabezado numerado de sección (00–05). El número ordena el dossier;
+ * el titular lleva el peso, sin kickers encima.
  */
-export function SectionHeading({ index, title, lede, className }: Props) {
+export function SectionHeading({ index, title, lede, id, className }: Props) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 28 }}
@@ -30,13 +31,16 @@ export function SectionHeading({ index, title, lede, className }: Props) {
       >
         {index}
       </p>
-      <h2 className="font-display mt-4 text-4xl font-bold uppercase leading-[1.05] tracking-[0.04em] text-bone sm:text-5xl">
+      <h2
+        id={id}
+        className="font-display mt-4 text-4xl font-bold uppercase leading-[1.02] tracking-[0.02em] text-bone sm:text-6xl"
+      >
         {title}
       </h2>
       {lede ? (
-        <p className="mt-5 max-w-[65ch] text-base leading-relaxed text-fog">
+        <div className="mt-5 max-w-[65ch] text-base leading-relaxed text-fog">
           {lede}
-        </p>
+        </div>
       ) : null}
     </motion.div>
   );

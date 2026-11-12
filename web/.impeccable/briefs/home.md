@@ -11,9 +11,9 @@ Superficie: home pública `/`. Modo Persuade: el visitante entiende qué es Nege
 - Acción: entrar a `/login` o seguir a mecanismo/prueba.
 - Prueba: el mecanismo dramatizado en vivo (ruido→señal interactivo) + instrumentos con valores reales del repo; nada fabricado (sin testimonios, clientes ni benchmarks).
 
-## Dirección fijada (dados 6-1-4, gana THE ROLL)
+## Dirección fijada — v2 expediente dossier (dados 0d2275c3, candidata 7; referencias del usuario 2026-11-12)
 
-**Descenso fractal.** El scroll es un zoom que desciende por escalas: mente → caos → orden. Estructura: hero fractal interactivo (Three.js, híbrido) → manifiesto corto → mecanismo (campo ASCII que converge con el scroll, GSAP ScrollTrigger) → prueba instrumental (contadores mono con valores reales) → acceso (login/app) → cierre real. Interacción firma: la rueda baja de escala; el fractal responde al puntero.
+**Expedición al orden.** Dossier de campo cinematográfico: héroe full-bleed con telón fílmico generado por canvas (grano, fugas de luz tenues, viñeta) + titular Chakra apilado a la izquierda + marginalia mono (coordenadas de sección, readout vivo). Secciones numeradas 00–05. Sin hero 3D de partículas (eliminado con la dirección anterior por rechazo del usuario), sin manifiesto centrado, sin cards. ASCII como marginalia y sistemas, no como mundo entero.
 
 ## Mundo (fijado en ronda previa)
 

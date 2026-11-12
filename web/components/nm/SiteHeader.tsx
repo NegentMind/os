@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 /** Barra fija: fondo sólido void + hairline. Sin vidrios ni decoración. */
@@ -20,15 +21,25 @@ export function SiteHeader() {
           <Link href="#mechanism" className="transition-colors hover:text-bone">
             Mechanism
           </Link>
-          <Link href="#proof" className="transition-colors hover:text-bone">
-            Proof
+          <Link href="#product" className="transition-colors hover:text-bone">
+            Engine
           </Link>
-          <Link href="#systems" className="transition-colors hover:text-bone">
-            Systems
+          <Link href="#roadmap" className="transition-colors hover:text-bone">
+            Roadmap
+          </Link>
+          <Link href="#faq" className="transition-colors hover:text-bone">
+            FAQ
           </Link>
         </nav>
-        <Button asChild size="sm">
-          <Link href="/login">Enter</Link>
+        <Button asChild size="sm" className="font-mono tracking-[0.08em]">
+          <a
+            href="https://github.com/ness-e/Vantadb"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+            <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" aria-hidden="true" />
+          </a>
         </Button>
       </div>
     </header>

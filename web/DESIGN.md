@@ -34,6 +34,11 @@ typography:
     fontWeight: 400
     lineHeight: 1.4
     letterSpacing: "0.14em"
+  monoRamp:
+    marginalia: "10px"     # índices de sección, coordenadas, captions densas
+    microLabel: "11px"     # etiquetas de datos, nav, ticker, footer legal
+    base: "12px"           # mono de sistema por defecto
+    codeBody: "12.5–13px"  # cuerpo de terminal/código legible
 rounded:
   sm: "2px"
   md: "8px"
@@ -68,6 +73,7 @@ Home Persuade de Negent Mind: descenso fractal — el scroll baja de escala (10�
 - Display Chakra Petch 700, mayúsculas, tracking 0.04em (hero) / 0.12em (wordmark). Sin kickers: el heading carga solo.
 - Texto Inter 400/500, medida ≤60ch, `text-pretty` en prosa.
 - Técnico JetBrains Mono tabular para instrumentos, índices de escala (`SCALE 10⁻ⁿ`), captions de figura y navegación de datos.
+- Rampa mono (`monoRamp`): 10px marginalia/índices, 11px micro-etiquetas/nav/ticker, 12px base, 12.5–13px cuerpo de terminal. Fuera de esta rampa no hay tamaños literales.
 
 ## Layout
 
@@ -87,11 +93,15 @@ Home Persuade de Negent Mind: descenso fractal — el scroll baja de escala (10�
 
 ## Components
 
-- `nm/EntropyHero`: puntos 3D que resuelven ruido→retícula; el puntero ordena localmente. `frameloop="demand"` + estado convergido con `prefers-reduced-motion`.
-- `nm/AsciiField`: canvas de ruido fractal, scrub por ScrollTrigger + imán de puntero; expone entropía de Shannon, % resuelto y FPS reales vía `onStats`.
+- `nm/FilmBackdrop`: campo cinematográfico de fondo (canvas); caos hiper-cromático acotado (magenta/cyan/ácido/naranja con glow) solo dentro del field, nunca en chrome.
+- `nm/LatticeField`: retícula de puntos 2D que se resuelve ruido→orden; sucede al hero 3D con el mismo contrato: estático convergido con `prefers-reduced-motion`.
+- `nm/DescentSection`: bloque dossier 02–03 — `AsciiField` (canvas fractal, scrub GSAP + imán de puntero) + `EntropyTrace` (fig. 03, últimas 120 muestras) + `InstrumentCounter` (entropía Shannon, % resuelto, FPS reales).
+- `nm/TerminalDemo`: sesión tipeada (instalar → put → search) derivada de una única posición global de carácter — duplicados imposibles por construcción; con `prefers-reduced-motion` muestra la sesión completa.
+- `nm/FeatureRail`: ledger de capacidades VantaDB; índice sticky en desktop, lista numerada en móvil. Item activo en Pulse.
+- `nm/Faq`: acordeón ledger con hairlines; sin cards.
+- `nm/Ticker`: banda mono con reloj UTC real; claims solo verificables.
 - `nm/InstrumentCounter`: numeral tabular mono + etiqueta; solo valores medidos o constantes documentadas (120f/30fps del loop GIF).
-- `nm/GlitchWord`: scramble→resolución al entrar en viewport, con fallback por timeout y `aria-label` con el texto final.
-- `nm/SectionHeading`: índice de escala mono + H2 display + lede opcional. Sin kicker.
+- `nm/SectionHeading`: índice de sección mono + H2 display + lede opcional. Sin kicker.
 - `nm/Reveal`: una sola entrada por viewport (`whileInView`, expo-out 0.6s). El scroll coreografiado (scrub) pertenece a `AsciiField`/GSAP, no aquí.
 - `nm/SiteHeader` / `nm/SiteFooter`: chrome mínimo, sitemap sin rutas inventadas, contacto real, legales pendientes marcados como pendientes.
 
