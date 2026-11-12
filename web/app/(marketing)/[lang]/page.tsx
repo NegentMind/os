@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SilkHero } from "@/components/nm/SilkHero";
 import { Ticker } from "@/components/nm/Ticker";
@@ -13,84 +14,14 @@ import { SiteFooter } from "@/components/nm/SiteFooter";
 import { Reveal } from "@/components/nm/Reveal";
 import { TerminalDemo } from "@/components/nm/TerminalDemo";
 import { InstrumentCounter } from "@/components/nm/InstrumentCounter";
-import { Faq, type FaqItem } from "@/components/nm/Faq";
+import { Faq } from "@/components/nm/Faq";
+import { getDictionary, isLocale } from "@/lib/i18n";
 
 const VANTADB_REPO = "https://github.com/ness-e/Vantadb";
 const ORG_REPO = "https://github.com/NegentMind";
 const SPECS_REPO = "https://github.com/NegentMind/negentmind";
 
-const PROBLEMS: Array<{ name: string; detail: string }> = [
-  {
-    name: "Markdown memory rots",
-    detail:
-      "A memory file is something you edit by hand. It drifts, duplicates, and nobody prunes it. The agent reads the rot as fact.",
-  },
-  {
-    name: "Hosted memory exfiltrates",
-    detail:
-      "A memory SaaS means your agent's context lives on someone else's meter. Latency, lock-in, and your data leaving the machine.",
-  },
-  {
-    name: "Process state dies",
-    detail:
-      "In-process stores vanish on exit. Every new session starts from zero and re-learns the same lessons.",
-  },
-];
-
-const NOT_ITEMS: Array<{ name: string; detail: string }> = [
-  {
-    name: "Not an agent framework",
-    detail:
-      "Negent Mind does not orchestrate reasoning or prompt loops. It builds the substrate the reasoning reads from and writes to.",
-  },
-  {
-    name: "Not a hosted service",
-    detail:
-      "No account, no API key, no meter running on your agent's context. The binary is the product.",
-  },
-  {
-    name: "Not vaporware",
-    detail:
-      "Every module on the map is either shipped code or a written specification with a status label — never a rendered promise.",
-  },
-];
-
 type Cell = boolean | "partial";
-const COMPARE: Array<{
-  name: string;
-  embedded: Cell;
-  local: Cell;
-  txn: Cell;
-  hybrid: Cell;
-}> = [
-  { name: "Memory files (CLAUDE.md, AGENTS.md)", embedded: true, local: true, txn: false, hybrid: false },
-  { name: "Hosted memory APIs (Mem0, Zep)", embedded: false, local: false, txn: false, hybrid: "partial" },
-  { name: "Agent servers (Letta)", embedded: false, local: false, txn: "partial", hybrid: "partial" },
-  { name: "VantaDB", embedded: true, local: true, txn: true, hybrid: true },
-];
-
-const FAQ_ITEMS: FaqItem[] = [
-  {
-    q: "Is VantaDB ready for production?",
-    a: "It is at v0.9.0 and in build. The core engine — storage, hybrid retrieval, MVCC transactions — is implemented. Treat it like any young embedded database: pin the version, run your own workload, report what breaks.",
-  },
-  {
-    q: "Why embedded instead of a service?",
-    a: "Agent memory is data, not infrastructure. Embedded means no ops surface, no network hop, nothing leaving the machine, and it works offline. The same reason SQLite wins where a database server would be overhead.",
-  },
-  {
-    q: "What are the named systems?",
-    a: "The capability modules on the roadmap — Cardinal, Meta, Iris, Execute, Sage. Each exists today only as a specification RFC; VantaDB is the only shipped module. Status labels are honest, not marketing.",
-  },
-  {
-    q: "How does an RFC become code?",
-    a: "The specification pipeline: a module is written as a formal RFC first, reviewed in public, and only gets a repository once the RFC is approved. No phantom repos.",
-  },
-  {
-    q: "What does it cost?",
-    a: "Nothing. Apache-2.0, use it anywhere. No managed cloud exists today; if one ever does, the engine stays open.",
-  },
-];
 
 function Cell({ v }: { v: Cell }) {
   if (v === true) return <span className="text-pulse">●</span>;
@@ -111,17 +42,25 @@ function Crosshairs() {
   );
 }
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const d = getDictionary(lang);
+
   return (
     <>
-      <SiteHeader />
+      <SiteHeader lang={lang} dict={d.nav} />
       <main>
         {/* 00 — HERO: seda líquida (mondragon2) */}
         <div id="top">
-          <SilkHero />
+          <SilkHero dict={d.hero} />
         </div>
 
-        <Ticker />
+        <Ticker items={d.ticker.items} />
 
         {/* 01 — THE ORGANIZATION */}
         <section id="org" aria-labelledby="org-h" className="nmsec scroll-mt-24">
@@ -129,22 +68,17 @@ export default function Home() {
           <div className="nmsec-inner nmsec-pad">
             <div className="sechead split">
               <div>
-                <p className="lbl">[ 01 / THE ORGANIZATION ]</p>
+                <p className="lbl">{d.org.label}</p>
                 <h2 className="h2" id="org-h">
-                  Agents are brilliant at inference
-                  <span className="qual">and amnesiac by default.</span>
+                  {d.org.title}
+                  <span className="qual">{d.org.qual}</span>
                 </h2>
               </div>
-              <p className="secsub">
-                Negent Mind is an independent open-source organization building
-                capability infrastructure for AI agents — memory, perception,
-                verification, execution. One substrate is shipping; the rest are
-                specifications with honest labels.
-              </p>
+              <p className="secsub">{d.org.sub}</p>
             </div>
             <Reveal>
               <div className="border-linedark border-t">
-                {PROBLEMS.map((p, i) => (
+                {d.org.problems.map((p, i) => (
                   <div
                     key={p.name}
                     className="border-linedark grid gap-2 border-b py-6 sm:grid-cols-[180px_1fr] sm:gap-8"
@@ -168,7 +102,7 @@ export default function Home() {
         </section>
 
         {/* 02 — THE PRINCIPLE: escultura scroll-driven (nice-squash Immersive) */}
-        <Immersive />
+        <Immersive dict={d.immersive} />
 
         {/* 03 — THE MODULES: capability grid (nice-squash Platform) */}
         <section
@@ -180,19 +114,15 @@ export default function Home() {
           <div className="nmsec-inner nmsec-pad">
             <div className="sechead split">
               <div>
-                <p className="lbl">[ 03 / THE MODULES ]</p>
+                <p className="lbl">{d.modules.label}</p>
                 <h2 className="h2" id="modules-h">
-                  One substrate. Six named systems.
-                  <span className="qual">specifications, not vaporware.</span>
+                  {d.modules.title}
+                  <span className="qual">{d.modules.qual}</span>
                 </h2>
               </div>
-              <p className="secsub">
-                The architecture is layered: a memory substrate at the core, and
-                capability modules defined as public RFCs before a single
-                repository exists. Only one is code today.
-              </p>
+              <p className="secsub">{d.modules.sub}</p>
             </div>
-            <HolonGrid />
+            <HolonGrid items={d.modules.items} />
           </div>
         </section>
 
@@ -206,45 +136,35 @@ export default function Home() {
           <div className="nmsec-inner nmsec-pad">
             <div className="sechead split">
               <div>
-                <p className="lbl">[ 04 / FLAGSHIP ENGINE ]</p>
+                <p className="lbl">{d.engine.label}</p>
                 <h2 className="h2" id="engine-h">
-                  VantaDB.
-                  <span className="qual">memory that stays when the session ends.</span>
+                  {d.engine.title}
+                  <span className="qual">{d.engine.qual}</span>
                 </h2>
               </div>
-              <p className="secsub">
-                The first shipped module — an embedded persistent-memory engine
-                for agents. Hybrid retrieval, transactional state, zero servers.
-                Scroll through the pipeline.
-              </p>
+              <p className="secsub">{d.engine.sub}</p>
             </div>
           </div>
-          <FlowBoard />
+          <FlowBoard dict={d.engine.board} />
           <div className="nmsec-inner nmsec-pad">
             <Reveal>
               <div className="grid items-start gap-10 pt-20 lg:grid-cols-[1fr_1.1fr]">
                 <div>
                   <h3 className="font-display text-xl font-bold tracking-[0.04em] text-bone uppercase sm:text-2xl">
-                    Five lines. Persistent memory.
+                    {d.engine.h3}
                   </h3>
                   <p className="mt-4 max-w-[58ch] text-sm leading-relaxed text-fog text-pretty sm:text-base">
-                    The Python SDK mirrors the Rust core. Put a payload with its
-                    embedding, query it by meaning and by term, get it back when
-                    the next session opens.
+                    {d.engine.body}
                   </p>
                   <div className="mt-8 grid grid-cols-2 gap-6">
-                    <InstrumentCounter label="Servers to run" value="0" />
-                    <InstrumentCounter label="Processes it embeds in" value="1" />
-                    <InstrumentCounter
-                      label="Engine version"
-                      value="v0.9.0"
-                      tone="fog"
-                    />
-                    <InstrumentCounter
-                      label="License"
-                      value="Apache-2.0"
-                      tone="pulse"
-                    />
+                    {d.engine.counters.map((c) => (
+                      <InstrumentCounter
+                        key={c.label}
+                        label={c.label}
+                        value={c.value}
+                        tone={c.tone}
+                      />
+                    ))}
                   </div>
                   <Button
                     asChild
@@ -256,12 +176,12 @@ export default function Home() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Read the source
+                      {d.engine.cta}
                       <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
                     </a>
                   </Button>
                 </div>
-                <TerminalDemo />
+                <TerminalDemo replayLabel={d.engine.replayAria} />
               </div>
             </Reveal>
           </div>
@@ -271,7 +191,7 @@ export default function Home() {
         <section className="nmsec" aria-label="Mechanism and proof">
           <Crosshairs />
           <div className="nmsec-inner nmsec-pad">
-            <DescentSection />
+            <DescentSection dict={d.proof} />
           </div>
         </section>
 
@@ -283,16 +203,16 @@ export default function Home() {
         >
           <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
             <p className="font-mono text-[11px] tracking-[0.14em] uppercase">
-              06 / THE BOUNDARY
+              {d.boundary.label}
             </p>
             <h2
               id="not-h"
               className="font-display mt-4 text-3xl font-bold tracking-[0.02em] uppercase sm:text-5xl"
             >
-              Positioned by what it is not.
+              {d.boundary.title}
             </h2>
             <div className="mt-12 grid gap-10 md:grid-cols-3">
-              {NOT_ITEMS.map((n) => (
+              {d.boundary.items.map((n) => (
                 <div key={n.name} className="border-t-2 border-[#14161c]/70 pt-5">
                   <h3 className="font-display text-lg font-bold tracking-[0.04em] uppercase">
                     {n.name}
@@ -304,8 +224,7 @@ export default function Home() {
               ))}
             </div>
             <p className="font-mono mt-14 text-[11px] tracking-[0.14em] uppercase">
-              The alternative today is a markdown file or someone else&apos;s
-              server.
+              {d.boundary.footnote}
             </p>
           </div>
         </section>
@@ -320,40 +239,35 @@ export default function Home() {
           <div className="nmsec-inner nmsec-pad">
             <div className="sechead split">
               <div>
-                <p className="lbl">[ 07 / THE LANDSCAPE ]</p>
+                <p className="lbl">{d.landscape.label}</p>
                 <h2 className="h2" id="compare-h">
-                  Same job, different architectures.
-                  <span className="qual">architecture, not quality.</span>
+                  {d.landscape.title}
+                  <span className="qual">{d.landscape.qual}</span>
                 </h2>
               </div>
-              <p className="secsub">
-                These are not competitors so much as different shapes for the
-                same need — where VantaDB&apos;s engine sits among them.
-              </p>
+              <p className="secsub">{d.landscape.sub}</p>
             </div>
             <Reveal className="overflow-x-auto">
               <table className="w-full min-w-[640px] border-collapse text-left">
                 <thead>
                   <tr className="font-mono border-linedark border-b text-[10px] tracking-[0.14em] text-fog uppercase">
-                    <th scope="col" className="py-3 pr-4 font-normal">
-                      Approach
-                    </th>
-                    <th scope="col" className="px-4 py-3 font-normal">
-                      Embedded
-                    </th>
-                    <th scope="col" className="px-4 py-3 font-normal">
-                      Local-first
-                    </th>
-                    <th scope="col" className="px-4 py-3 font-normal">
-                      Transactional
-                    </th>
-                    <th scope="col" className="px-4 py-3 font-normal">
-                      Hybrid
-                    </th>
+                    {d.landscape.heads.map((h, i) => (
+                      <th
+                        key={h}
+                        scope="col"
+                        className={
+                          i === 0
+                            ? "py-3 pr-4 font-normal"
+                            : "px-4 py-3 font-normal"
+                        }
+                      >
+                        {h}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody className="font-mono text-xs tracking-[0.04em]">
-                  {COMPARE.map((row) => (
+                  {d.landscape.rows.map((row) => (
                     <tr
                       key={row.name}
                       className={
@@ -390,7 +304,7 @@ export default function Home() {
               </table>
             </Reveal>
             <p className="font-mono mt-4 text-[10px] tracking-[0.14em] text-fog uppercase">
-              ● yes · ◐ partial · — no · architecture comparison, not a benchmark
+              {d.landscape.legend}
             </p>
           </div>
         </section>
@@ -405,23 +319,19 @@ export default function Home() {
           <div className="nmsec-inner nmsec-pad">
             <div className="sechead split">
               <div>
-                <p className="lbl">[ 08 / OPEN SOURCE ]</p>
+                <p className="lbl">{d.oss.label}</p>
                 <h2 className="h2" id="oss-h">
-                  Built in public.
-                  <span className="qual">join in.</span>
+                  {d.oss.title}
+                  <span className="qual">{d.oss.qual}</span>
                 </h2>
               </div>
-              <p className="secsub">
-                Negent Mind is an independent open-source organization. The
-                engine is Apache-2.0: read it, fork it, embed it in your agent —
-                and help decide what gets built next.
-              </p>
+              <p className="secsub">{d.oss.sub}</p>
             </div>
-            <OssCards />
+            <OssCards cards={d.oss.cards} />
             <div className="mt-10 flex flex-wrap gap-4">
               <Button asChild size="lg" className="font-mono tracking-[0.08em]">
                 <a href={VANTADB_REPO} target="_blank" rel="noopener noreferrer">
-                  ness-e/Vantadb
+                  {d.oss.ctaRepo}
                   <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </a>
               </Button>
@@ -432,7 +342,7 @@ export default function Home() {
                 className="font-mono tracking-[0.08em]"
               >
                 <a href={ORG_REPO} target="_blank" rel="noopener noreferrer">
-                  NegentMind org
+                  {d.oss.ctaOrg}
                   <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </a>
               </Button>
@@ -443,7 +353,7 @@ export default function Home() {
                 className="font-mono tracking-[0.08em]"
               >
                 <a href={SPECS_REPO} target="_blank" rel="noopener noreferrer">
-                  Read the specs
+                  {d.oss.ctaSpecs}
                   <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </a>
               </Button>
@@ -459,18 +369,18 @@ export default function Home() {
           <Crosshairs />
           <div className="nmsec-inner nmsec-pad">
             <div className="sechead">
-              <p className="lbl">[ 09 / THE INQUIRY ]</p>
+              <p className="lbl">{d.faq.label}</p>
               <h2 className="h2" id="faq-h">
-                Asked, answered.
+                {d.faq.title}
               </h2>
             </div>
             <Reveal>
-              <Faq items={FAQ_ITEMS} />
+              <Faq items={d.faq.items} />
             </Reveal>
           </div>
         </section>
       </main>
-      <SiteFooter />
+      <SiteFooter dict={d.footer} />
     </>
   );
 }

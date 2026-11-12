@@ -1,11 +1,12 @@
 import Link from "next/link";
+import type { Dict } from "@/lib/i18n";
 
 /*
  * Cierre real: wordmark gigante (patrón portado de templates/ox Footer —
  * footer-word a escala de viewport), sitemap centrado y meta row.
  * Sin rutas inventadas; legales marcados como pendientes.
  */
-export function SiteFooter() {
+export function SiteFooter({ dict }: { dict: Dict["footer"] }) {
   return (
     <footer className="border-linedark border-t pt-16 pb-10">
       <p
@@ -17,15 +18,18 @@ export function SiteFooter() {
       </p>
 
       <nav
-        aria-label="Mapa del sitio"
+        aria-label={dict.navAria}
         className="font-mono mt-12 mb-8 flex flex-wrap justify-center gap-x-7 gap-y-3 text-xs font-bold tracking-[0.14em] text-fog uppercase"
       >
-        <Link href="#product" className="transition-colors hover:text-pulse">
-          Engine
-        </Link>
-        <Link href="#roadmap" className="transition-colors hover:text-pulse">
-          Roadmap
-        </Link>
+        {dict.links.map((l) => (
+          <Link
+            key={l.href}
+            href={l.href}
+            className="transition-colors hover:text-pulse"
+          >
+            {l.label}
+          </Link>
+        ))}
         <a
           href="https://github.com/ness-e/Vantadb"
           target="_blank"
@@ -59,8 +63,8 @@ export function SiteFooter() {
       </nav>
 
       <div className="font-mono mx-auto flex max-w-6xl flex-wrap justify-between gap-2 px-4 text-[13px] text-fog sm:px-6">
-        <span>© 2026 Negent Mind · Apache-2.0</span>
-        <span>Privacy and Terms pending publication.</span>
+        <span>{dict.legal.replace("{year}", "2026")}</span>
+        <span>{dict.pending}</span>
       </div>
     </footer>
   );

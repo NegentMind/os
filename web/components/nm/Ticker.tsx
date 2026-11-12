@@ -2,19 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-const ITEMS = [
-  "EMBEDDED MEMORY ENGINE",
-  "BM25 + HNSW → RRF",
-  "MVCC SNAPSHOT ISOLATION",
-  "WAL + CRC32C · FJALL LSM",
-  "APACHE-2.0 · LOCAL-FIRST",
-];
-
 /**
  * Único marquee de la página: ticker mono con reloj UTC vivo.
  * Pausado con prefers-reduced-motion (ver globals.css).
  */
-export function Ticker() {
+export function Ticker({ items }: { items: readonly string[] }) {
   const [now, setNow] = useState("--:--:--");
 
   useEffect(() => {
@@ -30,7 +22,7 @@ export function Ticker() {
 
   const row = (
     <>
-      {ITEMS.map((item) => (
+      {items.map((item) => (
         <span key={item} className="mx-6 inline-flex items-center gap-6">
           <span>{item}</span>
           <span aria-hidden="true" className="text-pulse">

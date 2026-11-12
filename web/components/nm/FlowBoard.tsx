@@ -8,12 +8,14 @@ import {
   type RefObject,
 } from "react";
 import { Sculpture, type ShapeName } from "@/components/nm/sculpture";
+import type { Dict } from "@/lib/i18n";
 
 /*
  * Scroll-pinned stage board ported from webTemplates/nice-squash-242352
  * (Flow.tsx): stage tabs, code panel, query graph, metric panel and a
  * point-cloud form, linked by drawn connector paths. Stage content
- * describes only documented VantaDB usage.
+ * describes only documented VantaDB usage. Code stays in English
+ * (it's product code); names, statuses and metric chrome localize.
  */
 type Metric =
   | { kind: "checks"; title: string; value: string; unit: string; rows: string[] }
@@ -27,26 +29,23 @@ type Metric =
   | { kind: "grid"; title: string; value: string; unit: string }
   | { kind: "line"; title: string; value: string; unit: string };
 
-interface Stage {
+interface StageDef {
   key: string;
-  name: string;
-  status: string;
   file: string;
   shape: ShapeName;
   code: ReactNode;
   active: string[];
-  metric: Metric;
+  metricValue: string;
+  metricRows?: number[];
 }
 
 const K = ({ c, children }: { c: string; children: ReactNode }) => (
   <span className={`t-${c}`}>{children}</span>
 );
 
-const STAGES: Stage[] = [
+const STAGE_DEFS: StageDef[] = [
   {
     key: "connect",
-    name: "Connect",
-    status: "CONNECTING",
     file: "client.py",
     shape: "lattice",
     code: (
@@ -63,18 +62,10 @@ const STAGES: Stage[] = [
       </>
     ),
     active: ["in", "router"],
-    metric: {
-      kind: "checks",
-      title: "ENGINE",
-      value: "1",
-      unit: "PROCESS",
-      rows: ["embedded core", "fjall backend", "wal enabled", "local-first"],
-    },
+    metricValue: "1",
   },
   {
     key: "index",
-    name: "Index",
-    status: "INDEXING",
     file: "put.py",
     shape: "twistTorus",
     code: (
@@ -94,23 +85,11 @@ const STAGES: Stage[] = [
       </>
     ),
     active: ["router", "search", "crm", "tickets"],
-    metric: {
-      kind: "bars",
-      title: "INDEX",
-      value: "2",
-      unit: "ENGINES",
-      rows: [
-        ["hnsw", 1],
-        ["bm25", 1],
-        ["filters", 0.9],
-        ["wal", 0.72],
-      ],
-    },
+    metricValue: "2",
+    metricRows: [1, 1, 0.9, 0.72],
   },
   {
     key: "query",
-    name: "Query",
-    status: "FUSING",
     file: "search.py",
     shape: "sphere",
     code: (
@@ -127,12 +106,10 @@ const STAGES: Stage[] = [
       </>
     ),
     active: ["search", "crm", "tickets", "judge"],
-    metric: { kind: "grid", title: "SCORE", value: "RRF", unit: "K=60" },
+    metricValue: "RRF",
   },
   {
     key: "commit",
-    name: "Commit",
-    status: "COMMITTED",
     file: "wal.log",
     shape: "rings",
     code: (
@@ -147,7 +124,7 @@ const STAGES: Stage[] = [
       </>
     ),
     active: ["judge", "out"],
-    metric: { kind: "line", title: "ISOLATION", value: "MVCC", unit: "SNAPSHOTS" },
+    metricValue: "MVCC",
   },
 ];
 
@@ -213,7 +190,7 @@ function Graph({ active }: { active: string[] }) {
   );
 }
 
-function MetricPanel({ m }: { m: Metric }) {
+function MetricPanel({ m, regions }: { m: Metric; regions: readonly string[] }) {
   return (
     <>
       <div className="mt-head">
@@ -288,9 +265,9 @@ function MetricPanel({ m }: { m: Metric }) {
             />
           </svg>
           <div className="mt-regions">
-            <span>READ</span>
-            <span>WRITE</span>
-            <span>COMMIT</span>
+            {regions.map((r) => (
+              <span key={r}>{r}</span>
+            ))}
           </div>
         </>
       )}
@@ -378,12 +355,50 @@ function Links({
   return <svg className="sc__links" ref={svgRef} aria-hidden="true" />;
 }
 
-export function FlowBoard() {
+export function FlowBoard({ dict }: { dict: Dict["engine"]["board"] }) {
   const [stage, setStage] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
   const shapeRef = useRef<HTMLCanvasElement>(null);
   const sculpt = useRef<Sculpture | null>(null);
+
+  const STAGES = STAGE_DEFS.map((d, i) => {
+    const meta = dict.stages[i];
+    let metric: Metric;
+    if (d.key === "connect")
+      metric = {
+        kind: "checks",
+        title: meta.metricTitle,
+        value: d.metricValue,
+        unit: meta.metricUnit,
+        rows: meta.rowLabels,
+      };
+    else if (d.key === "index")
+      metric = {
+        kind: "bars",
+        title: meta.metricTitle,
+        value: d.metricValue,
+        unit: meta.metricUnit,
+        rows: meta.rowLabels.map(
+          (l, j) => [l, d.metricRows?.[j] ?? 0] as [string, number],
+        ),
+      };
+    else if (d.key === "query")
+      metric = {
+        kind: "grid",
+        title: meta.metricTitle,
+        value: d.metricValue,
+        unit: meta.metricUnit,
+      };
+    else
+      metric = {
+        kind: "line",
+        title: meta.metricTitle,
+        value: d.metricValue,
+        unit: meta.metricUnit,
+      };
+    return { ...d, name: meta.name, status: meta.status, metric };
+  });
 
   useEffect(() => {
     const reduced = window.matchMedia(
@@ -391,7 +406,7 @@ export function FlowBoard() {
     ).matches;
     if (shapeRef.current) {
       sculpt.current = new Sculpture(shapeRef.current, {
-        shapes: STAGES.map((s) => s.shape),
+        shapes: STAGE_DEFS.map((s) => s.shape),
         points: 6000,
         ink: "#EDEAE3",
         dotSize: 1.4,
@@ -434,7 +449,11 @@ export function FlowBoard() {
           style={{ height: "100%" }}
         >
           <div className="sc__sticky">
-            <div className="sc__steps" role="tablist" aria-label="Stages">
+            <div
+              className="sc__steps"
+              role="tablist"
+              aria-label={dict.stagesAria}
+            >
               {STAGES.map((s, i) => (
                 <button
                   key={s.key}
@@ -464,20 +483,22 @@ export function FlowBoard() {
                   </span>
                 </button>
               ))}
-              <p className="sc__hint lbl">SCROLL OR SELECT A STAGE</p>
+              <p className="sc__hint lbl">{dict.hint}</p>
             </div>
             <div className="sc__board" ref={boardRef}>
               <Links boardRef={boardRef} seq={stage} />
               <div className="sc__bar-top">
                 <span>
-                  STAGE{" "}
+                  {dict.stageLabel}{" "}
                   <b>
                     {String(stage + 1).padStart(2, "0")} /{" "}
                     {cur.name.toUpperCase()}
                   </b>
                 </span>
                 <span>VANTADB · PY</span>
-                <span className="sc__status">STATUS {cur.status}</span>
+                <span className="sc__status">
+                  {dict.statusLabel} {cur.status}
+                </span>
               </div>
               <div className="pnl pnl--code">
                 <div className="pnl__head">
@@ -490,7 +511,7 @@ export function FlowBoard() {
               </div>
               <div className="pnl pnl--graph">
                 <div className="pnl__head">
-                  <span>QUERY GRAPH</span>
+                  <span>{dict.graphHead}</span>
                   <span>7 NODES</span>
                 </div>
                 <div className="pnl__body">
@@ -499,12 +520,12 @@ export function FlowBoard() {
               </div>
               <div className="pnl pnl--metric">
                 <div className="pnl__body">
-                  <MetricPanel m={cur.metric} />
+                  <MetricPanel m={cur.metric} regions={dict.regions} />
                 </div>
               </div>
               <div className="pnl pnl--object">
                 <div className="pnl__head">
-                  <span>FORM</span>
+                  <span>{dict.formHead}</span>
                   <span>{cur.shape.toUpperCase()}</span>
                 </div>
                 <div className="pnl__body">

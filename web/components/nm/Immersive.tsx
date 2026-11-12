@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Sculpture } from "@/components/nm/sculpture";
+import type { Dict } from "@/lib/i18n";
 
 /*
  * Immersive scroll-driven halftone sculpture, ported from
@@ -9,14 +10,7 @@ import { Sculpture } from "@/components/nm/sculpture";
  * particles assemble → expand → morph → reorganise into a lattice —
  * negentropy made literal. Drag to rotate.
  */
-const PHASES = [
-  "PHASE 01 — ASSEMBLE",
-  "PHASE 02 — EXPAND",
-  "PHASE 03 — MORPH",
-  "PHASE 04 — REORGANISE",
-];
-
-export function Immersive() {
+export function Immersive({ dict }: { dict: Dict["immersive"] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const cvsRef = useRef<HTMLCanvasElement>(null);
   const phaseRef = useRef<HTMLSpanElement>(null);
@@ -47,8 +41,11 @@ export function Immersive() {
       const p = Math.min(1, Math.max(0, -r.top / Math.max(1, total)));
       prog.current = reduced ? 1 : p;
       const ph = Math.min(3, Math.floor((reduced ? 1 : p) * 4));
-      if (phaseRef.current && phaseRef.current.textContent !== PHASES[ph]) {
-        phaseRef.current.textContent = PHASES[ph];
+      if (
+        phaseRef.current &&
+        phaseRef.current.textContent !== dict.phases[ph]
+      ) {
+        phaseRef.current.textContent = dict.phases[ph];
       }
       if (barRef.current)
         barRef.current.style.setProperty("--p", String(reduced ? 1 : p));
@@ -74,48 +71,34 @@ export function Immersive() {
       window.removeEventListener("scroll", onScroll);
       sec?.removeEventListener("pointermove", onMove);
     };
-  }, []);
+  }, [dict]);
 
   return (
     <section className="imm" id="system" aria-label="Immersive system">
       <div ref={trackRef} style={{ height: "400vh" }}>
         <div className="ordo-imm" style={{ height: "100%" }}>
           <div className="ordo-imm__sticky">
-            <canvas
-              ref={cvsRef}
-              role="img"
-              aria-label="A large sculpture of halftone particles. Scrolling assembles it, expands it, morphs it into a knot and finally reorganises the particles into a clean cubic lattice. Drag to rotate."
-            />
+            <canvas ref={cvsRef} role="img" aria-label={dict.canvasAria} />
             <div className="ordo-imm__ui">
               <div className="ordo-imm__top">
-                <p className="lbl">[ 02 / THE PRINCIPLE ]</p>
+                <p className="lbl">{dict.label}</p>
                 <p className="lbl ordo-imm__phase" aria-live="polite">
-                  <span ref={phaseRef}>PHASE 01 — ASSEMBLE</span>
+                  <span ref={phaseRef}>{dict.phases[0]}</span>
                 </p>
               </div>
               <div className="ordo-imm__tags" aria-hidden="true">
-                <span className="tag tag--1">
-                  <i />
-                  CAPABILITY / <b>MEMORY</b>
-                </span>
-                <span className="tag tag--2">
-                  <i />
-                  PRINCIPLE / <b>NEGENTROPY</b>
-                </span>
-                <span className="tag tag--3">
-                  <i />
-                  METHOD / <b>HYBRID</b>
-                </span>
-                <span className="tag tag--4">
-                  <i />
-                  LICENSE / <b>APACHE-2.0</b>
-                </span>
+                {dict.tags.map((t, i) => (
+                  <span key={t.k} className={`tag tag--${i + 1}`}>
+                    <i />
+                    {t.k} / <b>{t.v}</b>
+                  </span>
+                ))}
               </div>
               <div className="ordo-imm__copy">
-                <h3 className="ordo-imm__title">Order out of chaos.</h3>
+                <h3 className="ordo-imm__title">{dict.title}</h3>
                 <p className="ordo-imm__sub">
-                  <span>Capabilities agents don't have.</span>
-                  <span>Built in the open.</span>
+                  <span>{dict.sub1}</span>
+                  <span>{dict.sub2}</span>
                 </p>
               </div>
               <div className="ordo-imm__ruler">

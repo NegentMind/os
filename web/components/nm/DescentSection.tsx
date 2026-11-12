@@ -5,6 +5,7 @@ import { AsciiField, type FieldStats } from "@/components/nm/AsciiField";
 import { EntropyTrace } from "@/components/nm/EntropyTrace";
 import { InstrumentCounter } from "@/components/nm/InstrumentCounter";
 import { SectionHeading } from "@/components/nm/SectionHeading";
+import type { Dict } from "@/lib/i18n";
 
 const ZERO: FieldStats = { entropy: 0, resolved: 0, fps: 0 };
 const HISTORY = 120;
@@ -14,7 +15,7 @@ const HISTORY = 120;
  * y los instrumentos muestran valores medidos en vivo, nada fabricado.
  * La traza guarda el historial real de entropía (osciloscopio, no decoración).
  */
-export function DescentSection() {
+export function DescentSection({ dict }: { dict: Dict["proof"] }) {
   const [stats, setStats] = useState<FieldStats>(ZERO);
   const [history, setHistory] = useState<number[]>([]);
 
@@ -23,13 +24,20 @@ export function DescentSection() {
     setHistory((h) => [...h.slice(-HISTORY + 1), s.entropy]);
   };
 
+  const values = [
+    stats.entropy.toFixed(2),
+    String(stats.resolved),
+    String(stats.fps),
+    dict.bannerLoopValue,
+  ];
+
   return (
     <>
       <section id="mechanism" aria-labelledby="mechanism-h" className="scroll-mt-24">
         <SectionHeading
-          index="05 / MECHANISM"
-          title={<span id="mechanism-h">Noise in. Signal out.</span>}
-          lede="This field is live fractal noise. Scroll and it converges to order; move the pointer and order follows it. What you see is the product: stochastic output, deterministically resolved."
+          index={dict.mechIndex}
+          title={<span id="mechanism-h">{dict.mechTitle}</span>}
+          lede={dict.mechLede}
         />
         <div className="mt-8">
           <div className="border-linedark border">
@@ -38,7 +46,7 @@ export function DescentSection() {
               className="border-linedark flex items-center justify-between border-b px-3 py-1.5 font-mono text-[10px] tracking-[0.18em] text-fog"
             >
               <span>FRM 001 / 024</span>
-              <span>LIVE FIELD — SCROLL SCRUBS ORDER</span>
+              <span>{dict.mechChrome}</span>
             </div>
             <AsciiField
               onStats={onStats}
@@ -46,46 +54,36 @@ export function DescentSection() {
             />
           </div>
           <p className="font-mono mt-3 text-[11px] tracking-[0.14em] text-fog uppercase">
-            Fig. 01 — Fractal noise field, scroll-scrubbed · live entropy
+            {dict.fig1}
           </p>
         </div>
       </section>
 
       <section id="proof" aria-labelledby="proof-h" className="mt-24 scroll-mt-24 sm:mt-32">
         <SectionHeading
-          index="05 / PROOF"
-          title={<span id="proof-h">Measured, not claimed.</span>}
-          lede="No testimonials, no customers invented, no benchmarks borrowed. These numbers are computed here, now, from the field above."
+          index={dict.proofIndex}
+          title={<span id="proof-h">{dict.proofTitle}</span>}
+          lede={dict.proofLede}
         />
         <div className="mt-8 grid grid-cols-2 gap-6 lg:grid-cols-4">
-          <InstrumentCounter
-            label="Field entropy (Shannon, live)"
-            value={stats.entropy.toFixed(2)}
-            unit="bits"
-            tone="pulse"
-          />
-          <InstrumentCounter
-            label="Glyphs resolved to order"
-            value={String(stats.resolved)}
-            unit="%"
-          />
-          <InstrumentCounter
-            label="Render loop"
-            value={String(stats.fps)}
-            unit="fps"
-            tone="fog"
-          />
-          <InstrumentCounter
-            label="Deterministic banner loop"
-            value="120f"
-            unit="30fps"
-            tone="fog"
-          />
+          {dict.counters.map((c, i) => (
+            <InstrumentCounter
+              key={c.label}
+              label={c.label}
+              value={values[i]}
+              unit={c.unit}
+              tone={c.tone}
+            />
+          ))}
         </div>
         <div className="mt-6">
-          <EntropyTrace values={history} className="border-linedark h-28 w-full border" />
+          <EntropyTrace
+            values={history}
+            className="border-linedark h-28 w-full border"
+            ariaLabel={dict.traceAria}
+          />
           <p className="font-mono mt-3 text-[11px] tracking-[0.14em] text-fog uppercase">
-            Fig. 02 — Entropy trace, last {HISTORY} samples · scale 0–8 bits
+            {dict.fig2.replace("{n}", String(HISTORY))}
           </p>
         </div>
       </section>

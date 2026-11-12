@@ -11,9 +11,11 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 export function EntropyTrace({
   values,
   className,
+  ariaLabel,
 }: {
   values: number[];
   className?: string;
+  ariaLabel?: string;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const reduced = usePrefersReducedMotion();
@@ -115,7 +117,7 @@ export function EntropyTrace({
     <canvas
       ref={ref}
       role="img"
-      aria-label="Trazo en vivo de la entropía de Shannon medida en el campo"
+      aria-label={ariaLabel}
       className={className ?? "h-28 w-full"}
     />
   );

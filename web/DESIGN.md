@@ -173,6 +173,14 @@ Home de **Negent Mind** (la organización, no solo VantaDB): híbrido por zonas 
 - `nm/Reveal`: una sola entrada por viewport (`whileInView`, expo-out 0.6s).
 - `nm/SiteFooter`: wordmark gigante `footer-word` (patrón portado de `templates/ox`, ~17vw) + links centrados + meta row; sitemap sin rutas inventadas.
 
+## i18n
+
+- Rutas `/en` y `/es` (segmento `[lang]` bajo route group `(marketing)`); `/login` y `/app` viven en el grupo `(product)` con su propio root layout `lang="en"`.
+- `middleware.ts` redirige `/` por Accept-Language (`es*` → `/es`, resto `/en`). Locales inválidos → `notFound()`.
+- Todo el copy vive en `lib/i18n/{en,es}.ts` (tipo `Dict = typeof en`, espejo estructural obligatorio). Componentes reciben slices por props; los nombres propios, código, flags técnicos (`live`) y claims de producto no se traducen.
+- Switcher `EN / ES` en el nav (`.nm-nav-lang`) — swap del primer segmento preservando la ruta; activo en Pulse.
+- `generateStaticParams` prerrenderiza ambos locales; `generateMetadata` localiza title/description/OG + `alternates.languages`.
+
 ## Do's and Don'ts
 
 - Haz: un momento de motion por sección (descenso, morph, pin); contenido visible por defecto; foco visible Pulse; scrollbar/selección/caret del mundo; `prefers-reduced-motion` = estado final estático.

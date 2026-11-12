@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import type { Dict } from "@/lib/i18n";
 
 /*
  * Ported verbatim from webTemplates/mondragon2 (recreation of the Mondra
@@ -190,7 +191,7 @@ function useClock() {
   return time;
 }
 
-export function SilkHero() {
+export function SilkHero({ dict }: { dict: Dict["hero"] }) {
   const time = useClock();
   const [loading, setLoading] = useState(true);
   const [pct, setPct] = useState(0);
@@ -238,7 +239,9 @@ export function SilkHero() {
             style={{ strokeDashoffset: 88 - (88 * pct) / 100 }}
           />
         </svg>
-        <div className="txt">Loading… {pct}%</div>
+        <div className="txt">
+          {dict.loader} {pct}%
+        </div>
       </div>
 
       <div className="silk-hero-card">
@@ -254,7 +257,7 @@ export function SilkHero() {
                   style={{ marginBottom: 14, display: "block" }}
                 />
                 <div className="silk-hero-addr">
-                  Open Source, Everywhere
+                  {dict.addr}
                   <span className="time">{time} UTC</span>
                 </div>
               </div>
@@ -264,8 +267,9 @@ export function SilkHero() {
                 </span>
                 <div className="col">
                   <p>
-                    Read the code —<br />
-                    VantaDB on GitHub
+                    {dict.managerLine1}
+                    <br />
+                    {dict.managerLine2}
                   </p>
                   <a
                     className="silk-btn-pill light small"
@@ -273,7 +277,7 @@ export function SilkHero() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    View Repo
+                    {dict.managerCta}
                   </a>
                 </div>
               </div>
@@ -281,21 +285,15 @@ export function SilkHero() {
             <div className="silk-hero-right">
               <span className="silk-dot" />
               <h1 className="silk-hero-slogan" id="hero-h">
-                Order out of chaos for the age of AI agents.
+                {dict.slogan}
               </h1>
               <div className="silk-hero-metrics">
-                <div className="silk-metric">
-                  <div className="num">Rust</div>
-                  <div className="lbl">Core Language</div>
-                </div>
-                <div className="silk-metric">
-                  <div className="num">2</div>
-                  <div className="lbl">Retrieval Engines — HNSW + BM25</div>
-                </div>
-                <div className="silk-metric">
-                  <div className="num">2.0</div>
-                  <div className="lbl">Apache License</div>
-                </div>
+                {dict.metrics.map((m) => (
+                  <div className="silk-metric" key={m.lbl}>
+                    <div className="num">{m.num}</div>
+                    <div className="lbl">{m.lbl}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -306,13 +304,12 @@ export function SilkHero() {
       </div>
 
       <p className="silk-hero-sub font-mono">
-        <span className="text-pulse">■</span> VANTADB · APACHE-2.0 · RUST ·
-        LOCAL-FIRST —{" "}
+        <span className="text-pulse">■</span> {dict.subTags} —{" "}
         <Link
           href="#engine"
           className="underline decoration-pulse underline-offset-4 transition-colors hover:text-bone"
         >
-          see the engine ↓
+          {dict.subLink}
         </Link>
       </p>
     </section>

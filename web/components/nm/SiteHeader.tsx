@@ -1,25 +1,27 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { FlipText } from "@/components/nm/FlipText";
+import { LOCALES, type Dict, type Locale } from "@/lib/i18n";
 
 /*
  * Floating nav ported from webTemplates/mondragon2 (Nav.tsx): transparent
  * over the hero — bone ink that reads over the silk — collapsing into a
  * light pill after 60px of scroll. Links use letter-by-letter FlipText.
+ * Language switch swaps the first path segment (/en ↔ /es).
  */
-const LINKS = [
-  { href: "#system", label: "System" },
-  { href: "#modules", label: "Modules" },
-  { href: "#engine", label: "Engine" },
-  { href: "#proof", label: "Proof" },
-  { href: "#faq", label: "FAQ" },
-];
-
-export function SiteHeader() {
+export function SiteHeader({
+  lang,
+  dict,
+}: {
+  lang: Locale;
+  dict: Dict["nav"];
+}) {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -28,32 +30,52 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const hrefFor = (l: Locale) =>
+    pathname.replace(/^\/(en|es)(?=\/|$)/, `/${l}`) || `/${l}`;
+
   return (
     <header className={`nm-nav${scrolled ? " pill" : ""}`}>
       <div className="nm-nav-inner">
         <Link
-          href="/"
+          href={`/${lang}`}
           className="nm-nav-word font-display uppercase"
-          aria-label="Negent Mind, inicio"
+          aria-label={dict.homeAria}
         >
           NEGENT&nbsp;MIND<span className="text-pulse">.</span>
         </Link>
-        <nav aria-label="Secciones" className="nm-nav-links">
-          {LINKS.map((l) => (
+        <nav aria-label={dict.navAria} className="nm-nav-links">
+          {dict.links.map((l) => (
             <Link key={l.href} href={l.href}>
               <FlipText text={l.label} />
             </Link>
           ))}
         </nav>
-        <a
-          href="https://github.com/NegentMind"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="nm-nav-cta font-mono"
-        >
-          GitHub
-          <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-        </a>
+        <div className="nm-nav-right">
+          <nav aria-label={dict.langAria} className="nm-nav-lang font-mono">
+            {LOCALES.map((l, i) => (
+              <span key={l} className="nm-nav-lang-item">
+                {i > 0 && <span className="nm-nav-lang-sep">/</span>}
+                <Link
+                  href={hrefFor(l)}
+                  hrefLang={l}
+                  aria-current={l === lang ? "true" : undefined}
+                  className={l === lang ? "on" : ""}
+                >
+                  {l.toUpperCase()}
+                </Link>
+              </span>
+            ))}
+          </nav>
+          <a
+            href="https://github.com/NegentMind"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nm-nav-cta font-mono"
+          >
+            {dict.cta}
+            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </header>
   );

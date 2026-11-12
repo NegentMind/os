@@ -30,7 +30,7 @@ const LINES: Line[] = [
 
 const SPINNER = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
 
-export function TerminalDemo() {
+export function TerminalDemo({ replayLabel }: { replayLabel: string }) {
   const [run, setRun] = useState(0);
   const [li, setLi] = useState(0);
   const [ch, setCh] = useState(0);
@@ -124,7 +124,7 @@ export function TerminalDemo() {
         <span>agent_memory — python</span>
         <button
           type="button"
-          aria-label="Replay terminal session"
+          aria-label={replayLabel}
           onClick={() => {
             setReduced(false);
             setRun((r) => r + 1);

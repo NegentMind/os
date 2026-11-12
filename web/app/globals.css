@@ -281,6 +281,15 @@ input[type="number"] {
   transition: background .25s, color .25s;
 }
 .nm-nav-cta:hover { background: var(--color-pulse); color: var(--color-void); }
+.nm-nav-right { display: flex; align-items: center; gap: 18px; }
+.nm-nav-lang { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .14em; }
+.nm-nav-lang a { color: var(--color-bone); opacity: .55; transition: opacity .2s, color .3s; }
+.nm-nav-lang a:hover { opacity: 1; }
+.nm-nav-lang a.on { color: var(--color-pulse); opacity: 1; }
+.nm-nav-lang-sep { color: var(--color-bone); opacity: .3; margin-right: 8px; }
+.nm-nav.pill .nm-nav-lang a { color: var(--color-ink); }
+.nm-nav.pill .nm-nav-lang a.on { color: var(--color-pulsedeep, #5B4FE0); }
+.nm-nav.pill .nm-nav-lang-sep { color: var(--color-ink); }
 @media (max-width: 900px) { .nm-nav-links { display: none; } }
 
 /* FlipText (ported from mondragon2) */
