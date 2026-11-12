@@ -93,17 +93,17 @@ Home Persuade de Negent Mind: descenso fractal — el scroll baja de escala (10�
 
 ## Components
 
-- `nm/FilmBackdrop`: campo cinematográfico de fondo (canvas); caos hiper-cromático acotado (magenta/cyan/ácido/naranja con glow) solo dentro del field, nunca en chrome.
-- `nm/LatticeField`: retícula de puntos 2D que se resuelve ruido→orden; sucede al hero 3D con el mismo contrato: estático convergido con `prefers-reduced-motion`.
+- `nm/SilkHero` (zona hero — estética de plantilla conservada): shader "liquid silk" WebGL portado verbatim de `webTemplates/mondragon2` + hero-card redondeada, loader de anillo con progreso real (ligado a `onReady`), métricas reales y banda wordmark `mix-blend-mode: difference`. Frame estático con `prefers-reduced-motion`.
+- `nm/HalftoneCanvas` (portado de `webTemplates/nice-squash-242352`): engine halftone 2D con 6 instrumentos (chip `runtime`, esfera `memory`, grafo `orchestration`, barras `observability`, grid `evaluations`, órbita `security`). INK→Bone, ACC→Pulse, DIM→Fog; frame único con `prefers-reduced-motion`.
 - `nm/DescentSection`: bloque dossier 02–03 — `AsciiField` (canvas fractal, scrub GSAP + imán de puntero) + `EntropyTrace` (fig. 03, últimas 120 muestras) + `InstrumentCounter` (entropía Shannon, % resuelto, FPS reales).
-- `nm/TerminalDemo`: sesión tipeada (instalar → put → search) derivada de una única posición global de carácter — duplicados imposibles por construcción; con `prefers-reduced-motion` muestra la sesión completa.
-- `nm/FeatureRail`: ledger de capacidades VantaDB; índice sticky en desktop, lista numerada en móvil. Item activo en Pulse.
+- `nm/TerminalDemo` (mecánica portada de nice-squash): cmd tipeado char a char, líneas `run` con spinner braille, `ok`/`live` con iconos `✓/→/●`, replay ↻, caret parpadeante. Sesión = comportamiento documentado de VantaDB; con `prefers-reduced-motion` muestra la sesión completa.
+- `nm/FeatureRail`: ledger de capacidades VantaDB; índice sticky en desktop, lista numerada en móvil, instrumento `HalftoneCanvas` por fila. Item activo en Pulse.
 - `nm/Faq`: acordeón ledger con hairlines; sin cards.
 - `nm/Ticker`: banda mono con reloj UTC real; claims solo verificables.
 - `nm/InstrumentCounter`: numeral tabular mono + etiqueta; solo valores medidos o constantes documentadas (120f/30fps del loop GIF).
 - `nm/SectionHeading`: índice de sección mono + H2 display + lede opcional. Sin kicker.
 - `nm/Reveal`: una sola entrada por viewport (`whileInView`, expo-out 0.6s). El scroll coreografiado (scrub) pertenece a `AsciiField`/GSAP, no aquí.
-- `nm/SiteHeader` / `nm/SiteFooter`: chrome mínimo, sitemap sin rutas inventadas, contacto real, legales pendientes marcados como pendientes.
+- `nm/SiteHeader` / `nm/SiteFooter`: chrome mínimo, sitemap sin rutas inventadas, contacto real, legales pendientes marcados como pendientes. El footer lleva el wordmark gigante `footer-word` (patrón portado de `templates/ox`, ~17vw) + links centrados + meta row.
 
 ## Do's and Don'ts
 

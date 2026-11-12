@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { HalftoneCanvas, type HalftoneKind } from "@/components/nm/HalftoneCanvas";
 
 export type RailItem = {
   index: string;
   name: string;
   detail: string;
   spec: string;
+  canvas?: HalftoneKind;
 };
 
 /**
@@ -66,18 +68,27 @@ export function FeatureRail({ items }: { items: RailItem[] }) {
             }}
             className="border-linedark border-t py-10 first:border-t-0 md:min-h-[38vh] md:first:pt-0"
           >
-            <p className="font-mono text-[11px] tracking-[0.14em] text-fog uppercase md:hidden">
-              {it.index}
-            </p>
-            <h3 className="font-display mt-2 text-2xl font-bold tracking-[0.04em] text-bone uppercase sm:text-3xl md:mt-0">
-              {it.name}
-            </h3>
-            <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-fog text-pretty">
-              {it.detail}
-            </p>
-            <p className="font-mono mt-5 text-xs tracking-[0.1em] text-pulse">
-              {it.spec}
-            </p>
+            <div className="grid items-center gap-8 sm:grid-cols-[1fr_180px]">
+              <div>
+                <p className="font-mono text-[11px] tracking-[0.14em] text-fog uppercase md:hidden">
+                  {it.index}
+                </p>
+                <h3 className="font-display mt-2 text-2xl font-bold tracking-[0.04em] text-bone uppercase sm:text-3xl md:mt-0">
+                  {it.name}
+                </h3>
+                <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-fog text-pretty">
+                  {it.detail}
+                </p>
+                <p className="font-mono mt-5 text-xs tracking-[0.1em] text-pulse">
+                  {it.spec}
+                </p>
+              </div>
+              {it.canvas && (
+                <div className="border-linedark h-40 w-full border sm:h-44 sm:w-44">
+                  <HalftoneCanvas kind={it.canvas} />
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>

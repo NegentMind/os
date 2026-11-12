@@ -20,7 +20,7 @@ Superficie: home pública `/`. Modo Persuade: el visitante entiende qué es Nege
 
 ## Dirección fijada (dados 6-1-4, gana THE ROLL)
 
-**Descenso fractal.** El scroll es un zoom que desciende por escalas: mente → caos → orden. Estructura dossier implementada: hero (FilmBackdrop + LatticeField 2D, badge factual, CTAs a GitHub/#product) → 02–03 mecanismo+prueba (DescentSection: AsciiField con scrub GSAP, EntropyTrace, InstrumentCounter con valores reales) → 04 engine (FeatureRail VantaDB) → producto (TerminalDemo tipeada + métricas reales) → 05 boundary (panel Pulse "qué no somos") → comparativa honesta → roadmap/holones etiquetados → invitación open source → FAQ → contacto real. Interacción firma: la rueda baja de escala; los fields responden al puntero.
+**Descenso fractal + híbrido por zonas.** El scroll desciende por escalas: mente → caos → orden. Estructura implementada: hero (SilkHero — seda líquida WebGL portada de mondragon2, zona que conserva estética de plantilla: hero-card redondeada, loader real, wordmark `mix-blend-mode:difference`, métricas reales) → 02–03 mecanismo+prueba (DescentSection: AsciiField con scrub GSAP, EntropyTrace, InstrumentCounter con valores reales) → 04 engine (FeatureRail con HalftoneCanvas portado de nice-squash por fila) → producto (TerminalDemo con mecánica nice-squash + métricas reales) → 05 boundary (panel Pulse "qué no somos") → comparativa honesta → roadmap/holones etiquetados → invitación open source → FAQ → contacto real → footer con wordmark gigante (patrón ox). Interacción firma: los fields responden al puntero; chrome y cuerpo siguen la ley NM.
 
 ## Mundo (fijado en ronda previa)
 

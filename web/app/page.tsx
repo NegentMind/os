@@ -1,9 +1,6 @@
-import Link from "next/link";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { FilmBackdrop } from "@/components/nm/FilmBackdrop";
-import { LatticeField } from "@/components/nm/LatticeField";
-import { MaskLine } from "@/components/nm/MaskLine";
+import { SilkHero } from "@/components/nm/SilkHero";
 import { Ticker } from "@/components/nm/Ticker";
 import { SectionHeading } from "@/components/nm/SectionHeading";
 import { DescentSection } from "@/components/nm/DescentSection";
@@ -44,6 +41,7 @@ const RAIL_ITEMS: RailItem[] = [
     detail:
       "Runs inside your process, the way SQLite runs inside an app. No server, no daemon, no container, no port to secure. Memory lives where the agent lives.",
     spec: "IN-PROCESS · ZERO NETWORK CALLS",
+    canvas: "memory",
   },
   {
     index: "02",
@@ -51,6 +49,7 @@ const RAIL_ITEMS: RailItem[] = [
     detail:
       "Lexical BM25 and vector HNSW in one engine, fused with Reciprocal Rank Fusion. Exact terms and semantic neighbors come back in a single query, with structured metadata filters.",
     spec: "BM25 + HNSW → RRF · METADATA FILTERS",
+    canvas: "orchestration",
   },
   {
     index: "03",
@@ -58,6 +57,7 @@ const RAIL_ITEMS: RailItem[] = [
     detail:
       "Snapshot isolation with write-write conflict detection and ACID transactions. Ask what the agent knew at a given transaction — not just what is true now.",
     spec: "SNAPSHOT ISOLATION · WRITE CONFLICT DETECTION",
+    canvas: "observability",
   },
   {
     index: "04",
@@ -65,6 +65,7 @@ const RAIL_ITEMS: RailItem[] = [
     detail:
       "Write-ahead log with CRC32C checksums, crash-safe recovery, and atomic checkpoints on a Fjall LSM backend. Memory that survives the process that wrote it. Optional TTL for state that should expire.",
     spec: "WAL + CRC32C · FJALL LSM · TTL",
+    canvas: "runtime",
   },
 ];
 
@@ -167,70 +168,10 @@ export default function Home() {
     <>
       <SiteHeader />
       <main>
-        {/* 00 — HERO: ruido que resuelve en retícula. */}
-        <section
-          id="top"
-          aria-labelledby="hero-h"
-          className="relative flex min-h-svh flex-col overflow-hidden"
-        >
-          <FilmBackdrop className="absolute inset-0 h-full w-full" />
-          <LatticeField className="absolute inset-0 h-full w-full" />
-
-          <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col justify-end px-4 pt-28 pb-16 sm:px-6 sm:pb-20">
-            <div className="pointer-events-none absolute top-24 right-4 hidden text-right sm:right-6 md:block">
-              <p className="font-mono text-[10px] leading-relaxed tracking-[0.18em] text-fog uppercase">
-                Embedded memory engine
-                <br />
-                In-process · no server
-                <br />
-                Apache-2.0
-              </p>
-            </div>
-
-            <p className="font-mono mb-8 inline-flex w-fit items-center gap-3 border border-linedark px-3 py-1.5 text-[10px] tracking-[0.18em] text-fog uppercase">
-              <span className="bg-pulse inline-block h-1.5 w-1.5" aria-hidden="true" />
-              VantaDB · Apache-2.0 · Rust · Local-first
-            </p>
-
-            <h1
-              id="hero-h"
-              className="font-display text-[clamp(2.6rem,8.5vw,6rem)] leading-[0.98] font-bold tracking-[0.02em] text-bone uppercase"
-            >
-              <MaskLine>Order</MaskLine>
-              <MaskLine delay={0.08}>Out of</MaskLine>
-              <MaskLine delay={0.16}>
-                <span className="text-outline">Chaos.</span>
-              </MaskLine>
-            </h1>
-
-            <p className="mt-8 max-w-[62ch] text-base leading-relaxed text-fog text-pretty sm:text-lg">
-              VantaDB is an embedded memory engine for AI agents. Hybrid
-              retrieval — HNSW vectors fused with BM25 by RRF — MVCC snapshot
-              isolation, and WAL durability, in a single process on your
-              machine.
-            </p>
-
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Button asChild size="lg" className="font-mono tracking-[0.08em]">
-                <a href={VANTADB_REPO} target="_blank" rel="noopener noreferrer">
-                  Star VantaDB
-                  <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="font-mono tracking-[0.08em]"
-              >
-                <Link href="#product">
-                  See the engine
-                  <ArrowDown className="ml-2 h-4 w-4" aria-hidden="true" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        {/* 00 — HERO: seda líquida (mondragon2) — la zona hero conserva su estética. */}
+        <div id="top">
+          <SilkHero />
+        </div>
 
         <Ticker />
 
