@@ -12,7 +12,7 @@ type Line = { kind: "cmd" | "ok" | "run" | "live"; text: string; note?: string }
 
 const LINES: Line[] = [
   { kind: "cmd", text: "pip install vantadb-py" },
-  { kind: "ok", text: "Successfully installed vantadb-py-0.5.0" },
+  { kind: "ok", text: "Successfully installed vantadb-py-0.9.0" },
   { kind: "cmd", text: 'db = vantadb.Client("./agent_memory")' },
   { kind: "run", text: "Opening WAL · CRC32C check", note: "auto-heal" },
   { kind: "ok", text: "HNSW + BM25 indexes ready" },

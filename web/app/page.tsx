@@ -2,12 +2,15 @@ import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SilkHero } from "@/components/nm/SilkHero";
 import { Ticker } from "@/components/nm/Ticker";
-import { SectionHeading } from "@/components/nm/SectionHeading";
+import { Immersive } from "@/components/nm/Immersive";
+import { HolonGrid } from "@/components/nm/HolonGrid";
+import { FlowBoard } from "@/components/nm/FlowBoard";
+import { Marquee } from "@/components/nm/Marquee";
+import { OssCards } from "@/components/nm/OssCards";
 import { DescentSection } from "@/components/nm/DescentSection";
 import { SiteHeader } from "@/components/nm/SiteHeader";
 import { SiteFooter } from "@/components/nm/SiteFooter";
 import { Reveal } from "@/components/nm/Reveal";
-import { FeatureRail, type RailItem } from "@/components/nm/FeatureRail";
 import { TerminalDemo } from "@/components/nm/TerminalDemo";
 import { InstrumentCounter } from "@/components/nm/InstrumentCounter";
 import { Faq, type FaqItem } from "@/components/nm/Faq";
@@ -34,46 +37,11 @@ const PROBLEMS: Array<{ name: string; detail: string }> = [
   },
 ];
 
-const RAIL_ITEMS: RailItem[] = [
-  {
-    index: "01",
-    name: "Embedded",
-    detail:
-      "Runs inside your process, the way SQLite runs inside an app. No server, no daemon, no container, no port to secure. Memory lives where the agent lives.",
-    spec: "IN-PROCESS · ZERO NETWORK CALLS",
-    canvas: "memory",
-  },
-  {
-    index: "02",
-    name: "Hybrid retrieval",
-    detail:
-      "Lexical BM25 and vector HNSW in one engine, fused with Reciprocal Rank Fusion. Exact terms and semantic neighbors come back in a single query, with structured metadata filters.",
-    spec: "BM25 + HNSW → RRF · METADATA FILTERS",
-    canvas: "orchestration",
-  },
-  {
-    index: "03",
-    name: "MVCC",
-    detail:
-      "Snapshot isolation with write-write conflict detection and ACID transactions. Ask what the agent knew at a given transaction — not just what is true now.",
-    spec: "SNAPSHOT ISOLATION · WRITE CONFLICT DETECTION",
-    canvas: "observability",
-  },
-  {
-    index: "04",
-    name: "Durable",
-    detail:
-      "Write-ahead log with CRC32C checksums, crash-safe recovery, and atomic checkpoints on a Fjall LSM backend. Memory that survives the process that wrote it. Optional TTL for state that should expire.",
-    spec: "WAL + CRC32C · FJALL LSM · TTL",
-    canvas: "runtime",
-  },
-];
-
 const NOT_ITEMS: Array<{ name: string; detail: string }> = [
   {
     name: "Not an agent framework",
     detail:
-      "VantaDB does not orchestrate, plan, or call tools. It remembers — and leaves the reasoning to your stack.",
+      "Negent Mind does not orchestrate reasoning or prompt loops. It builds the substrate the reasoning reads from and writes to.",
   },
   {
     name: "Not a hosted service",
@@ -81,9 +49,9 @@ const NOT_ITEMS: Array<{ name: string; detail: string }> = [
       "No account, no API key, no meter running on your agent's context. The binary is the product.",
   },
   {
-    name: "Not a generic vector DB",
+    name: "Not vaporware",
     detail:
-      "Vector-only retrieval misses exact terms. Hybrid lexical-plus-semantic fusion is the product, not a flag.",
+      "Every module on the map is either shipped code or a written specification with a status label — never a rendered promise.",
   },
 ];
 
@@ -101,59 +69,26 @@ const COMPARE: Array<{
   { name: "VantaDB", embedded: true, local: true, txn: true, hybrid: true },
 ];
 
-const SYSTEMS: Array<{ name: string; fn: string; status: string }> = [
-  {
-    name: "Cardinal",
-    fn: "Episodic memory: every fact with position, time, provenance.",
-    status: "IN BUILD",
-  },
-  {
-    name: "Iris",
-    fn: "Document perception: dead files into queryable data.",
-    status: "DEFINED",
-  },
-  {
-    name: "Meta",
-    fn: "Trust calibration: what the system said, with what backing.",
-    status: "DEFINED",
-  },
-  {
-    name: "Execute",
-    fn: "Tool execution with log, replay, and reversal.",
-    status: "DEFINED",
-  },
-  {
-    name: "Sage",
-    fn: "Local correction capture; learning never leaves the org.",
-    status: "DEFINED",
-  },
-  {
-    name: "Plan",
-    fn: "Objectives into steps with acceptance criteria.",
-    status: "DEFINED",
-  },
-];
-
 const FAQ_ITEMS: FaqItem[] = [
   {
-    q: "Is it ready for production?",
-    a: "It is at v0.5 and in build. The core engine — storage, hybrid retrieval, MVCC transactions — is implemented. Treat it like any young embedded database: pin the version, run your own workload, report what breaks.",
+    q: "Is VantaDB ready for production?",
+    a: "It is at v0.9.0 and in build. The core engine — storage, hybrid retrieval, MVCC transactions — is implemented. Treat it like any young embedded database: pin the version, run your own workload, report what breaks.",
   },
   {
     q: "Why embedded instead of a service?",
     a: "Agent memory is data, not infrastructure. Embedded means no ops surface, no network hop, nothing leaving the machine, and it works offline. The same reason SQLite wins where a database server would be overhead.",
   },
   {
-    q: "How is it different from Mem0 or Zep?",
-    a: "Those are hosted memory services: your agent's context crosses the network and lives on their infrastructure. VantaDB is an engine that runs inside your process — SQLite's shape, retrieval designed for agent workloads.",
+    q: "What are the named systems?",
+    a: "The capability modules on the roadmap — Cardinal, Meta, Iris, Execute, Sage. Each exists today only as a specification RFC; VantaDB is the only shipped module. Status labels are honest, not marketing.",
+  },
+  {
+    q: "How does an RFC become code?",
+    a: "The specification pipeline: a module is written as a formal RFC first, reviewed in public, and only gets a repository once the RFC is approved. No phantom repos.",
   },
   {
     q: "What does it cost?",
     a: "Nothing. Apache-2.0, use it anywhere. No managed cloud exists today; if one ever does, the engine stays open.",
-  },
-  {
-    q: "What are the other named systems?",
-    a: "The research roadmap — Cardinal, Iris, Meta, Execute, Sage, Plan. VantaDB is the only product today; the rest carry honest status labels, not promises.",
   },
 ];
 
@@ -163,118 +98,184 @@ function Cell({ v }: { v: Cell }) {
   return <span className="text-linedark">—</span>;
 }
 
+function Crosshairs() {
+  return (
+    <>
+      <span className="crosshair ch-tl" aria-hidden="true">
+        +
+      </span>
+      <span className="crosshair ch-tr" aria-hidden="true">
+        +
+      </span>
+    </>
+  );
+}
+
 export default function Home() {
   return (
     <>
       <SiteHeader />
       <main>
-        {/* 00 — HERO: seda líquida (mondragon2) — la zona hero conserva su estética. */}
+        {/* 00 — HERO: seda líquida (mondragon2) */}
         <div id="top">
           <SilkHero />
         </div>
 
         <Ticker />
 
-        {/* 01 — EL PROBLEMA */}
-        <section
-          id="problem"
-          aria-labelledby="problem-h"
-          className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-24 sm:px-6 sm:pt-32"
-        >
-          <SectionHeading
-            index="01 / THE PROBLEM"
-            title={<span id="problem-h">Every session starts from zero.</span>}
-            lede="Agents are brilliant at inference and amnesiac by default. The current fixes all leak:"
-          />
-          <Reveal className="mt-10">
-            <div className="border-linedark border-t">
-              {PROBLEMS.map((p, i) => (
-                <div
-                  key={p.name}
-                  className="border-linedark grid gap-2 border-b py-6 sm:grid-cols-[180px_1fr] sm:gap-8"
-                >
-                  <p className="font-mono text-[11px] tracking-[0.14em] text-fog uppercase">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <div>
-                    <h3 className="font-display text-lg font-bold tracking-[0.04em] text-bone uppercase sm:text-xl">
-                      {p.name}
-                    </h3>
-                    <p className="mt-2 max-w-[62ch] text-sm leading-relaxed text-fog text-pretty sm:text-base">
-                      {p.detail}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </section>
-
-        {/* 02 + 03 — mecanismo y prueba medida en vivo */}
-        <div className="mx-auto max-w-6xl px-4 pt-24 sm:px-6 sm:pt-32">
-          <DescentSection />
-        </div>
-
-        {/* 04 — VANTADB */}
-        <section
-          id="product"
-          aria-labelledby="product-h"
-          className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-24 sm:px-6 sm:pt-32"
-        >
-          <SectionHeading
-            index="04 / THE ENGINE"
-            title={<span id="product-h">VantaDB.</span>}
-            lede="A persistent memory engine that embeds in the agent's own process. Memory that stays when the session ends."
-          />
-          <div className="mt-12">
-            <FeatureRail items={RAIL_ITEMS} />
-          </div>
-          <Reveal className="mt-16">
-            <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.1fr]">
+        {/* 01 — THE ORGANIZATION */}
+        <section id="org" aria-labelledby="org-h" className="nmsec scroll-mt-24">
+          <Crosshairs />
+          <div className="nmsec-inner nmsec-pad">
+            <div className="sechead split">
               <div>
-                <h3 className="font-display text-xl font-bold tracking-[0.04em] text-bone uppercase sm:text-2xl">
-                  Five lines. Persistent memory.
-                </h3>
-                <p className="mt-4 max-w-[58ch] text-sm leading-relaxed text-fog text-pretty sm:text-base">
-                  The Python SDK mirrors the Rust core. Put a payload with its
-                  embedding, query it by meaning and by term, get it back when
-                  the next session opens.
-                </p>
-                <div className="mt-8 grid grid-cols-2 gap-6">
-                  <InstrumentCounter label="Servers to run" value="0" />
-                  <InstrumentCounter label="Process it embeds in" value="1" />
-                  <InstrumentCounter
-                    label="Rust crate"
-                    value="v0.5"
-                    tone="fog"
-                  />
-                  <InstrumentCounter
-                    label="License"
-                    value="Apache-2.0"
-                    tone="pulse"
-                  />
-                </div>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="font-mono mt-8 tracking-[0.08em]"
-                >
-                  <a
-                    href={VANTADB_REPO}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Read the source
-                    <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </a>
-                </Button>
+                <p className="lbl">[ 01 / THE ORGANIZATION ]</p>
+                <h2 className="h2" id="org-h">
+                  Agents are brilliant at inference
+                  <span className="qual">and amnesiac by default.</span>
+                </h2>
               </div>
-              <TerminalDemo />
+              <p className="secsub">
+                Negent Mind is an independent open-source organization building
+                capability infrastructure for AI agents — memory, perception,
+                verification, execution. One substrate is shipping; the rest are
+                specifications with honest labels.
+              </p>
             </div>
-          </Reveal>
+            <Reveal>
+              <div className="border-linedark border-t">
+                {PROBLEMS.map((p, i) => (
+                  <div
+                    key={p.name}
+                    className="border-linedark grid gap-2 border-b py-6 sm:grid-cols-[180px_1fr] sm:gap-8"
+                  >
+                    <p className="font-mono text-[11px] tracking-[0.14em] text-fog uppercase">
+                      {String(i + 1).padStart(2, "0")}
+                    </p>
+                    <div>
+                      <h3 className="font-display text-lg font-bold tracking-[0.04em] text-bone uppercase sm:text-xl">
+                        {p.name}
+                      </h3>
+                      <p className="mt-2 max-w-[62ch] text-sm leading-relaxed text-fog text-pretty sm:text-base">
+                        {p.detail}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
         </section>
 
-        {/* 05 — QUÉ NO SOMOS (panel Pulse) */}
+        {/* 02 — THE PRINCIPLE: escultura scroll-driven (nice-squash Immersive) */}
+        <Immersive />
+
+        {/* 03 — THE MODULES: capability grid (nice-squash Platform) */}
+        <section
+          id="modules"
+          aria-labelledby="modules-h"
+          className="nmsec scroll-mt-24"
+        >
+          <Crosshairs />
+          <div className="nmsec-inner nmsec-pad">
+            <div className="sechead split">
+              <div>
+                <p className="lbl">[ 03 / THE MODULES ]</p>
+                <h2 className="h2" id="modules-h">
+                  One substrate. Six named systems.
+                  <span className="qual">specifications, not vaporware.</span>
+                </h2>
+              </div>
+              <p className="secsub">
+                The architecture is layered: a memory substrate at the core, and
+                capability modules defined as public RFCs before a single
+                repository exists. Only one is code today.
+              </p>
+            </div>
+            <HolonGrid />
+          </div>
+        </section>
+
+        {/* 04 — FLAGSHIP ENGINE: flow board pinned (nice-squash Flow) */}
+        <section
+          id="engine"
+          aria-labelledby="engine-h"
+          className="nmsec scroll-mt-24"
+        >
+          <Crosshairs />
+          <div className="nmsec-inner nmsec-pad">
+            <div className="sechead split">
+              <div>
+                <p className="lbl">[ 04 / FLAGSHIP ENGINE ]</p>
+                <h2 className="h2" id="engine-h">
+                  VantaDB.
+                  <span className="qual">memory that stays when the session ends.</span>
+                </h2>
+              </div>
+              <p className="secsub">
+                The first shipped module — an embedded persistent-memory engine
+                for agents. Hybrid retrieval, transactional state, zero servers.
+                Scroll through the pipeline.
+              </p>
+            </div>
+          </div>
+          <FlowBoard />
+          <div className="nmsec-inner nmsec-pad">
+            <Reveal>
+              <div className="grid items-start gap-10 pt-20 lg:grid-cols-[1fr_1.1fr]">
+                <div>
+                  <h3 className="font-display text-xl font-bold tracking-[0.04em] text-bone uppercase sm:text-2xl">
+                    Five lines. Persistent memory.
+                  </h3>
+                  <p className="mt-4 max-w-[58ch] text-sm leading-relaxed text-fog text-pretty sm:text-base">
+                    The Python SDK mirrors the Rust core. Put a payload with its
+                    embedding, query it by meaning and by term, get it back when
+                    the next session opens.
+                  </p>
+                  <div className="mt-8 grid grid-cols-2 gap-6">
+                    <InstrumentCounter label="Servers to run" value="0" />
+                    <InstrumentCounter label="Processes it embeds in" value="1" />
+                    <InstrumentCounter
+                      label="Engine version"
+                      value="v0.9.0"
+                      tone="fog"
+                    />
+                    <InstrumentCounter
+                      label="License"
+                      value="Apache-2.0"
+                      tone="pulse"
+                    />
+                  </div>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="font-mono mt-8 tracking-[0.08em]"
+                  >
+                    <a
+                      href={VANTADB_REPO}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Read the source
+                      <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                    </a>
+                  </Button>
+                </div>
+                <TerminalDemo />
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* 05 — MECHANISM + PROOF: medición en vivo */}
+        <section className="nmsec" aria-label="Mechanism and proof">
+          <Crosshairs />
+          <div className="nmsec-inner nmsec-pad">
+            <DescentSection />
+          </div>
+        </section>
+
+        {/* 06 — BOUNDARY (panel Pulse) */}
         <section
           id="not"
           aria-labelledby="not-h"
@@ -282,7 +283,7 @@ export default function Home() {
         >
           <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
             <p className="font-mono text-[11px] tracking-[0.14em] uppercase">
-              05 / THE BOUNDARY
+              06 / THE BOUNDARY
             </p>
             <h2
               id="not-h"
@@ -292,10 +293,7 @@ export default function Home() {
             </h2>
             <div className="mt-12 grid gap-10 md:grid-cols-3">
               {NOT_ITEMS.map((n) => (
-                <div
-                  key={n.name}
-                  className="border-t-2 border-[#14161c]/70 pt-5"
-                >
+                <div key={n.name} className="border-t-2 border-[#14161c]/70 pt-5">
                   <h3 className="font-display text-lg font-bold tracking-[0.04em] uppercase">
                     {n.name}
                   </h3>
@@ -312,166 +310,116 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 06 — COMPARATIVA */}
+        {/* 07 — THE LANDSCAPE */}
         <section
           id="compare"
           aria-labelledby="compare-h"
-          className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-24 sm:px-6 sm:pt-32"
+          className="nmsec scroll-mt-24"
         >
-          <SectionHeading
-            index="06 / THE LANDSCAPE"
-            title={
-              <span id="compare-h">Same job, different architectures.</span>
-            }
-            lede="These are not competitors so much as different shapes for the same need. The axis here is architecture, not quality."
-          />
-          <Reveal className="mt-10 overflow-x-auto">
-            <table className="w-full min-w-[640px] border-collapse text-left">
-              <thead>
-                <tr className="font-mono border-linedark border-b text-[10px] tracking-[0.14em] text-fog uppercase">
-                  <th scope="col" className="py-3 pr-4 font-normal">
-                    Approach
-                  </th>
-                  <th scope="col" className="px-4 py-3 font-normal">
-                    Embedded
-                  </th>
-                  <th scope="col" className="px-4 py-3 font-normal">
-                    Local-first
-                  </th>
-                  <th scope="col" className="px-4 py-3 font-normal">
-                    Transactional
-                  </th>
-                  <th scope="col" className="px-4 py-3 font-normal">
-                    Hybrid
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="font-mono text-xs tracking-[0.04em]">
-                {COMPARE.map((row) => (
-                  <tr
-                    key={row.name}
-                    className={
-                      row.name === "VantaDB"
-                        ? "border-linedark border-b text-bone"
-                        : "border-linedark border-b text-fog"
-                    }
-                  >
-                    <th
-                      scope="row"
-                      className="py-4 pr-4 font-normal whitespace-nowrap"
-                    >
-                      {row.name === "VantaDB" ? (
-                        <span className="text-pulse">VantaDB</span>
-                      ) : (
-                        row.name
-                      )}
+          <Crosshairs />
+          <div className="nmsec-inner nmsec-pad">
+            <div className="sechead split">
+              <div>
+                <p className="lbl">[ 07 / THE LANDSCAPE ]</p>
+                <h2 className="h2" id="compare-h">
+                  Same job, different architectures.
+                  <span className="qual">architecture, not quality.</span>
+                </h2>
+              </div>
+              <p className="secsub">
+                These are not competitors so much as different shapes for the
+                same need — where VantaDB&apos;s engine sits among them.
+              </p>
+            </div>
+            <Reveal className="overflow-x-auto">
+              <table className="w-full min-w-[640px] border-collapse text-left">
+                <thead>
+                  <tr className="font-mono border-linedark border-b text-[10px] tracking-[0.14em] text-fog uppercase">
+                    <th scope="col" className="py-3 pr-4 font-normal">
+                      Approach
                     </th>
-                    <td className="px-4 py-4">
-                      <Cell v={row.embedded} />
-                    </td>
-                    <td className="px-4 py-4">
-                      <Cell v={row.local} />
-                    </td>
-                    <td className="px-4 py-4">
-                      <Cell v={row.txn} />
-                    </td>
-                    <td className="px-4 py-4">
-                      <Cell v={row.hybrid} />
-                    </td>
+                    <th scope="col" className="px-4 py-3 font-normal">
+                      Embedded
+                    </th>
+                    <th scope="col" className="px-4 py-3 font-normal">
+                      Local-first
+                    </th>
+                    <th scope="col" className="px-4 py-3 font-normal">
+                      Transactional
+                    </th>
+                    <th scope="col" className="px-4 py-3 font-normal">
+                      Hybrid
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </Reveal>
-          <p className="font-mono mt-4 text-[10px] tracking-[0.14em] text-fog uppercase">
-            ● yes · ◐ partial · — no · architecture comparison, not a benchmark
-          </p>
+                </thead>
+                <tbody className="font-mono text-xs tracking-[0.04em]">
+                  {COMPARE.map((row) => (
+                    <tr
+                      key={row.name}
+                      className={
+                        row.name === "VantaDB"
+                          ? "border-linedark border-b text-bone"
+                          : "border-linedark border-b text-fog"
+                      }
+                    >
+                      <th
+                        scope="row"
+                        className="py-4 pr-4 font-normal whitespace-nowrap"
+                      >
+                        {row.name === "VantaDB" ? (
+                          <span className="text-pulse">VantaDB</span>
+                        ) : (
+                          row.name
+                        )}
+                      </th>
+                      <td className="px-4 py-4">
+                        <Cell v={row.embedded} />
+                      </td>
+                      <td className="px-4 py-4">
+                        <Cell v={row.local} />
+                      </td>
+                      <td className="px-4 py-4">
+                        <Cell v={row.txn} />
+                      </td>
+                      <td className="px-4 py-4">
+                        <Cell v={row.hybrid} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Reveal>
+            <p className="font-mono mt-4 text-[10px] tracking-[0.14em] text-fog uppercase">
+              ● yes · ◐ partial · — no · architecture comparison, not a benchmark
+            </p>
+          </div>
         </section>
 
-        {/* 07 — ROADMAP */}
+        {/* 08 — OPEN SOURCE: price-cards (mondragon2) */}
         <section
-          id="roadmap"
-          aria-labelledby="roadmap-h"
-          className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-24 sm:px-6 sm:pt-32"
-        >
-          <SectionHeading
-            index="07 / THE ROADMAP"
-            title={<span id="roadmap-h">Named systems, honest status.</span>}
-            lede="VantaDB is the only product today. The rest of the map is research with labels, not launches."
-          />
-          <Reveal className="mt-10">
-            <div className="border-linedark border-t">
-              {SYSTEMS.map((s) => (
-                <div
-                  key={s.name}
-                  className="border-linedark grid items-baseline gap-1 border-b py-5 sm:grid-cols-[180px_1fr_auto] sm:gap-8"
-                >
-                  <h3 className="font-display text-base font-bold tracking-[0.06em] text-bone uppercase">
-                    {s.name}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-fog text-pretty">
-                    {s.fn}
-                  </p>
-                  <p
-                    className={`font-mono text-[10px] tracking-[0.14em] uppercase ${
-                      s.status === "IN BUILD" ? "text-pulse" : "text-fog"
-                    }`}
-                  >
-                    {s.status}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </section>
-
-        {/* 08 — OPEN SOURCE */}
-        <section
-          id="open-source"
+          id="oss"
           aria-labelledby="oss-h"
-          className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-24 sm:px-6 sm:pt-32"
+          className="nmsec scroll-mt-24"
         >
-          <SectionHeading
-            index="08 / OPEN SOURCE"
-            title={<span id="oss-h">Built in public. Join in.</span>}
-            lede="Negent Mind is an independent open-source organization. The engine is Apache-2.0: read it, fork it, embed it in your agent."
-          />
-          <Reveal className="mt-10">
-            <div className="border-linedark grid gap-8 border-t pt-10 md:grid-cols-3">
+          <Crosshairs />
+          <div className="nmsec-inner nmsec-pad">
+            <div className="sechead split">
               <div>
-                <h3 className="font-display text-base font-bold tracking-[0.04em] text-bone uppercase">
-                  Contribute
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-fog text-pretty">
-                  Issues, ideas, and pull requests are the contribution path.
-                  Rust core, Python bindings, docs — pick the surface you know.
-                </p>
+                <p className="lbl">[ 08 / OPEN SOURCE ]</p>
+                <h2 className="h2" id="oss-h">
+                  Built in public.
+                  <span className="qual">join in.</span>
+                </h2>
               </div>
-              <div>
-                <h3 className="font-display text-base font-bold tracking-[0.04em] text-bone uppercase">
-                  Report
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-fog text-pretty">
-                  A young engine earns trust by breaking in public. Reproduce
-                  it, file it, and it becomes a test.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-display text-base font-bold tracking-[0.04em] text-bone uppercase">
-                  Watch
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-fog text-pretty">
-                  Specs live in the open alongside the code. Follow the org to
-                  see the roadmap turn into releases.
-                </p>
-              </div>
+              <p className="secsub">
+                Negent Mind is an independent open-source organization. The
+                engine is Apache-2.0: read it, fork it, embed it in your agent —
+                and help decide what gets built next.
+              </p>
             </div>
+            <OssCards />
             <div className="mt-10 flex flex-wrap gap-4">
-              <Button
-                asChild
-                size="lg"
-                className="font-mono tracking-[0.08em]"
-              >
+              <Button asChild size="lg" className="font-mono tracking-[0.08em]">
                 <a href={VANTADB_REPO} target="_blank" rel="noopener noreferrer">
                   ness-e/Vantadb
                   <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
@@ -500,22 +448,26 @@ export default function Home() {
                 </a>
               </Button>
             </div>
-          </Reveal>
+          </div>
         </section>
 
+        {/* Marquee tipográfico (mondragon2) */}
+        <Marquee />
+
         {/* 09 — FAQ */}
-        <section
-          id="faq"
-          aria-labelledby="faq-h"
-          className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-24 pb-24 sm:px-6 sm:pt-32 sm:pb-32"
-        >
-          <SectionHeading
-            index="09 / THE INQUIRY"
-            title={<span id="faq-h">Asked, answered.</span>}
-          />
-          <Reveal className="mt-10">
-            <Faq items={FAQ_ITEMS} />
-          </Reveal>
+        <section id="faq" aria-labelledby="faq-h" className="nmsec scroll-mt-24">
+          <Crosshairs />
+          <div className="nmsec-inner nmsec-pad">
+            <div className="sechead">
+              <p className="lbl">[ 09 / THE INQUIRY ]</p>
+              <h2 className="h2" id="faq-h">
+                Asked, answered.
+              </h2>
+            </div>
+            <Reveal>
+              <Faq items={FAQ_ITEMS} />
+            </Reveal>
+          </div>
         </section>
       </main>
       <SiteFooter />

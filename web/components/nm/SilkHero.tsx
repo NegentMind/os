@@ -309,7 +309,7 @@ export function SilkHero() {
         <span className="text-pulse">■</span> VANTADB · APACHE-2.0 · RUST ·
         LOCAL-FIRST —{" "}
         <Link
-          href="#product"
+          href="#engine"
           className="underline decoration-pulse underline-offset-4 transition-colors hover:text-bone"
         >
           see the engine ↓

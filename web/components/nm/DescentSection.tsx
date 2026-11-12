@@ -27,7 +27,7 @@ export function DescentSection() {
     <>
       <section id="mechanism" aria-labelledby="mechanism-h" className="scroll-mt-24">
         <SectionHeading
-          index="02 / MECHANISM"
+          index="05 / MECHANISM"
           title={<span id="mechanism-h">Noise in. Signal out.</span>}
           lede="This field is live fractal noise. Scroll and it converges to order; move the pointer and order follows it. What you see is the product: stochastic output, deterministically resolved."
         />
@@ -46,14 +46,14 @@ export function DescentSection() {
             />
           </div>
           <p className="font-mono mt-3 text-[11px] tracking-[0.14em] text-fog uppercase">
-            Fig. 02 — Fractal noise field, scroll-scrubbed · live entropy
+            Fig. 01 — Fractal noise field, scroll-scrubbed · live entropy
           </p>
         </div>
       </section>
 
       <section id="proof" aria-labelledby="proof-h" className="mt-24 scroll-mt-24 sm:mt-32">
         <SectionHeading
-          index="03 / PROOF"
+          index="05 / PROOF"
           title={<span id="proof-h">Measured, not claimed.</span>}
           lede="No testimonials, no customers invented, no benchmarks borrowed. These numbers are computed here, now, from the field above."
         />
@@ -85,7 +85,7 @@ export function DescentSection() {
         <div className="mt-6">
           <EntropyTrace values={history} className="border-linedark h-28 w-full border" />
           <p className="font-mono mt-3 text-[11px] tracking-[0.14em] text-fog uppercase">
-            Fig. 03 — Entropy trace, last {HISTORY} samples · scale 0–8 bits
+            Fig. 02 — Entropy trace, last {HISTORY} samples · scale 0–8 bits
           </p>
         </div>
       </section>
