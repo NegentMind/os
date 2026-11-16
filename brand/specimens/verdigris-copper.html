@@ -1,47 +1,47 @@
 <!doctype html>
-<html lang="es" data-theme="light">
+<html lang="es" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Negent Mind — Exploración de color y tipografía</title>
-<meta name="description" content="Especimen estático de exploración de color y tipografía para Negent Mind. No publicado.">
+<title>Negent Mind — Exploración de marca: materia negra</title>
+<meta name="description" content="Especimen estático de exploración de marca, color y tipografía para Negent Mind. No publicado.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Sora:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* ── Tokens semánticos ─────────────────────────────────────────
-     Los valores hex viven en el objeto PALETTES del script y en los
-     valores por defecto de abajo (fallback sin JS = verdigris claro/
-     oscuro). Los componentes solo usan alias semánticos:
-     superficie (--bg/--surface), texto (--ink/--muted), estructura
-     (--structure), atención (--attention marca / --action funcional). */
+     Los hex viven en el objeto PALETTES del script y en los valores
+     por defecto (fallback sin JS = carbón y plata, tema oscuro).
+     Niveles físicos: --bg fondo · --section banda · --surface
+     tarjeta · --raised panel elevado. */
   :root {
     --font-heading: "Manrope", system-ui, sans-serif;
     --font-body: "Source Sans 3", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-    --light-bg: #F4F3EF; --light-surface: #EAEDE7; --light-ink: #1C1E1D;
-    --light-muted: #5C665F; --light-line: #C9D3CA; --light-structure: #2D5A4C;
-    --light-attention: #C85A32; --light-action: #AC4928; --light-on-action: #FFFFFF;
-    --dark-bg: #141615; --dark-surface: #1D211E; --dark-ink: #E6E8E6;
-    --dark-muted: #A4AFA8; --dark-line: #35453C; --dark-structure: #4E8A77;
-    --dark-attention: #E07A55; --dark-action: #E07A55; --dark-on-action: #141615;
+    --light-bg: #F5F6F8; --light-section: #F0F2F5; --light-surface: #E9EDF2; --light-raised: #FFFFFF;
+    --light-ink: #14171D; --light-muted: #535D6C; --light-line: #CBD3DF;
+    --light-structure: #42546E; --light-attention: #35475E; --light-action: #35475E; --light-on-action: #FFFFFF;
+    --dark-bg: #000000; --dark-section: #070809; --dark-surface: #0E1013; --dark-raised: #1C2026;
+    --dark-ink: #F1F3F5; --dark-muted: #ADB5C0; --dark-line: #343B46;
+    --dark-structure: #A7B4C7; --dark-attention: #E7EDF5; --dark-action: #E7EDF5; --dark-on-action: #000000;
+    --logo-dot: var(--attention);
   }
-  :root, html[data-theme="light"] {
-    color-scheme: light;
-    --bg: var(--light-bg); --surface: var(--light-surface); --ink: var(--light-ink);
-    --muted: var(--light-muted); --line: var(--light-line);
-    --structure: var(--light-structure); --attention: var(--light-attention);
-    --action: var(--light-action); --on-action: var(--light-on-action);
-    --link: var(--light-action);
-  }
-  html[data-theme="dark"] {
+  :root, html[data-theme="dark"] {
     color-scheme: dark;
-    --bg: var(--dark-bg); --surface: var(--dark-surface); --ink: var(--dark-ink);
-    --muted: var(--dark-muted); --line: var(--dark-line);
+    --bg: var(--dark-bg); --section: var(--dark-section); --surface: var(--dark-surface); --raised: var(--dark-raised);
+    --ink: var(--dark-ink); --muted: var(--dark-muted); --line: var(--dark-line);
     --structure: var(--dark-structure); --attention: var(--dark-attention);
     --action: var(--dark-action); --on-action: var(--dark-on-action);
     --link: var(--dark-action);
+  }
+  html[data-theme="light"] {
+    color-scheme: light;
+    --bg: var(--light-bg); --section: var(--light-section); --surface: var(--light-surface); --raised: var(--light-raised);
+    --ink: var(--light-ink); --muted: var(--light-muted); --line: var(--light-line);
+    --structure: var(--light-structure); --attention: var(--light-attention);
+    --action: var(--light-action); --on-action: var(--light-on-action);
+    --link: var(--light-action);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -55,27 +55,30 @@
     -webkit-font-smoothing: antialiased;
   }
   .mono { font-family: var(--font-mono); }
-  .lock {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    line-height: 1;
-  }
-  .dot { color: var(--attention); }
   a { color: var(--link); text-underline-offset: 3px; }
   :focus-visible { outline: 2px solid var(--structure); outline-offset: 3px; }
 
+  /* Logotipo = SVG vectorial original, nunca una fuente del sistema. */
+  .wm { display: block; height: auto; max-width: 100%; }
+  .wm-mast { height: 15px; width: auto; }
+  .wm-tile { height: 34px; width: auto; }
+  .wm-banner { height: 44px; width: auto; }
+  .wm-gh { height: 32px; width: auto; }
+  .mn { display: block; height: 62%; width: auto; max-width: 100%; }
+
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
   section {
-    padding: clamp(56px, 9vw, 120px) 0;
+    padding: clamp(48px, 8vw, 104px) 0;
     border-top: 1px solid var(--line);
     scroll-margin-top: var(--anchor-offset, 76px);
   }
   #capacidades, #memoria { scroll-margin-top: var(--anchor-offset, 76px); }
   section:first-of-type { border-top: none; }
+  /* Bandas de sección: el negro del fondo y la banda se leen por
+     separación física, no por bordes. */
+  #marca, #paleta { background: var(--section); }
 
-  /* ── Barra superior (sticky en escritorio, estática en móvil) ── */
+  /* ── Barra superior ─────────────────────────────────────────── */
   .topstrip {
     position: sticky; top: 0; z-index: 10;
     background: var(--bg);
@@ -101,8 +104,6 @@
   .tbtn[aria-pressed="true"] { border-color: var(--structure); color: var(--ink); }
   .tbtn[aria-pressed="true"]::before { content: "● "; color: var(--attention); font-size: 9px; }
 
-  /* Panel de controles: tipografía fija JetBrains Mono para que la
-     experimentación tipográfica no desestabilice los propios controles. */
   .ctrl { flex-basis: 100%; font-family: var(--font-mono); }
   .ctrl summary {
     cursor: pointer; color: var(--structure);
@@ -111,7 +112,7 @@
   .ctrl summary::marker { color: var(--attention); }
   .ctrl-body {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
     align-items: end;
     gap: 8px 14px; padding: 8px 0 12px;
   }
@@ -136,7 +137,7 @@
   /* ── Nota de alcance ────────────────────────────────────────── */
   .scope {
     border-left: 3px solid var(--attention);
-    padding: 12px 18px; margin-top: 40px;
+    padding: 12px 18px; margin-top: 28px;
     color: var(--muted); font-size: 14px; max-width: 720px;
   }
 
@@ -146,7 +147,6 @@
     gap: 16px; flex-wrap: wrap;
     padding: 22px 0; border-bottom: 1px solid var(--line);
   }
-  .masthead .lock { font-size: 15px; }
   .masthead nav { display: flex; gap: 20px; font-size: 13px; }
   .masthead nav a { color: var(--muted); text-decoration: none; }
   .masthead nav a:hover { color: var(--structure); }
@@ -156,7 +156,7 @@
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     gap: clamp(32px, 6vw, 80px);
     align-items: center;
-    padding: clamp(48px, 8vw, 96px) 0;
+    padding: clamp(40px, 7vw, 88px) 0;
   }
   .kicker {
     font-family: var(--font-mono);
@@ -190,8 +190,8 @@
   }
   .proof b { color: var(--structure); font-weight: 500; }
 
-  .diagram { border: 1px solid var(--line); background: var(--surface); padding: 20px; }
-  .diagram svg { display: block; width: 100%; height: auto; }
+  .diagram { border: 1px solid var(--line); background: var(--raised); padding: 14px; }
+  .diagram svg { display: block; width: 100%; height: auto; background: var(--surface); }
   .diagram .cap {
     margin-top: 12px; font-family: var(--font-mono);
     font-size: 11px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase;
@@ -215,6 +215,7 @@
     border-top: 3px solid var(--structure);
     padding: 24px;
   }
+  .card.feature { background: var(--raised); }
   .card .st {
     font-family: var(--font-mono);
     font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
@@ -226,43 +227,52 @@
   .card .lnk { margin-top: 14px; display: inline-block; font-size: 13px; font-weight: 500; }
 
   /* ── MARCA ──────────────────────────────────────────────────── */
+  .gal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+  .gal-card {
+    background: var(--surface); border: 1px solid var(--line);
+    padding: 20px; display: flex; flex-direction: column; gap: 14px;
+    min-width: 0;
+  }
+  .gal-logo {
+    background: var(--raised); border: 1px solid var(--line);
+    padding: 30px 18px; display: flex; align-items: center; justify-content: center;
+    min-height: 108px; min-width: 0; color: var(--ink);
+  }
+  .gal-logo .wm { width: 100%; height: auto; }
+  .gal-card h3 { font-size: 13px; }
+  .gal-card p { font-size: 13px; color: var(--muted); flex: 1; }
+  .gal-card .use { align-self: flex-start; }
+
   .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
-  .tile { border: 1px solid var(--line); padding: 40px 32px; position: relative; }
+  .tile { border: 1px solid var(--line); padding: 40px 32px; position: relative; display: flex; align-items: center; }
   .tile .tiletag {
     position: absolute; top: 14px; left: 16px;
     font-family: var(--font-mono);
     font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
   }
-  .tile-l { background: var(--light-bg); color: var(--light-ink); }
+  .tile-l { background: var(--light-bg); color: var(--light-ink); --logo-dot: var(--light-attention); }
   .tile-l .tiletag { color: var(--light-muted); }
-  .tile-l .dot { color: var(--light-attention); }
-  .tile-d { background: var(--dark-bg); color: var(--dark-ink); }
+  .tile-d { background: var(--dark-bg); color: var(--dark-ink); --logo-dot: var(--dark-attention); }
   .tile-d .tiletag { color: var(--dark-muted); }
-  .tile-d .dot { color: var(--dark-attention); }
-  .tile .lock { font-size: clamp(22px, 3vw, 34px); }
 
   .avatars { display: flex; gap: 24px; margin-top: 28px; flex-wrap: wrap; }
   .av { text-align: center; font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; }
   .mark {
     border-radius: 22%; display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-heading); font-weight: 700;
-    letter-spacing: 0; white-space: nowrap; margin-bottom: 8px;
+    margin-bottom: 8px;
   }
-  .mark-lg { width: 88px; height: 88px; font-size: 36px; }
-  .mark-sm { width: 36px; height: 36px; font-size: 14px; }
-  .mark-org { width: 56px; height: 56px; font-size: 22px; margin-bottom: 0; }
-  .mark-l { background: var(--light-bg); color: var(--light-ink); border: 1px solid var(--light-line); }
-  .mark-d { background: var(--dark-bg); color: var(--dark-ink); border: 1px solid var(--dark-line); }
-  .mark .adot { color: var(--light-attention); }
-  .mark-d .adot { color: var(--dark-attention); }
+  .mark-lg { width: 88px; height: 88px; }
+  .mark-sm { width: 36px; height: 36px; }
+  .mark-org { width: 56px; height: 56px; margin-bottom: 0; }
+  .mark-l { background: var(--light-bg); color: var(--light-ink); border: 1px solid var(--light-line); --logo-dot: var(--light-attention); }
+  .mark-d { background: var(--dark-bg); color: var(--dark-ink); border: 1px solid var(--dark-line); --logo-dot: var(--dark-attention); }
 
   .banner {
     margin-top: 32px; border: 1px solid var(--line);
-    background: var(--surface); position: relative; overflow: hidden;
+    background: var(--bg); position: relative; overflow: hidden;
     padding: clamp(28px, 5vw, 56px);
     display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
   }
-  .banner .lock { font-size: clamp(24px, 4vw, 42px); position: relative; }
   .banner .bmeta {
     font-family: var(--font-mono); font-size: 11px;
     letter-spacing: .14em; color: var(--muted); text-transform: uppercase;
@@ -273,6 +283,7 @@
   .regline { display: flex; flex-direction: column; gap: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; color: var(--muted); }
   .regline .bar { height: 1px; background: var(--structure); }
   .copperdot { width: 12px; height: 12px; border-radius: 50%; background: var(--attention); }
+  .refnote { margin-top: 28px; font-size: 13px; color: var(--muted); max-width: 72ch; }
 
   /* ── GITHUB ─────────────────────────────────────────────────── */
   .gh-frame {
@@ -291,7 +302,6 @@
     background: var(--bg);
     padding: clamp(28px, 5vw, 48px);
   }
-  .gh-banner .lock { font-size: clamp(22px, 3.6vw, 38px); position: relative; }
   .gh-banner .bmeta {
     margin-top: 12px; position: relative;
     font-family: var(--font-mono); font-size: 11px;
@@ -308,17 +318,25 @@
   .gh-repo .rname { font-weight: 600; }
   .gh-repo .rmeta { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; color: var(--muted); }
   .gh-links { margin-top: 22px; display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; }
-  /* Cromo de plataforma: enlaces neutros (tinta + subrayado), no en color de marca. */
   .gh-frame a { color: var(--ink); text-decoration: underline; }
   .gh-frame a:hover { color: var(--ink); text-decoration: none; }
 
   /* ── PALETA ─────────────────────────────────────────────────── */
+  .skey { margin-top: 40px; border: 1px solid var(--line); max-width: 520px; }
+  .skey .skrow {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 14px 18px; border-bottom: 1px solid var(--line);
+    font-size: 13px;
+  }
+  .skey .skrow:last-child { border-bottom: none; }
+  .skey .skrow .hex { font-family: var(--font-mono); font-size: 11px; }
+
   .palettes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
-  .pal { border: 1px solid var(--line); }
+  .pal { border: 1px solid var(--line); background: var(--surface); }
   .pal .phead {
     font-family: var(--font-mono); font-size: 11px;
     letter-spacing: .16em; text-transform: uppercase; padding: 14px 18px;
-    border-bottom: 1px solid var(--line); color: var(--muted); background: var(--surface);
+    border-bottom: 1px solid var(--line); color: var(--muted); background: var(--raised);
   }
   .prow { display: flex; align-items: center; gap: 14px; padding: 12px 18px; border-bottom: 1px solid var(--line); }
   .prow:last-child { border-bottom: none; }
@@ -333,7 +351,7 @@
   .prop-legend { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 14px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; color: var(--muted); }
   .prop-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 2px; margin-right: 7px; vertical-align: -1px; }
 
-  .contrast { margin-top: 40px; border: 1px solid var(--line); background: var(--surface); padding: 28px; }
+  .contrast { margin-top: 40px; border: 1px solid var(--line); background: var(--raised); padding: 28px; }
   .contrast h3 { margin-bottom: 8px; }
   .contrast .cnote { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
   .contrast table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -360,7 +378,7 @@
     .topstrip { position: static; }
     section, #capacidades, #memoria { scroll-margin-top: 16px; }
     .hero { grid-template-columns: 1fr; }
-    .cards, .duo, .palettes, .twocols { grid-template-columns: 1fr; }
+    .cards, .duo, .palettes, .twocols, .gal { grid-template-columns: 1fr; }
     .ctrl-body { grid-template-columns: 1fr; align-items: stretch; }
     .theme-btns { margin-left: 0; }
     h1 { max-width: 100%; }
@@ -369,9 +387,91 @@
 </head>
 <body>
 
+<!-- ══ Lettering vectorial original ════════════════════════════
+     Tres familias de logotipo + monograma dibujadas a mano como
+     geometría SVG. No son fuentes OTF ni reproducciones de las
+     referencias comerciales (Arcspoke / Fuigant / Unflow). El punto
+     de registro usa var(--logo-dot), que cada contexto fija. -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+  <defs>
+    <!-- ORBITAL — capitales construidas por geometría, trazo 13 -->
+    <symbol id="wm-orbital" viewBox="0 0 836 120">
+      <g fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="bevel">
+        <path d="M12,96 V16 L56,96 V16"/><!-- N -->
+        <path transform="translate(80,0)" d="M52,16 H12 V96 H52 M12,56 H44"/><!-- E -->
+        <path transform="translate(154,0)" d="M68,34 A30,30 0 1 0 74,56 H46"/><!-- G -->
+        <path transform="translate(248,0)" d="M52,16 H12 V96 H52 M12,56 H44"/><!-- E -->
+        <path transform="translate(322,0)" d="M12,96 V16 L56,96 V16"/><!-- N -->
+        <path transform="translate(402,0)" d="M6,16 H58 M32,16 V96"/><!-- T -->
+        <path transform="translate(506,0)" d="M12,96 V16 L40,62 L68,16 V96"/><!-- M -->
+        <path transform="translate(596,0)" d="M18,16 V96"/><!-- I -->
+        <path transform="translate(642,0)" d="M12,96 V16 L56,96 V16"/><!-- N -->
+        <path transform="translate(722,0)" d="M12,16 V96 H38 A40,40 0 0 0 38,16 H12 Z"/><!-- D -->
+      </g>
+      <circle cx="822" cy="92" r="6" fill="var(--logo-dot)"/>
+    </symbol>
+    <symbol id="mn-orbital" viewBox="0 0 180 120">
+      <g fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="bevel">
+        <path d="M12,96 V16 L56,96 V16"/>
+        <path transform="translate(82,0)" d="M12,96 V16 L40,62 L68,16 V96"/>
+      </g>
+      <circle cx="170" cy="92" r="6" fill="var(--logo-dot)"/>
+    </symbol>
+
+    <!-- CORTE — capitales densas cuadradas, cortes diagonales -->
+    <symbol id="wm-corte" viewBox="0 0 918 120">
+      <g fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter">
+        <path d="M14,98 V22 M64,22 V98 M17,24 L35,52 M45,67 L62,95"/><!-- N -->
+        <path transform="translate(88,0)" d="M14,22 V98 M14,22 H64 M14,60 H36 M47,60 H60 M14,98 H64"/><!-- E -->
+        <path transform="translate(172,0)" d="M76,38 Q70,22 52,22 H38 Q14,22 14,46 V74 Q14,98 38,98 H50 Q76,98 76,74 V62 H49"/><!-- G -->
+        <path transform="translate(266,0)" d="M14,22 V98 M14,22 H64 M14,60 H36 M47,60 H60 M14,98 H64"/><!-- E -->
+        <path transform="translate(350,0)" d="M14,98 V22 M64,22 V98 M17,24 L35,52 M45,67 L62,95"/><!-- N -->
+        <path transform="translate(438,0)" d="M8,22 H70 M39,22 V52 M39,66 V98"/><!-- T -->
+        <path transform="translate(556,0)" d="M14,98 V22 L40,62 L66,22 V98"/><!-- M -->
+        <path transform="translate(646,0)" d="M10,22 H34 M22,22 V98 M10,98 H34"/><!-- I -->
+        <path transform="translate(700,0)" d="M14,98 V22 M64,22 V98 M17,24 L35,52 M45,67 L62,95"/><!-- N -->
+        <path transform="translate(788,0)" d="M14,22 V98 H46 Q78,98 78,66 V54 Q78,22 46,22 Z"/><!-- D -->
+      </g>
+      <circle cx="906" cy="94" r="7" fill="var(--logo-dot)"/>
+    </symbol>
+    <symbol id="mn-corte" viewBox="0 0 192 120">
+      <g fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter">
+        <path d="M14,98 V22 M64,22 V98 M17,24 L35,52 M45,67 L62,95"/>
+        <path transform="translate(90,0)" d="M14,98 V22 L40,62 L66,22 V98"/>
+      </g>
+      <circle cx="182" cy="94" r="7" fill="var(--logo-dot)"/>
+    </symbol>
+
+    <!-- FLUJO — minúsculas orgánicas redondeadas, trazo 12 -->
+    <symbol id="wm-flujo" viewBox="0 0 788 120">
+      <g fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round">
+        <path d="M14,96 V46 C14,38 20,32 30,32 C40,32 44,40 44,48 V96"/><!-- n -->
+        <path transform="translate(66,0)" d="M62,63 H20 C18,43 28,32 42,32 C58,32 66,43 62,63 M20,63 C20,85 30,98 46,98 C54,98 60,94 64,88"/><!-- e -->
+        <path transform="translate(146,0)" d="M64,34 V96 C64,108 56,114 43,114 C33,114 26,111 23,105 M64,60 C64,80 53,94 40,94 C26,94 18,80 18,62 C18,44 28,32 42,32 C55,32 64,44 64,60"/><!-- g -->
+        <path transform="translate(234,0)" d="M62,63 H20 C18,43 28,32 42,32 C58,32 66,43 62,63 M20,63 C20,85 30,98 46,98 C54,98 60,94 64,88"/><!-- e -->
+        <path transform="translate(314,0)" d="M14,96 V46 C14,38 20,32 30,32 C40,32 44,40 44,48 V96"/><!-- n -->
+        <path transform="translate(380,0)" d="M34,20 V84 C34,92 40,96 48,96 M22,40 H48"/><!-- t -->
+        <path transform="translate(480,0)" d="M12,96 V46 C12,38 18,32 26,32 C34,32 38,38 38,46 V96 M38,48 C38,38 44,32 52,32 C60,32 66,38 66,46 V96"/><!-- m -->
+        <path transform="translate(568,0)" d="M26,44 V96"/><!-- i -->
+        <circle transform="translate(568,0)" cx="26" cy="24" r="6" stroke="none" fill="currentColor"/>
+        <path transform="translate(618,0)" d="M14,96 V46 C14,38 20,32 30,32 C40,32 44,40 44,48 V96"/><!-- n -->
+        <path transform="translate(684,0)" d="M64,14 V96 M64,64 C64,44 54,32 42,32 C28,32 18,44 18,64 C18,84 28,96 42,96 C55,96 64,84 64,64"/><!-- d -->
+      </g>
+      <circle cx="776" cy="92" r="6" fill="var(--logo-dot)"/>
+    </symbol>
+    <symbol id="mn-flujo" viewBox="0 0 164 120">
+      <g fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round">
+        <path d="M14,96 V46 C14,38 20,32 30,32 C40,32 44,40 44,48 V96"/>
+        <path transform="translate(66,0)" d="M12,96 V46 C12,38 18,32 26,32 C34,32 38,38 38,46 V96 M38,48 C38,38 44,32 52,32 C60,32 66,38 66,46 V96"/>
+      </g>
+      <circle cx="156" cy="92" r="6" fill="var(--logo-dot)"/>
+    </symbol>
+  </defs>
+</svg>
+
 <div class="topstrip" id="topstrip">
   <div class="wrap">
-    <span class="tag">Exploración de color y tipografía · No publicada</span>
+    <span class="tag">Exploración de marca — color, superficie, tipografía y lettering · No publicada</span>
     <nav aria-label="Secciones del especimen">
       <a href="#web">Web</a>
       <a href="#marca">Marca</a>
@@ -379,24 +479,32 @@
       <a href="#paleta">Paleta</a>
     </nav>
     <div class="theme-btns" role="group" aria-label="Tema">
-      <button type="button" class="tbtn" id="btn-light" aria-pressed="true">Claro</button>
-      <button type="button" class="tbtn" id="btn-dark" aria-pressed="false">Oscuro</button>
+      <button type="button" class="tbtn" id="btn-light" aria-pressed="false">Claro</button>
+      <button type="button" class="tbtn" id="btn-dark" aria-pressed="true">Oscuro</button>
     </div>
 
     <details class="ctrl" id="ctrl-panel">
-      <summary>Paleta y fuentes</summary>
+      <summary>Paleta, logo y fuentes</summary>
       <div class="ctrl-body">
         <div class="ctrl-field">
           <label for="sel-palette">Paleta</label>
           <select id="sel-palette">
-            <option value="verdigris">Verdigrís y cobre</option>
-            <option value="petroleo">Petróleo y ocre</option>
-            <option value="pizarra">Pizarra y burdeos</option>
-            <option value="oliva">Oliva y arcilla</option>
+            <option value="plata">Carbón y plata</option>
+            <option value="liquen">Negro y liquen</option>
+            <option value="hielo">Negro y hielo</option>
+            <option value="ambar">Negro y ámbar</option>
           </select>
         </div>
         <div class="ctrl-field">
-          <label for="sel-heading">Títulos y marca</label>
+          <label for="sel-brand">Logo y banner</label>
+          <select id="sel-brand">
+            <option value="orbital">Orbital — geométrico</option>
+            <option value="corte">Corte — industrial</option>
+            <option value="flujo">Flujo — orgánico</option>
+          </select>
+        </div>
+        <div class="ctrl-field">
+          <label for="sel-heading">Títulos</label>
           <select id="sel-heading">
             <option value="manrope">Manrope</option>
             <option value="sora">Sora</option>
@@ -415,7 +523,7 @@
           </select>
         </div>
         <button type="button" class="tbtn" id="btn-reset">Restablecer</button>
-        <p class="ctrl-note">Las fuentes cargan de Google Fonts; sin conexión, fallback sans/mono del sistema.</p>
+        <p class="ctrl-note">Las fuentes de texto cargan de Google Fonts (fallback sans/mono sin conexión). El logotipo es vectorial y no depende de ninguna fuente.</p>
       </div>
     </details>
     <p class="ctrl-state" id="ctrl-state" aria-live="polite"></p>
@@ -425,9 +533,9 @@
 <main>
 <div class="wrap">
   <p class="scope">
-    Composición representativa para evaluar combinaciones de color
-    (estructura / atención) y tipografía sobre superficies neutras — no es una
-    migración de la página en vivo ni del perfil de GitHub.
+    Composición representativa para evaluar sistema de superficies sobre negro,
+    paletas de estructura / atención, tipografía y lettering de marca — no es
+    una migración de la página en vivo ni del perfil de GitHub.
     Contenido en español; los enlaces apuntan a destinos reales.
   </p>
 </div>
@@ -436,7 +544,7 @@
 <section id="web" aria-labelledby="web-h">
   <div class="wrap">
     <div class="masthead">
-      <span class="lock">Negent Mind<span class="dot">.</span></span>
+      <svg class="wm wm-mast" viewBox="0 0 836 120" role="img" aria-label="Negent Mind"><use href="#wm-orbital" data-wm></use></svg>
       <nav aria-label="Navegación interna del ejemplo">
         <a href="#memoria">Memoria</a>
         <a href="#capacidades">Capacidades</a>
@@ -462,8 +570,6 @@
 
       <div class="diagram" aria-hidden="true">
         <svg viewBox="0 0 420 300" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-          <!-- Entrada dispersa → señal que converge en una retícula de memoria;
-               un solo punto de atención: la decisión terminal. -->
           <g stroke="var(--line)" stroke-width="1">
             <line x1="72" y1="60"  x2="196" y2="60"/>
             <line x1="48" y1="112" x2="196" y2="105"/>
@@ -517,7 +623,7 @@
       escrita de largo plazo.
     </p>
     <div class="cards">
-      <div class="card" id="memoria">
+      <div class="card feature" id="memoria">
         <p class="st">Activo · v0.9.0</p>
         <h3>VantaDB — flagship</h3>
         <p>
@@ -551,30 +657,59 @@
 <!-- ═══════════ 2 · MARCA ═══════════ -->
 <section id="marca" aria-labelledby="marca-h">
   <div class="wrap">
-    <p class="kicker">Identidad sobre los dos temas</p>
-    <h2 id="marca-h">Marca — wordmark, monograma y banner.</h2>
+    <p class="kicker">Tres direcciones de lettering original</p>
+    <h2 id="marca-h">Marca — logotipo, monograma y banner.</h2>
     <p class="intro">
-      El wordmark usa <b id="font-note">Manrope</b> 700 en mayúsculas; el punto
-      final es la única zona de atención. Las fichas muestran ambos temas a la
-      vez, con los valores de la paleta seleccionada.
+      Tres bocetos vectoriales originales para elegir dirección — no son una
+      fuente OTF de producción ni una identidad registrada, y no son Arcspoke,
+      Fuigant o Unflow —; el punto final es la única zona de atención.
+      Familia activa: <b id="brand-note">Orbital — geométrico</b>. Orbital y
+      Corte encajan con el laboratorio; Flujo es la línea experimental.
     </p>
+
+    <div class="gal">
+      <article class="gal-card">
+        <div class="gal-logo"><svg class="wm" viewBox="0 0 836 120" role="img" aria-label="Negent Mind — Orbital"><use href="#wm-orbital"></use></svg></div>
+        <h3>Orbital — geométrico</h3>
+        <p>Capitales construidas por geometría: arcos circulares en G y D con
+           terminal abierto, E y T escuadradas, N y M con vértice diseñado.
+           Silueta de tinta con un solo punto de registro.</p>
+        <button type="button" class="tbtn use" data-brand="orbital" aria-pressed="true">En uso</button>
+      </article>
+      <article class="gal-card">
+        <div class="gal-logo"><svg class="wm" viewBox="0 0 918 120" role="img" aria-label="Negent Mind — Corte"><use href="#wm-corte"></use></svg></div>
+        <h3>Corte — industrial</h3>
+        <p>Capitales densas de planta ancha y estructura cuadrada, con cortes
+           diagonales tipo stencil aplicados con criterio consistente — nunca
+           tantos como para perder la letra.</p>
+        <button type="button" class="tbtn use" data-brand="corte" aria-pressed="false">Usar</button>
+      </article>
+      <article class="gal-card">
+        <div class="gal-logo"><svg class="wm" viewBox="0 0 788 120" role="img" aria-label="Negent Mind — Flujo"><use href="#wm-flujo"></use></svg></div>
+        <h3>Flujo — orgánico</h3>
+        <p>Minúsculas suaves y asimétricas de trazo redondeado, dibujadas como
+           curvas libres. Línea experimental: más cercana a voz que a
+           infraestructura.</p>
+        <button type="button" class="tbtn use" data-brand="flujo" aria-pressed="false">Usar</button>
+      </article>
+    </div>
 
     <div class="duo">
       <div class="tile tile-l">
         <span class="tiletag" id="tiletag-l"></span>
-        <span class="lock">Negent Mind<span class="dot">.</span></span>
+        <svg class="wm wm-tile" viewBox="0 0 836 120" role="img" aria-label="Negent Mind"><use href="#wm-orbital" data-wm></use></svg>
       </div>
       <div class="tile tile-d">
         <span class="tiletag" id="tiletag-d"></span>
-        <span class="lock">Negent Mind<span class="dot">.</span></span>
+        <svg class="wm wm-tile" viewBox="0 0 836 120" role="img" aria-label="Negent Mind"><use href="#wm-orbital" data-wm></use></svg>
       </div>
     </div>
 
     <div class="avatars">
-      <div class="av"><div class="mark mark-l mark-lg">NM<span class="adot">.</span></div>MARCA CLARA</div>
-      <div class="av"><div class="mark mark-d mark-lg">NM<span class="adot">.</span></div>MARCA OSCURA</div>
-      <div class="av"><div class="mark mark-l mark-sm">NM<span class="adot">.</span></div>FAV 36 L</div>
-      <div class="av"><div class="mark mark-d mark-sm">NM<span class="adot">.</span></div>FAV 36 D</div>
+      <div class="av"><div class="mark mark-l mark-lg"><svg class="mn" viewBox="0 0 180 120" aria-hidden="true"><use href="#mn-orbital" data-mn></use></svg></div>MARCA CLARA</div>
+      <div class="av"><div class="mark mark-d mark-lg"><svg class="mn" viewBox="0 0 180 120" aria-hidden="true"><use href="#mn-orbital" data-mn></use></svg></div>MARCA OSCURA</div>
+      <div class="av"><div class="mark mark-l mark-sm"><svg class="mn" viewBox="0 0 180 120" aria-hidden="true"><use href="#mn-orbital" data-mn></use></svg></div>FAV 36 L</div>
+      <div class="av"><div class="mark mark-d mark-sm"><svg class="mn" viewBox="0 0 180 120" aria-hidden="true"><use href="#mn-orbital" data-mn></use></svg></div>FAV 36 D</div>
     </div>
 
     <div class="banner">
@@ -587,7 +722,7 @@
         <rect width="100%" height="100%" fill="url(#dotgrid)"/>
       </svg>
       <div style="position:relative">
-        <span class="lock">Negent Mind<span class="dot">.</span></span>
+        <svg class="wm wm-banner" viewBox="0 0 836 120" role="img" aria-label="Negent Mind"><use href="#wm-orbital" data-wm></use></svg>
         <p class="bmeta">Banner técnico 960×240 — mock estático · retícula + lockup + un punto</p>
       </div>
       <div class="regmarks" aria-hidden="true">
@@ -603,6 +738,17 @@
         </div>
       </div>
     </div>
+
+    <p class="refnote">
+      Referencias de dirección — fuentes comerciales <b>no incluidas</b>; estas
+      son reinterpretaciones vectoriales originales, no sus archivos de fuente:
+      Arcspoke — Build Interactive
+      (<a href="https://elements.envato.com/es/arcspoke-geometric-ai-robotics-sans-font-K5JH36T">elements.envato.com</a>),
+      Fuigant — Imoodev
+      (<a href="https://elements.envato.com/es/fuigant-clean-futuristic-font-NXMFYQK">elements.envato.com</a>),
+      Unflow — Sunday Lab
+      (<a href="https://elements.envato.com/es/unflow-typeface-Z34UE3Y">elements.envato.com</a>).
+    </p>
   </div>
 </section>
 
@@ -627,11 +773,11 @@
           <svg class="griddeco" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
             <rect width="100%" height="100%" fill="url(#dotgrid)"/>
           </svg>
-          <span class="lock">Negent Mind<span class="dot">.</span></span>
+          <svg class="wm wm-gh" viewBox="0 0 836 120" role="img" aria-label="Negent Mind"><use href="#wm-orbital" data-wm></use></svg>
           <p class="bmeta">Orden desde el caos · infraestructura verificable para agentes IA</p>
         </div>
         <div class="gh-org">
-          <div class="mark mark-d mark-org" aria-hidden="true">NM<span class="adot">.</span></div>
+          <div class="mark mark-d mark-org" aria-hidden="true"><svg class="mn" viewBox="0 0 180 120"><use href="#mn-orbital" data-mn></use></svg></div>
           <div>
             <p class="orgname">Negent Mind</p>
             <p class="orgbio">Applied AI research &amp; product engineering. Open infrastructure for persistent, controllable and reliable AI agents.</p>
@@ -660,11 +806,14 @@
 <section id="paleta" aria-labelledby="paleta-h">
   <div class="wrap">
     <p class="kicker">Tokens de referencia</p>
-    <h2 id="paleta-h">Paleta — dos temas, roles separados.</h2>
+    <h2 id="paleta-h">Paleta — niveles de superficie sobre negro.</h2>
     <p class="intro">
-      Neutros amplios (~85 %), un color estructural (~10 %) y uno de atención
-      (~5 %): jerarquía direccional, no medición estadística.
+      Materia negra: fondo #000 real, bandas, tarjetas y paneles como capas
+      físicas separadas. Neutros amplios (~85 %), un color estructural (~10 %)
+      y uno de atención (~5 %): jerarquía direccional, no medición estadística.
     </p>
+
+    <div class="skey" id="skey" aria-label="Niveles de superficie"></div>
 
     <div class="palettes">
       <div class="pal">
@@ -729,7 +878,7 @@
 
 <footer>
   <div class="wrap">
-    Especimen v2 · 2026-11-16 · <span id="footer-pal"></span> · exploración interna, no publicada ·
+    Especimen v3 · 2026-11-16 · <span id="footer-pal"></span> · <span id="footer-brand"></span> · exploración interna, no publicada ·
     tipografías: <span id="footer-fonts"></span> / JetBrains Mono
   </div>
 </footer>
@@ -739,21 +888,26 @@
     "use strict";
 
     /* ── Datos congelados de presets ─────────────────────────────
-       Hex y ratios precalculados para estos presets — no recomputar. El orden
-       de cada fila de tokens es: bg, surface, ink, muted, line,
-       structure, attention, action, on-action (--link = action).
+       Hex y ratios precalculados para estos presets — no recomputar.
+       Orden de tokens: bg, section, surface, raised, ink, muted,
+       line, structure, attention, action, on-action (--link = action).
        Ratios en orden: [tinta/fondo, muted/superficie, estructura/
        fondo, enlace/superficie, texto sobre botón]. */
-    var TOKENS = ["bg", "surface", "ink", "muted", "line", "structure", "attention", "action", "on-action"];
+    var TOKENS = ["bg", "section", "surface", "raised", "ink", "muted", "line", "structure", "attention", "action", "on-action"];
     var ROLES = [
       ["bg", "Fondo base"],
-      ["surface", "Superficie elevada"],
+      ["section", "Banda de sección"],
+      ["surface", "Tarjeta"],
+      ["raised", "Panel elevado"],
       ["ink", "Tinta"],
       ["muted", "Texto secundario"],
       ["line", "Línea decorativa"],
       ["structure", "Estructura"],
       ["attention", "Atención — marca"],
       ["action", "Atención funcional — acción / enlaces pequeños"]
+    ];
+    var SURFACES = [
+      ["bg", "Base"], ["section", "Sección"], ["surface", "Tarjeta"], ["raised", "Panel"]
     ];
     var CONTRAST_PAIRS = [
       ["Tinta / fondo", "Texto general."],
@@ -764,32 +918,37 @@
     ];
 
     var PALETTES = {
-      verdigris: {
-        label: "Verdigrís y cobre",
-        light: { bg: "#F4F3EF", surface: "#EAEDE7", ink: "#1C1E1D", muted: "#5C665F", line: "#C9D3CA", structure: "#2D5A4C", attention: "#C85A32", action: "#AC4928", "on-action": "#FFFFFF" },
-        dark:  { bg: "#141615", surface: "#1D211E", ink: "#E6E8E6", muted: "#A4AFA8", line: "#35453C", structure: "#4E8A77", attention: "#E07A55", action: "#E07A55", "on-action": "#141615" },
-        ratios: { light: [15.10, 5.05, 7.06, 4.75, 5.62], dark: [14.76, 7.20, 4.52, 5.50, 6.13] }
+      plata: {
+        label: "Carbón y plata",
+        light: { bg: "#F5F6F8", section: "#F0F2F5", surface: "#E9EDF2", raised: "#FFFFFF", ink: "#14171D", muted: "#535D6C", line: "#CBD3DF", structure: "#42546E", attention: "#35475E", action: "#35475E", "on-action": "#FFFFFF" },
+        dark:  { bg: "#000000", section: "#070809", surface: "#0E1013", raised: "#1C2026", ink: "#F1F3F5", muted: "#ADB5C0", line: "#343B46", structure: "#A7B4C7", attention: "#E7EDF5", action: "#E7EDF5", "on-action": "#000000" },
+        ratios: { light: [16.60, 5.67, 7.13, 8.07, 9.48], dark: [18.88, 9.21, 10.00, 16.18, 17.83] }
       },
-      petroleo: {
-        label: "Petróleo y ocre",
-        light: { bg: "#F1F4F3", surface: "#E5EBEA", ink: "#182526", muted: "#536568", line: "#C6D4D5", structure: "#245965", attention: "#A36A18", action: "#80500D", "on-action": "#FFFFFF" },
-        dark:  { bg: "#121A1C", surface: "#1C272A", ink: "#E4ECEB", muted: "#ADBEC1", line: "#35484D", structure: "#6DA6AC", attention: "#D9AF62", action: "#D9AF62", "on-action": "#121A1C" },
-        ratios: { light: [14.25, 5.08, 7.05, 5.67, 6.84], dark: [14.70, 7.95, 6.47, 7.47, 8.62] }
+      liquen: {
+        label: "Negro y liquen",
+        light: { bg: "#F6F7F1", section: "#EFF2E7", surface: "#E5EBD9", raised: "#FFFFFF", ink: "#1A2014", muted: "#576247", line: "#C5D1B3", structure: "#4D612E", attention: "#3D5126", action: "#3D5126", "on-action": "#FFFFFF" },
+        dark:  { bg: "#000000", section: "#070907", surface: "#0F140E", raised: "#1D261A", ink: "#F0F3E9", muted: "#ADB8A3", line: "#34432E", structure: "#A7BD77", attention: "#D3E5AC", action: "#D3E5AC", "on-action": "#000000" },
+        ratios: { light: [15.46, 5.31, 6.36, 7.16, 8.74], dark: [18.70, 9.02, 10.19, 13.82, 15.57] }
       },
-      pizarra: {
-        label: "Pizarra y burdeos",
-        light: { bg: "#F3F2F0", surface: "#E9E8E6", ink: "#25252B", muted: "#60616B", line: "#CED1D4", structure: "#465767", attention: "#933B4A", action: "#933B4A", "on-action": "#FFFFFF" },
-        dark:  { bg: "#17191D", surface: "#20242B", ink: "#EBE9E7", muted: "#ADB2BC", line: "#3A4654", structure: "#93A9BC", attention: "#D78692", action: "#D78692", "on-action": "#17191D" },
-        ratios: { light: [13.62, 5.02, 6.66, 5.78, 7.08], dark: [14.53, 7.32, 7.24, 5.72, 6.47] }
+      hielo: {
+        label: "Negro y hielo",
+        light: { bg: "#F4F7FB", section: "#EDF2F8", surface: "#E3EBF5", raised: "#FFFFFF", ink: "#141E2B", muted: "#4F6278", line: "#BFCFE2", structure: "#385D82", attention: "#294B70", action: "#294B70", "on-action": "#FFFFFF" },
+        dark:  { bg: "#000000", section: "#06090D", surface: "#0C131C", raised: "#172536", ink: "#EDF2F7", muted: "#A8B7CA", line: "#304760", structure: "#84A9CE", attention: "#C1DAF5", action: "#C1DAF5", "on-action": "#000000" },
+        ratios: { light: [15.63, 5.21, 6.39, 7.48, 8.99], dark: [18.64, 9.14, 8.55, 12.98, 14.61] }
       },
-      oliva: {
-        label: "Oliva y arcilla",
-        light: { bg: "#F5F3EA", surface: "#EBEADD", ink: "#24271F", muted: "#656958", line: "#D1D5BF", structure: "#515D39", attention: "#685046", action: "#685046", "on-action": "#FFFFFF" },
-        dark:  { bg: "#191B16", surface: "#23261E", ink: "#E9EBDF", muted: "#A9B09E", line: "#414A35", structure: "#9AA77C", attention: "#C8AB92", action: "#C8AB92", "on-action": "#191B16" },
-        ratios: { light: [13.64, 4.67, 6.35, 6.14, 7.43], dark: [14.40, 6.87, 6.77, 7.09, 8.02] }
+      ambar: {
+        label: "Negro y ámbar",
+        light: { bg: "#FAF6EF", section: "#F4ECE0", surface: "#EEE2D0", raised: "#FFFFFF", ink: "#281F14", muted: "#6F5A3D", line: "#D9C5A5", structure: "#785723", attention: "#624416", action: "#624416", "on-action": "#FFFFFF" },
+        dark:  { bg: "#000000", section: "#0B0805", surface: "#17120B", raised: "#2A2115", ink: "#F5F0E5", muted: "#C0B29B", line: "#52432B", structure: "#C5A36D", attention: "#F0CA8A", action: "#F0CA8A", "on-action": "#000000" },
+        ratios: { light: [15.04, 5.12, 6.12, 6.97, 8.91], dark: [18.48, 8.94, 8.83, 11.99, 13.52] }
       }
     };
 
+    var BRANDS = {
+      orbital: "Orbital — geométrico",
+      corte: "Corte — industrial",
+      flujo: "Flujo — orgánico"
+    };
     var HEADING_FONTS = {
       manrope: "Manrope", sora: "Sora", "space-grotesk": "Space Grotesk",
       "ibm-plex": "IBM Plex Sans", chakra: "Chakra Petch"
@@ -799,8 +958,8 @@
       "ibm-plex": "IBM Plex Sans", inter: "Inter"
     };
 
-    var DEFAULTS = { theme: "light", palette: "verdigris", heading: "manrope", body: "source-sans" };
-    var KEY = "nm-specimen-v2";
+    var DEFAULTS = { theme: "dark", palette: "plata", brand: "orbital", heading: "manrope", body: "source-sans" };
+    var KEY = "nm-specimen-v3";
 
     var root = document.documentElement;
     var strip = document.getElementById("topstrip");
@@ -809,11 +968,11 @@
     var btnD = document.getElementById("btn-dark");
     var btnReset = document.getElementById("btn-reset");
     var selPal = document.getElementById("sel-palette");
+    var selBrand = document.getElementById("sel-brand");
     var selHead = document.getElementById("sel-heading");
     var selBody = document.getElementById("sel-body");
     var ctrlState = document.getElementById("ctrl-state");
 
-    /* Estado inicial: defaults + lo que haya persistido (whitelist). */
     var state = {};
     var stored = null;
     try {
@@ -823,6 +982,7 @@
     function pick(map, val, dflt) { return (val && Object.prototype.hasOwnProperty.call(map, val)) ? val : dflt; }
     state.theme = (stored && (stored.theme === "dark" || stored.theme === "light")) ? stored.theme : DEFAULTS.theme;
     state.palette = pick(PALETTES, stored && stored.palette, DEFAULTS.palette);
+    state.brand = pick(BRANDS, stored && stored.brand, DEFAULTS.brand);
     state.heading = pick(HEADING_FONTS, stored && stored.heading, DEFAULTS.heading);
     state.body = pick(BODY_FONTS, stored && stored.body, DEFAULTS.body);
 
@@ -854,6 +1014,24 @@
       });
     }
 
+    function renderSurfaceKey(pal) {
+      var box = document.getElementById("skey");
+      box.textContent = "";
+      SURFACES.forEach(function (s) {
+        var row = document.createElement("div");
+        row.className = "skrow";
+        row.style.background = pal[state.theme][s[0]];
+        row.style.color = pal[state.theme].ink;
+        var name = document.createElement("span");
+        name.textContent = s[1];
+        var hex = document.createElement("span");
+        hex.className = "hex";
+        hex.textContent = pal[state.theme][s[0]];
+        row.appendChild(name); row.appendChild(hex);
+        box.appendChild(row);
+      });
+    }
+
     function renderContrast(pal) {
       var body = document.getElementById("contrast-body");
       body.textContent = "";
@@ -871,7 +1049,7 @@
         body.appendChild(tr);
       });
       document.getElementById("contrast-note").textContent =
-        "Ratios precomputados para " + pal.label + " en modo " +
+        "Ratios precalculados para " + pal.label + " en modo " +
         (state.theme === "light" ? "claro" : "oscuro") +
         ". 4.5:1 (AA texto normal) es guía de pares, no una auditoría completa.";
     }
@@ -879,8 +1057,10 @@
     function updateCaptions(pal) {
       var headName = HEADING_FONTS[state.heading];
       var bodyName = BODY_FONTS[state.body];
-      document.getElementById("font-note").textContent = headName;
+      var brandName = BRANDS[state.brand];
+      document.getElementById("brand-note").textContent = brandName;
       document.getElementById("footer-pal").textContent = pal.label;
+      document.getElementById("footer-brand").textContent = "lettering: " + brandName;
       document.getElementById("footer-fonts").textContent = headName + " / " + bodyName;
       document.getElementById("tiletag-l").textContent =
         "Fondo " + pal.light.bg + " · tinta " + pal.light.ink + " · punto " + pal.light.attention;
@@ -888,9 +1068,27 @@
         "Fondo " + pal.dark.bg + " · tinta " + pal.dark.ink + " · punto " + pal.dark.attention;
       ctrlState.textContent = "";
       var b = document.createElement("b");
-      b.textContent = pal.label + " · " + headName + " + " + bodyName +
+      b.textContent = brandName + " · " + pal.label + " · " + headName + " + " + bodyName +
         " · " + (state.theme === "light" ? "claro" : "oscuro");
       ctrlState.appendChild(b);
+    }
+
+    function updateBrand() {
+      var wvb = document.getElementById("wm-" + state.brand).getAttribute("viewBox");
+      var mvb = document.getElementById("mn-" + state.brand).getAttribute("viewBox");
+      document.querySelectorAll("use[data-wm]").forEach(function (u) {
+        u.setAttribute("href", "#wm-" + state.brand);
+        u.ownerSVGElement.setAttribute("viewBox", wvb);
+      });
+      document.querySelectorAll("use[data-mn]").forEach(function (u) {
+        u.setAttribute("href", "#mn-" + state.brand);
+        u.ownerSVGElement.setAttribute("viewBox", mvb);
+      });
+      document.querySelectorAll(".use").forEach(function (u) {
+        var active = u.getAttribute("data-brand") === state.brand;
+        u.setAttribute("aria-pressed", String(active));
+        u.textContent = active ? "En uso" : "Usar";
+      });
     }
 
     function applyState() {
@@ -905,30 +1103,34 @@
       btnL.setAttribute("aria-pressed", String(state.theme === "light"));
       btnD.setAttribute("aria-pressed", String(state.theme === "dark"));
       selPal.value = state.palette;
+      selBrand.value = state.brand;
       selHead.value = state.heading;
       selBody.value = state.body;
       renderPaletteTables(pal);
+      renderSurfaceKey(pal);
       renderContrast(pal);
       updateCaptions(pal);
+      updateBrand();
       persist();
     }
 
     btnL.addEventListener("click", function () { state.theme = "light"; applyState(); });
     btnD.addEventListener("click", function () { state.theme = "dark"; applyState(); });
     selPal.addEventListener("change", function () { state.palette = selPal.value; applyState(); });
+    selBrand.addEventListener("change", function () { state.brand = selBrand.value; applyState(); });
     selHead.addEventListener("change", function () { state.heading = selHead.value; applyState(); });
     selBody.addEventListener("change", function () { state.body = selBody.value; applyState(); });
+    document.querySelectorAll(".use").forEach(function (u) {
+      u.addEventListener("click", function () { state.brand = u.getAttribute("data-brand"); applyState(); });
+    });
     btnReset.addEventListener("click", function () {
-      state = { theme: DEFAULTS.theme, palette: DEFAULTS.palette, heading: DEFAULTS.heading, body: DEFAULTS.body };
+      state = { theme: DEFAULTS.theme, palette: DEFAULTS.palette, brand: DEFAULTS.brand, heading: DEFAULTS.heading, body: DEFAULTS.body };
       applyState();
     });
 
-    /* Panel abierto en escritorio, plegado en pantallas pequeñas:
-       se decide una vez con matchMedia; después el usuario manda. */
     var mq = window.matchMedia("(min-width: 861px)");
     ctrlPanel.open = mq.matches;
 
-    /* Margen de anclas = altura real de la barra (crece al abrir el panel). */
     function updateOffset() {
       var h = strip.getBoundingClientRect().height;
       root.style.setProperty("--anchor-offset", Math.ceil(h + 14) + "px");
