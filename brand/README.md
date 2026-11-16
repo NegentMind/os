@@ -19,7 +19,7 @@ exactos en `../AGENTS.md` §Marca y `media/remotion/src/tokens.ts`.
 | `brand-sheet.html` | Tablero de marca V3 (referencia visual vigente) |
 | `brand/specimens/` | Planchas y pruebas previas (wordmarks, avatares, capturas) |
 | `brand/exports/` | PNG/GIF finales listos para subir (avatar 500px, hero, banners) |
-| Notion · 🎨 Marca | Plataforma de marca: concepto, tokens, voz, reglas (fuera del repo) |
+| Notion · 🎨 Marca | Plataforma de marca: concepto, voz y reglas (fuera del repo; valores en `../AGENTS.md` §Marca) |
 | `docs/profile-README-{EN,ES}.md` | Espejos del perfil publicado (se regeneran, no se editan) |
 | `remotion/` | Proyecto Remotion propio para GIFs y PNGs de empresa/producto |
 
