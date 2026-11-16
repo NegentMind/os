@@ -7,15 +7,20 @@ Nivel workspace. Empieza por `README.md` para la orientación general.
 
 | Ruta | Qué es | Git |
 |---|---|---|
-| `os/` | **Monorepo privado**: specs/ strategy/ skills/ brand/ media/ web/ social/ + docs raíz | `NegentMind/os` · **privado** (origen de todo; espejo de este workspace) |
+| `os/` | **Monorepo privado**: specs/ skills/ brand/ media/ web/ social/ + docs raíz | `NegentMind/os` · **privado** (origen de todo; espejo de este workspace) |
 | `.github/` | Perfil + gobernanza (único público activo) | `NegentMind/.github` · público |
 | `brand/` | Casa de la marca: plataforma, tablero, exports, checklist | versionado en `os/` |
 | `media/` | Fábrica de imagen y video (`remotion/` + `hyperframes/` + `openmontage/`) | versionado en `os/` |
 | `web/` | Sitio + app (Next.js + Supabase + Cloudflare Pages) | versionado en `os/` |
 | `social/` | Hub social (`mcp-hub`) + automatización (`postiz/`, `n8n/`) + 7 redes | local (sin repo; `.env` con secretos, no commitear) |
-| `.tools/` | Scripts: `i18n-holons.py`, `gen-skills.py`, `drift-check.py` | local |
+| `.tools/` | Scripts: `gen-skills.py` | local |
 | `.opencode/` | **Sistema de ingeniería de VantaDB.** No es de Negent Mind | local, no tocar |
 | `.playwright-mcp/` / `.vscode/` | Artefactos de capturas / config del editor | local |
+
+**Estrategia, identidad, concepto de marca, decisiones e investigación viven en
+Notion** (página raíz «Negent Mind»: 🧭 Identidad y Estrategia · 🎨 Marca ·
+🧭 Registro de Decisiones · 🔬 Investigaciones y Revisiones). El repo conserva
+el cómo: código, specs y documentos que consumen herramientas.
 
 Identidad v1 (2026-11-11): Void `#08090C` · Bone `#EDEAE3` · Pulse `#8B7CFF`.
 Contacto: `negent@negentmind.com` · `negentmind.com` (pendiente compra).
@@ -35,9 +40,11 @@ GitHub renderiza **`profile/README.md`**, no el `README.md` de la raíz:
 
 ## Límites duros
 
-1. **VantaDB (`ness-e/Vantadb`) es de otro proyecto.** Leer está permitido. **Modificar,
-   commitear o reusar sus assets está prohibido.** Naranja `#FF5500`, la esfera y
-   Anton/SpaceMono se quedan allá. Ruptura total de marca con VantaDB.
+1. **VantaDB es el flagship de Negent Mind** (decisión 16-11-2026). Transferencia de
+   `ness-e/Vantadb` a la org pendiente (hito H2). Hasta entonces, sus cambios se hacen
+   en su propio repo. Sus assets de producto (naranja `#FF5500`, la esfera,
+   Anton/SpaceMono) no se usan en la marca Negent Mind hasta decidir la marca de
+   producto (Registro de Decisiones).
 2. **`.opencode/` no es de Negent Mind.** Task-system, agentes `vanta-*` y skills de
    VantaDB. **No mover, no modificar, no borrar.** (Por eso `opencode.json` vive en la
    raíz del workspace: es la config propia y OpenCode la carga desde el cwd.)
@@ -45,9 +52,9 @@ GitHub renderiza **`profile/README.md`**, no el `README.md` de la raíz:
    `node_modules/` y `dist/`. Solo `brand/exports/` sale hacia GitHub.
 4. **El perfil de GitHub está congelado.** Todo cambio de marca nace en `brand/` y se
    exporta; no se edita `profile/` a mano.
-5. **La estrategia es privada y evidenceada.** Toda afirmación de mercado cita su fuente;
-   si no está en `strategy/evidencia/02-evidencia-mercado.md`, no se afirma. Si un
-   documento contradice `strategy/NEGENT-MIND.md`, **`NEGENT-MIND.md` gana**.
+5. **La estrategia es privada y vive en Notion.** Toda afirmación de mercado cita su
+   fuente (Investigaciones y Revisiones en Notion). Si un documento local contradice
+   Notion, **Notion gana**.
 6. **Sin push sin orden explícita.**
 
 ---
@@ -65,10 +72,7 @@ NAME.md      English  ← principal, el que GitHub muestra
 NAME_ES.md   Español
 ```
 
-Los `README_ES.md` se tocan a mano. **Los `README.md` en inglés de los holones se
-regeneran**: `holons/<slug>/README.md` lo reescribe entero `.tools/i18n-holons.py`
-desde la tabla `HOLONS`; editarlo a mano no sirve. `ROOT` hardcodeado a
-`C:\Users\Eros\Negent Mind\negentmind\holons` (actualizar si cambia).
+Los `README_ES.md` se tocan a mano.
 
 ---
 
@@ -97,10 +101,9 @@ npm run typecheck      # debe salir exit 0 (tsc --noEmit)
 
 ## Marca (ley, no se duplica en otro archivo)
 
-Fuente de verdad: `brand/docs/brand-platform.md` (concepto, misión, voz) +
-`brand/brand-sheet.html` (mesa visual) + `media/remotion/src/tokens.ts` (valores).
-Checklist vivo: `brand/negentmind.md`. Espejos del perfil:
-`brand/docs/profile-README-{EN,ES}.md`.
+Concepto, misión y voz: **Notion · 🎨 Marca**. Valores: esta sección +
+`media/remotion/src/tokens.ts` + `brand/brand-sheet.html` (mesa visual).
+Espejos del perfil: `brand/docs/profile-README-{EN,ES}.md`.
 
 ```
 void    #08090C   fondo base dark-first (chroma ffmpeg: se recorta a alfa)
@@ -164,6 +167,4 @@ GIF single-play dual-theme (retícula + lockup + punto Pulse) + stills
 - Capturas antes de dar algo visual por terminado (`brand/specimens/`).
 - En repos Markdown: revisar el diff, sin enlaces relativos rotos.
 
-Open items (no son lurking bugs): colisión con `syntropyai.app`, disponibilidad de
-`syntropyos.com`, y si la relación Negent Mind ↔ VantaDB implica transferencia
-(hoy prohibida por el límite §1).
+Open item: transferencia de VantaDB a la org (hito H2).

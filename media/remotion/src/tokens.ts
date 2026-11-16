@@ -1,4 +1,4 @@
-/** Negent Mind brand tokens (ley). Ver docs/brand-platform.md */
+/** Negent Mind brand tokens (ley). Concept/voice: Notion - Marca; values here + os/AGENTS.md section Marca. */
 export const VOID = "#08090C";
 export const PANEL = "#0E131B";
 export const BONE = "#EDEAE3";

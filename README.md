@@ -7,13 +7,13 @@ Contacto: `negent@negentmind.com` · `negentmind.com` (dominio pendiente de comp
 
 | Ruta | Qué es |
 |---|---|
-| `os/` | **Monorepo privado** (`NegentMind/os`): specs, strategy, skills, brand, media, web, social + docs raíz. Origen de todo. |
+| `os/` | **Monorepo privado** (`NegentMind/os`): specs, skills, brand, media, web, social + docs raíz. Origen de todo. |
 | `.github/` | Perfil + gobernanza (único público activo, `NegentMind/.github`). |
 | `brand/` | Casa de la marca: plataforma, tablero, checklist, exports. |
 | `media/` | Fábrica de imagen y video (Remotion, HyperFrames, OpenMontage). |
 | `web/` | Sitio + app con login (Next.js 15 + React 19 + Supabase). Ver `web/README.md`. |
 | `social/` | Hub social + automatización (Postiz, n8n) + 7 redes. |
-| `.tools/` | Scripts del workspace (`i18n-holons.py`, `gen-skills.py`, `drift-check.py`). |
+| `.tools/` | Scripts del workspace (`gen-skills.py`). |
 | `.opencode/` | Sistema de ingeniería de VantaDB. No es de Negent Mind: no tocar. |
 
 Lee primero **`AGENTS.md`**: es la única instrucción para agentes del workspace

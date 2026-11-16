@@ -16,7 +16,7 @@ Sitio marketing + app con login de NegentMind. La home (modo Persuade) debe hace
 
 ## Positioning
 
-Negentropía aplicada: orden determinista sobre caos estocástico. Ningún vecino puede copiar con verdad el mecanismo "del ruido a la señal" porque es la tesis fundacional documentada en `strategy/NEGENT-MIND.md`.
+Negentropía aplicada: orden determinista sobre caos estocástico. Ningún vecino puede copiar con verdad el mecanismo "del ruido a la señal" porque es la tesis fundacional documentada en Notion (🧭 Identidad y Estrategia).
 
 ## Operating Context
 
@@ -37,7 +37,7 @@ Next.js 15 App Router + React 19 + Tailwind v4 + Supabase Auth (magic link). Rut
 
 ## Evidence on Hand
 
-- `brand/docs/brand-platform.md`, `brand/brand-sheet.html`, `media/remotion/src/tokens.ts`.
+- Notion · 🎨 Marca (concepto y voz), `brand/brand-sheet.html`, `media/remotion/src/tokens.ts`.
 - Contratos web: `README.md`, `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `DATA_MODELS.md`, `AGENTS.md`.
 - Investigación ascii-magic.com (2026-11-12): estilos ASCII, bloques, braille, dots/halftone, glitch/RGB split, scanlines/CRT, LED matrix, voxel, mosaicos.
 - Ausencias que no deben fabricarse: testimonios, clientes, benchmarks, precios, claims de capacidades no construidas.
