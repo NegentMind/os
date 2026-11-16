@@ -4,7 +4,7 @@
 
 > **Architectural blueprints and engineering standards for verifiable AI agents.**
 
-This repository serves as the technical specification layer for [Negent Mind](https://github.com/NegentMind).
+This folder holds the internal (private) technical specifications of [Negent Mind](https://github.com/NegentMind).
 
 > **Status: research / vision.** The modules below are a long-term capability map, not released products. The only shipped project is VantaDB (`v0.9.0`).
 

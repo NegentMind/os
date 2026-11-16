@@ -98,7 +98,7 @@ export const en = {
     label: "[ 03 / THE MODULES ]",
     title: "One engine shipping. A capability map beyond it.",
     qual: "vision, labelled as vision.",
-    sub: "The architecture is layered: a memory engine at the core, and a long-term map of capabilities around it — written as a public RFC set, not sold as products. Only VantaDB is released code today.",
+    sub: "The architecture is layered: a memory engine at the core, and a long-term map of capabilities around it — written as internal RFCs, not sold as products. Only VantaDB is released code today.",
     items: [
       {
         num: "S/01",
@@ -248,19 +248,19 @@ export const en = {
     label: "[ 05 / THE WORK ]",
     title: "How things get built here.",
     qual: "spec first, code second.",
-    sub: "The method is the message: written specifications, public review, honest status labels. Every project carries one of three: Active, Incubation or Vision.",
+    sub: "The method is the message: written specifications, evidence before claims, honest status labels. Every project carries one of three: Active, Incubation or Vision.",
     method: {
       title: "The specification pipeline",
       steps: [
         {
           name: "Write the spec",
           detail:
-            "Every capability starts as a formal RFC — problem, specification, dependencies — published before a line of code exists.",
+            "Every capability starts as a formal RFC — problem, specification, dependencies — written before a line of code exists.",
         },
         {
           name: "Public review",
           detail:
-            "RFCs are reviewed in the open. Comments, objections and benchmarks shape what gets built next.",
+            "Released code is reviewed in the open: issues, objections and benchmarks shape what gets built next.",
         },
         {
           name: "Then the release",
@@ -271,18 +271,18 @@ export const en = {
     },
     founder: {
       title: "One founder, working in the open.",
-      body: "Negent Mind is an independent, founder-led lab — not yet an incorporated company. No venture backing, no team page to inflate — the shipped engine, the written specification and this capability map are the full extent of the public work, stated at honest scale.",
+      body: "Negent Mind is an independent, founder-led lab — not yet an incorporated company. No venture backing, no team page to inflate — the shipped engine and this capability map are the full extent of the public work, stated at honest scale.",
     },
     contact: {
       title: "A direct line.",
-      body: "Questions about the architecture, the RFCs or contributing — one inbox, read by the person who wrote the code.",
+      body: "Questions about the architecture, VantaDB or contributing — one inbox, read by the person who wrote the code.",
       pending: "(available once negentmind.com is live)",
       fallback: "Until then, reach us on GitHub",
     },
     metrics: [
       { label: "Active engine", value: "1", unit: "", tone: "pulse" },
       { label: "In incubation", value: "1", unit: "", tone: "bone" },
-      { label: "Public specification", value: "1", unit: "RFC-01–04", tone: "fog" },
+      { label: "Written specifications", value: "4", unit: "RFC-01–04 · internal", tone: "fog" },
       { label: "License", value: "Apache-2.0", unit: "", tone: "fog" },
     ] as { label: string; value: string; unit: string; tone: Tone }[],
   },
@@ -399,7 +399,6 @@ export const en = {
     sub: "Negent Mind is an independent applied AI research lab. The engine is Apache-2.0: read it, fork it, embed it in your agent — and help decide what gets built next.",
     ctaRepo: displayUrl(VANTADB_REPO).replace("github.com/", ""),
     ctaOrg: "NegentMind org",
-    ctaSpecs: "Read the specs",
     cards: [
       {
         plan: "The substrate",
@@ -420,12 +419,12 @@ export const en = {
         plan: "The organization",
         amount: "Open",
         per: "specs before code",
-        desc: "Negent Mind publishes its capability specifications as public RFCs. Released code, work in incubation and vision are labelled as such.",
+        desc: "Negent Mind writes its capability specifications as internal RFCs; a public summary will live in the Handbook. Released code, work in incubation and vision are labelled as such.",
         inc: "HOW TO JOIN",
         rows: [
-          ["read", "the specification and the RFC pipeline"],
+          ["read", "the capability map and its status labels"],
           ["build", "good first issues on the engine repo"],
-          ["shape", "RFC reviews shape what gets built next"],
+          ["shape", "issues and benchmarks shape what gets built next"],
           ["follow", "direction and status in the Public Handbook"],
         ],
         cta: displayUrl(ORG_URL),
@@ -443,7 +442,7 @@ export const en = {
       },
       {
         q: "How do decisions get made?",
-        a: "Capabilities are written as specifications and reviewed in public; code ships with tests and evidence. The detailed roadmap is private. Direction, principles and project status live in the Public Handbook (publishing December 2026).",
+        a: "Capabilities are written as internal specifications; released code is reviewed in public, with tests and evidence. The detailed roadmap is private. Direction, principles and project status live in the Public Handbook (publishing December 2026).",
       },
       {
         q: "Is VantaDB ready for production?",

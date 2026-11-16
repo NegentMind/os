@@ -38,7 +38,6 @@ Public documents follow one language convention: `NAME.md` in English (primary) 
 | Repository | Visibility | What it is |
 |---|---|---|
 | [`NegentMind/.github`](https://github.com/NegentMind/.github) | public | This repository: organization profile and contribution policies |
-| [`NegentMind/negentmind`](https://github.com/NegentMind/negentmind) | public | Architecture specifications and RFCs (research/vision) |
 | [`ness-e/Vantadb`](https://github.com/ness-e/Vantadb) | public | VantaDB `v0.9.0` — currently at `ness-e/Vantadb`; moving to the NegentMind organization |
 
 ## Contact

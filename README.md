@@ -16,9 +16,7 @@ públicos/privados restantes son **espejos** de una carpeta de aquí: se edita e
 | Repo | Visibilidad | Qué es | Origen en `os/` |
 |---|---|---|---|
 | [`NegentMind/os`](https://github.com/NegentMind/os) | privado | Monorepo: specs, skills, brand, media, web, social + docs raíz | — |
-| [`NegentMind/negentmind`](https://github.com/NegentMind/negentmind) | público | README + SPECIFICATION EN/ES | espejo de [`specs/`](./specs/) |
 | [`NegentMind/.github`](https://github.com/NegentMind/.github) | público | Perfil del org + gobernanza | espejo de [`github-profile/`](./github-profile/) |
-| `NegentMind/skills` | privado | 5 skills del diagnóstico B2B (**congeladas**) | espejo de [`skills/`](./skills/) |
 | [`ness-e/Vantadb`](https://github.com/ness-e/Vantadb) | público | **VantaDB v0.9.0** (flagship): memoria persistente y búsqueda híbrida embebida para agentes. Transferencia a `NegentMind/vantadb` pendiente | repo propio (no vive aquí) |
 
 Estrategia, decisiones e investigación de mercado viven en **Notion** (privado),
@@ -29,9 +27,9 @@ capacidades de largo plazo (visión)**, no productos publicados.
 
 | Ruta | Qué es |
 |---|---|
-| `specs/` | Especificación de arquitectura (fuente del repo público `negentmind`). |
+| `specs/` | Especificación de arquitectura (carpeta interna; el repo público espejo se eliminó el 16-11-2026). |
 | `github-profile/` | Perfil + gobernanza del org (fuente de `NegentMind/.github`). |
-| `skills/` | Skills del diagnóstico B2B — experimento congelado. |
+| `skills/` | Skills del diagnóstico B2B — experimento congelado (carpeta interna; repo privado eliminado el 16-11-2026). |
 | `brand/` | Casa de la marca: tablero, exports, specimens. |
 | `media/` | Fábrica de imagen y video (Remotion, HyperFrames, OpenMontage). |
 | `web/` | Sitio + app (Next.js + Supabase). Ver `web/README.md`. |

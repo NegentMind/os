@@ -16,7 +16,7 @@ npm run dev
 ## Configuración
 
 Todas las URLs y flags viven en `lib/site.ts` (`SITE_URL`, `ORG_URL`,
-`VANTADB_REPO`, `SPECS_REPO`, `HANDBOOK_URL`, `APP_ENABLED`, `CONTACT_EMAIL`,
+`VANTADB_REPO`, `HANDBOOK_URL`, `APP_ENABLED`, `CONTACT_EMAIL`,
 `CONTACT_EMAIL_ENABLED`). No hardcodear URLs en componentes ni diccionarios.
 
 ## Estructura

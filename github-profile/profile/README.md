@@ -18,7 +18,6 @@
 |---|---|---|
 | [**VantaDB**](https://github.com/ness-e/Vantadb) | `v0.9.0` · Active | Persistent memory and hybrid search, embedded, for AI agents: a Rust/Python/TypeScript library that remembers across sessions — no server, no cloud. Currently at `ness-e/Vantadb`; moving to the NegentMind organization. |
 | **Scopegrain** | In incubation | Not yet released. |
-| [**Architecture specs**](https://github.com/NegentMind/negentmind) | Research / vision | Architecture specifications and RFCs. |
 
 Longer-term capability map (vision, not products) is described in the Public Handbook.
 

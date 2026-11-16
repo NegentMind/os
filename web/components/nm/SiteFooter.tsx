@@ -5,7 +5,6 @@ import {
   CONTACT_EMAIL_ENABLED,
   HANDBOOK_URL,
   ORG_URL,
-  SPECS_REPO,
   VANTADB_REPO,
 } from "@/lib/site";
 
@@ -55,14 +54,6 @@ export function SiteFooter({ dict }: { dict: Dict["footer"] }) {
           className="transition-colors hover:text-pulse"
         >
           GitHub
-        </a>
-        <a
-          href={SPECS_REPO}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-colors hover:text-pulse"
-        >
-          Specs
         </a>
         {HANDBOOK_URL ? (
           <a

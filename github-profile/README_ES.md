@@ -39,7 +39,6 @@ inglés.
 | Repositorio | Visibilidad | Qué es |
 |---|---|---|
 | [`NegentMind/.github`](https://github.com/NegentMind/.github) | público | Este repositorio: perfil de la organización y políticas de contribución |
-| [`NegentMind/negentmind`](https://github.com/NegentMind/negentmind) | público | Especificaciones de arquitectura y RFCs (investigación/visión) |
 | [`ness-e/Vantadb`](https://github.com/ness-e/Vantadb) | público | VantaDB `v0.9.0` — hoy en `ness-e/Vantadb`; en traslado a la organización NegentMind |
 
 ## Contacto

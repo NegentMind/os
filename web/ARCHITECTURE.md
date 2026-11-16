@@ -40,7 +40,7 @@ web/
 | `HANDBOOK_URL` | `NEXT_PUBLIC_HANDBOOK_URL` | `null` → texto sin enlace |
 | `APP_ENABLED` | `NEXT_PUBLIC_APP_ENABLED === "true"` | `false` → `/app`, `/login` 404 |
 | `CONTACT_EMAIL_ENABLED` | `NEXT_PUBLIC_CONTACT_EMAIL_ENABLED === "true"` | `false` → sin `mailto` |
-| `ORG_URL`, `VANTADB_REPO`, `SPECS_REPO`, `CONTACT_EMAIL` | constantes | — |
+| `ORG_URL`, `VANTADB_REPO`, `CONTACT_EMAIL` | constantes | — |
 
 `NEXT_PUBLIC_*` se incrustan en build: cambiar un flag exige rebuild.
 

@@ -20,9 +20,9 @@ para la orientación general. Las rutas sin prefijo son relativas a `os/`.
 
 | Ruta | Qué es | Git |
 |---|---|---|
-| `specs/` | Especificación de arquitectura (holones = mapa de capacidades, visión) | espejo → `NegentMind/negentmind` · público |
+| `specs/` | Especificación de arquitectura (holones = mapa de capacidades, visión) | interno en `os/` (repo público eliminado 16-11-2026; respaldo en `C:\Users\Eros\Backups`) |
 | `github-profile/` | Perfil del org (`profile/`) + gobernanza | espejo → `NegentMind/.github` · público |
-| `skills/` | 5 skills del diagnóstico B2B — **experimento congelado** | espejo → `NegentMind/skills` · privado |
+| `skills/` | 5 skills del diagnóstico B2B — **experimento congelado** | interno en `os/` (repo privado eliminado 16-11-2026; respaldo en `C:\Users\Eros\Backups`) |
 | `brand/` | Casa de la marca: tablero, exports, specimens | versionado en `os/` |
 | `media/` | Fábrica de imagen y video (`remotion/` + `hyperframes/` + `openmontage/`) | versionado en `os/` |
 | `web/` | Sitio + app (Next.js + Supabase; despliegue en Cloudflare Workers vía `@opennextjs/cloudflare`, ver `web/DEPLOY.md`) | versionado en `os/` |
@@ -34,8 +34,8 @@ VantaDB **no vive aquí**: repo propio `ness-e/Vantadb` (v0.9.0; transferencia a
 
 ### Espejos (regla)
 
-`specs/`, `github-profile/` y `skills/` son la **fuente**; los repos
-`NegentMind/negentmind`, `NegentMind/.github` y `NegentMind/skills` son espejos.
+`github-profile/` es la **fuente**; el repo `NegentMind/.github` es su espejo
+(el único que queda tras eliminar `negentmind` y `skills` el 16-11-2026).
 **Se edita siempre en `os/`** y después se sincroniza al repo espejo (el push lo hace
 el fundador). No editar el espejo directamente: el siguiente sync lo pisaría.
 

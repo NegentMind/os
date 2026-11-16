@@ -19,8 +19,6 @@ export const ORG_URL = "https://github.com/NegentMind";
  */
 export const VANTADB_REPO = "https://github.com/ness-e/Vantadb";
 
-/** Public specification repository (SPECIFICATION.md, RFC-01–04). */
-export const SPECS_REPO = "https://github.com/NegentMind/negentmind";
 
 /** Public Handbook. `null` until published: render as non-link text. */
 export const HANDBOOK_URL: string | null =

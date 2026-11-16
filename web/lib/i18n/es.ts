@@ -93,7 +93,7 @@ export const es: Dict = {
     label: "[ 03 / LOS MÓDULOS ]",
     title: "Un motor publicado. Un mapa de capacidades más allá.",
     qual: "visión, etiquetada como visión.",
-    sub: "La arquitectura es por capas: un motor de memoria en el núcleo y un mapa de capacidades a largo plazo a su alrededor — escrito como un conjunto público de RFCs, no vendido como productos. Hoy solo VantaDB es código publicado.",
+    sub: "La arquitectura es por capas: un motor de memoria en el núcleo y un mapa de capacidades a largo plazo a su alrededor — escrito como RFCs internos, no vendido como productos. Hoy solo VantaDB es código publicado.",
     items: [
       {
         num: "S/01",
@@ -227,19 +227,19 @@ export const es: Dict = {
     label: "[ 05 / EL TRABAJO ]",
     title: "Cómo se construye aquí.",
     qual: "primero la spec, después el código.",
-    sub: "El método es el mensaje: especificaciones escritas, revisión pública, etiquetas de estado honestas. Cada proyecto lleva una de tres: Activo, Incubación o Visión.",
+    sub: "El método es el mensaje: especificaciones escritas, evidencia antes que afirmaciones, etiquetas de estado honestas. Cada proyecto lleva una de tres: Activo, Incubación o Visión.",
     method: {
       title: "El pipeline de especificación",
       steps: [
         {
           name: "Escribir la spec",
           detail:
-            "Cada capacidad empieza como un RFC formal — problema, especificación, dependencias — publicado antes de que exista una línea de código.",
+            "Cada capacidad empieza como un RFC formal — problema, especificación, dependencias — escrito antes de que exista una línea de código.",
         },
         {
           name: "Revisión pública",
           detail:
-            "Los RFCs se revisan a la vista. Comentarios, objeciones y benchmarks orientan qué se construye después.",
+            "El código publicado se revisa a la vista: issues, objeciones y benchmarks orientan qué se construye después.",
         },
         {
           name: "Después la versión",
@@ -250,18 +250,18 @@ export const es: Dict = {
     },
     founder: {
       title: "Un fundador, trabajando a la vista.",
-      body: "Negent Mind es un laboratorio independiente dirigido por su fundador — aún no es una entidad empresarial constituida. Sin capital de riesgo, sin página de equipo que inflar — el motor entregado, la especificación escrita y este mapa de capacidades son toda la extensión del trabajo público, declarada a escala honesta.",
+      body: "Negent Mind es un laboratorio independiente dirigido por su fundador — aún no es una entidad empresarial constituida. Sin capital de riesgo, sin página de equipo que inflar — el motor entregado y este mapa de capacidades son toda la extensión del trabajo público, declarada a escala honesta.",
     },
     contact: {
       title: "Una línea directa.",
-      body: "Preguntas sobre la arquitectura, los RFCs o cómo contribuir — un solo buzón, leído por la persona que escribió el código.",
+      body: "Preguntas sobre la arquitectura, VantaDB o cómo contribuir — un solo buzón, leído por la persona que escribió el código.",
       pending: "(disponible cuando negentmind.com esté activo)",
       fallback: "Mientras tanto, escríbenos en GitHub",
     },
     metrics: [
       { label: "Motor activo", value: "1", unit: "", tone: "pulse" },
       { label: "En incubación", value: "1", unit: "", tone: "bone" },
-      { label: "Especificación pública", value: "1", unit: "RFC-01–04", tone: "fog" },
+      { label: "Especificaciones escritas", value: "4", unit: "RFC-01–04 · internas", tone: "fog" },
       { label: "Licencia", value: "Apache-2.0", unit: "", tone: "fog" },
     ],
   },
@@ -378,7 +378,6 @@ export const es: Dict = {
     sub: "Negent Mind es un laboratorio independiente de investigación aplicada en IA. El motor es Apache-2.0: léelo, haz fork, embébelo en tu agente — y ayuda a decidir qué se construye después.",
     ctaRepo: displayUrl(VANTADB_REPO).replace("github.com/", ""),
     ctaOrg: "NegentMind org",
-    ctaSpecs: "Lee las specs",
     cards: [
       {
         plan: "El substrato",
@@ -399,12 +398,12 @@ export const es: Dict = {
         plan: "La organización",
         amount: "Abierto",
         per: "specs antes que código",
-        desc: "Negent Mind publica sus especificaciones de capacidades como RFCs públicos. El código publicado, el trabajo en incubación y la visión se etiquetan como tales.",
+        desc: "Negent Mind escribe sus especificaciones de capacidades como RFCs internos; un resumen público vivirá en el Handbook. El código publicado, el trabajo en incubación y la visión se etiquetan como tales.",
         inc: "CÓMO SUMARSE",
         rows: [
-          ["lee", "la especificación y el pipeline de RFCs"],
+          ["lee", "el mapa de capacidades y sus etiquetas de estado"],
           ["construye", "good first issues en el repo del motor"],
-          ["define", "las revisiones de RFC orientan qué se construye"],
+          ["define", "issues y benchmarks orientan qué se construye"],
           ["sigue", "dirección y estado en el Public Handbook"],
         ],
         cta: displayUrl(ORG_URL),
@@ -422,7 +421,7 @@ export const es: Dict = {
       },
       {
         q: "¿Cómo se toman las decisiones?",
-        a: "Las capacidades se escriben como especificaciones y se revisan en público; el código se publica con tests y evidencia. La hoja de ruta detallada es privada. La dirección, los principios y el estado de los proyectos viven en el Public Handbook (se publica en diciembre de 2026).",
+        a: "Las capacidades se escriben como especificaciones internas; el código publicado se revisa en público, con tests y evidencia. La hoja de ruta detallada es privada. La dirección, los principios y el estado de los proyectos viven en el Public Handbook (se publica en diciembre de 2026).",
       },
       {
         q: "¿VantaDB está lista para producción?",

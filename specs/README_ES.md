@@ -4,7 +4,7 @@
 
 > **Modelos arquitectónicos y estándares de ingeniería para agentes de IA verificables.**
 
-Este repositorio alberga la capa de especificaciones técnicas de [Negent Mind](https://github.com/NegentMind).
+Esta carpeta contiene las especificaciones técnicas internas (privadas) de [Negent Mind](https://github.com/NegentMind).
 
 > **Estado: investigación / visión.** Los módulos de abajo son un mapa de capacidades de largo plazo, no productos publicados. El único proyecto publicado es VantaDB (`v0.9.0`).
 

@@ -18,7 +18,7 @@ import { Reveal } from "@/components/nm/Reveal";
 import { TerminalDemo } from "@/components/nm/TerminalDemo";
 import { Faq } from "@/components/nm/Faq";
 import { getDictionary, isLocale } from "@/lib/i18n";
-import { ORG_URL, SPECS_REPO, VANTADB_REPO } from "@/lib/site";
+import { ORG_URL, VANTADB_REPO } from "@/lib/site";
 
 type Cell = boolean | "partial";
 
@@ -358,17 +358,6 @@ export default async function Home({
               >
                 <a href={ORG_URL} target="_blank" rel="noopener noreferrer">
                   {d.oss.ctaOrg}
-                  <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="font-mono tracking-[0.08em]"
-              >
-                <a href={SPECS_REPO} target="_blank" rel="noopener noreferrer">
-                  {d.oss.ctaSpecs}
                   <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </a>
               </Button>

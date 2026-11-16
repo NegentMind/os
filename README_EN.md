@@ -16,9 +16,7 @@ repos are **mirrors** of a folder in here: edit in `os/`, then sync (the founder
 | Repo | Visibility | What it is | Source in `os/` |
 |---|---|---|---|
 | [`NegentMind/os`](https://github.com/NegentMind/os) | private | Monorepo: specs, skills, brand, media, web, social + root docs | — |
-| [`NegentMind/negentmind`](https://github.com/NegentMind/negentmind) | public | README + SPECIFICATION EN/ES | mirror of [`specs/`](./specs/) |
 | [`NegentMind/.github`](https://github.com/NegentMind/.github) | public | Org profile + governance | mirror of [`github-profile/`](./github-profile/) |
-| `NegentMind/skills` | private | 5 B2B diagnostic skills (**frozen**) | mirror of [`skills/`](./skills/) |
 | [`ness-e/Vantadb`](https://github.com/ness-e/Vantadb) | public | **VantaDB v0.9.0** (flagship): embedded persistent memory and hybrid search for AI agents. Transfer to `NegentMind/vantadb` pending | own repo (not here) |
 
 Strategy, decisions and market research live in **Notion** (private), not in the repo
