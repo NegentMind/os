@@ -30,7 +30,8 @@ El conjunto completo de principios se describe en el Public Handbook.
 
 ### Conectar
 
-- **Preguntas y bugs**: GitHub Issues (o Discussions, donde estén habilitadas) en el repositorio correspondiente.
+- **Preguntas e ideas**: [GitHub Discussions](https://github.com/NegentMind/.github/discussions).
+- **Bugs**: GitHub Issues en el repositorio correspondiente.
 - **Contribuir**: lee la [guía de contribución](https://github.com/NegentMind/.github/blob/main/CONTRIBUTING_ES.md) — fork, rama y pull request con tests (y un benchmark reproducible si afecta al rendimiento) y una explicación de qué cambia y por qué. Las contribuciones se aceptan bajo Apache-2.0.
 - **Seguridad**: lee la [política de seguridad](https://github.com/NegentMind/.github/blob/main/SECURITY_ES.md) y reporta en privado — nunca en issues públicos.
 - **Public Handbook**: se publica en diciembre de 2026. <!-- HANDBOOK_URL: add when published -->

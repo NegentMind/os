@@ -43,7 +43,7 @@ Public documents follow one language convention: `NAME.md` in English (primary) 
 
 ## Contact
 
-Use GitHub Issues (or Discussions, where enabled) in the relevant repository. For
+Questions and ideas: [GitHub Discussions](https://github.com/NegentMind/.github/discussions). Bugs: GitHub Issues in the relevant repository. For
 vulnerabilities, follow [`SECURITY.md`](./SECURITY.md). See [`SUPPORT.md`](./SUPPORT.md).
 
 ## License

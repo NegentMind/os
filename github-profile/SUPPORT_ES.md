@@ -9,7 +9,7 @@
 | Reporte de bug | GitHub Issues del repositorio correspondiente (formulario de bug) |
 | Solicitud de funcionalidad | GitHub Issues del repositorio correspondiente (formulario de funcionalidad) |
 | Resultados de benchmark | GitHub Issues del repositorio correspondiente (formulario de benchmark) |
-| Pregunta o ayuda de uso | GitHub Discussions del repositorio correspondiente, donde estén habilitadas; si no, GitHub Issues |
+| Pregunta o ayuda de uso | [GitHub Discussions](https://github.com/NegentMind/.github/discussions) (categoría Q&A) |
 | Vulnerabilidad de seguridad | Nunca en público — sigue [SECURITY_ES.md](./SECURITY_ES.md) |
 | Problema de conducta | En privado — ver [CODE_OF_CONDUCT_ES.md](./CODE_OF_CONDUCT_ES.md) |
 

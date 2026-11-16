@@ -44,7 +44,7 @@ inglés.
 
 ## Contacto
 
-Usa GitHub Issues (o Discussions, donde estén habilitadas) en el repositorio correspondiente.
+Preguntas e ideas: [GitHub Discussions](https://github.com/NegentMind/.github/discussions). Bugs: GitHub Issues en el repositorio correspondiente.
 Para vulnerabilidades, sigue [`SECURITY_ES.md`](./SECURITY_ES.md). Ver
 [`SUPPORT_ES.md`](./SUPPORT_ES.md).
 

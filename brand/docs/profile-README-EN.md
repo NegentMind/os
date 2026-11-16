@@ -30,7 +30,8 @@ The full set of principles is described in the Public Handbook.
 
 ### Connect
 
-- **Questions and bugs**: GitHub Issues (or Discussions, where enabled) in the relevant repository.
+- **Questions and ideas**: [GitHub Discussions](https://github.com/NegentMind/.github/discussions).
+- **Bugs**: GitHub Issues in the relevant repository.
 - **Contributing**: read the [contributing guide](https://github.com/NegentMind/.github/blob/main/CONTRIBUTING.md) — fork, branch and open a pull request with tests (plus a reproducible benchmark for performance changes) and an explanation of what changed and why. Contributions are under Apache-2.0.
 - **Security**: read the [security policy](https://github.com/NegentMind/.github/blob/main/SECURITY.md) and report privately — never in public issues.
 - **Public Handbook**: publishing December 2026. <!-- HANDBOOK_URL: add when published -->

@@ -9,7 +9,7 @@
 | Bug report | GitHub Issues in the relevant repository (bug report form) |
 | Feature request | GitHub Issues in the relevant repository (feature request form) |
 | Benchmark results | GitHub Issues in the relevant repository (benchmark form) |
-| Question or usage help | GitHub Discussions of the relevant repository, where enabled; otherwise GitHub Issues |
+| Question or usage help | [GitHub Discussions](https://github.com/NegentMind/.github/discussions) (Q&A category) |
 | Security vulnerability | Never in public — follow [SECURITY.md](./SECURITY.md) |
 | Conduct issue | Privately — see [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) |
 

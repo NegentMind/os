@@ -73,5 +73,5 @@ contributions are credited in the release notes of repositories that keep them.
 
 ## Contact
 
-GitHub Issues (or Discussions, where enabled) in the relevant repository. See
+Questions and ideas: [GitHub Discussions](https://github.com/NegentMind/.github/discussions). Bugs: GitHub Issues in the relevant repository. See
 [SUPPORT.md](./SUPPORT.md).
