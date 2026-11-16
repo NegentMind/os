@@ -1,0 +1,60 @@
+name: Benchmark report
+description: Share reproducible performance results (regression, comparison or measurement).
+title: "bench: "
+labels: ["benchmark"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Results are only actionable if someone else can reproduce them. Fill in every
+        required field.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What was measured and the headline result.
+    validations:
+      required: true
+  - type: textarea
+    id: methodology
+    attributes:
+      label: Methodology
+      description: Workload, operations measured, warm-up, number of runs, metrics (latency percentiles, throughput, recall, memory), and how they were computed.
+    validations:
+      required: true
+  - type: textarea
+    id: dataset
+    attributes:
+      label: Dataset
+      description: Name and source (URL), size, dimensions, and any preprocessing. Synthetic data must include the generator and seed.
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware and environment
+      description: CPU model and cores, RAM, storage type, OS, runtime versions, and the version or commit benchmarked.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Exact commands, scripts or a link to the benchmark code.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: results
+    attributes:
+      label: Results
+      description: Raw numbers (table or attached output), including variance across runs. Include the baseline when comparing.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: Another person can reproduce these results with the information above.
+          required: true

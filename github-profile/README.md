@@ -1,97 +1,51 @@
-﻿# NegentMind
-
 <div align="right"><a href="./README_ES.md">Español</a> | English</div>
 
-<p align="center"><strong>Order out of chaos for the age of AI agents.</strong></p>
+# Negent Mind — `.github`
 
-<p align="center"><em>Infrastructure that turns operational chaos into systems you can trust.</em></p>
+This is the special `.github` repository of the [NegentMind](https://github.com/NegentMind)
+organization. It holds two things:
 
-This is the `.github` repository of **NegentMind**. It holds two distinct things, and
-keeping them apart is the point of this repository:
+- **The organization profile** — `profile/README.md` is what renders on
+  [github.com/NegentMind](https://github.com/NegentMind). The root `README.md` (this file)
+  is not shown there.
+- **Organization-wide defaults** — contribution, security and conduct policies and the
+  issue/PR templates. GitHub applies them to every repository in the organization that does
+  not define its own.
 
-| | |
+Manifesto, principles, governance and the long-term capability map live in the
+**Public Handbook — publishing December 2026**. <!-- HANDBOOK_URL: add when published -->
+
+## Files
+
+| File | Purpose |
 |---|---|
-| [`profile/`](./profile/) | The **organization profile** — this is what renders on [github.com/NegentMind](https://github.com/NegentMind) |
-| The repository root | **Governance and community documents** — the rules that apply to every repository in the organization |
+| [`profile/README.md`](./profile/README.md) · [ES](./profile/README_ES.md) | Organization profile |
+| [`CONTRIBUTING.md`](./CONTRIBUTING.md) · [ES](./CONTRIBUTING_ES.md) | How to contribute, quality policy, licensing of contributions |
+| [`SECURITY.md`](./SECURITY.md) · [ES](./SECURITY_ES.md) | How to report a vulnerability privately |
+| [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) · [ES](./CODE_OF_CONDUCT_ES.md) | Contributor Covenant 2.1 and how to report conduct issues |
+| [`SUPPORT.md`](./SUPPORT.md) · [ES](./SUPPORT_ES.md) | Where to ask questions and report bugs |
+| [`TRADEMARK.md`](./TRADEMARK.md) | Use of the Negent Mind, VantaDB and Scopegrain names and marks |
+| [`CONTRIBUTORS.md`](./CONTRIBUTORS.md) · [ES](./CONTRIBUTORS_ES.md) | Maintainers and contributors |
+| [`LICENSE`](./LICENSE) · [`NOTICE`](./NOTICE) | Apache License 2.0 |
+| [`ISSUE_TEMPLATE/`](./ISSUE_TEMPLATE/) | Default issue forms: bug report, feature request, benchmark |
+| [`PULL_REQUEST_TEMPLATE.md`](./PULL_REQUEST_TEMPLATE.md) | Default pull request template |
 
-GitHub renders `profile/README.md`, not the root `README.md`. That is why the two are
-separate documents with separate jobs.
+Public documents follow one language convention: `NAME.md` in English (primary) and
+`NAME_ES.md` in Spanish. Templates, `TRADEMARK.md`, `LICENSE` and `NOTICE` are English only.
 
----
-
-## The organization profile
-
-This is the page a visitor lands on.
-
-| | |
-|---|---|
-| [🇬🇧 English](./profile/README.md) | primary |
-| [🇪🇸 Español](./profile/README_ES.md) | option |
-
----
-
-## Governance documents
-
-These are GitHub community health files. Because they live here, they apply to **every
-repository in the organization** that does not override them — including
-[`NEGENT MIND`](https://github.com/NegentMind/NEGENT MIND).
-
-| Document | English | Español |
-|---|---|---|
-| Manifesto | [MANIFESTO.md](./MANIFESTO.md) | [MANIFESTO_ES.md](./MANIFESTO_ES.md) |
-| Roadmap | [ROADMAP.md](./ROADMAP.md) | [ROADMAP_ES.md](./ROADMAP_ES.md) |
-| Contributing | [CONTRIBUTING.md](./CONTRIBUTING.md) | [CONTRIBUTING_ES.md](./CONTRIBUTING_ES.md) |
-| Code of conduct | [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) | [CODE_OF_CONDUCT_ES.md](./CODE_OF_CONDUCT_ES.md) |
-| Security policy | [SECURITY.md](./SECURITY.md) | [SECURITY_ES.md](./SECURITY_ES.md) |
-| Contributors | [CONTRIBUTORS.md](./CONTRIBUTORS.md) | [CONTRIBUTORS_ES.md](./CONTRIBUTORS_ES.md) |
-| License | [LICENSE](./LICENSE) · [NOTICE](./NOTICE) | — |
-
-### Language convention
-
-**Every public document in this organization is written in English first, with a Spanish
-version alongside it.** The pattern is fixed:
-
-```
-NAME.md        English  ← primary, the one GitHub shows
-NAME_ES.md     Español
-```
-
-This applies to the profile, the manifesto, the roadmap, the monorepo and all nine holons.
-English is the primary because the code, the commits and the developer audience are
-English. Spanish exists because the customers are Venezuelan, not because it is secondary
-in importance.
-
----
-
-## Repositories in this organization
+## Repositories
 
 | Repository | Visibility | What it is |
 |---|---|---|
-| [`.github`](https://github.com/NegentMind/.github) | public | This one. Organization profile and governance |
-| [`NEGENT MIND`](https://github.com/NegentMind/NEGENT MIND) | public | **The nine holons**, one directory each. The substrate |
-| [`ness-e/Vantadb`](https://github.com/ness-e/Vantadb) | public | The memory substrate. Released library, its own repo, v0.7.0 in production |
-| `strategy` | **private** | Master definition, market evidence, business model, competitive analysis |
-
-Nine `NEGENT MIND-<holon>` repositories were **deleted** on 29 September 2026 after their
-contents were merged into the `NEGENT MIND` monorepo. Their history lives inside the monorepo.
-
-The private `strategy` repository holds what the public one must not: pricing,
-competitive analysis, risk register and the market evidence with its sources. Mixing "this
-is what we believe" with "this is what we know about the market" degrades both.
-
----
+| [`NegentMind/.github`](https://github.com/NegentMind/.github) | public | This repository: organization profile and contribution policies |
+| [`NegentMind/negentmind`](https://github.com/NegentMind/negentmind) | public | Architecture specifications and RFCs (research/vision) |
+| [`ness-e/Vantadb`](https://github.com/ness-e/Vantadb) | public | VantaDB `v0.9.0` — currently at `ness-e/Vantadb`; moving to the NegentMind organization |
 
 ## Contact
 
-- 📧 [NegentMind.ia@gmail.com](mailto:NegentMind.ia@gmail.com)
-- 💬 [Discord](https://discord.gg/g8nqB3NtXt)
-
----
+Use GitHub Issues (or Discussions, where enabled) in the relevant repository. For
+vulnerabilities, follow [`SECURITY.md`](./SECURITY.md). See [`SUPPORT.md`](./SUPPORT.md).
 
 ## License
 
-Apache 2.0 — see [LICENSE](./LICENSE) and [NOTICE](./NOTICE).
-
----
-
-**NegentMind** — Order out of chaos.
+Apache License 2.0 — see [`LICENSE`](./LICENSE) and [`NOTICE`](./NOTICE).

@@ -1,21 +1,43 @@
 # Negent Mind — instrucciones para agentes
 
 Único AGENTS.md del workspace (unifica los anteriores de raíz, `brand/` y `social/`).
-Nivel workspace. Empieza por `README.md` para la orientación general.
+Vive en `os/`; la raíz del workspace solo tiene un puntero. Empieza por `README.md`
+para la orientación general. Las rutas sin prefijo son relativas a `os/`.
 
 ## Mapa del workspace
 
+**Raíz del workspace** (`C:\Users\Eros\Negent Mind`, repo git local sin remoto):
+
 | Ruta | Qué es | Git |
 |---|---|---|
-| `os/` | **Monorepo privado**: specs/ skills/ brand/ media/ web/ social/ + docs raíz | `NegentMind/os` · **privado** (origen de todo; espejo de este workspace) |
-| `.github/` | Perfil + gobernanza (único público activo) | `NegentMind/.github` · público |
-| `brand/` | Casa de la marca: plataforma, tablero, exports, checklist | versionado en `os/` |
-| `media/` | Fábrica de imagen y video (`remotion/` + `hyperframes/` + `openmontage/`) | versionado en `os/` |
-| `web/` | Sitio + app (Next.js + Supabase + Cloudflare Pages) | versionado en `os/` |
-| `social/` | Hub social (`mcp-hub`) + automatización (`postiz/`, `n8n/`) + 7 redes | local (sin repo; `.env` con secretos, no commitear) |
-| `.tools/` | Scripts: `gen-skills.py` | local |
+| `os/` | **Monorepo privado**: origen de todo (ver tabla siguiente) | `NegentMind/os` · **privado** |
+| `.github/` | Clon de trabajo del repo público del perfil + gobernanza | `NegentMind/.github` · público (espejo de `os/github-profile/`) |
+| `templates/`, `webTemplates/`, `shots/` | Referencias de diseño locales (plantillas y capturas de terceros) | **ignorados por git; nunca se publican** |
 | `.opencode/` | **Sistema de ingeniería de VantaDB.** No es de Negent Mind | local, no tocar |
-| `.playwright-mcp/` / `.vscode/` | Artefactos de capturas / config del editor | local |
+| `.playwright-mcp/` / `.vscode/` | Artefactos de capturas / config del editor | local, ignorados |
+
+**Dentro de `os/`:**
+
+| Ruta | Qué es | Git |
+|---|---|---|
+| `specs/` | Especificación de arquitectura (holones = mapa de capacidades, visión) | espejo → `NegentMind/negentmind` · público |
+| `github-profile/` | Perfil del org (`profile/`) + gobernanza | espejo → `NegentMind/.github` · público |
+| `skills/` | 5 skills del diagnóstico B2B — **experimento congelado** | espejo → `NegentMind/skills` · privado |
+| `brand/` | Casa de la marca: tablero, exports, specimens | versionado en `os/` |
+| `media/` | Fábrica de imagen y video (`remotion/` + `hyperframes/` + `openmontage/`) | versionado en `os/` |
+| `web/` | Sitio + app (Next.js + Supabase; despliegue en Cloudflare Workers vía `@opennextjs/cloudflare`, ver `web/DEPLOY.md`) | versionado en `os/` |
+| `social/` | Hub social (`mcp-hub`) + automatización (`postiz/`, `n8n/`) + carpetas por red. **Tooling**, no canales de comunidad | versionado en `os/` (`.env` con secretos, nunca commitear) |
+| `.tools/` | Scripts: `gen-skills.py` (congelado) | versionado en `os/` |
+
+VantaDB **no vive aquí**: repo propio `ness-e/Vantadb` (v0.9.0; transferencia a
+`NegentMind/vantadb` pendiente).
+
+### Espejos (regla)
+
+`specs/`, `github-profile/` y `skills/` son la **fuente**; los repos
+`NegentMind/negentmind`, `NegentMind/.github` y `NegentMind/skills` son espejos.
+**Se edita siempre en `os/`** y después se sincroniza al repo espejo (el push lo hace
+el fundador). No editar el espejo directamente: el siguiente sync lo pisaría.
 
 **Estrategia, identidad, concepto de marca, decisiones e investigación viven en
 Notion** (página raíz «Negent Mind»: 🧭 Identidad y Estrategia · 🎨 Marca ·
@@ -25,14 +47,14 @@ el cómo: código, specs y documentos que consumen herramientas.
 Identidad v1 (2026-11-11): Void `#08090C` · Bone `#EDEAE3` · Pulse `#8B7CFF`.
 Contacto: `negent@negentmind.com` · `negentmind.com` (pendiente compra).
 
-### Los dos documentos de `.github/`
+### Los dos documentos de `.github/` (fuente: `github-profile/`)
 
 GitHub renderiza **`profile/README.md`**, no el `README.md` de la raíz:
 
-- `profile/` → lo que se ve en github.com/NegentMind (banner GIF dual, holones, enlaces).
+- `profile/` → lo que se ve en github.com/NegentMind (banner GIF dual, proyectos, enlaces).
   Los `src` relativos (`org-negentmind.gif`) resuelven dentro de `profile/`.
-- raíz → `MANIFESTO`, `ROADMAP`, `CONTRIBUTING`, `SECURITY`, `CODE_OF_CONDUCT`,
-  `CONTRIBUTORS`, `LICENSE`, `NOTICE`. Aplican a **todo** el org.
+- raíz → `CONTRIBUTING`, `SECURITY`, `CODE_OF_CONDUCT`, `CONTRIBUTORS`, `LICENSE`,
+  `NOTICE`. Aplican a **todo** el org. El roadmap es **privado** (Notion): no se publica.
 - En `profile/`, enlaces a otros documentos con **URLs absolutas** a
   `github.com/NegentMind/...`, no rutas relativas.
 
@@ -51,7 +73,7 @@ GitHub renderiza **`profile/README.md`**, no el `README.md` de la raíz:
 3. **`brand/` es local pero versionable**: su `.gitignore` excluye `out/`,
    `node_modules/` y `dist/`. Solo `brand/exports/` sale hacia GitHub.
 4. **El perfil de GitHub está congelado.** Todo cambio de marca nace en `brand/` y se
-   exporta; no se edita `profile/` a mano.
+   exporta; no se edita `github-profile/profile/` a mano.
 5. **La estrategia es privada y vive en Notion.** Toda afirmación de mercado cita su
    fuente (Investigaciones y Revisiones en Notion). Si un documento local contradice
    Notion, **Notion gana**.
@@ -63,7 +85,7 @@ GitHub renderiza **`profile/README.md`**, no el `README.md` de la raíz:
 
 - Commits **directos a `main`**, un solo autor, **Conventional Commits en inglés**.
 - `.github/CONTRIBUTING.md` documenta fork → rama → PR. **Es aspiracional.** No hay CI
-  ni plantillas de PR. Los merges del monorepo son `git subtree`, no merges de PR.
+  (las plantillas de issue/PR viven en `github-profile/`). Los merges del monorepo son `git subtree`, no merges de PR.
 
 ## Convención de idiomas (público)
 
@@ -140,6 +162,9 @@ GIF single-play dual-theme (retícula + lockup + punto Pulse) + stills
 
 ## Social (`social/` — reglas del hub)
 
+0. `social/` es **tooling** (MCP, automatización), no la lista de canales. Canales de
+   comunidad vigentes: GitHub + X (principal) + Reddit/HN en lanzamientos. **Discord
+   solo al llegar a 500 estrellas**; `social/discord/` no implica un canal abierto.
 1. MCP primario: `social-hub` (`mcp-hub/dist/index.js`). Config en `social/opencode.json`.
    No tocar `~/.config/opencode/opencode.json` ni otras carpetas.
 2. Legacy (`bluesky`, `linkedin`, `reddit`, `youtube-transcript`, `twitter-free`,

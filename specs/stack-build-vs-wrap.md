@@ -1,5 +1,8 @@
 # Herramientas, frameworks y MCP — qué existe y qué sirve
 
+> **Estado: evidencia histórica previa a la decisión del 16-11-2026 (estrategia en Notion).**
+> Las decisiones de esta página no son vigentes; los holones son visión, no productos.
+
 > Investigación del 29 de septiembre de 2026. Datos de la API de GitHub en la fecha:
 > estrellas, licencia, lenguaje y fecha del último push. Nada de esto es humo de
 > marketing: es lo que los repositorios dicen de sí mismos.
@@ -159,7 +162,7 @@ Temporal resuelve exactamente eso y es self-hosted.
 | **Execute** | Servidor MCP propio + auditoría propia. Consume MCP, no lo compite |
 | **Iris** | Sin herramienta externa: OCR propio sobre VantaDB. El mercado de OCR en la nube es exactamente el problema de soberanía |
 | **Orchestra** | Runtime propio. LangGraph/Mastra como referencia, no como dependencia |
-| **Sustrato** | Temporal para flujos largos. PostgreSQL de VantaDB para todo lo demás |
+| **Sustrato** | Temporal para flujos largos. VantaDB (motor embebido con WAL, no PostgreSQL) para todo lo demás |
 
 ---
 

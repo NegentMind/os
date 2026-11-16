@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/NegentMind/.github/blob/main/SECURITY.md
+    about: Never report vulnerabilities in public issues. Follow the security policy to report privately.
+  - name: VantaDB issues
+    url: https://github.com/ness-e/Vantadb/issues
+    about: VantaDB currently lives at ness-e/Vantadb. Open VantaDB issues there.

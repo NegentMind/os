@@ -1,5 +1,7 @@
 # Funciones ausentes en VantaDB — catálogo para verificar
 
+> **Snapshot 2026-10-01 (pre-v0.9.0).** Pendiente de re-verificar contra v0.9.0; migrar a GitHub Issues de VantaDB (tarea en Notion).
+
 > Análisis profundo del árbol `C:\Users\Eros\VantaDB Proyect\VantaDB` (lectura) + releases publicadas.
 > Solo funciones/capacidades que HOY no existen o no están completas. Cada una: explicación, ejemplo de uso esperado, dónde verificar y línea de resultado.
 > Leyenda de estado: **Pendiente** (falta verificar en release) · **Ausente-plan** (reconocida en backlog/roadmap) · **Ausente-sin-plan** (no está en su roadmap).

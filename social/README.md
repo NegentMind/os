@@ -5,6 +5,10 @@ otra carpeta, estos MCP no se cargan. Si arrancas desde aquí, se suman a tu
 config global (`~/.config/opencode/opencode.json`: playwright, metasearch,
 websearch, argus, notion, pencil).
 
+> **Alcance:** `social/` es tooling (MCP + automatización). No define los canales de
+> comunidad: hoy son GitHub + X (principal) + Reddit/HN en lanzamientos. Discord no es
+> canal de comunidad hasta llegar a 500 estrellas; su integración aquí es solo técnica.
+
 ## Visión: `social-hub` primero
 
 `mcp-hub/` es el MCP propio y autónomo (19 tools, `social_*`, v0.9). Suma a v0.8:
@@ -70,7 +74,7 @@ publican vía Buffer-direct (`social_post` provider `buffer` con `profileIds`).
 ## Uso
 
 ```powershell
-cd C:\Users\Eros\Negent Mind\social
+cd "C:\Users\Eros\Negent Mind\os\social"
 cd mcp-hub; npm install; npm run build; cd ..
 npx playwright install chromium   # una vez, para X/LinkedIn browser
 # copiar .env.example -> .env y rellenar solo lo que uses

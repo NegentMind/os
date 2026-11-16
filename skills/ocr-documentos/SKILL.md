@@ -6,6 +6,8 @@ description: >
   organizacion tiene documentos que nadie puede consultar.
 ---
 
+> **Estado: experimento congelado.** Instrumento de la hipótesis B2B de diagnóstico (Registro de Decisiones, Notion). No usar ni publicar hasta que esa hipótesis se reactive.
+
 # OCR y extracción de documentos
 
 > **Este es el prework de Iris.** Si sale bien, es el primer producto que existe.

@@ -1,5 +1,7 @@
 ﻿# NegentMind — Agent Infrastructure Specification
 
+> **Status: research/vision.** The holons described here are a long-term capability map, not released products. Only VantaDB is shipped (v0.9.0).
+
 > **Architectural Reference Model for Verifiable Agent Substrates.**
 
 This document unifies the architectural framework of NegentMind. Rather than treating capabilities as disconnected packages or empty repositories, NegentMind defines agent infrastructure as a layered modular system built on top of deterministic, persistent storage.
@@ -30,7 +32,7 @@ Autonomous agents require more than prompt orchestration: they require **state s
 
 ## 2. Core Substrate: VantaDB
 
-The active foundation of the entire architecture is **VantaDB** (`v0.7.0`), an embedded persistent storage and hybrid vector retrieval engine implemented in Rust.
+The active foundation of the entire architecture is **VantaDB** (`v0.9.0`), an embedded persistent storage and hybrid vector retrieval engine implemented in Rust.
 
 * **Embedded & In-Process:** Runs within the application lifecycle; zero network overhead.
 * **Hybrid Retrieval:** HNSW (Hierarchical Navigable Small World) for dense embeddings + BM25 for lexical matching.

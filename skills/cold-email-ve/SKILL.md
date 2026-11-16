@@ -6,6 +6,8 @@ description: >
   NegentMind.
 ---
 
+> **Estado: experimento congelado.** Instrumento de la hipótesis B2B de diagnóstico (Registro de Decisiones, Notion). No usar ni publicar hasta que esa hipótesis se reactive.
+
 # Primer contacto
 
 ## Principio

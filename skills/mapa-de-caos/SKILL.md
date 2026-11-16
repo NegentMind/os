@@ -6,6 +6,8 @@ description: >
   cliente pueda leer, discutir y archivar. Un mapa por caos encontrado.
 ---
 
+> **Estado: experimento congelado.** Instrumento de la hipótesis B2B de diagnóstico (Registro de Decisiones, Notion). No usar ni publicar hasta que esa hipótesis se reactive.
+
 # Mapa de Caos
 
 El entregable del diagnóstico. **Un documento por caos encontrado.** Si no se

@@ -9,7 +9,7 @@ Todo lo que genera imagen/video vive aquí. Código se versiona; `out/` y binari
 | `openmontage/` | OpenMontage (workflow) | Orquestador: brief→script→assets→compose; elige runtime (Remotion/HyperFrames/FFmpeg) |
 | `revideo/` | Revideo (TS headless) | Solo si se necesita render desatendido/CI estilo Motion Canvas |
 | `motion-canvas/` | Motion Canvas (archivado) | NO usar en proyectos nuevos (inactivo desde 2024); solo referencia |
-| `_shared/` | — | `assets/`, `footage/`, `audio/`, `fonts/` (con licencias), `renders/` finales |
+| `_shared/` | — | (por crear) `assets/`, `footage/`, `audio/`, `fonts/` (con licencias), `renders/` finales |
 
 ## Reglas
 

@@ -6,6 +6,8 @@ description: >
   cualquier llamada donde el objetivo es calificar y no vender.
 ---
 
+> **Estado: experimento congelado.** Instrumento de la hipótesis B2B de diagnóstico (Registro de Decisiones, Notion). No usar ni publicar hasta que esa hipótesis se reactive.
+
 # Entrevista de diagnóstico
 
 ## Antes de la llamada

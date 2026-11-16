@@ -1,18 +1,13 @@
 [Español](./CONTRIBUTORS_ES.md) | English
 
-# NegentMind Contributors
+# Negent Mind Contributors
 
-Thanks to everyone who contributes to NegentMind.
+Thanks to everyone who contributes to Negent Mind.
 
-## Core Team
+## Maintainers
 
-- [ness-e](https://github.com/ness-e)
+- [ness-e](https://github.com/ness-e) — founder, principal maintainer
 
 ## Contributors
 
-*(To be added here when external contributors arrive.)*
-
----
-
-**NegentMind** — Order out of chaos.
-
+*(Listed here as external contributors arrive.)*

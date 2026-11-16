@@ -14,5 +14,5 @@ Canónicos para publicar. Fuente: `../remotion/src/` (stills + GIF). Los PNG man
 | `avatar-light.png` | Variante clara 500×500 | Alternativa / docs |
 | `hero-dark.png` / `hero-light.png` | Hero 1920×640 con tagline | README, social |
 
-Copia del avatar vigente también en la raíz del workspace (`avatar-dark.png`).
-Contacto: `negent@negentmind.com` · `negentmind.com`.
+Esta carpeta es la única copia versionada del avatar (la duplicada en la raíz de `os/` se eliminó).
+Contacto: `negent@negentmind.com` · `negentmind.com` (dominio y correo pendientes de compra).

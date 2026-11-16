@@ -1,54 +1,80 @@
 [English](./CONTRIBUTING.md) | Español
 
-# Contribuir a NegentMind
+# Contribuir a Negent Mind
 
-Gracias por tu interés en contribuir.
+Gracias por tu interés en contribuir. Esta política aplica a cada repositorio de la
+organización NegentMind que no defina su propio `CONTRIBUTING.md`.
 
-## Cómo Contribuir
+## Formas de contribuir
 
-### 1. Reportar Bugs
+- **Reportar bugs**: abre un issue en el repositorio correspondiente con el formulario de
+  bug. Incluye qué hiciste, qué esperabas y qué ocurrió, además de versiones y entorno.
+- **Proponer funcionalidades**: abre una solicitud describiendo primero el problema y
+  después la solución propuesta.
+- **Reportar benchmarks**: usa el formulario de benchmark — metodología, dataset, hardware
+  y resultados reproducibles.
+- **Contribuir código o documentación**: haz un fork del repositorio, crea una rama
+  (`git checkout -b feat/descripcion-corta`), haz commit y abre un pull request.
+- **Ayudar a otros**: responde preguntas en issues y discussions.
 
-- Abre un issue en el repo correspondiente.
-- Incluye: descripción, pasos para reproducir, comportamiento esperado vs. real.
+Las vulnerabilidades de seguridad nunca se reportan en issues públicos — ver
+[SECURITY_ES.md](./SECURITY_ES.md).
 
-### 2. Contribuir Código
+## Política de calidad
 
-- Haz un fork del repo.
-- Crea una rama: `git checkout -b feature/tu-feature`
-- Haz tus cambios y commits.
-- Abre un Pull Request.
+Los pull requests se revisan por evidencia, no por intención:
 
-### 3. Escribir Documentación
+- **Tests**: el comportamiento nuevo viene con tests, y los tests existentes pasan.
+- **Benchmark**: si el cambio toca rendimiento, incluye un benchmark reproducible
+  (metodología, dataset, hardware, antes/después). No se aceptan afirmaciones de
+  rendimiento sin él.
+- **Explicación**: el autor explica qué cambió y por qué, y puede responder las preguntas
+  de la revisión.
 
-- Mejora docs existentes.
-- Agrega ejemplos.
-- Corrige errores.
+Resultados:
 
-### 4. Ayudar a la Comunidad
-
-- Responde issues.
-- Ayuda en Discord.
-- Comparte tu experiencia.
+- Los pull requests incompletos reciben solicitud de correcciones.
+- El código inseguro se bloquea hasta que se corrija.
+- El spam, el acoso o el sabotaje llevan a restricción o expulsión (ver el
+  [Código de Conducta](./CODE_OF_CONDUCT_ES.md)).
 
 ## Estándares
 
-- **Código**: Sigue el estilo del proyecto (Conventional Commits, pares EN/ES). Sin linter/formatter/CI configurados aún.
-- **Commits**: Mensajes descriptivos (ver [Conventional Commits](https://www.conventionalcommits.org/)).
-- **PRs**: Pequeños y enfocados (mejor 3 PRs de 100 líneas que 1 de 300).
+- **Commits**: [Conventional Commits](https://www.conventionalcommits.org/), en inglés.
+- **Pull requests**: pequeños y enfocados — tres PRs de 100 líneas se revisan mejor que
+  uno de 300.
+- **Herramientas**: cada repositorio documenta sus propios comandos de build, test y lint;
+  síguelos. No asumas herramientas que un repositorio no documente.
+- **Idioma**: código, commits y documentación técnica en inglés. Los documentos públicos
+  usan `NAME.md` (inglés, principal) y `NAME_ES.md` (español).
+
+## Forma de trabajo
+
+Async-first: la discusión ocurre por escrito en issues y pull requests. Las llamadas se
+hacen solo cuando hay una razón concreta. Roles: el fundador es el maintainer principal;
+con el tiempo pueden sumarse maintainers de confianza; el resto contribuye mediante pull
+requests.
+
+## Licencia de las contribuciones
+
+- Las contribuciones se licencian bajo la [Apache License 2.0](./LICENSE), la misma
+  licencia del proyecto (Apache-2.0, sección 5).
+- **Contribuciones externas no triviales**: se te puede pedir firmar un Acuerdo de Licencia
+  de Contribuidor Individual basado en el Apache ICLA. Este requisito se activa con el
+  primer pull request externo; se te indicará en el PR si aplica.
+- **Correcciones triviales de documentación** (erratas, enlaces rotos, redacción): basta
+  con el sign-off del [DCO](https://developercertificate.org/) — haz commit con
+  `git commit -s`.
+
+> Esto se basa en plantillas estándar y no constituye asesoría legal.
 
 ## Reconocimiento
 
-- Contribuidores aparecen en `CONTRIBUTORS_ES.md` de cada repo.
-- Contribuciones significativas se mencionan en changelogs.
+Los contribuidores aparecen en [CONTRIBUTORS_ES.md](./CONTRIBUTORS_ES.md), y las
+contribuciones significativas se reconocen en las notas de versión de los repositorios que
+las mantienen.
 
 ## Contacto
 
-- **Email**: [negent@negentmind.com](mailto:negent@negentmind.com)
-- **Discord**: [https://discord.gg/g8nqB3NtXt](https://discord.gg/g8nqB3NtXt)
-
----
-
-**NegentMind** — Orden desde el caos.
-
-
-
+GitHub Issues (o Discussions, donde estén habilitadas) en el repositorio correspondiente.
+Ver [SUPPORT_ES.md](./SUPPORT_ES.md).

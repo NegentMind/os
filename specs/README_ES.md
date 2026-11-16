@@ -1,4 +1,4 @@
-﻿# Negent Mind — Especificaciones y Arquitectura
+# Negent Mind — Especificaciones y Arquitectura
 
 <div align="right"><a href="./README.md">English</a> | Español</div>
 
@@ -6,12 +6,14 @@
 
 Este repositorio alberga la capa de especificaciones técnicas de [Negent Mind](https://github.com/NegentMind).
 
+> **Estado: investigación / visión.** Los módulos de abajo son un mapa de capacidades de largo plazo, no productos publicados. El único proyecto publicado es VantaDB (`v0.9.0`).
+
 ---
 
 ### Componentes Principales
 
-* 📖 **[SPECIFICATION_ES.md](./SPECIFICATION_ES.md)**: Modelo de arquitectura por capas (Memoria, Contexto, Verificación, Orquestación).
-* ⚡ **Sustrato en Producción**: [VantaDB](https://github.com/ness-e/Vantadb) (`v0.7.0`) — Motor embebido de memoria en Rust con recuperación HNSW + BM25.
+* **[SPECIFICATION_ES.md](./SPECIFICATION_ES.md)**: Modelo de arquitectura por capas (Memoria, Contexto, Verificación, Orquestación).
+* **Sustrato en Producción**: [VantaDB](https://github.com/ness-e/Vantadb) (`v0.9.0`) — Motor embebido de memoria en Rust con recuperación HNSW + BM25.
 
 ---
 

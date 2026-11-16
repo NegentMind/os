@@ -1,8 +1,8 @@
-# Negent Mind AI — Organización
+# Negent Mind — Casa de la marca
 
 Soluciones para ecosistemas de LLMs y agentes de IA. Negent Mind no es un LLM: construye la infraestructura alrededor — coherente, estable — porque un LLM sin buena infraestructura es caos.
 
-Creador de holones: todos en su ámbito, partes de un todo mayor. VantaDB (memoria local) es el primero. Marco oficial: **holón** (Koestler, 1967).
+Holones: mapa de capacidades (visión), no productos; VantaDB (memoria local) es el producto activo. Marco oficial: **holón** (Koestler, 1967).
 
 ## Dónde está la definición
 
@@ -17,11 +17,11 @@ exactos en `../AGENTS.md` §Marca y `media/remotion/src/tokens.ts`.
 | Ruta | Qué es |
 |---|---|
 | `brand-sheet.html` | Tablero de marca V3 (referencia visual vigente) |
-| `brand/specimens/` | Planchas y pruebas previas (wordmarks, avatares, capturas) |
-| `brand/exports/` | PNG/GIF finales listos para subir (avatar 500px, hero, banners) |
+| `specimens/` | Planchas y pruebas previas (wordmarks, avatares, capturas) |
+| `exports/` | PNG/GIF finales listos para subir (avatar 500px, hero, banners) |
 | Notion · 🎨 Marca | Plataforma de marca: concepto, voz y reglas (fuera del repo; valores en `../AGENTS.md` §Marca) |
 | `docs/profile-README-{EN,ES}.md` | Espejos del perfil publicado (se regeneran, no se editan) |
-| `remotion/` | Proyecto Remotion propio para GIFs y PNGs de empresa/producto |
+| `../media/remotion/` | Proyecto Remotion propio para GIFs y PNGs de empresa/producto |
 
 ## Reglas
 

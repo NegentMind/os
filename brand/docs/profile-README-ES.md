@@ -1,34 +1,35 @@
-﻿<a href="https://discord.gg/g8nqB3NtXt"><img align="right" src="https://img.shields.io/badge/NEGENT MIND-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="NEGENT MIND on Discord"></a>
-<a href="https://opensource.org/licenses/Apache-2.0"><img align="right" src="https://img.shields.io/badge/Apache_2.0-181717?style=for-the-badge&logoColor=white" alt="Apache 2.0"></a>
-<div align="left"><a href="./README.md">English</a> | Español</div>
+﻿<a href="https://www.apache.org/licenses/LICENSE-2.0"><img align="right" src="https://img.shields.io/badge/license-Apache--2.0-8B7CFF?style=flat-square" alt="Licencia: Apache-2.0"></a>
+<div align="left"><a href="https://github.com/NegentMind/.github/blob/main/profile/README.md">English</a> | Español</div>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="org-negentmind.gif">
   <img src="org-negentmind-light.gif" alt="Logotipo de Negent Mind animándose hasta su posición" width="960">
 </picture>
 
-<p align="center"><strong>Orden desde el caos para la era de los agentes de IA.</strong></p>
+<p align="center"><strong>Applied AI Research &amp; Product Engineering</strong> — infraestructura para IA agéntica persistente, controlable, eficiente y confiable.</p>
+
+<p align="center"><sub>Laboratorio independiente; aún no es una entidad empresarial constituida.</sub></p>
 
 ---
 
-### ¿Qué es Negent Mind?
+### Qué construimos
 
-**Negent Mind** desarrolla infraestructura determinista y soberana para agentes autónomos. Mientras los modelos de lenguaje aportan inteligencia estadística, los sistemas operativos demandan memoria predecible, contexto verificado y estados auditables. Aislamos la inferencia probabilística detrás de esquemas estrictos y almacenamiento persistente con garantías ACID.
-
----
-
-### Repositorios del Ecosistema
-
-| Repositorio | Estado | Enfoque |
+| Proyecto | Estado | Qué es |
 |---|---|---|
-| [**`VantaDB`**](https://github.com/ness-e/Vantadb) | `v0.7.0` (Activo) | Motor embebido de memoria persistente en Rust. Búsqueda híbrida HNSW + BM25, MVCC y cero latencia de red. |
-| [**`negentmind`**](https://github.com/NegentMind/negentmind) | Especificaciones | Modelos de referencia arquitectónica, RFCs y estándares para sistemas de agentes verificables. |
-| [**`.github`**](https://github.com/NegentMind/.github) | Activo | Perfil institucional, manifiesto de ingeniería y roadmap público. |
+| [**VantaDB**](https://github.com/ness-e/Vantadb) | `v0.9.0` · Activo | Memoria persistente y búsqueda híbrida, embebida, para agentes de IA: una biblioteca Rust/Python/TypeScript que recuerda entre sesiones — sin servidor, sin nube. Hoy en `ness-e/Vantadb`; en traslado a la organización NegentMind. |
+| **Scopegrain** | En incubación | Aún no publicado. |
+| [**Especificaciones de arquitectura**](https://github.com/NegentMind/negentmind) | Investigación / visión | Especificaciones de arquitectura y RFCs. |
 
----
+El mapa de capacidades a largo plazo (visión, no productos) se describe en el Public Handbook.
+
+### Principios
+
+Evidencia antes que marketing · Local-first · Open-core (núcleos Apache-2.0)
+
+El conjunto completo de principios se describe en el Public Handbook.
 
 ### Conectar
 
-- **Discord**: [Unirse a la comunidad](https://discord.gg/g8nqB3NtXt)
-- **Contacto**: [negent@negentmind.com](mailto:negent@negentmind.com)
-- **Licencia**: Apache 2.0
+- **Preguntas y bugs**: GitHub Issues (o Discussions, donde estén habilitadas) en el repositorio correspondiente.
+- **Seguridad**: lee la [política de seguridad](https://github.com/NegentMind/.github/blob/main/SECURITY_ES.md) y reporta en privado — nunca en issues públicos.
+- **Public Handbook**: se publica en diciembre de 2026. <!-- HANDBOOK_URL: add when published -->
