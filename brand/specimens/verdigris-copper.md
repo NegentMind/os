@@ -1,16 +1,61 @@
-# Especimen — verdigris + terracota (exploración de color)
+# Especimen — exploración de color y tipografía
 
 **Estado:** exploración interna, **no publicada**. Composición representativa;
-no es una migración de la web en vivo ni del perfil de GitHub.
+no es una migración de la web en vivo ni del perfil de GitHub. Es una
+**previsualización**, no producción: nada de lo elegido aquí toca `web/`,
+`github-profile/` ni `brand/exports/`.
 
 ## Qué es
 
 `verdigris-copper.html` — página estática autocontenida (CSS + vanilla JS, sin
-dependencias ni build) que muestra la identidad Negent Mind con una paleta
-candidata de verdigris (estructura) + terracota/cobre (atención) sobre neutros,
-en tema claro y oscuro. Cuatro bloques: **Web**, **Marca**, **GitHub** (mock
-ilustrativo, cromo neutro) y **Paleta** (tokens exactos, proporción 85/10/5 y
-tabla de contraste medido).
+dependencias ni build) para evaluar paletas de color estructura/atención sobre
+neutros y combinaciones tipográficas, en tema claro y oscuro. Cuatro bloques:
+**Web**, **Marca**, **GitHub** (mock ilustrativo, cromo neutro) y **Paleta**
+(tokens exactos, proporción 85/10/5 y tabla de contraste medido).
+
+## Controles
+
+Barra superior (sticky en escritorio, estática en móvil):
+
+- **Claro / Oscuro** — alterna el tema (`data-theme` + `aria-pressed`).
+- **«Paleta y fuentes»** (panel `<details>`; abierto por defecto en escritorio,
+  plegado en móvil):
+  - **Paleta** — Verdigrís y cobre · Petróleo y ocre · Pizarra y burdeos ·
+    Oliva y arcilla.
+  - **Títulos y marca** — Manrope · Sora · Space Grotesk · IBM Plex Sans ·
+    Chakra Petch (referencia).
+  - **Texto** — Source Sans 3 · DM Sans · IBM Plex Sans · Inter (referencia).
+  - **Restablecer** — vuelve a los valores por defecto.
+- Resumen de la combinación activa (paleta · títulos + texto · modo),
+  `aria-live="polite"`.
+
+**Defaults:** Verdigrís y cobre · claro · Manrope + Source Sans 3.
+Todas las combinaciones son independientes (4×5×4×2). Las fuentes cargan de
+Google Fonts; sin conexión cae al fallback sans/mono del sistema.
+
+### Persistencia
+
+La elección se guarda en `localStorage` (clave `nm-specimen-v2`) dentro de
+`try/catch`: si el almacenamiento está bloqueado, la página funciona igual con
+los defaults. Al restaurar solo se aceptan IDs conocidos (whitelist).
+
+## Arquitectura de tokens
+
+Cada preset define 9 tokens por tema (`bg, surface, ink, muted, line,
+structure, attention, action, on-action`; `--link` = `action`), expuestos como
+`--light-*` y `--dark-*` y alias semánticos `--bg/--surface/--ink/--muted/
+--line/--structure/--attention/--action/--on-action` según `data-theme`.
+Las fichas de Marca usan los tokens de cada tema de forma fija (claro y oscuro
+simultáneos). Las tablas de paleta y contraste se rellenan por JS
+(`createElement`/`textContent`) con los datos congelados del preset — ratios
+precalculados para estos presets, no recomputados.
+
+Reglas de aplicación: estructura = hairlines, marcadores, diagramas (texto
+pequeño solo sobre fondo base; en paneles, tinta + marcador); atención = un
+solo punto por pieza (la variante funcional de acción cubre texto pequeño,
+enlaces y botones). La tabla de contraste del especimen muestra los 5 pares de
+aplicación del preset y modo activos; 4.5:1 (AA texto normal) es guía de
+pares, no auditoría.
 
 ## Cómo verlo
 
@@ -20,35 +65,10 @@ Abrir directo en el navegador:
 file:///C:/Users/Eros/Negent%20Mind/os/brand/specimens/verdigris-copper.html
 ```
 
-El botón **Claro / Oscuro** de la barra superior alterna el tema (atributo
-`data-theme` + `aria-pressed`); claro es el tema por defecto. Las fuentes
-(Chakra Petch / Inter / JetBrains Mono) cargan de Google Fonts; sin red cae al
-fallback sans/mono del sistema.
-
-## Tokens de referencia
-
-| Rol | Claro | Oscuro |
-|---|---|---|
-| Fondo | `#F4F3EF` | `#141615` |
-| Superficie elevada | `#EAEDE7` | `#1D211E` |
-| Tinta | `#1C1E1D` | `#E6E8E6` |
-| Texto secundario | `#5C665F` | `#A4AFA8` |
-| Línea decorativa | `#C9D3CA` | `#35453C` |
-| Estructura (verdigris) | `#2D5A4C` | `#4E8A77` |
-| Atención marca | `#C85A32` | `#E07A55` |
-| Atención funcional (acción/enlaces pequeños) | `#AC4928` | `#E07A55` |
-
-Reglas de aplicación: verdigris = estructura (hairlines, marcadores, diagramas);
-terracota = un solo punto de atención por pieza (punto del lockup, CTA, decisión
-terminal). La terracota de marca no sirve para texto pequeño ni botones en claro
-(contraste medido insuficiente); para eso está la variante funcional. En oscuro,
-texto verde pequeño solo sobre el fondo base — en paneles elevados, tinta +
-marcador verde. La tabla completa de ratios está dentro del especimen.
-
 ## Capturas
 
-`out/` (ignorado por git): renders de verificación — light desktop 1440×1000,
-dark desktop, mobile 390px y detalle marca/GitHub.
+`out/` (ignorado por git): renders de verificación — escritorio/móvil en ambos
+temas, paletas y fuentes alternativas, detalle de marca/GitHub/paleta.
 
 ## Pendiente si se aprueba
 
