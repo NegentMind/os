@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Dict } from "@/lib/i18n";
+import { VANTADB_REPO } from "@/lib/site";
 
 /*
  * Ported verbatim from webTemplates/mondragon2 (recreation of the Mondra
@@ -273,7 +274,7 @@ export function SilkHero({ dict }: { dict: Dict["hero"] }) {
                   </p>
                   <a
                     className="silk-btn-pill light small"
-                    href="https://github.com/ness-e/Vantadb"
+                    href={VANTADB_REPO}
                     target="_blank"
                     rel="noreferrer"
                   >

@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { fontVars } from "@/lib/fonts";
+import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Negent Mind",
-  description: "Negent Mind — open-source capability infrastructure for AI agents.",
+  description:
+    "Negent Mind — Applied AI Research & Product Engineering: infrastructure for persistent, controllable, efficient and trustworthy agentic AI.",
+  robots: { index: false, follow: false },
 };
 
 export default function ProductLayout({

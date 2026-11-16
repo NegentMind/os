@@ -1,9 +1,12 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabaseServer";
 import { Button } from "@/components/ui/button";
+import { APP_ENABLED, VANTADB_REPO } from "@/lib/site";
 
 export default async function AppHome() {
+  // Product surface is disabled at launch (NEXT_PUBLIC_APP_ENABLED).
+  if (!APP_ENABLED) notFound();
   const supabase = await createClient();
   const {
     data: { user },
@@ -25,7 +28,7 @@ export default async function AppHome() {
       <div className="mt-8 flex gap-4">
         <Button asChild variant="outline" className="font-mono tracking-[0.08em]">
           <a
-            href="https://github.com/ness-e/Vantadb"
+            href={VANTADB_REPO}
             target="_blank"
             rel="noopener noreferrer"
           >

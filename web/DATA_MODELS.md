@@ -1,5 +1,9 @@
 # DATA_MODELS.md — tipos, esquemas y contratos de API
 
+> **Estado:** las rutas de producto (`/login`, `/app`) están **desactivadas en el
+> lanzamiento** (`NEXT_PUBLIC_APP_ENABLED=false` → `notFound()`). Estos contratos
+> aplican cuando se activen; ver `DEPLOY.md` §6 para Site URL / Redirect URLs.
+
 ## Fuente de verdad
 
 Supabase Postgres. Tipos generados con `supabase gen types` cuando haya tablas

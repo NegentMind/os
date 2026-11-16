@@ -1,23 +1,32 @@
-# web/ — sitio + app (Next.js + Supabase + Cloudflare Pages)
+# web/ — sitio de Negent Mind (Next.js + Cloudflare Workers vía OpenNext)
 
-Marketing `/` público + app `/app` con login (magic link Supabase). $0 hasta ~50k MAU.
+Marketing bilingüe público en `/en` y `/es`. La superficie de producto (`/app`,
+`/login`, magic link Supabase) existe en código pero está **desactivada en el
+lanzamiento** (`NEXT_PUBLIC_APP_ENABLED=false` → 404).
 
 ## Setup
 
 ```powershell
 cd web
 npm install
-Copy-Item .env.example .env.local   # rellenar con proyecto Supabase
+Copy-Item .env.example .env.local   # flags del sitio; Supabase solo si APP_ENABLED=true
 npm run dev
 ```
 
-1. Crear proyecto en Supabase Free → copiar URL + anon key.
-2. Auth → habilitar Email (magic link) + Google/GitHub OAuth si se quiere.
-3. Deploy: conectar repo a Cloudflare Pages (`npm run build` como build command).
-   Para SSR en Pages se usa `@cloudflare/next-on-pages` (añadir cuando se despliegue).
+## Configuración
+
+Todas las URLs y flags viven en `lib/site.ts` (`SITE_URL`, `ORG_URL`,
+`VANTADB_REPO`, `SPECS_REPO`, `HANDBOOK_URL`, `APP_ENABLED`, `CONTACT_EMAIL`,
+`CONTACT_EMAIL_ENABLED`). No hardcodear URLs en componentes ni diccionarios.
 
 ## Estructura
 
-- `app/page.tsx` marketing, `app/login/` auth, `app/app/` privada (redirect si no hay sesión).
-- `lib/` clientes Supabase (browser/server). `legacy/exp-web03.html` prueba anterior preservada.
+- `app/(marketing)/[lang]/` home EN/ES (`lib/i18n/{en,es}.ts`, `Dict = typeof en`).
+- `app/(product)/` `/login` y `/app` (gate `notFound()` si `APP_ENABLED` es false).
+- `app/robots.ts`, `app/sitemap.ts`, `app/icon.svg`, `public/og.png`.
+- `middleware.ts` negocia `/` → `/en` | `/es` por `Accept-Language`.
 - `.env.local` nunca se commitea.
+
+## Deploy
+
+Ver `DEPLOY.md` (dominio, OpenNext/Cloudflare, variables, Supabase, flags).

@@ -118,13 +118,13 @@ components:
 
 ## Overview
 
-Home de **Negent Mind** (la organización, no solo VantaDB): híbrido por zonas — cada zona conserva la estética de la plantilla de la que se extrajo. Hero = seda líquida WebGL (mondragon2, hiper-cromática). Cuerpo = instrumentos halftone + board blueprint + escultura de puntos (nice-squash, monocromo Bone). Cards Bone sobre Void + nav pill + price-cards (mondragon2). Rail de roadmap (strand), filas numeradas invert (sequenceone), panel de acento (arccheo), nav por luminancia (noveq). Wordmark gigante (ox). Pulse cierra. La estructura es org-first: 11 secciones y VantaDB ocupa solo la 06 (FLAGSHIP ENGINE).
+Home de **Negent Mind** (la organización, no solo VantaDB): híbrido por zonas — cada zona conserva la estética de la plantilla de la que se extrajo. Hero = seda líquida WebGL (mondragon2, hiper-cromática). Cuerpo = instrumentos halftone + board blueprint + escultura de puntos (nice-squash, monocromo Bone). Cards Bone sobre Void + nav pill + price-cards (mondragon2). Rail de estado de proyectos (strand), filas numeradas invert (sequenceone), panel de acento (arccheo), nav por luminancia (noveq). Wordmark gigante (ox). Pulse cierra. La estructura es org-first: 11 secciones y VantaDB ocupa solo la 06 (FLAGSHIP ENGINE).
 
 ## Colors
 
 - Fondo Void `#08090C`, superficies Panel `#0E131B`, tinta Bone, secundario Fog. Hairlines `linedark` 1px. Tema claro reservado (bg/ink/pulsedeep).
 - Caos solo en fields: la seda del hero (rainbow domain-warped) y los campos ASCII; nunca en chrome, texto ni controles.
-- Pulse `#8B7CFF`: CTA primario, foco, estados activos/IN BUILD, punto del lockup, accent del board. Nada más lo usa.
+- Pulse `#8B7CFF`: CTA primario, foco, estados activos/ACTIVE/INCUBATION, punto del lockup, accent del board. Nada más lo usa.
 - Sobre superficies Bone (price-card, nav pill): rampa de tinta `ink #14161C` → `inkSoft #3A3630` → `inkMute #5A5248` → `inkFaint #8A8177`.
 - Sobre paneles de código inmersivos (`codeBg #06070A`): rampa de tokens `codeComment/Dim/Mid/Lite/BodyText/Str` — tonos gris-azulados derivados del panel, fuera de la paleta de UI normal.
 
@@ -160,7 +160,7 @@ Home de **Negent Mind** (la organización, no solo VantaDB): híbrido por zonas 
 - `nm/sculpture` (portado verbatim de nice-squash `lib/sculpture.ts`): engine de nubes de puntos paramétricas 3D→2D canvas. Formas `sphere/lattice/twistTorus/rings/torusKnot`, morph por `setShape` o `externalProgress`, ripple de puntero, `dispose()`.
 - `nm/Immersive` (portado de nice-squash): track 400vh sticky — 46k puntos esfera→torusKnot→retícula por `externalProgress`, 4 fases con `aria-live`, tags con paralaje de puntero, ruler de progreso Pulse. Drag-to-rotate. Con reduced-motion salta a la retícula final.
 - `nm/FlowBoard` (portado de nice-squash `Flow.tsx`): track 400vh sticky — 4 stage-tabs (`Connect/Index/Query/Commit`) que también son botones scroll-to, board blueprint con panel de código (tokens `t-*`), query graph SVG con aristas animadas, panel métrica (checks/bars/grid/line), form sculpture y connectors SVG dibujados por `pathLength`. Contenido = uso documentado de VantaDB.
-- `nm/HolonGrid` (patrón `Platform` de nice-squash `Sections.tsx`): grid 3×2 de `.feat` — fhead (num/cat) + instrumento `HalftoneCanvas` + HUD (`ENGINE·v0.9.0`/`IN BUILD` en Pulse, resto `RFC`) + nombre + spec. Cards con reveal blur-rise (`hg-reveal`, 0.7s expo).
+- `nm/HolonGrid` (patrón `Platform` de nice-squash `Sections.tsx`): grid 3×2 de `.feat` — fhead (num/cat) + instrumento `HalftoneCanvas` + HUD (`ENGINE·v0.9.0`/`ACTIVE` en Pulse, resto `VISION` — mapa de capacidades, no productos) + nombre + spec. Cards con reveal blur-rise (`hg-reveal`, 0.7s expo).
 - `nm/HalftoneCanvas` (portado de `webTemplates/nice-squash-242352`): engine halftone 2D con 6 instrumentos (chip `runtime`, esfera `memory`, grafo `orchestration`, barras `observability`, grid `evaluations`, órbita `security`). INK→Bone, ACC→Pulse, DIM→Fog; frame único con `prefers-reduced-motion`.
 - `nm/FlipText` (portado verbatim de mondragon2): roll-up letra a letra con stagger `--i` (0.5s, bezier .76,0,.24,1).
 - `nm/SiteHeader` (portado de mondragon2): nav flotante transparente sobre la seda → pill Bone/Void al scroll; links con `FlipText`; CTA GitHub en pill void.
@@ -174,7 +174,7 @@ Home de **Negent Mind** (la organización, no solo VantaDB): híbrido por zonas 
 - `nm/SectionHeading`: índice de sección mono + H2 display + lede opcional (uso interno en `DescentSection`; las secciones nuevas usan `.sechead`).
 - `nm/Reveal`: una sola entrada por viewport (`whileInView`, expo-out 0.6s).
 - `nm/SiteFooter`: wordmark gigante `footer-word` (patrón portado de `templates/ox`, ~17vw) + links centrados + meta row; sitemap sin rutas inventadas.
-- `nm/RoadmapRail` (estructura portada de `templates/strand` "Scroll Progress Section"; mecánica reconstruida con el patrón de la casa): espina vertical con relleno `--p` por scroll, hitos `R/00–R/05` alternados con chip `IN BUILD`/`RFC` (Pulse para build, outline para rfc). Reduced-motion: `--p:1` + todos `.is-on`.
+- `nm/RoadmapRail` (estructura portada de `templates/strand` "Scroll Progress Section"; mecánica reconstruida con el patrón de la casa): espina vertical con relleno `--p` por scroll, hitos `R/00–R/06` alternados con chip `ACTIVE` (tono `shipped`, Pulse sólido) / `INCUBATION` (tono `build`, contorno Pulse) / `VISION` (tono `rfc`, Fog). Sección "Project status": estados, sin fechas (roadmap detallado privado). Reduced-motion: `--p:1` + todos `.is-on`.
 - `nm/WorkSection`: zona 05 — bento hairline (método RFC 01–03, métricas verificables, founder, contacto). Solo constantes honestas.
 - `nm/NumberedRows` (micro-interacción portada de `templates/sequenceone`): fill fade + inversión de tinta en hover/focus (Bone→Void), `tabIndex` para paridad de teclado.
 - `nm/useLuminance` (portado de `templates/noveq` `runtime.ts`): sonda de luminancia bajo el nav — `elementsFromPoint` + cadena de backgrounds, umbral 0.55, fallback `scrollY>60`. `SiteHeader` lo expone como `data-tone`; en estado transparente sobre superficie clara la tinta flipea a Void.
@@ -182,7 +182,7 @@ Home de **Negent Mind** (la organización, no solo VantaDB): híbrido por zonas 
 
 ## i18n
 
-- Rutas `/en` y `/es` (segmento `[lang]` bajo route group `(marketing)`); `/login` y `/app` viven en el grupo `(product)` con su propio root layout `lang="en"`.
+- Rutas `/en` y `/es` (segmento `[lang]` bajo route group `(marketing)`); `/login` y `/app` viven en el grupo `(product)` con su propio root layout `lang="en"`, desactivadas al lanzar (`APP_ENABLED`, `lib/site.ts`).
 - `middleware.ts` redirige `/` por Accept-Language (`es*` → `/es`, resto `/en`). Locales inválidos → `notFound()`.
 - Todo el copy vive en `lib/i18n/{en,es}.ts` (tipo `Dict = typeof en`, espejo estructural obligatorio). Componentes reciben slices por props; los nombres propios, código, flags técnicos (`live`) y claims de producto no se traducen.
 - Switcher `EN / ES` en el nav (`.nm-nav-lang`) — swap del primer segmento preservando la ruta; activo en Pulse.

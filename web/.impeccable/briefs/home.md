@@ -2,13 +2,13 @@
 
 ## Alcance y modo
 
-Superficie: home pública `/`. Modo Persuade: el visitante entiende qué es NegentMind, por qué importa y qué hacer en segundos.
+Superficie: home pública `/en` · `/es`. Modo Persuade: el visitante entiende qué es NegentMind, por qué importa y qué hacer en segundos.
 
 ## Audiencia, trabajo, acción, prueba
 
 - Audiencia: desarrolladores y líderes técnicos que evalúan infraestructura para LLMs/agentes.
-- Trabajo: decidir si esto merece su atención (docs, login, contacto).
-- Acción: entrar a `/login` o seguir a mecanismo/prueba.
+- Trabajo: decidir si esto merece su atención (GitHub, especificación, Public Handbook).
+- Acción: ir a GitHub (VantaDB / org) o seguir a mecanismo/prueba. `/login` y `/app` están desactivadas al lanzar: nunca son acción primaria.
 - Prueba: el mecanismo dramatizado en vivo (ruido→señal interactivo) + instrumentos con valores reales del repo; nada fabricado (sin testimonios, clientes ni benchmarks).
 
 ## Dirección fijada — v2 expediente dossier (dados 0d2275c3, candidata 7; referencias del usuario 2026-11-12)

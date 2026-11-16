@@ -18,10 +18,7 @@ import { Reveal } from "@/components/nm/Reveal";
 import { TerminalDemo } from "@/components/nm/TerminalDemo";
 import { Faq } from "@/components/nm/Faq";
 import { getDictionary, isLocale } from "@/lib/i18n";
-
-const VANTADB_REPO = "https://github.com/ness-e/Vantadb";
-const ORG_REPO = "https://github.com/NegentMind";
-const SPECS_REPO = "https://github.com/NegentMind/negentmind";
+import { ORG_URL, SPECS_REPO, VANTADB_REPO } from "@/lib/site";
 
 type Cell = boolean | "partial";
 
@@ -115,10 +112,11 @@ export default async function Home({
           </div>
         </section>
 
-        {/* 04 — THE ROADMAP: rail scroll (strand) */}
+        {/* 04 — PROJECT STATUS: rail scroll (strand). Status labels only, no dates:
+            the detailed roadmap is private. */}
         <section
-          id="roadmap"
-          aria-labelledby="roadmap-h"
+          id="status"
+          aria-labelledby="status-h"
           className="nmsec scroll-mt-24"
         >
           <Crosshairs />
@@ -126,7 +124,7 @@ export default async function Home({
             <div className="sechead split">
               <div>
                 <p className="lbl">{d.roadmap.label}</p>
-                <h2 className="h2" id="roadmap-h">
+                <h2 className="h2" id="status-h">
                   {d.roadmap.title}
                   <span className="qual">{d.roadmap.qual}</span>
                 </h2>
@@ -358,7 +356,7 @@ export default async function Home({
                 size="lg"
                 className="font-mono tracking-[0.08em]"
               >
-                <a href={ORG_REPO} target="_blank" rel="noopener noreferrer">
+                <a href={ORG_URL} target="_blank" rel="noopener noreferrer">
                   {d.oss.ctaOrg}
                   <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </a>

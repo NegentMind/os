@@ -1,6 +1,7 @@
 /* English dictionary — canonical shape (Dict = typeof en). */
 
 import type { HalftoneKind } from "@/components/nm/HalftoneCanvas";
+import { ORG_URL, VANTADB_REPO, displayUrl } from "@/lib/site";
 
 type Cell = boolean | "partial";
 type Tone = "bone" | "fog" | "pulse";
@@ -10,16 +11,16 @@ export const en = {
   meta: {
     title: "Negent Mind — Order out of chaos",
     description:
-      "Open-source capability infrastructure for AI agents. VantaDB: an embedded memory engine — hybrid retrieval (HNSW + BM25 + RRF), MVCC snapshot isolation, local-first. Apache-2.0.",
+      "Applied AI Research & Product Engineering: infrastructure for persistent, controllable, efficient and trustworthy agentic AI.",
   },
   nav: {
     homeAria: "Negent Mind, home",
     navAria: "Sections",
     langAria: "Language",
     links: [
-      { href: "#system", label: "System" },
+      { href: "#org", label: "Lab" },
       { href: "#modules", label: "Modules" },
-      { href: "#roadmap", label: "Roadmap" },
+      { href: "#status", label: "Status" },
       { href: "#engine", label: "Engine" },
       { href: "#faq", label: "FAQ" },
     ],
@@ -44,7 +45,7 @@ export const en = {
   ticker: {
     items: [
       "CAPABILITY INFRASTRUCTURE",
-      "6 NAMED SYSTEMS",
+      "CAPABILITY MAP · 1 ACTIVE",
       "EMBEDDED MEMORY ENGINE",
       "SPECS BEFORE CODE",
       "APACHE-2.0 · LOCAL-FIRST",
@@ -54,7 +55,7 @@ export const en = {
     label: "[ 01 / THE ORGANIZATION ]",
     title: "Agents are brilliant at inference",
     qual: "and amnesiac by default.",
-    sub: "Negent Mind is an independent open-source organization building capability infrastructure for AI agents — memory, perception, verification, execution. One substrate is shipping; the rest are specifications with honest labels.",
+    sub: "Negent Mind is an independent applied AI research and product engineering lab building infrastructure for AI agents — memory, perception, verification, execution. One engine is shipping; the rest of the map is written specification, labelled as vision.",
     problems: [
       {
         name: "Markdown memory rots",
@@ -95,9 +96,9 @@ export const en = {
   },
   modules: {
     label: "[ 03 / THE MODULES ]",
-    title: "One substrate. Six named systems.",
-    qual: "specifications, not vaporware.",
-    sub: "The architecture is layered: a memory substrate at the core, and capability modules defined as public RFCs before a single repository exists. Only one is code today.",
+    title: "One engine shipping. A capability map beyond it.",
+    qual: "vision, labelled as vision.",
+    sub: "The architecture is layered: a memory engine at the core, and a long-term map of capabilities around it — written as a public RFC set, not sold as products. Only VantaDB is released code today.",
     items: [
       {
         num: "S/01",
@@ -105,7 +106,7 @@ export const en = {
         kind: "memory",
         title: "VantaDB",
         body: "Embedded Rust engine — HNSW + BM25 hybrid retrieval with MVCC isolation, WAL durability and snapshotting. The storage layer every other module builds on.",
-        status: "IN BUILD",
+        status: "ACTIVE",
         hudLeft: "ENGINE · v0.9.0",
         live: true,
       },
@@ -115,7 +116,7 @@ export const en = {
         kind: "orchestration",
         title: "Cardinal",
         body: "Context & working memory. Bitemporal episodic state — what an agent knew, and when it became true — with provenance tracking and token budgeting.",
-        status: "RFC",
+        status: "VISION",
         hudLeft: "CONTEXT LAYER",
         live: false,
       },
@@ -125,7 +126,7 @@ export const en = {
         kind: "evaluations",
         title: "Meta",
         body: "Verification & metacognition. Deterministic execution traces and signed attestation logs so an agent's actions can be audited, not just logged.",
-        status: "RFC",
+        status: "VISION",
         hudLeft: "AUDIT LAYER",
         live: false,
       },
@@ -135,7 +136,7 @@ export const en = {
         kind: "observability",
         title: "Iris",
         body: "Perception & ingestion. Local-first pipelines that turn unstructured multimodal documents into vector-indexed, verifiable nodes.",
-        status: "RFC",
+        status: "VISION",
         hudLeft: "PERCEPTION",
         live: false,
       },
@@ -145,7 +146,7 @@ export const en = {
         kind: "runtime",
         title: "Execute",
         body: "Deterministic tool execution. Sandboxed action boundaries with explicit retry policies — no probabilistic retry loops.",
-        status: "RFC",
+        status: "VISION",
         hudLeft: "EXECUTION",
         live: false,
       },
@@ -155,7 +156,7 @@ export const en = {
         kind: "security",
         title: "Sage",
         body: "Correction feedback. Persistent human-in-the-loop signals so agents stop repeating mistakes that were already corrected.",
-        status: "RFC",
+        status: "VISION",
         hudLeft: "ADAPTATION",
         live: false,
       },
@@ -171,56 +172,64 @@ export const en = {
     }[],
   },
   roadmap: {
-    label: "[ 04 / THE ROADMAP ]",
-    title: "Six systems. One in build.",
-    qual: "the rest are written, not promised.",
-    sub: "Every module takes the same path: a public RFC, a public review, and only then a repository. The order is deliberate — each layer builds on the one below.",
+    label: "[ 04 / PROJECT STATUS ]",
+    title: "One engine active. One in incubation.",
+    qual: "the rest is vision, not promise.",
+    sub: "Status, not a schedule. Active means released code; Incubation means in development and not yet released; Vision means a written specification on the long-term map. No dates are promised here.",
     railLabel: "PIPELINE",
     progressLabel: "SCROLL",
     items: [
       {
         num: "R/00",
-        phase: "IN BUILD",
-        phaseTone: "build",
+        phase: "ACTIVE",
+        phaseTone: "shipped",
         name: "VantaDB",
         role: "STORAGE LAYER",
-        body: "The only code in the organization today: an embedded Rust engine — hybrid HNSW + BM25 retrieval fused by RRF, MVCC isolation, WAL durability. v0.9.0, Apache-2.0.",
+        body: "The only released code in the lab today: an embedded Rust engine — hybrid HNSW + BM25 retrieval fused by RRF, MVCC isolation, WAL durability. v0.9.0, Apache-2.0.",
       },
       {
         num: "R/01",
-        phase: "RFC",
+        phase: "INCUBATION",
+        phaseTone: "build",
+        name: "Scopegrain",
+        role: "NOT YET RELEASED",
+        body: "In incubation — not yet released. Details will be published with its first release.",
+      },
+      {
+        num: "R/02",
+        phase: "VISION",
         phaseTone: "rfc",
         name: "Cardinal",
         role: "CONTEXT LAYER",
         body: "Context & working memory. Bitemporal episodic state — what an agent knew, and when it became true — with provenance tracking and token budgeting. Written as RFC-01.",
       },
       {
-        num: "R/02",
-        phase: "RFC",
+        num: "R/03",
+        phase: "VISION",
         phaseTone: "rfc",
         name: "Meta",
         role: "AUDIT LAYER",
         body: "Verification & metacognition. Deterministic execution traces and signed attestation logs, so an agent's actions can be audited — not just logged. Written as RFC-02.",
       },
       {
-        num: "R/03",
-        phase: "RFC",
+        num: "R/04",
+        phase: "VISION",
         phaseTone: "rfc",
         name: "Iris",
         role: "PERCEPTION LAYER",
         body: "Perception & ingestion. Local-first pipelines that turn unstructured multimodal documents into vector-indexed, verifiable nodes. Written as RFC-03.",
       },
       {
-        num: "R/04",
-        phase: "RFC",
+        num: "R/05",
+        phase: "VISION",
         phaseTone: "rfc",
         name: "Execute",
         role: "EXECUTION LAYER",
         body: "Deterministic tool execution. Sandboxed action boundaries with explicit retry policies — no probabilistic retry loops. Written as RFC-04.",
       },
       {
-        num: "R/05",
-        phase: "RFC",
+        num: "R/06",
+        phase: "VISION",
         phaseTone: "rfc",
         name: "Sage",
         role: "ADAPTATION LAYER",
@@ -239,7 +248,7 @@ export const en = {
     label: "[ 05 / THE WORK ]",
     title: "How things get built here.",
     qual: "spec first, code second.",
-    sub: "The method is the message: written specifications, public review, honest status labels. This is the only pipeline a module can take.",
+    sub: "The method is the message: written specifications, public review, honest status labels. Every project carries one of three: Active, Incubation or Vision.",
     method: {
       title: "The specification pipeline",
       steps: [
@@ -251,28 +260,29 @@ export const en = {
         {
           name: "Public review",
           detail:
-            "RFCs are reviewed in the open. Comments, objections and benchmarks decide whether a module earns a repository.",
+            "RFCs are reviewed in the open. Comments, objections and benchmarks shape what gets built next.",
         },
         {
-          name: "Then the repo",
+          name: "Then the release",
           detail:
-            "No phantom repositories: a codebase is only instantiated once its RFC is approved. Status labels stay honest.",
+            "Nothing is presented as a product until it ships as verifiable code. Work in incubation stays labelled as such until it is released.",
         },
       ],
     },
     founder: {
       title: "One founder, working in the open.",
-      body: "Negent Mind is independent and founder-led. No venture backing, no team page to inflate — the shipped engine, the written RFCs and this roadmap are the full extent of the work, stated at honest scale.",
+      body: "Negent Mind is an independent, founder-led lab — not yet an incorporated company. No venture backing, no team page to inflate — the shipped engine, the written specification and this capability map are the full extent of the public work, stated at honest scale.",
     },
     contact: {
       title: "A direct line.",
       body: "Questions about the architecture, the RFCs or contributing — one inbox, read by the person who wrote the code.",
-      email: "negent@negentmind.com",
+      pending: "(available once negentmind.com is live)",
+      fallback: "Until then, reach us on GitHub",
     },
     metrics: [
-      { label: "Named systems", value: "6", unit: "", tone: "bone" },
-      { label: "Module in build", value: "1", unit: "", tone: "pulse" },
-      { label: "Public RFCs", value: "4", unit: "", tone: "fog" },
+      { label: "Active engine", value: "1", unit: "", tone: "pulse" },
+      { label: "In incubation", value: "1", unit: "", tone: "bone" },
+      { label: "Public specification", value: "1", unit: "RFC-01–04", tone: "fog" },
       { label: "License", value: "Apache-2.0", unit: "", tone: "fog" },
     ] as { label: string; value: string; unit: string; tone: Tone }[],
   },
@@ -363,7 +373,7 @@ export const en = {
       {
         name: "Not vaporware",
         detail:
-          "Every module on the map is either shipped code or a written specification with a status label — never a rendered promise.",
+          "Every entry on the map is released code, work in incubation or a written specification — each with a status label, never a rendered promise.",
       },
     ],
     footnote: "The alternative today is a markdown file or someone else's server.",
@@ -386,15 +396,15 @@ export const en = {
     label: "[ 10 / OPEN SOURCE ]",
     title: "Built in public.",
     qual: "join in.",
-    sub: "Negent Mind is an independent open-source organization. The engine is Apache-2.0: read it, fork it, embed it in your agent — and help decide what gets built next.",
-    ctaRepo: "ness-e/Vantadb",
+    sub: "Negent Mind is an independent applied AI research lab. The engine is Apache-2.0: read it, fork it, embed it in your agent — and help decide what gets built next.",
+    ctaRepo: displayUrl(VANTADB_REPO).replace("github.com/", ""),
     ctaOrg: "NegentMind org",
     ctaSpecs: "Read the specs",
     cards: [
       {
         plan: "The substrate",
         amount: "Apache-2.0",
-        per: "v0.9.0 — in build",
+        per: "v0.9.0 — active",
         desc: "VantaDB. One dependency, embedded in your process, readable end to end.",
         inc: "WHAT'S IN THE BOX",
         rows: [
@@ -403,23 +413,23 @@ export const en = {
           ["durability", "WAL with CRC32C + auto-heal on open"],
           ["memory", "TTL expiry, scoped contexts, zero network"],
         ],
-        cta: "github.com/ness-e/Vantadb",
-        href: "https://github.com/ness-e/Vantadb",
+        cta: displayUrl(VANTADB_REPO),
+        href: VANTADB_REPO,
       },
       {
         plan: "The organization",
         amount: "Open",
         per: "specs before code",
-        desc: "Negent Mind publishes capability specifications as RFCs before any repository exists. No phantom projects.",
+        desc: "Negent Mind publishes its capability specifications as public RFCs. Released code, work in incubation and vision are labelled as such.",
         inc: "HOW TO JOIN",
         rows: [
           ["read", "the specification and the RFC pipeline"],
           ["build", "good first issues on the engine repo"],
-          ["shape", "RFC reviews decide what gets built next"],
-          ["govern", "public roadmap, public roadmap only"],
+          ["shape", "RFC reviews shape what gets built next"],
+          ["follow", "direction and status in the Public Handbook"],
         ],
-        cta: "github.com/NegentMind",
-        href: "https://github.com/NegentMind",
+        cta: displayUrl(ORG_URL),
+        href: ORG_URL,
       },
     ],
   },
@@ -429,15 +439,15 @@ export const en = {
     items: [
       {
         q: "What is Negent Mind exactly?",
-        a: "An independent open-source organization building capability infrastructure for AI agents — memory, perception, verification, execution. VantaDB, the embedded memory engine, is its first shipped module; the other five systems are public specifications.",
+        a: "An independent applied AI research and product engineering lab building infrastructure for persistent, controllable, efficient and trustworthy agentic AI. VantaDB, the embedded memory engine, is its first released project. Scopegrain is in incubation and not yet released. Everything else on this page is a long-term capability map — written specifications, not products.",
       },
       {
         q: "How do decisions get made?",
-        a: "Through the RFC pipeline. Every capability is written as a specification, reviewed in public, and only gets a repository once approved. There is no private roadmap — what you see on this page is what exists.",
+        a: "Capabilities are written as specifications and reviewed in public; code ships with tests and evidence. The detailed roadmap is private. Direction, principles and project status live in the Public Handbook (publishing December 2026).",
       },
       {
         q: "Is VantaDB ready for production?",
-        a: "It is at v0.9.0 and in build. The core engine — storage, hybrid retrieval, MVCC transactions — is implemented. Treat it like any young embedded database: pin the version, run your own workload, report what breaks.",
+        a: "It is at v0.9.0 and in active development. The core engine — storage, hybrid retrieval, MVCC transactions — is implemented. Treat it like any young embedded database: pin the version, run your own workload, report what breaks.",
       },
       {
         q: "Why embedded instead of a service?",
@@ -457,6 +467,8 @@ export const en = {
       { href: "#proof", label: "Proof" },
       { href: "#faq", label: "FAQ" },
     ],
+    handbook: "Handbook",
+    handbookPending: "Handbook — publishing December 2026",
     legal: "© {year} Negent Mind · Apache-2.0",
     pending: "Privacy and Terms pending publication.",
   },

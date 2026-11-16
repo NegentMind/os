@@ -9,7 +9,8 @@ import type { Dict } from "@/lib/i18n";
  * `Platform`): bordered grid of technical cards, each pairing a numbered
  * header + HUD-framed halftone instrument with a system name and spec.
  * Content maps 1:1 to specs/SPECIFICATION.md — VantaDB is the only shipped
- * module; every RFC card is labelled DEFINED, not built. `live` is a
+ * project; every RFC card is labelled VISION (capability map, not a
+ * product). `live` is a
  * non-localized flag so the pulse dot survives translation.
  */
 function Reveal({ children }: { children: ReactNode }) {

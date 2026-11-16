@@ -1,10 +1,20 @@
 import Link from "next/link";
 import type { Dict } from "@/lib/i18n";
+import {
+  CONTACT_EMAIL,
+  CONTACT_EMAIL_ENABLED,
+  HANDBOOK_URL,
+  ORG_URL,
+  SPECS_REPO,
+  VANTADB_REPO,
+} from "@/lib/site";
 
 /*
  * Cierre real: wordmark gigante (patrón portado de templates/ox Footer —
  * footer-word a escala de viewport), sitemap centrado y meta row.
- * Sin rutas inventadas; legales marcados como pendientes.
+ * Sin rutas inventadas; legales marcados como pendientes. El mailto solo
+ * aparece con CONTACT_EMAIL_ENABLED (dominio activo); el Handbook es texto
+ * plano hasta que exista HANDBOOK_URL.
  */
 export function SiteFooter({ dict }: { dict: Dict["footer"] }) {
   return (
@@ -31,7 +41,7 @@ export function SiteFooter({ dict }: { dict: Dict["footer"] }) {
           </Link>
         ))}
         <a
-          href="https://github.com/ness-e/Vantadb"
+          href={VANTADB_REPO}
           target="_blank"
           rel="noopener noreferrer"
           className="transition-colors hover:text-pulse"
@@ -39,7 +49,7 @@ export function SiteFooter({ dict }: { dict: Dict["footer"] }) {
           VantaDB
         </a>
         <a
-          href="https://github.com/NegentMind"
+          href={ORG_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="transition-colors hover:text-pulse"
@@ -47,19 +57,33 @@ export function SiteFooter({ dict }: { dict: Dict["footer"] }) {
           GitHub
         </a>
         <a
-          href="https://github.com/NegentMind/negentmind"
+          href={SPECS_REPO}
           target="_blank"
           rel="noopener noreferrer"
           className="transition-colors hover:text-pulse"
         >
           Specs
         </a>
-        <a
-          href="mailto:negent@negentmind.com"
-          className="transition-colors hover:text-pulse"
-        >
-          negent@negentmind.com
-        </a>
+        {HANDBOOK_URL ? (
+          <a
+            href={HANDBOOK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-pulse"
+          >
+            {dict.handbook}
+          </a>
+        ) : (
+          <span>{dict.handbookPending}</span>
+        )}
+        {CONTACT_EMAIL_ENABLED ? (
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="transition-colors hover:text-pulse"
+          >
+            {CONTACT_EMAIL}
+          </a>
+        ) : null}
       </nav>
 
       <div className="font-mono mx-auto flex max-w-6xl flex-wrap justify-between gap-2 px-4 text-[13px] text-fog sm:px-6">

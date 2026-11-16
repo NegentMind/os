@@ -12,22 +12,23 @@ Visitantes que evalúan NegentMind: desarrolladores y líderes técnicos que tra
 
 ## Product Purpose
 
-Sitio marketing + app con login de NegentMind. La home (modo Persuade) debe hacer inteligible y deseable la oferta en segundos: infraestructura determinista y verificable para ecosistemas de LLMs. Éxito = el visitante entiende qué es, por qué importa y qué hacer (login / explorar docs / contacto).
+Sitio marketing bilingüe (EN/ES) de Negent Mind — Applied AI Research & Product Engineering. La home (modo Persuade) debe hacer inteligible la oferta en segundos: infraestructura para una IA agéntica más persistente, controlable, eficiente y confiable, con VantaDB como flagship. Éxito = el visitante entiende qué es, por qué importa y qué hacer (GitHub / leer la especificación / Public Handbook cuando se publique). La app con login existe en código pero está desactivada en el lanzamiento.
 
 ## Positioning
 
-Negentropía aplicada: orden determinista sobre caos estocástico. Ningún vecino puede copiar con verdad el mecanismo "del ruido a la señal" porque es la tesis fundacional documentada en Notion (🧭 Identidad y Estrategia).
+Negent Mind desarrolla infraestructura y arquitecturas para construir sistemas de IA agéntica más persistentes, controlables, eficientes y confiables. Tesis: mientras el mercado vende inteligencia, Negent Mind vende la capacidad de confiar en ella. Concepto visual: negentropía (orden desde el caos). Fuente de verdad estratégica: Notion (🧭 Identidad y Estrategia).
 
 ## Operating Context
 
-Next.js 15 App Router + React 19 + Tailwind v4 + Supabase Auth (magic link). Rutas: `/` marketing público (Server Component), `/login` (Client), `/app/*` privada con sesión verificada en servidor. Deploy futuro: Cloudflare Pages. Sin CI; commits directos a `main`, sin push sin orden explícita.
+Next.js 15 App Router + React 19 + Tailwind v4 + Supabase Auth (magic link). Rutas: `/` → `/en` | `/es` (middleware), marketing en `app/(marketing)/[lang]`; `/login` y `/app` en `app/(product)`, **desactivadas al lanzar** (`NEXT_PUBLIC_APP_ENABLED=false` → 404). URLs y flags en `lib/site.ts`. Deploy: Cloudflare Workers vía `@opennextjs/cloudflare` (ver `DEPLOY.md`). Sin CI; commits directos a `main`, sin push sin orden explícita.
 
 ## Capabilities and Constraints
 
-- Capacidades confirmadas: home marketing, login magic link, área privada `/app` con gate de sesión, componentes shadcn base (button, card, input, label).
+- Capacidades confirmadas: home marketing EN/ES, robots/sitemap/hreflang, login magic link y área privada `/app` con gate de sesión (ambas tras flag, apagadas), componentes shadcn base (button, card, input, label).
+- Portafolio público: VantaDB (Activo), Scopegrain (Incubación — "in incubation, not yet released", sin enlace ni fecha), holones (Visión: mapa de capacidades a largo plazo, no productos). Roadmap detallado privado; dirección y estado en el Public Handbook.
 - Pendiente (alcance futuro, no de esta pasada): registro, recuperación de contraseña, blog, secciones completas del sitio.
 - Restricción técnica: animación por capas (`motion/react` micro-interacciones; `gsap` timelines/scroll; no mezclar en el mismo componente). `prefers-reduced-motion` = sin animación.
-- Terminología: Negentropía (orden emergente), Sintropía (orden dirigido), Entropía (ruido estocástico), Lanikea (estructura cósmica de referencia visual), Fractales (patrón de escala).
+- Terminología: Negentropía (concepto: orden desde el caos), Entropía (ruido estocástico), Lanikea (estructura cósmica de referencia visual), Fractales (patrón de escala).
 
 ## Brand Commitments
 
@@ -40,7 +41,7 @@ Next.js 15 App Router + React 19 + Tailwind v4 + Supabase Auth (magic link). Rut
 - Notion · 🎨 Marca (concepto y voz), `brand/brand-sheet.html`, `media/remotion/src/tokens.ts`.
 - Contratos web: `README.md`, `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `DATA_MODELS.md`, `AGENTS.md`.
 - Investigación ascii-magic.com (2026-11-12): estilos ASCII, bloques, braille, dots/halftone, glitch/RGB split, scanlines/CRT, LED matrix, voxel, mosaicos.
-- Ausencias que no deben fabricarse: testimonios, clientes, benchmarks, precios, claims de capacidades no construidas.
+- Ausencias que no deben fabricarse: testimonios, clientes, benchmarks, precios, descargas/estrellas/usuarios, fechas internas de roadmap, claims de capacidades no construidas. No mencionar VantaDB Studio ni precios.
 
 ## Product Principles
 

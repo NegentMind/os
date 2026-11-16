@@ -1,4 +1,5 @@
 import type { Dict } from "@/lib/i18n";
+import { CONTACT_EMAIL, CONTACT_EMAIL_ENABLED, ORG_URL } from "@/lib/site";
 
 const TONE: Record<string, string> = {
   pulse: "text-pulse",
@@ -8,7 +9,8 @@ const TONE: Record<string, string> = {
 
 /**
  * Zona 05 THE WORK — cómo opera la organización: pipeline RFC, bento de
- * métricas verificables, founder y contacto. El encabezado lo renderiza la
+ * métricas verificables, founder y contacto (mailto solo si
+ * CONTACT_EMAIL_ENABLED; si no, texto + enlace a GitHub). El encabezado lo renderiza la
  * página (mismo patrón que HolonGrid).
  */
 export function WorkSection({ dict }: { dict: Dict["work"] }) {
@@ -71,12 +73,30 @@ export function WorkSection({ dict }: { dict: Dict["work"] }) {
         <p className="mt-3 max-w-md font-sans text-sm leading-relaxed text-fog text-pretty">
           {dict.contact.body}
         </p>
-        <a
-          href={`mailto:${dict.contact.email}`}
-          className="mt-4 inline-block border border-linedark px-4 py-2 font-mono text-[11px] tracking-[0.15em] text-bone transition-colors hover:border-pulse hover:text-pulse focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pulse"
-        >
-          {dict.contact.email}
-        </a>
+        {CONTACT_EMAIL_ENABLED ? (
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="mt-4 inline-block border border-linedark px-4 py-2 font-mono text-[11px] tracking-[0.15em] text-bone transition-colors hover:border-pulse hover:text-pulse focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pulse"
+          >
+            {CONTACT_EMAIL}
+          </a>
+        ) : (
+          <>
+            {/* Domain not registered yet: show the address, never a dead mailto. */}
+            <p className="mt-4 font-mono text-[11px] tracking-[0.15em] text-bone">
+              {CONTACT_EMAIL}{" "}
+              <span className="text-fog">{dict.contact.pending}</span>
+            </p>
+            <a
+              href={ORG_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-block border border-linedark px-4 py-2 font-mono text-[11px] tracking-[0.15em] text-bone transition-colors hover:border-pulse hover:text-pulse focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pulse"
+            >
+              {dict.contact.fallback} ↗
+            </a>
+          </>
+        )}
       </div>
     </div>
   );
