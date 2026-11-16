@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Negent Mind — Exploración de color: verdigris + terracota</title>
+<meta name="description" content="Especimen estático de exploración de color para Negent Mind. No publicado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens semánticos — los valores hex viven solo aquí y en las fichas de paleta.
+     Referencia clara: papel #F4F3EF · tinta #1C1E1D · verdigris #2D5A4C · terracota #C85A32.
+     Referencia oscura: grafito #141615 · tinta #E6E8E6 · verdigris #4E8A77 · cobre #E07A55. */
+  :root, html[data-theme="light"] {
+    color-scheme: light;
+    --bg: #F4F3EF;
+    --surface: #EAEDE7;
+    --ink: #1C1E1D;
+    --muted: #5C665F;
+    --line: #C9D3CA;
+    --structure: #2D5A4C;
+    --attention: #C85A32;
+    --action: #AC4928;
+    --on-action: #FFFFFF;
+    --link: #AC4928;
+  }
+  html[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #141615;
+    --surface: #1D211E;
+    --ink: #E6E8E6;
+    --muted: #A4AFA8;
+    --line: #35453C;
+    --structure: #4E8A77;
+    --attention: #E07A55;
+    --action: #E07A55;
+    --on-action: #141615;
+    --link: #E07A55;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+  .lock {
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .dot { color: var(--attention); }
+  a { color: var(--link); text-underline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--structure); outline-offset: 3px; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+  section { padding: clamp(56px, 9vw, 120px) 0; border-top: 1px solid var(--line); scroll-margin-top: 72px; }
+  #capacidades, #memoria { scroll-margin-top: 72px; }
+  section:first-of-type { border-top: none; }
+
+  /* ── Barra superior ─────────────────────────────────────────── */
+  .topstrip {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  }
+  .topstrip .wrap {
+    display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+    min-height: 56px; padding-top: 8px; padding-bottom: 8px;
+  }
+  .topstrip .tag { color: var(--action); font-weight: 500; }
+  .topstrip nav { display: flex; gap: 16px; flex-wrap: wrap; }
+  .topstrip nav a { color: var(--muted); text-decoration: none; }
+  .topstrip nav a:hover, .topstrip nav a:focus-visible { color: var(--structure); }
+  .theme-btns { margin-left: auto; display: flex; gap: 8px; }
+  .tbtn {
+    font: inherit; letter-spacing: .14em; text-transform: uppercase;
+    padding: 9px 16px; min-height: 40px; cursor: pointer;
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 4px;
+  }
+  .tbtn[aria-pressed="true"] {
+    border-color: var(--structure); color: var(--ink);
+  }
+  .tbtn[aria-pressed="true"]::before {
+    content: "● "; color: var(--attention); font-size: 9px;
+  }
+
+  /* ── Nota de alcance ────────────────────────────────────────── */
+  .scope {
+    border-left: 3px solid var(--attention);
+    padding: 12px 18px; margin-top: 40px;
+    color: var(--muted); font-size: 14px; max-width: 720px;
+  }
+
+  /* ── WEB ────────────────────────────────────────────────────── */
+  .masthead {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    padding: 22px 0; border-bottom: 1px solid var(--line);
+  }
+  .masthead .lock { font-size: 15px; }
+  .masthead nav { display: flex; gap: 20px; font-size: 13px; }
+  .masthead nav a { color: var(--muted); text-decoration: none; }
+  .masthead nav a:hover { color: var(--structure); }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+    padding: clamp(48px, 8vw, 96px) 0;
+  }
+  .kicker {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--structure); margin-bottom: 24px;
+  }
+  h1 {
+    font-family: "Chakra Petch", sans-serif; font-weight: 700;
+    font-size: clamp(34px, 5.4vw, 66px); line-height: 1.04;
+    letter-spacing: -.01em; max-width: 12ch;
+  }
+  .hero .lead {
+    margin-top: 28px; font-size: clamp(16px, 1.6vw, 19px);
+    color: var(--muted); max-width: 52ch;
+  }
+  .hero .ctas { margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 13px 22px; min-height: 44px; text-decoration: none;
+    border-radius: 4px;
+  }
+  .btn-primary { background: var(--action); color: var(--on-action); border: 1px solid var(--action); }
+  .btn-ghost { color: var(--link); border: 1px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--structure); }
+  .proof {
+    margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px; letter-spacing: .1em; color: var(--muted);
+  }
+  .proof b { color: var(--structure); font-weight: 500; }
+
+  .diagram { border: 1px solid var(--line); background: var(--surface); padding: 20px; }
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .diagram .cap {
+    margin-top: 12px; font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase;
+  }
+
+  h2 {
+    font-family: "Chakra Petch", sans-serif; font-weight: 700;
+    font-size: clamp(24px, 3.4vw, 40px); letter-spacing: .02em;
+    line-height: 1.15; max-width: 24ch;
+  }
+  h2 + .intro { margin-top: 18px; color: var(--muted); max-width: 62ch; }
+  h3 {
+    font-family: "Chakra Petch", sans-serif; font-weight: 600;
+    font-size: 15px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-top: 3px solid var(--structure);
+    padding: 24px;
+  }
+  .card .st {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .card .st::before { content: "● "; color: var(--structure); font-size: 9px; }
+  .card h3 { margin-top: 12px; }
+  .card p { margin-top: 10px; font-size: 14px; color: var(--muted); }
+  .card .lnk { margin-top: 14px; display: inline-block; font-size: 13px; font-weight: 500; }
+
+  /* ── MARCA ──────────────────────────────────────────────────── */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .tile { border: 1px solid var(--line); padding: 40px 32px; position: relative; }
+  .tile .tiletag {
+    position: absolute; top: 14px; left: 16px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  }
+  .tile-l { background: #F4F3EF; color: #1C1E1D; }
+  .tile-l .tiletag { color: #5C665F; }
+  .tile-d { background: #141615; color: #E6E8E6; }
+  .tile-d .tiletag { color: #A4AFA8; }
+  .tile .lock { font-size: clamp(22px, 3vw, 34px); }
+
+  .avatars { display: flex; gap: 24px; margin-top: 28px; flex-wrap: wrap; }
+  .av { text-align: center; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: .12em; }
+  .mark {
+    border-radius: 22%; display: flex; align-items: center; justify-content: center;
+    font-family: "Chakra Petch", sans-serif; font-weight: 700;
+    width: 88px; height: 88px; font-size: 42px; margin-bottom: 8px;
+  }
+  .mark-l { background: #F4F3EF; color: #1C1E1D; border: 1px solid #C9D3CA; }
+  .mark-d { background: #141615; color: #E6E8E6; border: 1px solid #35453C; }
+  .mark .adot { color: #C85A32; }
+  .mark-d .adot { color: #E07A55; }
+
+  .banner {
+    margin-top: 32px; border: 1px solid var(--line);
+    background: var(--surface); position: relative; overflow: hidden;
+    padding: clamp(28px, 5vw, 56px);
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  }
+  .banner .lock { font-size: clamp(24px, 4vw, 42px); position: relative; }
+  .banner .bmeta {
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px;
+    letter-spacing: .14em; color: var(--muted); text-transform: uppercase;
+    margin-top: 14px; position: relative;
+  }
+  .griddeco { position: absolute; inset: 0; }
+  .regmarks { display: flex; gap: 20px; align-items: center; flex-shrink: 0; position: relative; }
+  .regline { display: flex; flex-direction: column; gap: 8px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: .12em; color: var(--muted); }
+  .regline .bar { height: 1px; background: var(--structure); }
+  .copperdot { width: 12px; height: 12px; border-radius: 50%; background: var(--attention); }
+
+  /* ── GITHUB ─────────────────────────────────────────────────── */
+  .gh-frame {
+    margin-top: 40px; border: 1px solid var(--line); border-radius: 8px;
+    overflow: hidden; background: var(--surface);
+  }
+  .gh-chrome {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; border-bottom: 1px solid var(--line);
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; color: var(--muted);
+  }
+  .gh-chrome .gdot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--line); }
+  .gh-body { padding: clamp(24px, 4vw, 44px); }
+  .gh-banner {
+    border: 1px solid var(--line); position: relative; overflow: hidden;
+    background: var(--bg);
+    padding: clamp(28px, 5vw, 48px);
+  }
+  .gh-banner .lock { font-size: clamp(22px, 3.6vw, 38px); position: relative; }
+  .gh-banner .bmeta {
+    margin-top: 12px; position: relative;
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px;
+    letter-spacing: .14em; color: var(--muted); text-transform: uppercase;
+  }
+  .gh-org { display: flex; gap: 16px; align-items: flex-start; margin-top: 28px; }
+  .gh-org .orgname { font-weight: 600; font-size: 18px; }
+  .gh-org .orgbio { color: var(--muted); font-size: 14px; margin-top: 4px; max-width: 56ch; }
+  .gh-repos { margin-top: 28px; border-top: 1px solid var(--line); }
+  .gh-repo {
+    display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap;
+    padding: 14px 0; border-bottom: 1px solid var(--line);
+  }
+  .gh-repo .rname { font-weight: 600; }
+  .gh-repo .rmeta { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .08em; color: var(--muted); }
+  .gh-links { margin-top: 22px; display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; }
+  /* Cromo de plataforma: enlaces neutros (tinta + subrayado), no en color de marca. */
+  .gh-frame a { color: var(--ink); text-decoration: underline; }
+  .gh-frame a:hover { color: var(--ink); text-decoration: none; }
+
+  /* ── PALETA ─────────────────────────────────────────────────── */
+  .palettes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .pal { border: 1px solid var(--line); }
+  .pal .phead {
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px;
+    letter-spacing: .16em; text-transform: uppercase; padding: 14px 18px;
+    border-bottom: 1px solid var(--line); color: var(--muted); background: var(--surface);
+  }
+  .prow { display: flex; align-items: center; gap: 14px; padding: 12px 18px; border-bottom: 1px solid var(--line); }
+  .prow:last-child { border-bottom: none; }
+  .chip { width: 34px; height: 34px; border-radius: 4px; border: 1px solid var(--line); flex: none; }
+  .prow .role { flex: 1; font-size: 13px; }
+  .prow .hex { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; color: var(--muted); }
+
+  .propbar { display: flex; height: 40px; margin-top: 40px; border: 1px solid var(--line); }
+  .prop-neu { flex: 85; background: var(--surface); }
+  .prop-str { flex: 10; background: var(--structure); }
+  .prop-att { flex: 5; background: var(--attention); }
+  .prop-legend { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 14px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .1em; color: var(--muted); }
+  .prop-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 2px; margin-right: 7px; vertical-align: -1px; }
+  .prop-note { margin-top: 12px; font-size: 13px; color: var(--muted); }
+
+  .contrast { margin-top: 40px; border: 1px solid var(--line); background: var(--surface); padding: 28px; }
+  .contrast h3 { margin-bottom: 16px; }
+  .contrast table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .contrast th, .contrast td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .contrast th { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .contrast tr:last-child td { border-bottom: none; }
+  .contrast .ok, .contrast .ko { color: var(--ink); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; white-space: nowrap; }
+  .contrast .ok::before { content: "✓ "; }
+  .contrast .ko::before { content: "✗ "; }
+
+  .twocols { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+  .twocols h3 { margin-bottom: 12px; }
+  .twocols p, .twocols li { color: var(--muted); font-size: 14px; }
+  .twocols ul { padding-left: 18px; }
+  .twocols li { margin-top: 6px; }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 36px 0 56px;
+    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px;
+    letter-spacing: .12em; color: var(--muted); text-transform: uppercase;
+  }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .cards, .duo, .palettes, .twocols { grid-template-columns: 1fr; }
+    .theme-btns { margin-left: 0; }
+    h1 { max-width: 100%; }
+    /* La barra sticky crece a ~144px al apilarse: margen de ancla mayor. */
+    section, #capacidades, #memoria { scroll-margin-top: 160px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topstrip">
+  <div class="wrap">
+    <span class="tag">Exploración de color — verdigris + terracota · No publicada</span>
+    <nav aria-label="Secciones del especimen">
+      <a href="#web">Web</a>
+      <a href="#marca">Marca</a>
+      <a href="#github">GitHub</a>
+      <a href="#paleta">Paleta</a>
+    </nav>
+    <div class="theme-btns" role="group" aria-label="Tema">
+      <button type="button" class="tbtn" id="btn-light" aria-pressed="true">Claro</button>
+      <button type="button" class="tbtn" id="btn-dark" aria-pressed="false">Oscuro</button>
+    </div>
+  </div>
+</div>
+
+<main>
+<div class="wrap">
+  <p class="scope">
+    Composición representativa para evaluar verdigris (estructura) y terracota (atención)
+    sobre superficies neutras — no es una migración de la página en vivo ni del perfil de GitHub.
+    Contenido en español; los enlaces apuntan a destinos reales.
+  </p>
+</div>
+
+<!-- ═══════════ 1 · WEB ═══════════ -->
+<section id="web" aria-labelledby="web-h">
+  <div class="wrap">
+    <div class="masthead">
+      <span class="lock">Negent Mind<span class="dot">.</span></span>
+      <nav aria-label="Navegación interna del ejemplo">
+        <a href="#memoria">Memoria</a>
+        <a href="#capacidades">Capacidades</a>
+        <a href="#paleta">Sistema</a>
+      </nav>
+    </div>
+
+    <div class="hero">
+      <div>
+        <p class="kicker">Laboratorio independiente · infraestructura para agentes</p>
+        <h1 id="web-h">Orden desde el caos para la era de los agentes IA.</h1>
+        <p class="lead">
+          Laboratorio independiente de investigación aplicada en IA e ingeniería de
+          producto: construimos infraestructura persistente, controlable y confiable
+          para agentes — memoria, verificación, ejecución.
+        </p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="https://github.com/ness-e/Vantadb">Explorar VantaDB ↗</a>
+          <a class="btn btn-ghost" href="#memoria">La memoria en detalle</a>
+        </div>
+        <p class="proof">Rust / <b>HNSW + BM25</b> / Apache-2.0</p>
+      </div>
+
+      <div class="diagram" aria-hidden="true">
+        <svg viewBox="0 0 420 300" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <!-- Entrada dispersa → señal que converge en una retícula de memoria;
+               un solo punto cobre: la decisión terminal. -->
+          <g stroke="var(--line)" stroke-width="1">
+            <line x1="72" y1="60"  x2="196" y2="60"/>
+            <line x1="48" y1="112" x2="196" y2="105"/>
+            <line x1="64" y1="170" x2="196" y2="150"/>
+            <line x1="40" y1="224" x2="196" y2="195"/>
+            <line x1="88" y1="252" x2="196" y2="240"/>
+          </g>
+          <g fill="var(--muted)">
+            <circle cx="36" cy="52" r="3"/><circle cx="72" cy="60" r="3"/>
+            <circle cx="48" cy="112" r="3"/><circle cx="26" cy="138" r="3"/>
+            <circle cx="64" cy="170" r="3"/><circle cx="40" cy="224" r="3"/>
+            <circle cx="76" cy="206" r="3"/><circle cx="88" cy="252" r="3"/>
+            <circle cx="120" cy="84" r="3"/><circle cx="108" cy="190" r="3"/>
+          </g>
+          <g stroke="var(--structure)" stroke-width="1" fill="none">
+            <path d="M196 60  H246"/><path d="M196 105 H246"/>
+            <path d="M196 150 H246"/><path d="M196 195 H246"/>
+            <path d="M196 240 H246"/>
+          </g>
+          <g stroke="var(--line)" stroke-width="1" fill="none">
+            <rect x="246" y="36" width="104" height="228"/>
+            <line x1="246" y1="87"  x2="350" y2="87"/>
+            <line x1="246" y1="138" x2="350" y2="138"/>
+            <line x1="246" y1="189" x2="350" y2="189"/>
+            <line x1="246" y1="240" x2="350" y2="240"/>
+            <line x1="272" y1="36" x2="272" y2="264"/>
+            <line x1="298" y1="36" x2="298" y2="264"/>
+            <line x1="324" y1="36" x2="324" y2="264"/>
+          </g>
+          <g fill="var(--structure)">
+            <circle cx="246" cy="60"  r="3"/><circle cx="246" cy="105" r="3"/>
+            <circle cx="246" cy="150" r="3"/><circle cx="246" cy="195" r="3"/>
+            <circle cx="246" cy="240" r="3"/>
+            <circle cx="272" cy="87" r="2.4"/><circle cx="298" cy="87"  r="2.4"/><circle cx="324" cy="87"  r="2.4"/>
+            <circle cx="272" cy="138" r="2.4"/><circle cx="298" cy="138" r="2.4"/><circle cx="324" cy="138" r="2.4"/>
+            <circle cx="272" cy="189" r="2.4"/><circle cx="298" cy="189" r="2.4"/><circle cx="324" cy="189" r="2.4"/>
+            <circle cx="272" cy="240" r="2.4"/>
+          </g>
+          <path d="M350 240 H384" stroke="var(--attention)" stroke-width="1.4" fill="none"/>
+          <circle cx="392" cy="240" r="6" fill="var(--attention)"/>
+          <circle cx="392" cy="240" r="11" fill="none" stroke="var(--attention)" stroke-width="1"/>
+        </svg>
+        <p class="cap">Entrada dispersa → retícula de memoria · punto terminal = decisión</p>
+      </div>
+    </div>
+
+    <h2 id="capacidades">Un motor publicado. Un mapa de capacidades más allá.</h2>
+    <p class="intro">
+      Estado, no calendario: Activo significa código publicado; Incubación,
+      trabajo en desarrollo sin lanzamiento anunciado; Visión, especificación
+      escrita de largo plazo.
+    </p>
+    <div class="cards">
+      <div class="card" id="memoria">
+        <p class="st">Activo · v0.9.0</p>
+        <h3>VantaDB — flagship</h3>
+        <p>
+          Motor Rust embebido: memoria persistente y búsqueda híbrida HNSW + BM25
+          con aislamiento MVCC y durabilidad WAL. En
+          <code class="mono">ness-e/Vantadb</code>; transferencia a la org pendiente.
+        </p>
+        <a class="lnk" href="https://github.com/ness-e/Vantadb">Ver repositorio ↗</a>
+      </div>
+      <div class="card">
+        <p class="st">En incubación</p>
+        <h3>Scopegrain</h3>
+        <p>
+          Proyecto en incubación. Repositorio público de trabajo en progreso,
+          todavía sin lanzamiento anunciado.
+        </p>
+      </div>
+      <div class="card">
+        <p class="st">Visión — no productos publicados</p>
+        <h3>Mapa de capacidades</h3>
+        <p>
+          Contexto, verificación, percepción y ejecución como capas especificadas
+          a largo plazo. Las especificaciones son internas; un resumen público
+          vivirá en el Handbook.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2 · MARCA ═══════════ -->
+<section id="marca" aria-labelledby="marca-h">
+  <div class="wrap">
+    <p class="kicker">Identidad sobre los dos temas</p>
+    <h2 id="marca-h">Marca — wordmark, monograma y banner.</h2>
+    <p class="intro">
+      El wordmark conserva Chakra Petch 700 en mayúsculas; el punto final es la
+      única zona de atención terracota. Las fichas muestran ambos temas a la vez,
+      con sus valores exactos.
+    </p>
+
+    <div class="duo">
+      <div class="tile tile-l">
+        <span class="tiletag">Papel #F4F3EF · tinta #1C1E1D · punto #C85A32</span>
+        <span class="lock">Negent Mind<span class="dot" style="color:#C85A32">.</span></span>
+      </div>
+      <div class="tile tile-d">
+        <span class="tiletag">Grafito #141615 · tinta #E6E8E6 · punto #E07A55</span>
+        <span class="lock">Negent Mind<span class="dot" style="color:#E07A55">.</span></span>
+      </div>
+    </div>
+
+    <div class="avatars">
+      <div class="av"><div class="mark mark-l">NM<span class="adot">.</span></div>MARCA CLARA</div>
+      <div class="av"><div class="mark mark-d">NM<span class="adot">.</span></div>MARCA OSCURA</div>
+      <div class="av"><div class="mark mark-l" style="width:36px;height:36px;font-size:17px">NM<span class="adot">.</span></div>FAV 36 L</div>
+      <div class="av"><div class="mark mark-d" style="width:36px;height:36px;font-size:17px">NM<span class="adot">.</span></div>FAV 36 D</div>
+    </div>
+
+    <div class="banner" aria-hidden="false">
+      <svg class="griddeco" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="dotgrid" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1.2" cy="1.2" r="1.2" fill="var(--line)"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dotgrid)"/>
+      </svg>
+      <div style="position:relative">
+        <span class="lock">Negent Mind<span class="dot">.</span></span>
+        <p class="bmeta">Banner técnico 960×240 — mock estático · retícula + lockup + un punto</p>
+      </div>
+      <div class="regmarks" aria-hidden="true">
+        <div class="regline">
+          <span>Estructura</span>
+          <span class="bar" style="width:96px"></span>
+          <span>hairline 1px</span>
+        </div>
+        <div class="regline">
+          <span>Atención</span>
+          <span class="copperdot"></span>
+          <span>un punto</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3 · GITHUB ═══════════ -->
+<section id="github" aria-labelledby="github-h">
+  <div class="wrap">
+    <p class="kicker">Perfil de organización</p>
+    <h2 id="github-h">GitHub — vista ilustrativa del perfil de organización.</h2>
+    <p class="intro">
+      Mock honesto: el cromo de GitHub es neutral (la plataforma no admite CSS
+      propio); la identidad entra únicamente por el banner y el avatar del
+      perfil. No implica cambios aplicados en el perfil en vivo.
+    </p>
+
+    <div class="gh-frame">
+      <div class="gh-chrome" aria-hidden="true">
+        <span class="gdot"></span><span class="gdot"></span><span class="gdot"></span>
+        <span>github.com/NegentMind</span>
+      </div>
+      <div class="gh-body">
+        <div class="gh-banner">
+          <svg class="griddeco" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="url(#dotgrid)"/>
+          </svg>
+          <span class="lock">Negent Mind<span class="dot">.</span></span>
+          <p class="bmeta">Orden desde el caos · infraestructura verificable para agentes IA</p>
+        </div>
+        <div class="gh-org">
+          <div class="mark mark-d" style="width:56px;height:56px;font-size:26px;margin-bottom:0" aria-hidden="true">NM<span class="adot">.</span></div>
+          <div>
+            <p class="orgname">Negent Mind</p>
+            <p class="orgbio">Applied AI research &amp; product engineering. Open infrastructure for persistent, controllable and reliable AI agents.</p>
+          </div>
+        </div>
+        <div class="gh-repos">
+          <div class="gh-repo">
+            <span class="rname"><a href="https://github.com/ness-e/Vantadb">ness-e/Vantadb</a></span>
+            <span class="rmeta">v0.9.0 · flagship · transferencia a la org pendiente</span>
+          </div>
+          <div class="gh-repo">
+            <span class="rname">Scopegrain</span>
+            <span class="rmeta">en incubación · repositorio público WIP · sin lanzamiento anunciado</span>
+          </div>
+        </div>
+        <div class="gh-links">
+          <a href="https://github.com/NegentMind/.github/discussions">GitHub Discussions ↗</a>
+          <a href="https://github.com/NegentMind/.github/blob/main/CONTRIBUTING.md">Guía de contribución ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 4 · PALETA ═══════════ -->
+<section id="paleta" aria-labelledby="paleta-h">
+  <div class="wrap">
+    <p class="kicker">Tokens de referencia</p>
+    <h2 id="paleta-h">Paleta — dos temas, roles separados.</h2>
+    <p class="intro">
+      Neutros amplios (~85 %), verdigris como estructura (~10 %) y terracota como
+      atención (~5 %): jerarquía direccional, no medición estadística.
+    </p>
+
+    <div class="palettes">
+      <div class="pal">
+        <p class="phead">Claro · papel</p>
+        <div class="prow"><span class="chip" style="background:#F4F3EF"></span><span class="role">Fondo base</span><span class="hex">#F4F3EF</span></div>
+        <div class="prow"><span class="chip" style="background:#EAEDE7"></span><span class="role">Superficie elevada</span><span class="hex">#EAEDE7</span></div>
+        <div class="prow"><span class="chip" style="background:#1C1E1D"></span><span class="role">Tinta</span><span class="hex">#1C1E1D</span></div>
+        <div class="prow"><span class="chip" style="background:#5C665F"></span><span class="role">Texto secundario</span><span class="hex">#5C665F</span></div>
+        <div class="prow"><span class="chip" style="background:#C9D3CA"></span><span class="role">Línea decorativa</span><span class="hex">#C9D3CA</span></div>
+        <div class="prow"><span class="chip" style="background:#2D5A4C"></span><span class="role">Estructura — verdigris</span><span class="hex">#2D5A4C</span></div>
+        <div class="prow"><span class="chip" style="background:#C85A32"></span><span class="role">Atención — terracota marca</span><span class="hex">#C85A32</span></div>
+        <div class="prow"><span class="chip" style="background:#AC4928"></span><span class="role">Atención funcional — acción / enlaces pequeños</span><span class="hex">#AC4928</span></div>
+      </div>
+      <div class="pal">
+        <p class="phead">Oscuro · grafito</p>
+        <div class="prow"><span class="chip" style="background:#141615"></span><span class="role">Fondo base</span><span class="hex">#141615</span></div>
+        <div class="prow"><span class="chip" style="background:#1D211E"></span><span class="role">Superficie elevada</span><span class="hex">#1D211E</span></div>
+        <div class="prow"><span class="chip" style="background:#E6E8E6"></span><span class="role">Tinta</span><span class="hex">#E6E8E6</span></div>
+        <div class="prow"><span class="chip" style="background:#A4AFA8"></span><span class="role">Texto secundario</span><span class="hex">#A4AFA8</span></div>
+        <div class="prow"><span class="chip" style="background:#35453C"></span><span class="role">Línea decorativa</span><span class="hex">#35453C</span></div>
+        <div class="prow"><span class="chip" style="background:#4E8A77"></span><span class="role">Estructura — verdigris</span><span class="hex">#4E8A77</span></div>
+        <div class="prow"><span class="chip" style="background:#E07A55"></span><span class="role">Atención — cobre marca</span><span class="hex">#E07A55</span></div>
+        <div class="prow"><span class="chip" style="background:#E07A55"></span><span class="role">Atención funcional — acción / enlaces pequeños</span><span class="hex">#E07A55</span></div>
+      </div>
+    </div>
+
+    <div class="propbar" role="img" aria-label="Proporción orientativa: neutros 85 por ciento, verdigris estructural 10 por ciento, terracota de atención 5 por ciento">
+      <div class="prop-neu"></div>
+      <div class="prop-str"></div>
+      <div class="prop-att"></div>
+    </div>
+    <div class="prop-legend" aria-hidden="true">
+      <span><i style="background:var(--surface);border:1px solid var(--line)"></i>Neutros ~85 %</span>
+      <span><i style="background:var(--structure)"></i>Verdigris — estructura ~10 %</span>
+      <span><i style="background:var(--attention)"></i>Terracota — atención ~5 %</span>
+    </div>
+    <p class="prop-note">
+      Proporción direccional 85 / 10 / 5 — guía visual de jerarquía, no una
+      estadística medida. El neutro manda; el verde ordena; el cobre decide.
+    </p>
+
+    <div class="contrast">
+      <h3>Contraste medido (WCAG) — pares de aplicación</h3>
+      <table>
+        <tr><th>Par</th><th>Ratio</th><th>Uso</th></tr>
+        <tr><td>Tinta / fondo — claro</td><td class="ok">15.10:1</td><td>Texto general.</td></tr>
+        <tr><td>Tinta / fondo — oscuro</td><td class="ok">14.76:1</td><td>Texto general.</td></tr>
+        <tr><td>Verdigris #2D5A4C / papel #F4F3EF</td><td class="ok">7.06:1</td><td>Etiquetas, hairlines, marcadores.</td></tr>
+        <tr><td>Verdigris #4E8A77 / grafito #141615</td><td class="ok">4.52:1</td><td rowspan="2">Texto verde pequeño <b>solo</b> sobre fondo base; en paneles elevados (#1D211E, 4.06:1) usar tinta + marcador verde.</td></tr>
+        <tr><td>Verdigris #4E8A77 / elevado #1D211E</td><td class="ko">4.06:1</td></tr>
+        <tr><td>Terracota #C85A32 / papel</td><td class="ko">3.81:1</td><td rowspan="2">Marca terracota: reservada a punto, decoración y texto grande — nunca texto pequeño ni botones.</td></tr>
+        <tr><td>Blanco / terracota #C85A32</td><td class="ko">4.23:1</td></tr>
+        <tr><td>Funcional #AC4928 / papel</td><td class="ok">5.06:1</td><td>Enlaces destacados pequeños en claro.</td></tr>
+        <tr><td>Blanco / #AC4928</td><td class="ok">5.62:1</td><td>Botón primario claro (texto #FFFFFF).</td></tr>
+        <tr><td>Grafito / cobre #E07A55</td><td class="ok">6.13:1</td><td>Botón primario oscuro (texto #141615).</td></tr>
+        <tr><td>Muted / superficie elevada — claro</td><td class="ok">5.05:1</td><td rowspan="2">Texto secundario sobre paneles.</td></tr>
+        <tr><td>Muted / superficie elevada — oscuro</td><td class="ok">7.20:1</td></tr>
+        <tr><td>Foco — color estructura</td><td class="ok">&gt;3:1</td><td>Anillo de foco visible en ambos temas.</td></tr>
+      </table>
+    </div>
+
+    <div class="twocols">
+      <div>
+        <h3>Estructura — verdigris</h3>
+        <ul>
+          <li>Hairlines, bordes de tarjeta, nodos de diagrama, etiquetas técnicas.</li>
+          <li>Ordena la página sin pedir atención: es el sistema, no el mensaje.</li>
+          <li>En oscuro, texto verde pequeño solo sobre el fondo base.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Atención — terracota / cobre</h3>
+        <ul>
+          <li>Un solo punto por pieza: el punto del lockup, la decisión terminal, la CTA.</li>
+          <li>Marca #C85A32 / #E07A55 para decoración y texto grande; la variante
+              funcional #AC4928 / #E07A55 cubre texto pequeño, enlaces y botones.</li>
+          <li>Nada depende solo del color: etiquetas de texto acompañan siempre.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Especimen v1 · 2026-11-16 · verdigris + terracota · exploración interna, no publicada ·
+    tipografías: Chakra Petch / Inter / JetBrains Mono
+  </div>
+</footer>
+
+<script>
+  (function () {
+    "use strict";
+    var root = document.documentElement;
+    var btnL = document.getElementById("btn-light");
+    var btnD = document.getElementById("btn-dark");
+    function setTheme(t) {
+      root.setAttribute("data-theme", t);
+      btnL.setAttribute("aria-pressed", String(t === "light"));
+      btnD.setAttribute("aria-pressed", String(t === "dark"));
+    }
+    btnL.addEventListener("click", function () { setTheme("light"); });
+    btnD.addEventListener("click", function () { setTheme("dark"); });
+  })();
+</script>
+</body>
+</html>
