@@ -44,7 +44,11 @@ Notion** (página raíz «Negent Mind»: 🧭 Identidad y Estrategia · 🎨 Mar
 🧭 Registro de Decisiones · 🔬 Investigaciones y Revisiones). El repo conserva
 el cómo: código, specs y documentos que consumen herramientas.
 
-Identidad v1 (2026-11-11): Void `#08090C` · Bone `#EDEAE3` · Pulse `#8B7CFF`.
+Identidad v2 aprobada para la nueva web y nuevos assets: Orbital, carbón y plata,
+tipografía y superficies redondeadas, espectro del hero como material expresivo.
+Implementación en curso; valores web en `web/app/orbital.css`.
+Identidad v1 (Void/Bone/Pulse): compatibilidad de Remotion y perfil publicado,
+congelados hasta una migración explícita; no modificar su pipeline en esta tarea.
 Contacto: `negent@negentmind.com` · `negentmind.com` (pendiente compra).
 
 ### Los dos documentos de `.github/` (fuente: `github-profile/`)
@@ -121,7 +125,21 @@ npm run typecheck      # debe salir exit 0 (tsc --noEmit)
 
 ---
 
-## Marca (ley, no se duplica en otro archivo)
+## Marca v2 (web y nuevos assets)
+
+Decisión aprobada en **Notion · Marca**: Orbital (lettering SVG original),
+Outfit para títulos, DM Sans para texto y JetBrains Mono para código.
+Carbón y plata son la base; el hero admite un espectro cromático que se
+reutiliza de manera acotada en ilustraciones y detalles. Radios y espacios
+compartidos. Sin pantalla de carga bloqueante; movimiento reducido y pausa
+para efectos continuos. Componentes internos sobre shadcn/Radix.
+
+Valores web: `web/app/orbital.css`; contexto técnico aprobado:
+`web/docs/dev/site-v2-design.md`. No duplicar los valores de la nueva web
+en los tokens antiguos de Remotion: cambiaría los renders y el chroma-key.
+Ni la marca propia de VantaDB ni el perfil ya publicado cambian implícitamente.
+
+## Marca v1 (histórico / compatibilidad congelada)
 
 Concepto, misión y voz: **Notion · 🎨 Marca**. Valores: esta sección +
 `media/remotion/src/tokens.ts` + `brand/brand-sheet.html` (mesa visual).
