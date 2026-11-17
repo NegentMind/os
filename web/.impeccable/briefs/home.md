@@ -21,7 +21,7 @@ Mundo visual: [Negent Mind — Orbital](../../DESIGN.md).
 - Acción principal: explorar proyectos; secundaria: contribuir. Prueba en
   artefactos reales, sin clientes, testimonios, métricas ni benchmarks inventados.
 - Contenido desde SSR, poster/fallback inmediato y canvas Paper progresivo.
-  Pausa, visibilidad y reduced motion sin GPU. Motion gestiona navegación, titulares y controles; GSAP gestiona la entrada del hero y `ScrollScene` con ScrollTrigger. Nunca se importan ambos motores en un mismo componente ni comparten un wrapper transformado. `MotionProvider` centraliza la pausa y la preferencia del sistema, con control en el footer y contenido siempre visible.
+  Pausa, visibilidad y reduced motion sin GPU. Motion gestiona navegación, titulares y controles; la entrada del hero es CSS de primer render; GSAP gestiona reveals de sección vía `ScrollScene` y la respuesta del shader al puntero. Nunca se importan ambos motores en un mismo componente ni comparten un wrapper transformado. `MotionProvider` centraliza la pausa y la preferencia del sistema, con control en el footer y contenido siempre visible.
 
 ## Límites y pendientes
 

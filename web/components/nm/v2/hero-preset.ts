@@ -33,7 +33,7 @@ export const HERO_ART = Object.freeze({
     offsetX: 0.12,
     offsetY: -0.08,
     frame: 24000,
-    speed: 0.26,
+    speed: 0.32,
     minPixelRatio: 1,
     maxPixelCount: 1920 * 1080,
   } satisfies WarpProps,

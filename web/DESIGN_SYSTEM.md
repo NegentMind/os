@@ -83,9 +83,10 @@ una nueva rampa tipográfica ni una fuente llamada Orbital.
 Radios y tokens de layout tienen su fuente en `app/orbital.css`;
 `app/orbital-hero.css` conserva el hero de dos columnas y el wordmark completo,
 con altura máxima de 20svh (16svh en pantallas bajas). Header y hero comparten
-marco de ancho `calc(100% - 2 * var(--nm2-frame-gap))`, máximo 1760px. El hero
+marco fluido de ancho `calc(100% - 2 * var(--nm2-frame-gap))`, con gap `12px`
+(8px por debajo de 768px) y sin máximo de 1760px. El hero
 reserva 104px para la navegación superpuesta y puede crecer en móvil o zoom.
-`app/orbital-shell.css` define la barra flotante de máximo 64rem y el layout
+`app/orbital-shell.css` define la barra flotante a ancho de marco y el layout
 asimétrico de `PageHero`, con altura mínima `clamp(480px, 70svh, 720px)`.
 
 Secciones con padding vertical `clamp(3.5rem, 8vw, 7rem)`. Contenedor común,
@@ -130,11 +131,13 @@ no una sexta página pública.
 - Poster local desde SSR y fallback inmediato; canvas progresivo solo si
   permitido y visible. Pausa = `speed: 0`; oculto/fuera de viewport = pausa;
   reduced motion = poster estático y ninguna GPU.
-- Motion gestiona navegación, titulares `assemble`/`focus`/`trace` y respuesta
-  a controles. GSAP gestiona la entrada acotada del hero y `ScrollScene` con
-  ScrollTrigger: inicio `top 80%`, fin `bottom 25%`, `scrub: 0.5`. Nunca se
-  importan ambos motores en un mismo componente ni se transforman desde dos
-  motores los mismos wrappers. Los contextos se revierten al desmontar o pausar.
+- CSS posee la entrada del hero en primer render. Motion gestiona navegación,
+  titulares y controles. GSAP gestiona reveals de sección y decor acotado en
+  `ScrollScene` (trazo `top 90%` a `center 55%`, flotación `top bottom` a
+  `bottom top`, scrub 0.8) y el easing del puntero sobre el shader Paper. Los
+  listeners se retiran al pausar o desmontar; el tween del puntero se cancela
+  sin reiniciar el frame. Nunca se importan ambos motores en un mismo
+  componente ni se transforman desde dos motores los mismos wrappers.
 - `MotionProvider` centraliza pausa, preferencia del sistema y `html[data-motion]`.
   El control global está en el footer; el hero no tiene botón local.
   `prefers-reduced-motion` conserva arte estático y deshabilita el control

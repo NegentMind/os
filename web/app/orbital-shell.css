@@ -118,7 +118,6 @@
   left: 0;
   right: 0;
   width: calc(100% - 2 * var(--nm2-frame-gap));
-  max-width: 1760px;
   margin-inline: auto;
   z-index: 50;
   pointer-events: none;
@@ -129,22 +128,25 @@
   align-items: center;
   gap: 0.75rem;
   width: 100%;
-  max-width: 1760px;
   margin-inline: auto;
   min-height: 72px;
-  padding: 0.75rem clamp(20px, 3vw, 40px);
+  padding: 0.75rem clamp(32px, 4.5vw, 72px);
   border-radius: var(--nm2-radius-hero);
   background: transparent;
   border: 1px solid transparent;
   pointer-events: auto;
-  /* Width is deliberately not CSS-transitioned: Motion owns its FLIP. */
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition: background-color 600ms ease, border-color 600ms ease,
+    backdrop-filter 600ms ease, -webkit-backdrop-filter 600ms ease,
+    box-shadow 600ms ease;
 }
 
 .nm2-header__bar[data-floating="true"] {
-  max-width: 64rem;
   background: color-mix(in srgb, var(--nm2-surface) 94%, transparent);
   border-color: color-mix(in srgb, var(--nm2-structure) 45%, transparent);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .nm2-header__brand {
@@ -318,14 +320,13 @@
   }
 }
 
-/* SSR-visible headings; each effect changes a different visual property. */
-.nm2-animated-heading__word,
-.nm2-animated-heading__line {
+/* SSR-visible headings; Motion owns the per-word reveal, CSS only shapes it. */
+.nm2-animated-heading__mask,
+.nm2-animated-heading__word {
   display: inline-block;
 }
 
-.nm2-animated-heading--trace {
-  display: inline-block;
+.nm2-animated-heading--trace .nm2-animated-heading__mask {
   overflow: clip;
   vertical-align: bottom;
   padding-block-end: 0.08em;
@@ -341,7 +342,6 @@
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(24px, 4vw, 64px);
   width: calc(100% - 2 * var(--nm2-frame-gap));
-  max-width: 1760px;
   min-height: clamp(480px, 70svh, 720px);
   margin: var(--nm2-frame-gap) auto;
   padding: 104px clamp(24px, 5vw, 80px) 48px;
@@ -423,7 +423,6 @@
   isolation: isolate;
   overflow: hidden;
   width: calc(100% - 2 * var(--nm2-frame-gap));
-  max-width: 1760px;
   margin: 0 auto var(--nm2-frame-gap);
   border-radius: var(--nm2-radius-hero);
   border-top: 1px solid var(--nm2-line);
@@ -594,14 +593,13 @@
   }
 }
 
-/* Bottom optical edge: a soft fallback plus three progressive blur masks. */
+/* Bottom optical edge: five progressive masked blur layers, never a tint. */
 .nm2-viewport-fade {
   position: fixed;
   inset: auto 0 0;
   z-index: 40;
-  height: clamp(24px, 2.4vw, 32px);
+  height: 24px;
   pointer-events: none;
-  background: linear-gradient(transparent, color-mix(in srgb, var(--nm2-bg) 65%, transparent));
 }
 
 .nm2-viewport-fade__layer {
@@ -610,26 +608,56 @@
   pointer-events: none;
 }
 
-@supports (backdrop-filter: blur(1px)) and (mask-image: linear-gradient(transparent, black)) {
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   .nm2-viewport-fade__layer:nth-child(1) {
-    backdrop-filter: blur(2px);
-    mask-image: linear-gradient(transparent, black 80%);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
   }
 
   .nm2-viewport-fade__layer:nth-child(2) {
-    backdrop-filter: blur(5px);
-    mask-image: linear-gradient(transparent 25%, black);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    mask-image: linear-gradient(to bottom, transparent 15%, black 50%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 15%, black 50%);
   }
 
   .nm2-viewport-fade__layer:nth-child(3) {
-    backdrop-filter: blur(9px);
-    mask-image: linear-gradient(transparent 55%, black);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    mask-image: linear-gradient(to bottom, transparent 35%, black 70%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 35%, black 70%);
+  }
+
+  .nm2-viewport-fade__layer:nth-child(4) {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    mask-image: linear-gradient(to bottom, transparent 55%, black 85%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 55%, black 85%);
+  }
+
+  .nm2-viewport-fade__layer:nth-child(5) {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    mask-image: linear-gradient(to bottom, transparent 72%, black 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 72%, black 100%);
   }
 }
 
-body:has(:focus-visible) .nm2-viewport-fade,
+@media (forced-colors: active) {
+  .nm2-viewport-fade {
+    display: none;
+  }
+}
+
 body:has(:focus-visible) .nm2-pointer-feedback {
   visibility: hidden;
+}
+
+/* Keyboard focus keeps scroll clearance above the optical strip. */
+.nm2-site :focus-visible {
+  scroll-margin-block-end: 40px;
 }
 
 /* Native cursor is never replaced. This ring never receives pointer input. */
@@ -653,6 +681,10 @@ body:has(:focus-visible) .nm2-pointer-feedback {
 }
 
 @media (max-width: 47.999rem) {
+  .nm2-header__bar {
+    padding: 0.75rem 24px;
+  }
+
   .nm2-page-hero {
     grid-template-columns: minmax(0, 1fr);
     padding: 104px 24px 24px;
@@ -676,7 +708,4 @@ body:has(:focus-visible) .nm2-pointer-feedback {
     overflow-wrap: anywhere;
   }
 
-  .nm2-viewport-fade {
-    height: 16px;
-  }
 }

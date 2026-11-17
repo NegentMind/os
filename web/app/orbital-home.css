@@ -19,21 +19,35 @@
   isolation: isolate;
   margin-inline: var(--nm2-frame-gap);
   border-radius: var(--nm2-radius-hero);
+  /* Reading clearance stays above the material gradients at both edges. */
+  padding-block: max(96px, clamp(3.5rem, 8vw, 7rem));
+}
+
+.nm2-home .nm2-section--paper > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .nm2-home .nm2-section--paper {
+    padding-block: 72px;
+  }
 }
 
 .nm2-home .nm2-section--paper::before,
 .nm2-home .nm2-section--paper::after {
   content: "";
   position: absolute;
-  z-index: 0;
   inset-inline: 0;
-  block-size: clamp(24px, 3.5vw, 48px);
-  background-image:
-    linear-gradient(180deg, var(--nm2-paper-ink), transparent),
-    radial-gradient(circle at 1px 1px, var(--nm2-paper-ink) 1px, transparent 1.3px);
-  background-size: 100% 100%, 6px 6px;
-  mask-image: linear-gradient(180deg, #000, transparent);
+  z-index: 0;
+  block-size: clamp(64px, 6vw, 112px);
   pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    var(--nm2-frame-bg),
+    color-mix(in srgb, var(--nm2-frame-bg) 62%, transparent) 28%,
+    transparent
+  );
 }
 
 .nm2-home .nm2-section--paper::before {
@@ -134,28 +148,10 @@
 
 .nm2-home :is(
   .nm2-system-story__art, .nm2-memory-demo__art, .nm2-scope-study__art,
-  .nm2-evidence-workbench__art
+  .nm2-capability-story__art, .nm2-evidence-workbench__art
 ) > :first-child {
   width: 100%;
   height: 100%;
-}
-
-.nm2-home :is(
-  .nm2-system-story__signals, .nm2-memory-demo__layers, .nm2-scope-study__planes,
-  .nm2-capability-story__rails, .nm2-evidence-workbench__signals
-) {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  stroke: var(--nm2-line);
-  stroke-width: 1.5;
-}
-
-.nm2-home svg [data-active="true"] {
-  stroke: var(--nm2-text);
-  stroke-width: 2.5;
 }
 
 .nm2-home .nm2-system-story {
@@ -168,11 +164,6 @@
 
 .nm2-home .nm2-system-story__art {
   aspect-ratio: 32 / 21;
-}
-
-.nm2-home .nm2-system-story__signals circle {
-  fill: var(--nm2-section);
-  transition: r 220ms, stroke 220ms;
 }
 
 .nm2-home .nm2-system-story__reading {
@@ -229,18 +220,6 @@
   aspect-ratio: 32 / 21;
 }
 
-.nm2-home .nm2-memory-demo__layer {
-  transform-box: fill-box;
-  transform-origin: center;
-  fill: color-mix(in srgb, var(--nm2-surface) 70%, transparent);
-  transition: transform 300ms, fill 220ms;
-}
-
-.nm2-home .nm2-memory-demo__layer[data-active="true"] {
-  fill: color-mix(in srgb, var(--nm2-spectrum-ice) 16%, var(--nm2-surface));
-  transform: translateY(-18px);
-}
-
 .nm2-home .nm2-memory-demo__controls {
   margin-block: 1.5rem 1.25rem;
 }
@@ -275,28 +254,6 @@
 
 .nm2-home .nm2-scope-study__art {
   aspect-ratio: 32 / 21;
-}
-
-.nm2-home .nm2-scope-study__plane {
-  fill: color-mix(in srgb, var(--nm2-surface) 65%, transparent);
-  transform-origin: center;
-  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.nm2-home .nm2-scope-study__plane--0 {
-  transform: translate(-12px, -10px);
-}
-
-.nm2-home .nm2-scope-study__plane--2 {
-  transform: translate(12px, 10px);
-}
-
-.nm2-home .nm2-scope-study[data-exploded="true"] .nm2-scope-study__plane--0 {
-  transform: translate(-76px, -44px) rotate(-6deg);
-}
-
-.nm2-home .nm2-scope-study[data-exploded="true"] .nm2-scope-study__plane--2 {
-  transform: translate(76px, 44px) rotate(6deg);
 }
 
 .nm2-home .nm2-scope-study > .nm2-story-control {
@@ -367,24 +324,6 @@
 .nm2-home .nm2-capability-story__art {
   aspect-ratio: 18 / 17;
   overflow: clip;
-}
-
-.nm2-home .nm2-capability-story__field {
-  position: absolute;
-  inset: 0;
-  height: 100%;
-  width: 100%;
-  color: var(--nm2-spectrum-ice);
-}
-
-.nm2-home .nm2-capability-story__blueprint {
-  position: absolute;
-  inset: 12% 0;
-  width: 100%;
-}
-
-.nm2-home .nm2-capability-story__rails {
-  stroke: var(--nm2-structure);
 }
 
 .nm2-home .nm2-home-holons {

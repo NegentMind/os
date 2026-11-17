@@ -35,140 +35,162 @@
   position: relative;
   inline-size: 100%;
   min-inline-size: 0;
-  aspect-ratio: 32 / 25;
-  perspective: 900px;
+  aspect-ratio: 32 / 21;
   isolation: isolate;
   pointer-events: none;
 }
 
-.nm2-blueprint__tilt,
 .nm2-blueprint__svg {
+  position: absolute;
+  inset: 0;
   display: block;
   inline-size: 100%;
   block-size: 100%;
-}
-
-.nm2-blueprint__tilt {
-  transform: rotateX(var(--nm2-scene-tilt-x, 0deg))
-    rotateY(var(--nm2-scene-tilt-y, 0deg));
-  transform-origin: center;
-  transition: transform 280ms ease-out;
-}
-
-.nm2-blueprint__svg {
   overflow: visible;
 }
 
 .nm2-blueprint__svg path,
 .nm2-blueprint__svg line,
-.nm2-blueprint__svg polyline {
+.nm2-blueprint__svg polyline,
+.nm2-blueprint__svg ellipse {
   vector-effect: non-scaling-stroke;
 }
 
-.nm2-blueprint__solid {
+.nm2-blueprint__connector,
+.nm2-blueprint__edge {
+  fill: none;
+  stroke: var(--nm2-line);
+  stroke-width: 1.5;
+}
+
+.nm2-blueprint__connector-trace {
+  fill: none;
+  stroke: var(--nm2-structure);
+  stroke-width: 1.5;
+  opacity: 0.45;
+  vector-effect: non-scaling-stroke;
+  transition:
+    stroke 280ms ease,
+    opacity 280ms ease;
+}
+
+.nm2-blueprint__connector-trace[data-selected] {
+  stroke: var(--nm2-text);
   opacity: 0.85;
 }
 
-.nm2-blueprint__secondary {
-  opacity: 0.48;
-}
-
-.nm2-blueprint__ports {
-  opacity: 0.65;
-}
-
 .nm2-blueprint__face {
-  fill: currentColor;
-  fill-opacity: 0.035;
-  stroke: none;
+  stroke: var(--nm2-line);
+  stroke-width: 1.5;
 }
 
+.nm2-blueprint__face--top {
+  fill: var(--nm2-raised);
+}
+
+.nm2-blueprint__face--left,
 .nm2-blueprint__face--side {
-  fill-opacity: 0.065;
+  fill: var(--nm2-surface);
 }
 
-.nm2-blueprint__construction {
-  stroke-dasharray: 3 6;
-  opacity: 0.2;
+.nm2-blueprint__face--right {
+  fill: var(--nm2-section);
 }
 
-.nm2-blueprint__ground {
-  opacity: 0.12;
-}
-
-.nm2-blueprint__node {
-  fill: currentColor;
-  stroke: none;
-  opacity: 0.55;
-}
-
-/* CSS owns these inner groups; GSAP exclusively owns [data-float] above them.
- * Loops are paused by default, including SSR and browsers without JS. */
-.nm2-blueprint__drift,
-.nm2-blueprint__layer {
+/* Scope/evidence study: three sheets with interaction-driven spread. */
+.nm2-blueprint__sheet {
+  fill: var(--nm2-surface);
+  stroke: var(--nm2-line);
+  stroke-width: 1.5;
   transform-box: fill-box;
   transform-origin: center;
-  animation: nm2-scene-suspend 14s ease-in-out infinite alternate;
-  animation-play-state: paused;
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.nm2-blueprint__layer--0 {
-  animation-duration: 16s;
+.nm2-blueprint__sheet--0 {
+  transform: translateY(-18px);
 }
 
-.nm2-blueprint__layer--1 {
-  animation-duration: 18s;
-  animation-delay: -5s;
+.nm2-blueprint__sheet--2 {
+  transform: translateY(18px);
 }
 
-.nm2-blueprint__layer--2 {
-  animation-duration: 20s;
-  animation-delay: -9s;
+.nm2-blueprint[data-expanded] .nm2-blueprint__sheet--0 {
+  transform: translate(-28px, -58px);
 }
 
-.nm2-blueprint[data-active="true"] .nm2-blueprint__drift,
-.nm2-blueprint[data-active="true"] .nm2-blueprint__layer {
-  animation-play-state: running;
+.nm2-blueprint[data-expanded] .nm2-blueprint__sheet--2 {
+  transform: translate(28px, 58px);
 }
 
-@keyframes nm2-scene-suspend {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-5px);
-  }
+/* Native HTML label layer: text stays >=13px over the SVG connectors. */
+.nm2-blueprint__nodes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-/* Pointer tilt never extends to coarse/hoverless inputs. The activity hook
- * also removes the pointer listeners and clears the properties when paused. */
-@media (hover: none), (pointer: coarse) {
-  .nm2-blueprint__tilt {
-    transform: none;
-    transition: none;
-  }
+.nm2-blueprint__node-card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 26%;
+  min-height: 64px;
+  padding: 8px;
+  border: 1px solid var(--nm2-line);
+  border-radius: var(--nm2-radius-sm);
+  background: var(--nm2-surface);
+  box-shadow: 0 4px 5px rgb(0 0 0 / 18%);
+  color: var(--nm2-text);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  transition:
+    background-color 280ms ease,
+    border-color 280ms ease,
+    color 280ms ease;
 }
 
-html[data-motion="off"] .nm2-blueprint .nm2-blueprint__drift,
-html[data-motion="off"] .nm2-blueprint .nm2-blueprint__layer {
-  animation-play-state: paused;
+.nm2-blueprint--system .nm2-blueprint__node-card {
+  width: 28%;
 }
 
-html[data-motion="off"] .nm2-blueprint .nm2-blueprint__tilt {
-  transform: none;
-  transition: none;
+.nm2-blueprint--system .nm2-blueprint__node-card--0 { left: 50%; top: 50%; }
+.nm2-blueprint--system .nm2-blueprint__node-card--1 { left: 18%; top: 16%; }
+.nm2-blueprint--system .nm2-blueprint__node-card--2 { left: 82%; top: 16%; }
+.nm2-blueprint--system .nm2-blueprint__node-card--3 { left: 82%; top: 84%; }
+.nm2-blueprint--system .nm2-blueprint__node-card--4 { left: 18%; top: 84%; }
+
+:is(.nm2-blueprint--memory, .nm2-blueprint--evidence, .nm2-blueprint--capabilities)
+  .nm2-blueprint__node-card--0 { left: 17%; top: 50%; }
+:is(.nm2-blueprint--memory, .nm2-blueprint--evidence, .nm2-blueprint--capabilities)
+  .nm2-blueprint__node-card--1 { left: 50%; top: 50%; }
+:is(.nm2-blueprint--memory, .nm2-blueprint--evidence, .nm2-blueprint--capabilities)
+  .nm2-blueprint__node-card--2 { left: 83%; top: 50%; }
+
+.nm2-blueprint__node-icon {
+  flex: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .nm2-blueprint .nm2-blueprint__drift,
-  .nm2-blueprint .nm2-blueprint__layer {
-    animation: none;
-  }
+.nm2-blueprint__node-index {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--nm2-muted);
+}
 
-  .nm2-blueprint .nm2-blueprint__tilt {
-    transform: none;
-    transition: none;
-  }
+.nm2-blueprint__node-card[data-selected] {
+  background: var(--nm2-action);
+  border-color: var(--nm2-action);
+  color: var(--nm2-on-action);
+}
+
+.nm2-blueprint__node-card[data-selected] .nm2-blueprint__node-index {
+  color: color-mix(in srgb, var(--nm2-on-action) 65%, transparent);
 }
 
 @media (forced-colors: active) {

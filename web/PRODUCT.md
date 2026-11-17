@@ -32,7 +32,7 @@ Dos root layouts independientes: marketing con `orbital.css`, `fontVarsV2`, `Mot
 - Galerías `/[lang]/design-system` y `/[lang]/design-system/art` (`en | es`): internas, solo development, `noindex`, fuera del sitemap y `notFound()` fuera de development.
 - Handbook sigue en `null`; email tras flag `false`. No publicar enlaces privados de Notion ni prometer canales operativos sin habilitación.
 - Auth ampliada, blog, research, precios y otras superficies no forman parte de este alcance ni son próximos lanzamientos comprometidos. No sustituir contenido inexistente por secciones vacías.
-- El movimiento no gatea contenido. Motion gestiona navegación, titulares y controles; GSAP gestiona la entrada del hero y `ScrollScene` con ScrollTrigger. Nunca se importan ambos motores en un mismo componente ni comparten un wrapper transformado. `MotionProvider` centraliza la pausa y la preferencia del sistema, con control en el footer y contenido siempre visible. Reduced motion = poster estático/sin GPU; pausa y visibilidad controlan el efecto continuo.
+- El movimiento no gatea contenido. Motion gestiona navegación, titulares y controles; la entrada del hero es CSS de primer render; GSAP gestiona reveals de sección vía `ScrollScene` y la respuesta del shader al puntero. Nunca se importan ambos motores en un mismo componente ni comparten un wrapper transformado. `MotionProvider` centraliza la pausa y la preferencia del sistema, con control en el footer y contenido siempre visible. Reduced motion = poster estático/sin GPU; pausa y visibilidad controlan el efecto continuo.
 
 ## Brand Commitments
 

@@ -22,6 +22,10 @@ export function HeroWarp({
 }) {
   const host = useRef<HTMLDivElement>(null);
   const mount = useRef<ShaderMount | null>(null);
+  const pointerPoint = useRef({
+    x: HERO_ART.params.offsetX,
+    y: HERO_ART.params.offsetY,
+  });
   const latestAnimate = useRef(animate);
   const failed = useRef(false);
   const [status, setStatus] = useState<"pending" | "ready" | "failed">("pending");
@@ -102,6 +106,8 @@ export function HeroWarp({
           u_worldWidth: p.worldWidth,
           u_worldHeight: p.worldHeight,
         } satisfies WarpUniforms;
+        pointerPoint.current.x = p.offsetX;
+        pointerPoint.current.y = p.offsetY;
         const created = new ShaderMount(
           element,
           warpFragmentShader,
@@ -129,6 +135,106 @@ export function HeroWarp({
     void initialize();
     return cleanup;
   }, [capture]);
+
+  // Pointer steering: one reusable tween eases the shader offset by at most
+  // ±0.03 around the frozen canonical values. Attached to .nm2-hero so no
+  // overlay ever intercepts the real hit targets.
+  useEffect(() => {
+    if (status !== "ready" || !animate || capture) return;
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const hero = host.current?.closest<HTMLElement>(".nm2-hero");
+    if (!hero || !fine.matches) return;
+
+    let disposed = false;
+    let context: { kill: () => void } | undefined;
+    let detach: (() => void) | undefined;
+    const stop = () => {
+      detach?.();
+      context?.kill();
+    };
+
+    void import("gsap")
+      .then(({ gsap }) => {
+        if (disposed) return;
+        const scoped = gsap.context(() => {}, hero);
+        context = scoped;
+        scoped.add(() => {
+          const base = {
+            x: HERO_ART.params.offsetX,
+            y: HERO_ART.params.offsetY,
+          };
+          const point = pointerPoint.current;
+          const apply = () => {
+            if (!document.hidden) {
+              mount.current?.setUniforms({
+                u_offsetX: point.x,
+                u_offsetY: point.y,
+              });
+            }
+          };
+          const tween = gsap.to(point, {
+            x: point.x,
+            y: point.y,
+            duration: 0.9,
+            ease: "power2.out",
+            paused: true,
+            onUpdate: apply,
+          });
+          const steer = (x: number, y: number) => {
+            if (disposed) return;
+            tween.vars.x = x;
+            tween.vars.y = y;
+            tween.invalidate().restart();
+          };
+          const move = (event: PointerEvent) => {
+            if (
+              disposed ||
+              !fine.matches ||
+              event.pointerType === "touch" ||
+              document.hidden
+            )
+              return;
+            const rect = hero.getBoundingClientRect();
+            if (rect.width <= 0 || rect.height <= 0) return;
+            const nx = Math.max(
+              -1,
+              Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1),
+            );
+            const ny = Math.max(
+              -1,
+              Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1),
+            );
+            steer(base.x + nx * 0.03, base.y + ny * 0.03);
+          };
+          const reset = () => {
+            if (!disposed && fine.matches && !document.hidden)
+              steer(base.x, base.y);
+          };
+          detach = () => {
+            hero.removeEventListener("pointermove", move);
+            hero.removeEventListener("pointerleave", reset);
+            hero.removeEventListener("pointercancel", reset);
+            tween.kill();
+          };
+          hero.addEventListener("pointermove", move, { passive: true });
+          hero.addEventListener("pointerleave", reset, { passive: true });
+          hero.addEventListener("pointercancel", reset, { passive: true });
+        });
+      })
+      .catch((error: unknown) => {
+        stop();
+        if (disposed) return;
+        console.warn(
+          "Orbital pointer steering unavailable; check the GSAP chunk before reloading. Ambient shader animation remains available.",
+          error,
+        );
+      });
+
+    return () => {
+      disposed = true;
+      stop();
+    };
+  }, [status, animate, capture]);
 
   if (status === "failed") return null;
 

@@ -23,23 +23,16 @@ export function SystemStory({ copy, caption }: SystemStoryProps) {
       <ScrollScene className="nm2-system-story__scene">
         <figure>
           <div className="nm2-system-story__art" aria-hidden="true">
-            <BlueprintScene variant="system" />
-            <svg className="nm2-system-story__signals" viewBox="0 0 640 420" fill="none">
-              {[
-                "M320 182l-58 29-54-67", "M320 182l58 29 64 68",
-                "M320 182l54-27 54-3", "M320 182l-54 27-54 68",
-              ].map((path, index) => (
-                <path key={path} d={path} data-draw="" data-active={selected === index + 1} />
-              ))}
-              {[[320, 182], [208, 144], [442, 279], [428, 152], [212, 277]].map(([cx, cy], index) => (
-                <circle key={index} cx={cx} cy={cy} r={selected === index ? 17 : 7} data-active={selected === index} />
-              ))}
-            </svg>
+            <BlueprintScene
+              variant="system"
+              labels={copy.items.map((item) => item.label)}
+              selected={selected}
+            />
           </div>
           <figcaption>{caption}</figcaption>
         </figure>
       </ScrollScene>
-      <div className="nm2-system-story__reading">
+      <div className="nm2-system-story__reading" data-scroll-reveal="">
         <div className="nm2-story-controls" role="group" aria-label={copy.controls}>
           {copy.items.map((item, index) => (
             <motion.button

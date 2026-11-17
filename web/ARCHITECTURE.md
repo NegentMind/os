@@ -102,16 +102,16 @@ soporte también salen de este módulo. No exponer URLs privadas de Notion.
 | `field-canvas.tsx`, `blueprint-scene.tsx`, `scroll-scene.tsx` | Campos Canvas 2D con fallback SVG, geometrías originales y relaciones GSAP/ScrollTrigger |
 | `motion-preference.tsx`, `viewport-fade.tsx`, `pointer-feedback.tsx` | Control global en footer y efectos decorativos sin capturar interacción |
 | `hero-background.tsx`, `hero-warp.tsx`, `hero-preset.ts` | Poster y mejora WebGL progresiva con Paper; ciclo de vida del adaptador |
-| `hero-entrance.tsx` | Entrada GSAP acotada sobre contenido ya visible, con cleanup |
+| `hero-entrance.tsx` | Entrada CSS de primer render; sin reseteo asíncrono ni dependencia de GPU. |
 | `faq.tsx` | Disclosure nativo `details/summary`; no necesita otro motor ni dependencia |
 
 `MotionProvider` centraliza pausa, preferencia del sistema y `html[data-motion]`. El control global está en el footer; el hero no tiene botón local. El sistema nunca oculta contenido ni espera a una animación. `prefers-reduced-motion` conserva arte estático y deshabilita el control cuando la preferencia del sistema prevalece.
 
 `SiteHeader` es una única navegación fija, transparente e integrada en el marco del hero al inicio. Motion observa posición/dirección de scroll; a partir de unos 72 px la barra se separa con un desplazamiento ascendente y una superficie flotante. El menú móvil sigue usando Sheet/Radix.
 
-Motion gestiona navegación, titulares `assemble`/`focus`/`trace` y respuesta a controles. GSAP gestiona la entrada acotada del hero y `ScrollScene` con ScrollTrigger: inicio `top 80%`, fin `bottom 25%`, `scrub: 0.5`. Nunca se importan ambos motores en un mismo componente ni se transforman desde dos motores los mismos wrappers. Los contextos se revierten al desmontar o pausar. Sin scroll hijack, pin ni pistas de 400vh.
+CSS posee la entrada del hero en primer render. Motion gestiona navegación, titulares y controles. GSAP gestiona reveals de sección y decor acotado en `ScrollScene` (trazo `top 90%` a `center 55%`, flotación `top bottom` a `bottom top`, scrub 0.8) y el easing del puntero sobre el shader Paper. Los listeners se retiran al pausar o desmontar; el tween del puntero se cancela sin reiniciar el frame. Nunca se importan ambos motores en un mismo componente ni se transforman desde dos motores los mismos wrappers. Sin scroll hijack, pin ni pistas de 400vh.
 
-`FieldCanvas` ofrece `wave`, `orbit`, `network` y `memory`, con fallback SVG SSR determinista. Canvas 2D solo anima con movimiento permitido, intersección y pestaña visible; no necesita otra librería. El límite es 1.400 puntos desktop o 600 móvil/puntero grueso, DPR máximo 1,5 y objetivo de planificación de 30 fps, no rendimiento medido. `BlueprintScene` aporta cinco geometrías originales SVG isométricas; el tilt solo actúa con puntero fino. `ScrollScene`, puntero y loops usan wrappers distintos.
+`FieldCanvas` ofrece `wave`, `orbit`, `network` y `memory`, con fallback SVG SSR determinista. Canvas 2D solo anima con movimiento permitido, intersección y pestaña visible; no necesita otra librería. El límite es 1.400 puntos desktop o 600 móvil/puntero grueso, DPR máximo 1,5 y objetivo de planificación de 30 fps, no rendimiento medido. `BlueprintScene` ofrece diagramas semánticos con etiquetas HTML e iconos Lucide cuando recibe `labels`, o sólidos SVG decorativos cuando no las recibe. `ScrollScene` posee su trazo y flotación; ya no hay tilt ni bucles de la geometría explicativa.
 
 `PageHero` comparte composición asimétrica entre Proyectos (`network`), VantaDB (`memory`), Laboratorio (`orbit`) y Contribuir (`wave`). La home alterna carbón con papel/plata y usa controles accesibles para explorar sistema, memoria, Scopegrain, holones y evidencia. El footer combina monograma, enlaces y campo monocromático, sin repetir el wordmark gigante. `ViewportFade` y `PointerFeedback` son decorativos, no capturan interacción y no sustituyen el cursor nativo.
 

@@ -4,7 +4,6 @@
   isolation: isolate;
   overflow: hidden;
   width: calc(100% - 2 * var(--nm2-frame-gap));
-  max-width: 1760px;
   margin: var(--nm2-frame-gap) auto;
   border-radius: var(--nm2-radius-hero, 32px);
   color: var(--nm2-text, #f1f3f5);
@@ -13,7 +12,6 @@
 
 .nm2-hero__content {
   position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   min-height: calc(100svh - 2 * var(--nm2-frame-gap));
@@ -65,15 +63,17 @@
   width: 100%;
   margin-top: auto;
   padding-top: clamp(20px, 3svh, 40px);
+  mix-blend-mode: difference;
 }
 
-.nm2-hero__wordmark {
+.nm2-hero__signature .nm2-hero__wordmark {
   display: block;
   width: 100%;
   height: auto;
   max-height: 20svh;
   overflow: visible;
-  color: var(--nm2-text, #f1f3f5);
+  /* White is the difference-blend inversion operand, not an accent. */
+  color: rgb(255 255 255);
 }
 
 .nm2-hero__note {
@@ -224,4 +224,24 @@
       linear-gradient(0deg, rgb(7 8 9 / 88%), transparent 38%),
       linear-gradient(180deg, rgb(7 8 9 / 94%) 0%, rgb(7 8 9 / 80%) 41%, rgb(7 8 9 / 12%) 73%);
   }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nm2-hero__intro > [data-hero-reveal],
+  .nm2-page-hero__content {
+    animation: nm2-hero-arrive 1100ms cubic-bezier(.22,1,.36,1) both;
+  }
+  .nm2-hero__description { animation-delay: 100ms; }
+  .nm2-hero__actions { animation-delay: 180ms; }
+  .nm2-hero__signature {
+    animation: nm2-signature-arrive 1400ms ease-out both;
+  }
+}
+@keyframes nm2-hero-arrive {
+  from { opacity: .66; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes nm2-signature-arrive {
+  from { opacity: .75; }
+  to { opacity: 1; }
 }

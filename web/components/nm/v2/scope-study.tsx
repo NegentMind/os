@@ -20,15 +20,7 @@ export function ScopeStudy({ copy, caption }: {
       <ScrollScene>
         <figure>
           <div className="nm2-scope-study__art" aria-hidden="true">
-            <BlueprintScene variant="scope" />
-            <svg className="nm2-scope-study__planes" viewBox="0 0 640 420" fill="none">
-              {[0, 1, 2].map((plane) => (
-                <g key={plane} className={`nm2-scope-study__plane nm2-scope-study__plane--${plane}`}>
-                  <path data-draw="" d="M180 130l240 -35 40 195 -240 35Z" />
-                  <path d="M202 147l201 -29 34 159 -201 29Z" />
-                </g>
-              ))}
-            </svg>
+            <BlueprintScene variant="scope" expanded={exploded} />
           </div>
           <figcaption>{caption}</figcaption>
         </figure>

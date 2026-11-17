@@ -130,10 +130,9 @@ export function SiteHeader({ lang, copy }: { lang: Locale; copy: NavCopy }) {
       </a>
       <header className="nm2-header">
           <motion.div
-            layout={canAnimate}
             initial={false}
-            animate={{ y: floating ? -8 : 0 }}
-            transition={{ duration: canAnimate ? 0.38 : 0, ease: [0.16, 1, 0.3, 1] }}
+            animate={{ y: floating ? -4 : 0 }}
+            transition={{ duration: canAnimate ? 0.6 : 0, ease: [0.22, 1, 0.36, 1] }}
             className="nm2-header__bar"
             data-floating={floating || undefined}
           >

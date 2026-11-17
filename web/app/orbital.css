@@ -49,7 +49,8 @@
 
   --nm2-container: 72rem;
   --nm2-gutter: clamp(1.25rem, 4vw, 3rem);
-  --nm2-frame-gap: clamp(12px, 1.66vw, 24px);
+  --nm2-frame-gap: 12px;
+  --nm2-frame-bg: var(--nm2-bg);
   --nm2-radius-sm: 12px;
   --nm2-radius-card: 20px;
   --nm2-radius-hero: 32px;
@@ -130,6 +131,12 @@ html[data-motion="off"] .nm2-site *::after {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --nm2-frame-gap: 8px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

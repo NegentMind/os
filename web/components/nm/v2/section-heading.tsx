@@ -26,7 +26,7 @@ export function SectionHeading({
         <AnimatedHeading text={title} effect={effect} />
       </Tag>
       {description ? (
-        <p className="nm2-section-heading__description">{description}</p>
+        <p className="nm2-section-heading__description" data-scroll-reveal="">{description}</p>
       ) : null}
     </div>
   );

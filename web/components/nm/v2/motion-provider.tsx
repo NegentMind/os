@@ -49,11 +49,12 @@ export function MotionProvider({ children }: { children: ReactNode }) {
   // Mirror the effective state on <html> so CSS-only decorative loops in
   // the .nm2-site subtree stop too, without a JS render loop.
   useEffect(() => {
+    if (reduced === null) return;
     document.documentElement.dataset.motion = value.canAnimate ? "on" : "off";
     return () => {
       delete document.documentElement.dataset.motion;
     };
-  }, [value.canAnimate]);
+  }, [reduced, value.canAnimate]);
 
   return (
     // Motion caches this policy at mount; pause is handled by live transitions

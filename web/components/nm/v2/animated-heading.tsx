@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useEffect, useRef } from "react";
+import { stagger, useAnimate, useInView } from "motion/react";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
 
 export type HeadingEffect = "assemble" | "focus" | "trace";
@@ -12,55 +13,67 @@ export function AnimatedHeading({
   text: string;
   effect?: HeadingEffect;
 }) {
+  const [scope, animate] = useAnimate<HTMLSpanElement>();
+  const inView = useInView(scope, { once: true, amount: 0.2 });
+  const prepared = useRef(false);
+  const played = useRef(false);
   const { canAnimate } = useSiteMotion();
-  const transition = {
-    duration: canAnimate ? 0.4 : 0,
-    ease: [0.16, 1, 0.3, 1] as const,
-  };
 
-  // No hidden initial state: SSR, no-JS and paused readers get the real title.
-  // Only the visual text is split; no duplicate screen-reader-only heading.
-  if (effect === "assemble") {
-    const words = text.split(/(\s+)/);
-    const wordCount = Math.max(1, Math.ceil(words.length / 2) - 1);
-    return (
-      <span className="nm2-animated-heading nm2-animated-heading--assemble">
-        {words.map((word, index) =>
-          /^\s+$/.test(word) ? word : (
-            <motion.span
-              key={`${word}-${index}`}
-              className="nm2-animated-heading__word"
-              initial={false}
-              whileInView={canAnimate ? { y: [8, 0] } : { y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{
-                ...transition,
-                delay: canAnimate ? (Math.floor(index / 2) / wordCount) * 0.1 : 0,
-              }}
-            >
-              {word}
-            </motion.span>
-          ),
-        )}
-      </span>
+  useEffect(() => {
+    const element = scope.current;
+    if (!element) return;
+    if (!canAnimate) {
+      animate(".nm2-animated-heading__word", { opacity: 1, y: 0 }, { duration: 0 });
+      prepared.current = false;
+      return;
+    }
+    if (played.current) return;
+    const rect = element.getBoundingClientRect();
+    if (!prepared.current) {
+      // Prepare only outside the viewport; never knock already-visible text down.
+      if (rect.top < window.innerHeight) {
+        played.current = true;
+        return;
+      }
+      animate(
+        ".nm2-animated-heading__word",
+        { opacity: 0.2, y: effect === "trace" ? "85%" : "50%" },
+        { duration: 0 },
+      );
+      prepared.current = true;
+    }
+    if (!inView) return;
+    played.current = true;
+    const count = element.querySelectorAll(".nm2-animated-heading__word").length;
+    const controls = animate(
+      ".nm2-animated-heading__word",
+      { opacity: 1, y: 0 },
+      {
+        duration: effect === "focus" ? 1 : 0.85,
+        delay: stagger(Math.min(0.055, 0.35 / Math.max(1, count - 1))),
+        ease: [0.22, 1, 0.36, 1],
+      },
     );
-  }
+    return () => {
+      controls.stop();
+    };
+  }, [animate, canAnimate, effect, inView, scope]);
 
+  // SSR renders the whole readable title; only the visual text is split.
   return (
-    <span className={`nm2-animated-heading nm2-animated-heading--${effect}`}>
-      <motion.span
-        className="nm2-animated-heading__line"
-        initial={false}
-        whileInView={canAnimate
-          ? effect === "focus"
-            ? { filter: ["blur(3px)", "blur(0px)"] }
-            : { y: ["0.12em", "0em"], clipPath: ["inset(0 0 10% 0)", "inset(0 0 0% 0)"] }
-          : { y: 0, filter: "blur(0px)", clipPath: "inset(0 0 0% 0)" }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={transition}
-      >
-        {text}
-      </motion.span>
+    <span
+      ref={scope}
+      className={`nm2-animated-heading nm2-animated-heading--${effect}`}
+    >
+      {text.split(/(\s+)/).map((word, index) =>
+        /^\s+$/.test(word) ? (
+          word
+        ) : (
+          <span key={`${word}-${index}`} className="nm2-animated-heading__mask">
+            <span className="nm2-animated-heading__word">{word}</span>
+          </span>
+        ),
+      )}
     </span>
   );
 }

@@ -24,17 +24,11 @@ export function MemoryDemo({ steps, controlsLabel, caption }: MemoryDemoProps) {
       <ScrollScene className="nm2-memory-demo__scene">
         <figure>
           <div className="nm2-memory-demo__art" aria-hidden="true">
-            <BlueprintScene variant="memory" />
-            <svg className="nm2-memory-demo__layers" viewBox="0 0 640 420" fill="none">
-              {[0, 1, 2].map((layer) => (
-                <g key={layer} className="nm2-memory-demo__layer" data-active={selected === layer}>
-                  <path
-                    d={`M295 ${154 - layer * 62}l152 88-102 59-152-88Z`}
-                    data-draw=""
-                  />
-                </g>
-              ))}
-            </svg>
+            <BlueprintScene
+              variant="memory"
+              labels={steps.map((step) => step.title)}
+              selected={selected}
+            />
           </div>
           <figcaption>{caption}</figcaption>
         </figure>

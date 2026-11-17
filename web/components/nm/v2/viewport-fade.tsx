@@ -5,6 +5,8 @@ export function ViewportFade() {
       <span className="nm2-viewport-fade__layer" />
       <span className="nm2-viewport-fade__layer" />
       <span className="nm2-viewport-fade__layer" />
+      <span className="nm2-viewport-fade__layer" />
+      <span className="nm2-viewport-fade__layer" />
     </div>
   );
 }

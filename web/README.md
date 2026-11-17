@@ -57,9 +57,9 @@ Ver `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `PRODUCT.md` y `DESIGN.md`.
 
 `SiteHeader` es una única navegación fija, transparente e integrada en el marco del hero al inicio. Motion observa posición/dirección de scroll; a partir de unos 72 px la barra se separa con un desplazamiento ascendente y una superficie flotante. El menú móvil sigue usando Sheet/Radix.
 
-Motion gestiona navegación, titulares `assemble`/`focus`/`trace` y respuesta a controles. GSAP gestiona la entrada acotada del hero y `ScrollScene` con ScrollTrigger: inicio `top 80%`, fin `bottom 25%`, `scrub: 0.5`. Nunca se importan ambos motores en un mismo componente ni se transforman desde dos motores los mismos wrappers. Los contextos se revierten al desmontar o pausar. Sin scroll hijack, pin ni pistas de 400vh.
+CSS posee la entrada del hero en primer render. Motion gestiona navegación, titulares y controles. GSAP gestiona reveals de sección y decor acotado en `ScrollScene` (trazo `top 90%` a `center 55%`, flotación `top bottom` a `bottom top`, scrub 0.8) y el easing del puntero sobre el shader Paper. Los listeners se retiran al pausar o desmontar; el tween del puntero se cancela sin reiniciar el frame. Nunca se importan ambos motores en un mismo componente ni se transforman desde dos motores los mismos wrappers. Sin scroll hijack, pin ni pistas de 400vh.
 
-`FieldCanvas` ofrece `wave`, `orbit`, `network` y `memory`, con fallback SVG SSR determinista. Canvas 2D solo anima con movimiento permitido, intersección y pestaña visible; no necesita otra librería. El límite es 1.400 puntos desktop o 600 móvil/puntero grueso, DPR máximo 1,5 y objetivo de planificación de 30 fps, no rendimiento medido. `BlueprintScene` aporta cinco geometrías originales SVG isométricas; el tilt solo actúa con puntero fino. `ScrollScene`, puntero y loops usan wrappers distintos.
+`FieldCanvas` ofrece `wave`, `orbit`, `network` y `memory`, con fallback SVG SSR determinista. Canvas 2D solo anima con movimiento permitido, intersección y pestaña visible; no necesita otra librería. El límite es 1.400 puntos desktop o 600 móvil/puntero grueso, DPR máximo 1,5 y objetivo de planificación de 30 fps, no rendimiento medido. `BlueprintScene` ofrece diagramas semánticos con etiquetas HTML e iconos Lucide cuando recibe `labels`, o sólidos SVG decorativos cuando no las recibe. `ScrollScene` posee su trazo y flotación; ya no hay tilt ni bucles de la geometría explicativa.
 
 `PageHero` comparte composición asimétrica entre Proyectos (`network`), VantaDB (`memory`), Laboratorio (`orbit`) y Contribuir (`wave`). La home alterna carbón con papel/plata y usa controles accesibles para explorar sistema, memoria, Scopegrain, holones y evidencia. El footer combina monograma, enlaces y campo monocromático, sin repetir el wordmark gigante. `ViewportFade` y `PointerFeedback` son decorativos, no capturan interacción y no sustituyen el cursor nativo.
 
@@ -93,6 +93,8 @@ autorización explícita.
 
 Las cinco páginas y la dirección Orbital están aprobadas y escritas localmente.
 La ronda de navegador de esta iteración está realizada: cinco rutas por idioma en escritorio, home y héroes interiores a 390×844, y hero a 1024×600. Se ejercieron selección de diagramas, menú móvil con Escape y retorno de foco, pausa/reanudación sin perder la selección y preferencia reducida real de Chromium. La consola de una sesión normal nueva no mostró errores ni el aviso espurio de movimiento reducido. Evidencias locales en `../brand/specimens/out/orbital-review-2026-11-17/`, incluida `final/`.
+
+Se aplicó después una ronda correctiva de composición y movimiento (marco, entrada del hero, diagramas semánticos, bordes reales y respuesta al puntero); la aceptación visual de esa ronda queda pendiente del usuario.
 
 Siguen pendientes `npm run typecheck` y `npm run build`, que ejecuta manualmente el usuario. Esta ronda no acredita despliegue, auditoría WCAG completa ni rendimiento medido. Las fotos de
 `../brand/specimens/out/redesign-before/` son baseline V1, no evidencia de Orbital.

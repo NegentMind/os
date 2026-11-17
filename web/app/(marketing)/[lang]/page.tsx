@@ -60,7 +60,7 @@ export default async function Home({ params }: MarketingPageProps) {
           className="nm2-home-project"
         >
           <div className="nm2-home-workbench">
-            <div className="nm2-prose nm2-home-workbench__copy">
+            <div className="nm2-prose nm2-home-workbench__copy" data-scroll-reveal="">
               <p>{h.work.vantadbBody}</p>
               <ul className="nm2-fact-tags" aria-label={h.work.vantadbName}>
                 {h.work.vantadbFacts.map((fact) => <li key={fact}>{fact}</li>)}
@@ -74,7 +74,7 @@ export default async function Home({ params }: MarketingPageProps) {
           </div>
         </ProjectCard>
         <div className="nm2-home-scope">
-          <div className="nm2-home-scope__ledger">
+          <div className="nm2-home-scope__ledger" data-scroll-reveal="">
             <div className="nm2-ledger-name">
               <h3>{h.work.scopegrainName}</h3>
               <StatusBadge status="incubation" label={c.common.incubation} />

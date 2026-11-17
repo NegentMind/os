@@ -30,7 +30,7 @@ export function EvidenceWorkbench({ copy, links, labels, caption }: EvidenceWork
     <div className="nm2-evidence-workbench" data-selected={selected}>
       <div className="nm2-evidence-workbench__ledger" role="group" aria-label={copy.evidence.controls}>
         {entries.map((entry, index) => (
-          <div key={entry.label} className="nm2-evidence-workbench__entry" data-active={selected === index}>
+          <div key={entry.label} className="nm2-evidence-workbench__entry" data-active={selected === index} data-scroll-reveal="">
             <motion.button
               type="button"
               className="nm2-evidence-workbench__select"
@@ -50,17 +50,11 @@ export function EvidenceWorkbench({ copy, links, labels, caption }: EvidenceWork
         <ScrollScene>
           <figure>
             <div className="nm2-evidence-workbench__art" aria-hidden="true">
-              <BlueprintScene variant="evidence" />
-              <svg className="nm2-evidence-workbench__signals" viewBox="0 0 640 360" fill="none">
-                {[0, 1, 2].map((index) => (
-                  <path
-                    key={index}
-                    data-draw=""
-                    data-active={selected === index}
-                    d={`M${130 + index * 190} 110v90Q${130 + index * 190} 260 320 260`}
-                  />
-                ))}
-              </svg>
+              <BlueprintScene
+                variant="evidence"
+                labels={entries.map((entry) => entry.label)}
+                selected={selected}
+              />
             </div>
             <figcaption>{caption}</figcaption>
           </figure>
