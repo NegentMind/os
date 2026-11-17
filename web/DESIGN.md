@@ -1,194 +1,335 @@
 ---
-name: "Negent Mind — home"
-description: "Fractal descent: noise resolves into signal as you scroll."
+name: "Negent Mind — Orbital"
+description: "Laboratorio independiente: carbón y plata funcionales, espectro expresivo y movimiento opcional."
 colors:
-  void: "#08090C"
-  panel: "#0E131B"
-  bone: "#EDEAE3"
-  fog: "#98A1B3"
-  pulse: "#8B7CFF"
-  linedark: "#232B38"
-  ink: "#14161C"
-  pulsedeep: "#5B4FE0"
-  linelight: "#D4D0C6"
-  chaos-magenta: "#FF0055"
-  chaos-cyan: "#00F0FF"
-  chaos-acid: "#CCFF00"
-  chaos-orange: "#FF6600"
-  inkSoft: "#3A3630"       # texto cuerpo sobre Bone (price-card li)
-  inkMute: "#5A5248"       # label mono sobre Bone (price-card .plan)
-  inkFaint: "#8A8177"      # secundario sobre Bone (price-card .per/.inc)
-  codeBg: "#06070A"        # panel de código inmersivo
-  codeHead: "#1C2430"      # hairline dentro del panel de código
-  codeMute: "#777777"      # head de terminal, dots inactivos
-  codeComment: "#5E6B80"   # comentarios en code panels
-  codeDim: "#6E7688"       # puntuación/paths en código
-  codeMid: "#A9AEC2"       # funciones/misc en código
-  codeLite: "#C9CEDD"      # fn itálicas en código
-  codeBodyText: "#D6D6D6"  # cuerpo de terminal
-  codeStr: "#E8E8E8"       # strings/números en código
-  silkInk: "#FFFFFF"       # texto/blend sobre la seda (hero zone)
-  termDot: "#3A3A3A"       # dots inactivos del chrome de terminal
-  termMute: "#6E6E6E"      # prompt/mute del chrome de terminal
-  termRun: "#A9A9A9"       # líneas run (spinner) de terminal
-  navShadow: "rgba(0,0,0,.28)" # sombra del nav pill (firma mondragon2)
+  bg: "#000000"
+  section: "#070809"
+  surface: "#0E1013"
+  raised: "#1C2026"
+  text: "#F1F3F5"
+  muted: "#ADB5C0"
+  line: "#343B46"
+  structure: "#A7B4C7"
+  action: "#E7EDF5"
+  on-action: "#000000"
+  paper-bg: "#E7EDF5"
+  paper-ink: "#111418"
+  paper-muted: "#4D5662"
+  paper-line: "#AFBAC8"
+  paper-panel: "#DAE1EA"
+  spectrum-teal: "#5BADA0"
+  spectrum-blue: "#465DCF"
+  spectrum-violet: "#965CCB"
+  spectrum-rose: "#DC5E89"
+  spectrum-amber: "#D9A45E"
+  spectrum-ice: "#B7CDD7"
 typography:
   display:
-    fontFamily: "Chakra Petch, sans-serif"
-    fontSize: "clamp(2.5rem, 7vw, 4.5rem)"
-    fontWeight: 700
-    lineHeight: 1.02
-    letterSpacing: "0.04em"
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "clamp(3rem, 5.7vw, 5.5rem)"
+    fontWeight: 450
+    lineHeight: 1.025
+    letterSpacing: "-0.035em"
+  display-mobile:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "clamp(2.65rem, 8.3vw, 3.75rem)"
+    fontWeight: 450
+    lineHeight: 1.025
+    letterSpacing: "-0.035em"
+  page-title:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "clamp(2.75rem, 5.8vw, 5.5rem)"
+    fontWeight: 450
+    lineHeight: 1.06
+    letterSpacing: "-0.03em"
+  headline:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "clamp(1.75rem, 3.4vw, 2.5rem)"
+    fontWeight: 600
+    lineHeight: 1.15
+    letterSpacing: "-0.025em"
+  title:
+    fontFamily: "Outfit, system-ui, sans-serif"
+    fontSize: "1.375rem"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "-0.02em"
   body:
-    fontFamily: "Inter, system-ui, sans-serif"
+    fontFamily: "DM Sans, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.6
-    letterSpacing: "normal"
+  lede:
+    fontFamily: "DM Sans, system-ui, sans-serif"
+    fontSize: "1.0625rem"
+    fontWeight: 400
+    lineHeight: 1.65
+  label:
+    fontFamily: "DM Sans, system-ui, sans-serif"
+    fontSize: "0.8125rem"
+    fontWeight: 500
+    lineHeight: 1.4
   mono:
     fontFamily: "JetBrains Mono, ui-monospace, monospace"
     fontSize: "0.75rem"
-    fontWeight: 400
-    lineHeight: 1.4
-    letterSpacing: "0.14em"
-  monoRamp:
-    hudLabel: "9.5px"      # HUD de instrumento feat-grid (nice-squash)
-    marginalia: "10px"     # índices de sección, coordenadas, captions densas
-    tagLabel: "10.5px"     # tags inmersivos, heads de panel
-    microLabel: "11px"     # etiquetas de datos, nav, ticker, footer legal
-    base: "12px"           # mono de sistema por defecto
-    codeBody: "12.5–13px"  # cuerpo de terminal/código legible
-    metricUnit: "11px"
-    metricValue: "40px"    # numerales del board (Flow)
-  # `scale` = rampa enumerada que el detector lee: pasos discretos usados
-  # por las zonas portadas (mondragon2/nice-squash) además del monoRamp.
-  scale:
-    s9_5: "9.5px"
-    s10: "10px"
-    s10_5: "10.5px"
-    s11: "11px"
-    s12: "12px"
-    s12_5: "12.5px"
-    s13: "13px"
-    s14: "14px"
-    s15: "15px"
-    s15_5: "15.5px"
-    s17: "17px"
-    s18: "18px"
-    s19: "19px"
-    s20: "20px"
-    s22: "22px"
-    s24: "24px"
-    s26: "26px"
-    s28: "28px"
-    s31: "31px"
-    s34: "34px"
-    s40: "40px"
-    s48: "48px"
-    s52: "52px"
-    s53: "53px"
-    s56: "56px"
-    s64: "64px"
-    s85: "85px"
-    s96: "96px"
-    s120: "120px"
-    s240: "240px"
-    s340: "340px"
 rounded:
-  sm: "2px"
-  md: "8px"
-  card: "14px"     # zonas portadas: hero-card, price-card, nav pill (mondragon2)
-  pill: "999px"    # pills de nav/CTA (mondragon2)
-  scroll: "5px"    # thumb del scrollbar
+  sm: "12px"
+  card: "20px"
+  hero: "32px"
+  pill: "999px"
 spacing:
-  section: "96px 128px"
-  container: "1152px"
+  container: "72rem"
+  gutter: "clamp(1.25rem, 4vw, 3rem)"
+  frame-gap: "clamp(12px, 1.66vw, 24px)"
+  section: "clamp(3.5rem, 8vw, 7rem)"
 components:
   button-primary:
-    backgroundColor: "{colors.pulse}"
-    textColor: "{colors.void}"
-    rounded: "{rounded.sm}"
-    padding: "16px 32px"
-  button-outline:
+    backgroundColor: "{colors.action}"
+    textColor: "{colors.on-action}"
+    rounded: "{rounded.pill}"
+  button-secondary:
     backgroundColor: "transparent"
-    textColor: "{colors.bone}"
-    rounded: "{rounded.sm}"
-    padding: "16px 32px"
+    textColor: "{colors.text}"
+    rounded: "{rounded.pill}"
+  text-link:
+    backgroundColor: "transparent"
+    textColor: "{colors.structure}"
+    rounded: "{rounded.pill}"
+  navigation:
+    backgroundColor: "transparent"
+    textColor: "{colors.muted}"
+    rounded: "{rounded.hero}"
+    padding: "0.75rem clamp(20px, 3vw, 40px)"
+  status-badge:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.structure}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: "0.25rem 0.75rem"
+  project-card:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.card}"
+    padding: "clamp(1.5rem, 3vw, 2.25rem)"
+  disclosure:
+    textColor: "{colors.text}"
+    padding: "1.125rem 0"
 ---
+
+# Design System: Negent Mind — Orbital
 
 ## Overview
 
-Home de **Negent Mind** (la organización, no solo VantaDB): híbrido por zonas — cada zona conserva la estética de la plantilla de la que se extrajo. Hero = seda líquida WebGL (mondragon2, hiper-cromática). Cuerpo = instrumentos halftone + board blueprint + escultura de puntos (nice-squash, monocromo Bone). Cards Bone sobre Void + nav pill + price-cards (mondragon2). Rail de estado de proyectos (strand), filas numeradas invert (sequenceone), panel de acento (arccheo), nav por luminancia (noveq). Wordmark gigante (ox). Pulse cierra. La estructura es org-first: 11 secciones y VantaDB ocupa solo la 06 (FLAGSHIP ENGINE).
+**Creative North Star: "Orbital / carbón y plata"**
+
+Negent Mind presenta su trabajo como un laboratorio de ingeniería independiente. La organización va primero; VantaDB aporta una entrada concreta al trabajo existente. Carbón y plata organizan la lectura, mientras una materia fluida y cromática expresa el campo de posibilidades alrededor de los modelos.
+
+Orbital es lettering vectorial original, no la fuente de la interfaz. Los títulos Outfit, el texto DM Sans y las superficies redondeadas comparten una geometría amable sin homogeneizar las composiciones. El contenido y las acciones están disponibles desde el primer render; la animación es una mejora opcional.
+
+**Key Characteristics:**
+
+- Organización primero.
+- Carbón y plata funcionales; espectro expresivo acotado.
+- Lettering propio y tipografía redondeada.
+- Composiciones variadas con radios y contenedores compartidos.
+- Contenido inmediato y movimiento opcional.
+
+Ámbito: marketing Orbital escrito localmente, con correcciones en curso,
+revisión visual final y typecheck/build del usuario pendientes. Los valores
+proceden de `app/orbital.css` y sus hojas de hero, páginas, escenas, home y shell;
+las fuentes, de `lib/fonts.ts` (`fontVarsV2`). No acredita despliegue.
+V1 queda en `globals.css` y su código de compatibilidad; Remotion y el perfil
+GitHub publicado/congelado no se migran con esta ficha.
 
 ## Colors
 
-- Fondo Void `#08090C`, superficies Panel `#0E131B`, tinta Bone, secundario Fog. Hairlines `linedark` 1px. Tema claro reservado (bg/ink/pulsedeep).
-- Caos solo en fields: la seda del hero (rainbow domain-warped) y los campos ASCII; nunca en chrome, texto ni controles.
-- Pulse `#8B7CFF`: CTA primario, foco, estados activos/ACTIVE/INCUBATION, punto del lockup, accent del board. Nada más lo usa.
-- Sobre superficies Bone (price-card, nav pill): rampa de tinta `ink #14161C` → `inkSoft #3A3630` → `inkMute #5A5248` → `inkFaint #8A8177`.
-- Sobre paneles de código inmersivos (`codeBg #06070A`): rampa de tokens `codeComment/Dim/Mid/Lite/BodyText/Str` — tonos gris-azulados derivados del panel, fuera de la paleta de UI normal.
+Carbón y plata separan funciones de lectura, estructura y acción; el espectro
+aporta materia, no una segunda jerarquía de controles. El frontmatter contiene
+los valores canónicos; cada nombre corto corresponde a `--nm2-<nombre>`.
+
+### Primary
+
+- **action / on-action:** plata de acción con texto negro; también orienta el foco.
+- **structure:** plata estructural para enlaces y detalles de soporte.
+
+### Neutral
+
+- **bg / section:** fondo y bandas de lectura.
+- **surface / raised:** superficies y énfasis por diferencia tonal.
+- **text / muted:** texto principal y secundario.
+- **line:** bordes y separadores, secundarios al fill y al espacio.
+
+### Papel Y Tinta
+
+`paper-bg`, `paper-ink`, `paper-muted`, `paper-line` y `paper-panel` definen
+las secciones claras dentro de una sola identidad. `.nm2-section--paper`
+invierte juntos los roles semánticos, incluidas acciones y foco. No hay
+selector de tema ni texto oscuro improvisado sobre componentes oscuros.
+
+### Material expresivo
+
+Los seis **spectrum-teal / blue / violet / rose / amber / ice** se comparten
+entre hero, ilustraciones y detalles acotados. Los aliases `--nm2-art-*`
+resuelven a esos mismos canónicos; no son otra paleta. El sombreado del hero
+incluye además un carbón azulado (`#101C27`) solo como material expresivo,
+no como color funcional ni token nuevo.
+
+**The Functional Silver Rule.** Texto de lectura y controles permanecen
+neutrales; el espectro no convierte las acciones en botones multicolores.
+El estado de proyecto siempre tiene etiqueta, no solo un punto de color.
 
 ## Typography
 
-- Display Chakra Petch 700, mayúsculas, tracking 0.04em (hero) / 0.12em (wordmark). Sin kickers: el heading carga solo.
-- Texto Inter 400/500, medida ≤60ch, `text-pretty` en prosa.
-- Técnico JetBrains Mono tabular para instrumentos, índices de escala (`SCALE 10⁻ⁿ`), captions de figura y navegación de datos.
-- Rampa mono (`monoRamp`): 9.5px HUD, 10px marginalia, 10.5px tags/heads, 11px micro-etiquetas/nav, 12px base, 12.5–13px cuerpo de terminal, 40px numeral de board.
-- La `scale` del frontmatter enumera además los pasos de las zonas portadas: 14–15.5px body denso, 17–19px lede, 20–26px h3/stages, 31–34px h2/slogan, 48–85px marquee, 96–340px wordmark. Fuera de estas dos rampas no hay tamaños literales.
+**Display Font:** Outfit, con fallback system-ui/sans-serif.
+**Body Font:** DM Sans, con fallback system-ui/sans-serif.
+**Code Font:** JetBrains Mono, con fallback ui-monospace/monospace.
+
+Outfit y DM Sans aportan curvas abiertas y lectura editorial sin imponer
+la composición del wordmark a cada título. Orbital es geometría SVG, no un
+`font-face` ni una cuarta familia de interfaz.
+
+### Hierarchy
+
+- **Display:** titular del hero; `display-mobile` recoge su override bajo
+  768px. Tamaños, peso declarado, interlínea y tracking están en frontmatter.
+- **Page title:** encabezados `PageHero`, con medida de hasta 14ch y override
+  móvil `clamp(2.5rem, 9vw, 4rem)` bajo 48rem.
+- **Headline:** títulos de sección, con descripción separada y lectura equilibrada.
+- **Title:** nombre de ProjectCard; la variante destacada usa un tamaño
+  fluido (`clamp(1.75rem, 3vw, 2.25rem)`).
+- **Body / lede:** prosa y entradas editoriales; lede compartido con medida
+  máxima de 62ch. La descripción del hero tiene su propio tamaño
+  (`clamp(1rem, 1.3vw, 1.125rem)`) e interlínea (1.65).
+- **Label:** estado textual de proyecto en DM Sans.
+- **Mono:** código/identificadores técnicos; el specimen usa el tamaño
+  registrado, no una rampa mono para navegación o todo el sitio.
+
+Los tamaños documentados son usos reales de CSS, no una escala modular
+inventada ni un catálogo exhaustivo de cada composición.
+
+**The Lettering Is Not Type Rule.** Conservar el SVG original para la marca;
+usar las fuentes de interfaz para títulos, texto y código, sin reconstruir
+Orbital con letras tipográficas.
 
 ## Layout
 
-- Contenedor `max-w-6xl`, gutters `px-4 sm:px-6`. Secciones `py-24 sm:py-32`; más aire arriba del heading que debajo.
-- Secciones tipo `.nmsec` con hairline top + crosshairs + chrome `.sechead.split` (lbl mono + h2 + secsub, patrón nice-squash).
-- Dos tracks de scroll pinneado: Immersive 400vh (escultura) y Flow 400vh (board); ambos degradan a layout estático en móvil.
-- `sc__board` lleva retícula blueprint 32px (hairlines con degradado de 1px) — es superficie de medición deliberada, no textura decorativa.
-- Secciones ancladas llevan `scroll-mt-24` por el header fijo.
-- Ledger (problems/compare): filas con hairline top, sin cards. Cards solo dentro de zonas portadas (feat-grid, price-card).
+Contenedor y gutter comunes según frontmatter. Las secciones comparten
+ritmo vertical sin convertirse en cards: se alternan proyecto destacado,
+ledger compacto, diagrama explicativo y pasaje editorial. El hero tiene un
+marco propio redondeado, mientras el contenido interior usa la medida común.
+
+El header fijo empieza transparente y comparte el marco del hero
+(máximo 1760px). Al superar unos 72px se separa, sube 8px y adopta una
+superficie flotante de hasta 64rem. El menú móvil usa Sheet; la navegación
+de escritorio aparece desde 64rem. El footer cambia a dos columnas desde
+48rem. Copy EN/ES y wordmark conservan su flujo natural en móvil y zoom.
+La revisión de navegador de esta iteración se realizó en escritorio y móvil;
+typecheck y build siguen pendientes de ejecución manual por el usuario.
+
+`SiteHeader`, `main#main-content` y `SiteFooter` forman el shell compartido
+de las cinco páginas por locale. El skip link llega al contenido principal;
+el selector de idioma preserva la página. Mapa de rutas y SEO en
+`ARCHITECTURE.md`, no en una composición exclusiva de home.
 
 ## Elevation & Depth
 
-- Profundidad = hairlines, no sombras. Excepciones fijadas: glow en glifos de caos dentro de los fields (canvas/WebGL), y la sombra `0 4px 24px` + `backdrop-blur` del nav pill y tags inmersivos (firma mondragon2/nice-squash, solo en esas zonas).
-- Nav flotante (mondragon2): transparente sobre la seda → pill Bone 92% + blur + sombra al pasar 60px (transición de `padding`, encogimiento deliberado del pill).
+La profundidad nace del fill, las diferencias de tono y el espacio entre
+elementos. Las superficies carbón permiten reservar plata para lectura y
+acción; las líneas apoyan la estructura sin dibujar todas las jerarquías.
+La pill del header mezcla su superficie con transparencia contenida;
+la materia del hero se sombrea para mantener áreas legibles.
+
+No hay una escala de sombras ni rampas tonales adicionales documentadas.
+Neón y glow no son el lenguaje de elevación de la UI.
 
 ## Shapes
 
-- Radio `--radius 0.5rem` (shadcn); `card 14px` en zonas portadas (hero-card, price-card, nav pill); `pill 999px` en CTAs/nav. Avatar/marca NM. en pastilla 22%.
+Radios nombrados en frontmatter: **sm** para superficies pequeñas,
+**card** para contenedores, **hero** para el marco expresivo y **pill**
+para navegación, acciones y badges. No redondear cada elemento con un
+selector universal ni imponer una misma silueta a diagramas y texto.
+La marca mantiene sus trazados Orbital originales.
 
 ## Components
 
-- `nm/SilkHero` (zona hero — estética de plantilla conservada): shader "liquid silk" WebGL portado verbatim de `webTemplates/mondragon2` + hero-card redondeada, loader de anillo con progreso real (ligado a `onReady`), métricas reales y banda wordmark `mix-blend-mode: difference`. Frame estático con `prefers-reduced-motion`.
-- `nm/sculpture` (portado verbatim de nice-squash `lib/sculpture.ts`): engine de nubes de puntos paramétricas 3D→2D canvas. Formas `sphere/lattice/twistTorus/rings/torusKnot`, morph por `setShape` o `externalProgress`, ripple de puntero, `dispose()`.
-- `nm/Immersive` (portado de nice-squash): track 400vh sticky — 46k puntos esfera→torusKnot→retícula por `externalProgress`, 4 fases con `aria-live`, tags con paralaje de puntero, ruler de progreso Pulse. Drag-to-rotate. Con reduced-motion salta a la retícula final.
-- `nm/FlowBoard` (portado de nice-squash `Flow.tsx`): track 400vh sticky — 4 stage-tabs (`Connect/Index/Query/Commit`) que también son botones scroll-to, board blueprint con panel de código (tokens `t-*`), query graph SVG con aristas animadas, panel métrica (checks/bars/grid/line), form sculpture y connectors SVG dibujados por `pathLength`. Contenido = uso documentado de VantaDB.
-- `nm/HolonGrid` (patrón `Platform` de nice-squash `Sections.tsx`): grid 3×2 de `.feat` — fhead (num/cat) + instrumento `HalftoneCanvas` + HUD (`ENGINE·v0.9.0`/`ACTIVE` en Pulse, resto `VISION` — mapa de capacidades, no productos) + nombre + spec. Cards con reveal blur-rise (`hg-reveal`, 0.7s expo).
-- `nm/HalftoneCanvas` (portado de `webTemplates/nice-squash-242352`): engine halftone 2D con 6 instrumentos (chip `runtime`, esfera `memory`, grafo `orchestration`, barras `observability`, grid `evaluations`, órbita `security`). INK→Bone, ACC→Pulse, DIM→Fog; frame único con `prefers-reduced-motion`.
-- `nm/FlipText` (portado verbatim de mondragon2): roll-up letra a letra con stagger `--i` (0.5s, bezier .76,0,.24,1).
-- `nm/SiteHeader` (portado de mondragon2): nav flotante transparente sobre la seda → pill Bone/Void al scroll; links con `FlipText`; CTA GitHub en pill void.
-- `nm/Marquee` (portado de mondragon2): track tipográfico infinito 22s, nombres de sistema alternando sólido/hueco (`-webkit-text-stroke`).
-- `nm/OssCards` (patrón price-card de mondragon2): card Bone sobre Void — plan mono + amount 52px + desc + filas included + btn-pill invertible. El "precio" es Apache-2.0.
-- `nm/DescentSection`: bloque dossier 05 — `AsciiField` (canvas fractal, scrub + imán de puntero) + `EntropyTrace` (fig. 02, últimas 120 muestras) + `InstrumentCounter` (entropía Shannon, % resuelto, FPS reales).
-- `nm/TerminalDemo` (mecánica portada de nice-squash): cmd tipeado char a char, líneas `run` con spinner braille, `ok`/`live` con iconos `✓/→/●`, replay ↻, caret parpadeante. Sesión = comportamiento documentado de VantaDB; con `prefers-reduced-motion` muestra la sesión completa.
-- `nm/Faq`: acordeón ledger con hairlines; sin cards.
-- `nm/Ticker`: banda mono con reloj UTC real; claims solo verificables.
-- `nm/InstrumentCounter`: numeral tabular mono + etiqueta; solo valores medidos o constantes documentadas.
-- `nm/SectionHeading`: índice de sección mono + H2 display + lede opcional (uso interno en `DescentSection`; las secciones nuevas usan `.sechead`).
-- `nm/Reveal`: una sola entrada por viewport (`whileInView`, expo-out 0.6s).
-- `nm/SiteFooter`: wordmark gigante `footer-word` (patrón portado de `templates/ox`, ~17vw) + links centrados + meta row; sitemap sin rutas inventadas.
-- `nm/RoadmapRail` (estructura portada de `templates/strand` "Scroll Progress Section"; mecánica reconstruida con el patrón de la casa): espina vertical con relleno `--p` por scroll, hitos `R/00–R/06` alternados con chip `ACTIVE` (tono `shipped`, Pulse sólido) / `INCUBATION` (tono `build`, contorno Pulse) / `VISION` (tono `rfc`, Fog). Sección "Project status": estados, sin fechas (roadmap detallado privado). Reduced-motion: `--p:1` + todos `.is-on`.
-- `nm/WorkSection`: zona 05 — bento hairline (método RFC 01–03, métricas verificables, founder, contacto). Solo constantes honestas.
-- `nm/NumberedRows` (micro-interacción portada de `templates/sequenceone`): fill fade + inversión de tinta en hover/focus (Bone→Void), `tabIndex` para paridad de teclado.
-- `nm/useLuminance` (portado de `templates/noveq` `runtime.ts`): sonda de luminancia bajo el nav — `elementsFromPoint` + cadena de backgrounds, umbral 0.55, fallback `scrollY>60`. `SiteHeader` lo expone como `data-tone`; en estado transparente sobre superficie clara la tinta flipea a Void.
-- Zona 08 `.accent-panel` (estructura portada de `templates/arccheo` FAQ Section): panel Pulse full-bleed, cruces de esquina `+` (firma arccheo), top row mono + hairline, items con regla 2px superior.
+La implementación reutilizable vive en `components/nm/v2/`. Compone
+shadcn **Button** y el **Sheet** generado con Radix; `components/ui/*`
+se conserva sin personalización manual. Variantes, tokens y composición
+propios se resuelven en la capa interna.
 
-## i18n
+- **button-primary:** acción plata/negro en pill, compuesta por `ActionLink`
+  sobre Button; borde material neutro de dos capas y reflejo en hover/foco.
+- **button-secondary:** superficie neutra, texto principal y borde material;
+  invierte sus roles junto con la sección de papel.
+- **text-link:** enlace estructural sin fill; hover pasa a text y subraya.
+- **navigation:** barra transparente al inicio y flotante al hacer scroll,
+  enlaces neutrales y fondo raised en el activo. Menú móvil Sheet con cierre
+  y gestión de foco; el cambio de idioma conserva la página.
+- **status-badge:** etiqueta explícita activo/incubación/visión sobre surface;
+  un punto de apoyo cromático nunca sustituye el texto.
+- **project-card:** surface, radio card y nombre Outfit; la destacada usa
+  raised. Resumen con medida de lectura y acción separada.
+- **disclosure:** FAQ de filas con `details/summary` nativo, separadores line,
+  título Outfit, respuesta muted e indicador de apertura; sin otra dependencia.
 
-- Rutas `/en` y `/es` (segmento `[lang]` bajo route group `(marketing)`); `/login` y `/app` viven en el grupo `(product)` con su propio root layout `lang="en"`, desactivadas al lanzar (`APP_ENABLED`, `lib/site.ts`).
-- `middleware.ts` redirige `/` por Accept-Language (`es*` → `/es`, resto `/en`). Locales inválidos → `notFound()`.
-- Todo el copy vive en `lib/i18n/{en,es}.ts` (tipo `Dict = typeof en`, espejo estructural obligatorio). Componentes reciben slices por props; los nombres propios, código, flags técnicos (`live`) y claims de producto no se traducen.
-- Switcher `EN / ES` en el nav (`.nm-nav-lang`) — swap del primer segmento preservando la ruta; activo en Pulse.
-- `generateStaticParams` prerrenderiza ambos locales; `generateMetadata` localiza title/description/OG + `alternates.languages`.
+Las muestras HTML/CSS de `.impeccable/design.json` son esquemas estáticos,
+no sustitutos del componente real ni una segunda implementación de su runtime.
+
+Todos los controles conservan foco visible; los estados hover no son la
+única pista de interacción. `BrandMark`, `Surface`, `Section` y
+`SectionHeading` mantienen geometría, tono y ritmo comunes.
+
+### Hero y movimiento opcional
+
+Poster local disponible desde SSR y fallback inmediato. Paper Shaders
+**0.0.82 (Apache-2.0)** aporta el shader/loop/visibility: API vanilla pública
+`ShaderMount` con `warpFragmentShader` de `@paper-design/shaders`, montada
+por un wrapper React local mínimo con `try/catch` y cleanup. El wrapper
+React de Paper inicializa async y un ErrorBoundary no captura ese fallo;
+el adaptador no copia el shader ni sustituye su motor.
+
+Canvas progresivo solo si permitido y visible. Pausa = `speed: 0`;
+oculto/fuera de viewport = pausa; reduced motion = poster estático sin GPU.
+GSAP aplica la entrada del hero y el trazado/desplazamiento de `ScrollScene`
+(`top 80%` a `bottom 25%`, `scrub: 0.5`). Motion gestiona navegación,
+titulares `assemble`/`focus`/`trace` y controles; nunca se importan ambos
+motores en un mismo componente ni comparten un wrapper transformado.
+No hay mejoras medidas de FPS, rendimiento o bundle que documentar.
+
+`FieldCanvas` mantiene un SVG SSR y cuatro patrones Canvas 2D: `wave`,
+`orbit`, `network` y `memory`. `BlueprintScene` aporta cinco geometrías SVG
+originales con proyección isométrica común. La actividad depende de la pausa
+global, la preferencia del sistema, la intersección y la visibilidad de pestaña.
+El control global está en el footer; el hero no tiene botón de pausa local.
+El fondo del footer, el fade del viewport y la respuesta del puntero no
+interceptan controles ni sustituyen el cursor nativo.
+
+Assets coordinados en `../brand/orbital/`, copias en `public/brand/`,
+favicon en `app/icon.svg` y OG en `public/og.png` (1200×630).
+
+**The Immediate Content Rule.** La animación no gatea lectura, acciones ni
+navegación. Sin loader, relojes decorativos, telemetría falsa, scroll hijack
+ni pistas de 400vh.
 
 ## Do's and Don'ts
 
-- Haz: un momento de motion por sección (descenso, morph, pin); contenido visible por defecto; foco visible Pulse; scrollbar/selección/caret del mundo; `prefers-reduced-motion` = estado final estático.
-- No hagas: cards fuera de zonas portadas, kickers sobre headings, degradados fuera del shader/board-blueprint, vidrio/shadows fuera del nav pill y tags inmersivos, serif editorial, emojis como iconos, rutas o claims inventados (blog, precios, testimonios, clientes), `style={{}}` para layout, editar `components/ui/*` a mano.
+### Do
+
+- Presentar primero la organización y enlazar trabajo verificable.
+- Mantener carbón y plata para lectura, estructura y acciones.
+- Reutilizar el espectro del hero en arte y detalles acotados.
+- Variar composiciones conservando radios, contenedores y ritmo comunes.
+- Ofrecer contenido inmediato, poster/fallback, pausa y reduced motion sin GPU.
+- Conservar foco visible, teclado y estados activo/incubación/visión escritos.
+- Mantener V1 como compatibilidad sin migrar Remotion ni el perfil publicado.
+
+### Don't
+
+- No presentar los glifos del logo como una fuente completa ni mezclar las paletas V1 y Orbital.
+- No usar neón, botones multicolores ni una jerarquía basada solo en bordes.
+- No ocultar contenido hasta que termine una entrada o cargue WebGL.
+- No añadir loaders, relojes, telemetría falsa, scroll hijack ni pistas de 400vh.
+- No mezclar GSAP y Motion en el mismo componente ni copiar el motor Paper.
+- No personalizar manualmente `components/ui/*`.
+- No inventar métricas, clientes, testimonios, capacidades, research/blog ni precios.
+- No presentar las fotos `redesign-before` como evidencia del rediseño ni declarar validación o despliegue sin resultados.

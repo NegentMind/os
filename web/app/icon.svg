@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#08090C"/>
-  <text x="256" y="262" text-anchor="middle" dominant-baseline="central" font-family="'Chakra Petch',sans-serif" font-weight="700" font-size="200" letter-spacing="4" fill="#EDEAE3">NM<tspan fill="#8B7CFF">.</tspan></text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#070809"/><svg x="5" y="14" width="54" height="36" viewBox="0 0 180 120" color="#F1F3F5">
+      <g fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="bevel">
+        <path d="M12,96 V16 L56,96 V16"/>
+        <path transform="translate(82,0)" d="M12,96 V16 L40,62 L68,16 V96"/>
+      </g>
+      <circle cx="170" cy="92" r="6" fill="currentColor"/>
+    </svg></svg>

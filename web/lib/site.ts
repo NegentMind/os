@@ -19,6 +19,21 @@ export const ORG_URL = "https://github.com/NegentMind";
  */
 export const VANTADB_REPO = "https://github.com/ness-e/Vantadb";
 
+/** Public organization governance and collaboration entry points. */
+export const DISCUSSIONS_URL = "https://github.com/NegentMind/.github/discussions";
+export const CONTRIBUTING_URL =
+  "https://github.com/NegentMind/.github/blob/main/CONTRIBUTING.md";
+export const CODE_OF_CONDUCT_URL =
+  "https://github.com/NegentMind/.github/blob/main/CODE_OF_CONDUCT.md";
+export const SECURITY_URL =
+  "https://github.com/NegentMind/.github/blob/main/SECURITY.md";
+export const TRADEMARK_URL =
+  "https://github.com/NegentMind/.github/blob/main/TRADEMARK.md";
+export const SUPPORT_URL =
+  "https://github.com/NegentMind/.github/blob/main/SUPPORT.md";
+export const VANTADB_DOCS = `${VANTADB_REPO}#readme`;
+export const FOUNDER_URL = "https://github.com/ness-e";
+
 
 /** Public Handbook. `null` until published: render as non-link text. */
 export const HANDBOOK_URL: string | null =

@@ -8,49 +8,58 @@ web
 
 ## Users
 
-Visitantes que evalúan NegentMind: desarrolladores y líderes técnicos que trabajan con LLMs y agentes de IA, y necesitan infraestructura verificable (memoria, contexto, verificación, ejecución). Audiencia secundaria: comunidad (blog, secciones públicas).
+Visitantes que evalúan Negent Mind: desarrolladores y líderes técnicos que trabajan con LLMs y agentes de IA, y necesitan distinguir trabajo existente de visión. Audiencia secundaria: colaboradores open source y comunidad que busca proyectos, principios y vías reales de participación.
 
 ## Product Purpose
 
-Sitio marketing bilingüe (EN/ES) de Negent Mind — Applied AI Research & Product Engineering. La home (modo Persuade) debe hacer inteligible la oferta en segundos: infraestructura para una IA agéntica más persistente, controlable, eficiente y confiable, con VantaDB como flagship. Éxito = el visitante entiende qué es, por qué importa y qué hacer (GitHub / leer la especificación / Public Handbook cuando se publique). La app con login existe en código pero está desactivada en el lanzamiento.
+Sitio marketing bilingüe (EN/ES) de un laboratorio de ingeniería independiente. Organización primero: explicar qué construye Negent Mind alrededor de los modelos y ofrecer una entrada al trabajo verificable mediante VantaDB, flagship activo. Éxito = entender organización, estado de los proyectos y siguiente acción (explorar proyectos, consultar el repositorio o contribuir). Cinco páginas por locale, no una home que concentre toda la información. La app con login existe en código pero sigue desactivada.
 
 ## Positioning
 
-Negent Mind desarrolla infraestructura y arquitecturas para construir sistemas de IA agéntica más persistentes, controlables, eficientes y confiables. Tesis: mientras el mercado vende inteligencia, Negent Mind vende la capacidad de confiar en ella. Concepto visual: negentropía (orden desde el caos). Fuente de verdad estratégica: Notion (🧭 Identidad y Estrategia).
+Negent Mind desarrolla infraestructura y arquitecturas alrededor de los modelos; no es proveedor de modelos. Memoria persistente es la entrada concreta actual; percepción, razonamiento, acción verificable y las demás capacidades expresan dirección de largo plazo, no una oferta ya construida. Fuente estratégica: Notion (Identidad y Estrategia), ya contrastada para esta dirección. Scopegrain está en incubación pública WIP. Los nueve holones son visión; Cardinal no es VantaDB ni un producto entregado.
 
 ## Operating Context
 
-Next.js 15 App Router + React 19 + Tailwind v4 + Supabase Auth (magic link). Rutas: `/` → `/en` | `/es` (middleware), marketing en `app/(marketing)/[lang]`; `/login` y `/app` en `app/(product)`, **desactivadas al lanzar** (`NEXT_PUBLIC_APP_ENABLED=false` → 404). URLs y flags en `lib/site.ts`. Deploy: Cloudflare Workers vía `@opennextjs/cloudflare` (ver `DEPLOY.md`). Sin CI; commits directos a `main`, sin push sin orden explícita.
+Next.js 15 App Router + React 19 + Tailwind 4, shadcn/Radix, Motion, GSAP y Paper Shaders. `/` → `/en` | `/es` por middleware. Marketing en `app/(marketing)/[lang]` tiene home, `/projects`, `/projects/vantadb`, `/about` (Laboratorio) y `/contribute` bajo ambos locales. `lib/site-routes.ts` centraliza cinco `PageId`; `lib/marketing-metadata.ts` genera metadata propia y el sitemap incluye las cinco rutas bilingües.
+
+Dos root layouts independientes: marketing con `orbital.css`, `fontVarsV2`, `MotionProvider`, header, `main#main-content` y footer; producto con su compatibilidad V1. `/login` y `/app` siguen gated/desactivadas (`NEXT_PUBLIC_APP_ENABLED=false` → 404); Supabase Auth magic link y sesión server continúan en código. URLs/flags en `lib/site.ts`, copy nuevo en `lib/content/`, `lib/i18n/Dict` conservado para V1. Cloudflare Workers vía `@opennextjs/cloudflare` es la vía documentada, no evidencia de despliegue del rediseño. Sin CI; la práctica general de Git está en AGENTS.
 
 ## Capabilities and Constraints
 
-- Capacidades confirmadas: home marketing EN/ES, robots/sitemap/hreflang, login magic link y área privada `/app` con gate de sesión (ambas tras flag, apagadas), componentes shadcn base (button, card, input, label).
-- Portafolio público: VantaDB (Activo), Scopegrain (Incubación — "in incubation, not yet released", sin enlace ni fecha), holones (Visión: mapa de capacidades a largo plazo, no productos). Roadmap detallado privado; dirección y estado en el Public Handbook.
-- Pendiente (alcance futuro, no de esta pasada): registro, recuperación de contraseña, blog, secciones completas del sitio.
-- Restricción técnica: animación por capas (`motion/react` micro-interacciones; `gsap` timelines/scroll; no mezclar en el mismo componente). `prefers-reduced-motion` = sin animación.
-- Terminología: Negentropía (concepto: orden desde el caos), Entropía (ruido estocástico), Lanikea (estructura cósmica de referencia visual), Fractales (patrón de escala).
+- Escrito localmente: cinco páginas EN/ES, metadata por página, sitemap bilingüe, biblioteca `components/nm/v2`, hero con poster/fallback y mejora progresiva. No equivale a validación runtime ni cierre visual.
+- VantaDB está activo en `https://github.com/ness-e/Vantadb`; la transferencia a NegentMind aún no se ha hecho. No cambiar por anticipado su URL ni su marca de producto.
+- Scopegrain: repositorio público WIP en incubación, sin anuncio de lanzamiento, fecha ni oferta comercial. Nueve holones: visión explícita, no nueve productos disponibles.
+- Galerías `/[lang]/design-system` y `/[lang]/design-system/art` (`en | es`): internas, solo development, `noindex`, fuera del sitemap y `notFound()` fuera de development.
+- Handbook sigue en `null`; email tras flag `false`. No publicar enlaces privados de Notion ni prometer canales operativos sin habilitación.
+- Auth ampliada, blog, research, precios y otras superficies no forman parte de este alcance ni son próximos lanzamientos comprometidos. No sustituir contenido inexistente por secciones vacías.
+- El movimiento no gatea contenido. Motion gestiona navegación, titulares y controles; GSAP gestiona la entrada del hero y `ScrollScene` con ScrollTrigger. Nunca se importan ambos motores en un mismo componente ni comparten un wrapper transformado. `MotionProvider` centraliza la pausa y la preferencia del sistema, con control en el footer y contenido siempre visible. Reduced motion = poster estático/sin GPU; pausa y visibilidad controlan el efecto continuo.
 
 ## Brand Commitments
 
-- Decisión 2026-11-12 (ronda de preguntas): la home adopta el sistema dual orden/caos del brief (orden monocromático + caos hiper-cromático con glow/sombras solo en momentos de caos); el resto del sistema conserva Pulse como acento único.
-- Tokens ley en `media/remotion/src/tokens.ts`; proyección web en `app/globals.css` (`@theme`). Tipos: Chakra Petch 700 display, Inter texto, JetBrains Mono técnico.
-- ASCII como material nativo (bloques, braille, dithering, glitch, scanlines, CRT) investigado en ascii-magic.com.
+- Orbital / carbón y plata: dirección y cinco páginas aprobadas. La actualización de Notion Marca ya se efectuó y aprobó; no implica publicación de assets ni despliegue.
+- Orbital es lettering SVG original, no una fuente. Outfit para títulos, DM Sans para texto, JetBrains Mono solo para código. Radios y contenedores compartidos con composiciones variadas.
+- Marketing toma tokens de `app/orbital.css`: neutrales funcionales y seis tonos `--nm2-spectrum-*` para material expresivo acotado. Fill, tonos y espacio crean profundidad, sin neón ni botones multicolores.
+- Paper Shaders 0.0.82 (Apache-2.0), API vanilla pública `ShaderMount` + `warpFragmentShader` con adaptador React mínimo para `try/catch`/cleanup. No GLSL propio/runtime Framer; no copiar el loop ni atribuir mejoras medidas de rendimiento.
+- Sin loader, relojes decorativos, telemetría falsa ni scroll hijack/tracks de 400vh. Contenido y acciones desde SSR; animación opcional.
+- Assets coordinados en `../brand/orbital/`, copias en `public/brand/`, favicon `app/icon.svg` y OG `public/og.png` (1200×630). V1 queda como compatibilidad: Remotion y perfil GitHub publicado/congelado no cambian.
 
 ## Evidence on Hand
 
-- Notion · 🎨 Marca (concepto y voz), `brand/brand-sheet.html`, `media/remotion/src/tokens.ts`.
+- Notion: Identidad y Estrategia, Marca y contexto del Handbook ya contrastados. El Handbook no es todavía un enlace público habilitado.
+- Dirección y ejecución aprobadas: `docs/dev/site-v2-design.md` y `docs/dev/plans/2026-11-16-orbital-site-v2.md`. Sus diagnósticos previos son baseline, no estado actual del código.
 - Contratos web: `README.md`, `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `DATA_MODELS.md`, `AGENTS.md`.
-- Investigación ascii-magic.com (2026-11-12): estilos ASCII, bloques, braille, dots/halftone, glitch/RGB split, scanlines/CRT, LED matrix, voxel, mosaicos.
-- Ausencias que no deben fabricarse: testimonios, clientes, benchmarks, precios, descargas/estrellas/usuarios, fechas internas de roadmap, claims de capacidades no construidas. No mencionar VantaDB Studio ni precios.
+- Implementación local: `components/nm/v2/`, `lib/content/`, `app/orbital*.css`; ficha visual `DESIGN.md`. La ronda de navegador de esta iteración está realizada: cinco rutas por idioma en escritorio, home y héroes interiores a 390×844, y hero a 1024×600. Se ejercieron selección de diagramas, menú móvil con Escape y retorno de foco, pausa/reanudación sin perder la selección y preferencia reducida real de Chromium. La consola de una sesión normal nueva no mostró errores ni el aviso espurio de movimiento reducido. Evidencias locales en `../brand/specimens/out/orbital-review-2026-11-17/`, incluida `final/`. Siguen pendientes `npm run typecheck` y `npm run build`, que ejecuta manualmente el usuario. Esta ronda no acredita despliegue, auditoría WCAG completa ni rendimiento medido.
+- `../brand/specimens/out/redesign-before/` conserva fotos de V1: no son evidencia visual del nuevo sitio.
+- Ausencias que no deben fabricarse: testimonios, clientes, métricas de adopción, benchmarks, research/blog, precios, fechas internas, capacidades no construidas o mejoras de FPS/bundle/rendimiento sin medición. No presentar VantaDB Studio ni planes comerciales.
 
 ## Product Principles
 
-1. El orden se demuestra, no se declara: cada sección dramatiza el mecanismo (ruido → señal).
-2. La terminal es el hogar: monoespacio, retícula y ASCII antes que decoración.
-3. El caos es material acotado: aparece, se procesa y converge; nunca es el fondo permanente.
-4. Rendimiento como respeto: 60fps, sin animación sin propósito, contenido visible por defecto.
-5. Comunidad abierta: cualquier nivel participa; el sitio lo invita, no lo filtra.
+1. Organización primero; VantaDB como entrada concreta, no sustituto de toda la organización.
+2. Evidencia antes que marketing: separar activo, incubación y visión; enlazar artefactos reales.
+3. Carbón y plata organizan la lectura; el espectro expresa posibilidades sin convertirse en telemetría ni oferta ficticia.
+4. Contenido inmediato y movimiento opcional: poster/fallback, reduced motion, pausa y visibilidad antes que espectáculo bloqueante.
+5. Participación con caminos reales y colaboración escrita; no prometer canales ni material todavía no públicos.
 
 ## Accessibility & Inclusion
 
-WCAG AA mínimo (contraste 4.5:1 texto). Foco visible siempre. `prefers-reduced-motion` desactiva animación.
+Objetivo WCAG AA (contraste de texto 4.5:1), foco visible, navegación por teclado y etiquetas de estado explícitas. Menú Sheet/Radix con gestión de foco; FAQ `details/summary` nativo sin otra dependencia. Contenido legible desde el primer render y utilizable sin WebGL; `prefers-reduced-motion` mantiene poster estático sin GPU. Son criterios de aceptación pendientes de revisión final, no una certificación de conformidad.

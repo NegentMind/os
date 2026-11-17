@@ -1,0 +1,704 @@
+/* Home stories only. The shell owns imports, tokens and inverse surface roles. */
+.nm2-home > .nm2-section > .nm2-container {
+  --nm2-container: 88rem;
+  max-width: min(100%, 88rem);
+}
+
+.nm2-home > .nm2-section {
+  overflow: clip;
+}
+
+.nm2-home > .nm2-section + .nm2-section {
+  border-block-start: 0;
+}
+
+.nm2-home .nm2-section--paper {
+  background: var(--nm2-section);
+  color: var(--nm2-text);
+  position: relative;
+  isolation: isolate;
+  margin-inline: var(--nm2-frame-gap);
+  border-radius: var(--nm2-radius-hero);
+}
+
+.nm2-home .nm2-section--paper::before,
+.nm2-home .nm2-section--paper::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset-inline: 0;
+  block-size: clamp(24px, 3.5vw, 48px);
+  background-image:
+    linear-gradient(180deg, var(--nm2-paper-ink), transparent),
+    radial-gradient(circle at 1px 1px, var(--nm2-paper-ink) 1px, transparent 1.3px);
+  background-size: 100% 100%, 6px 6px;
+  mask-image: linear-gradient(180deg, #000, transparent);
+  pointer-events: none;
+}
+
+.nm2-home .nm2-section--paper::before {
+  inset-block-start: 0;
+}
+
+.nm2-home .nm2-section--paper::after {
+  inset-block-end: 0;
+  transform: rotate(180deg);
+}
+
+.nm2-home .nm2-section--paper :focus-visible {
+  outline-color: var(--nm2-text);
+}
+
+.nm2-home .nm2-section--paper ::selection {
+  background: var(--nm2-text);
+  color: var(--nm2-section);
+}
+
+.nm2-home :is(figure, ol, ul) {
+  margin: 0;
+}
+
+.nm2-home figure > figcaption {
+  color: var(--nm2-muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  margin-block-start: 0.75rem;
+  max-width: 64ch;
+}
+
+.nm2-home :is(.nm2-story-detail, .nm2-holon-explorer__detail, .nm2-capability-story__copy) h3,
+.nm2-home .nm2-story-detail h4 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.375rem, 2.25vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--nm2-text);
+}
+
+.nm2-home :is(.nm2-story-detail, .nm2-holon-explorer__detail) p {
+  max-width: 65ch;
+  color: var(--nm2-muted);
+  margin-block-start: 0.75rem;
+}
+
+.nm2-home .nm2-story-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.nm2-home .nm2-story-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.875rem;
+  padding: 0.65rem 1.15rem;
+  border: 1px solid var(--nm2-line);
+  border-radius: 20px;
+  color: var(--nm2-text);
+  background: transparent;
+  font: inherit;
+  line-height: 1.35;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 180ms, border-color 180ms, color 180ms;
+}
+
+.nm2-home .nm2-story-control:hover {
+  border-color: var(--nm2-text);
+  background: var(--nm2-raised);
+}
+
+.nm2-home .nm2-story-control[aria-pressed="true"] {
+  border-color: var(--nm2-text);
+  background: var(--nm2-text);
+  color: var(--nm2-section);
+}
+
+.nm2-home .nm2-story-boundary {
+  max-width: 72ch;
+  color: var(--nm2-muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.nm2-home :is(
+  .nm2-system-story__art, .nm2-memory-demo__art, .nm2-scope-study__art,
+  .nm2-capability-story__art, .nm2-evidence-workbench__art
+) {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+}
+
+.nm2-home :is(
+  .nm2-system-story__art, .nm2-memory-demo__art, .nm2-scope-study__art,
+  .nm2-evidence-workbench__art
+) > :first-child {
+  width: 100%;
+  height: 100%;
+}
+
+.nm2-home :is(
+  .nm2-system-story__signals, .nm2-memory-demo__layers, .nm2-scope-study__planes,
+  .nm2-capability-story__rails, .nm2-evidence-workbench__signals
+) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  stroke: var(--nm2-line);
+  stroke-width: 1.5;
+}
+
+.nm2-home svg [data-active="true"] {
+  stroke: var(--nm2-text);
+  stroke-width: 2.5;
+}
+
+.nm2-home .nm2-system-story {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  margin-block-start: clamp(2.5rem, 5vw, 5rem);
+}
+
+.nm2-home .nm2-system-story__art {
+  aspect-ratio: 32 / 21;
+}
+
+.nm2-home .nm2-system-story__signals circle {
+  fill: var(--nm2-section);
+  transition: r 220ms, stroke 220ms;
+}
+
+.nm2-home .nm2-system-story__reading {
+  display: grid;
+  gap: 1.75rem;
+  align-content: start;
+}
+
+.nm2-home .nm2-system-story__reading .nm2-story-detail {
+  min-height: 11rem;
+}
+
+.nm2-home .nm2-home-project[data-featured="true"] {
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  margin-block-start: clamp(2rem, 4vw, 4rem);
+  border: 0;
+  border-radius: 32px;
+  background: var(--nm2-surface);
+}
+
+.nm2-home .nm2-home-project[data-featured="true"] .nm2-project-card__name {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.05;
+}
+
+.nm2-home .nm2-home-project .nm2-project-card__summary {
+  max-width: 32ch;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.nm2-home .nm2-home-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.nm2-home .nm2-home-workbench > *,
+.nm2-home .nm2-home-scope > *,
+.nm2-home .nm2-system-story > *,
+.nm2-home .nm2-capability-story > *,
+.nm2-home .nm2-holon-explorer__composition > *,
+.nm2-home .nm2-evidence-workbench > * {
+  min-width: 0;
+}
+
+.nm2-home .nm2-home-workbench__copy {
+  align-self: start;
+  padding-block-start: 2rem;
+}
+
+.nm2-home .nm2-memory-demo__art {
+  aspect-ratio: 32 / 21;
+}
+
+.nm2-home .nm2-memory-demo__layer {
+  transform-box: fill-box;
+  transform-origin: center;
+  fill: color-mix(in srgb, var(--nm2-surface) 70%, transparent);
+  transition: transform 300ms, fill 220ms;
+}
+
+.nm2-home .nm2-memory-demo__layer[data-active="true"] {
+  fill: color-mix(in srgb, var(--nm2-spectrum-ice) 16%, var(--nm2-surface));
+  transform: translateY(-18px);
+}
+
+.nm2-home .nm2-memory-demo__controls {
+  margin-block: 1.5rem 1.25rem;
+}
+
+.nm2-home .nm2-memory-demo__detail {
+  min-height: 10rem;
+}
+
+.nm2-home .nm2-memory-demo__context {
+  font-size: 0.875rem;
+}
+
+.nm2-home .nm2-home-scope {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 6vw, 7rem);
+  align-items: center;
+  margin-block-start: clamp(3.5rem, 7vw, 7rem);
+  padding-inline: clamp(0rem, 3vw, 3rem);
+}
+
+.nm2-home .nm2-home-scope__ledger {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+  max-width: 46ch;
+}
+
+.nm2-home .nm2-home-scope__ledger h3 {
+  font-size: clamp(2rem, 3.25vw, 3rem);
+}
+
+.nm2-home .nm2-scope-study__art {
+  aspect-ratio: 32 / 21;
+}
+
+.nm2-home .nm2-scope-study__plane {
+  fill: color-mix(in srgb, var(--nm2-surface) 65%, transparent);
+  transform-origin: center;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nm2-home .nm2-scope-study__plane--0 {
+  transform: translate(-12px, -10px);
+}
+
+.nm2-home .nm2-scope-study__plane--2 {
+  transform: translate(12px, 10px);
+}
+
+.nm2-home .nm2-scope-study[data-exploded="true"] .nm2-scope-study__plane--0 {
+  transform: translate(-76px, -44px) rotate(-6deg);
+}
+
+.nm2-home .nm2-scope-study[data-exploded="true"] .nm2-scope-study__plane--2 {
+  transform: translate(76px, 44px) rotate(6deg);
+}
+
+.nm2-home .nm2-scope-study > .nm2-story-control {
+  margin-block-start: 1.25rem;
+}
+
+.nm2-home .nm2-scope-study__note {
+  color: var(--nm2-muted);
+  font-size: 0.9375rem;
+  max-width: 62ch;
+  min-height: 4.5em;
+  margin-block-start: 1rem;
+}
+
+.nm2-home .nm2-capability-story {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+  margin-block-start: clamp(2.5rem, 5vw, 5rem);
+}
+
+.nm2-home .nm2-capability-story__copy {
+  display: grid;
+  gap: clamp(3rem, 6vw, 6rem);
+  position: relative;
+  z-index: 1;
+}
+
+.nm2-home .nm2-capability-story__copy article {
+  max-width: 49ch;
+}
+
+.nm2-home .nm2-capability-story__copy h3 {
+  margin-block: 0.75rem 1rem;
+}
+
+.nm2-home .nm2-capability-story__copy article > p:not(.nm2-map-state) {
+  color: var(--nm2-muted);
+}
+
+.nm2-home .nm2-capability-story__flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-block-start: 1.5rem;
+  padding: 0;
+  list-style: none;
+  color: var(--nm2-text);
+  font-size: 0.875rem;
+}
+
+.nm2-home .nm2-capability-story__flow li {
+  padding-block-end: 0.5rem;
+  border-block-end: 1px solid var(--nm2-line);
+}
+
+.nm2-home .nm2-capability-story__vision > .nm2-action {
+  margin-block-start: 1.5rem;
+  white-space: normal;
+}
+
+.nm2-home .nm2-capability-story__figure {
+  width: calc(100% + min(3vw, var(--nm2-gutter)));
+}
+
+.nm2-home .nm2-capability-story__art {
+  aspect-ratio: 18 / 17;
+  overflow: clip;
+}
+
+.nm2-home .nm2-capability-story__field {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  color: var(--nm2-spectrum-ice);
+}
+
+.nm2-home .nm2-capability-story__blueprint {
+  position: absolute;
+  inset: 12% 0;
+  width: 100%;
+}
+
+.nm2-home .nm2-capability-story__rails {
+  stroke: var(--nm2-structure);
+}
+
+.nm2-home .nm2-home-holons {
+  background: var(--nm2-bg);
+}
+
+.nm2-home .nm2-holon-explorer__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem clamp(2rem, 7vw, 8rem);
+  max-width: 76rem;
+  margin-block: 2rem 3rem;
+  color: var(--nm2-muted);
+}
+
+.nm2-home .nm2-holon-explorer__intro > p {
+  max-width: 62ch;
+}
+
+.nm2-home .nm2-holon-explorer__composition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.nm2-home .nm2-holon-explorer__map {
+  position: relative;
+  min-height: 27rem;
+}
+
+.nm2-home .nm2-holon-explorer__connections {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  stroke: var(--nm2-line);
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+
+.nm2-home .nm2-holon-explorer__modules {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem 1rem;
+  min-height: inherit;
+  align-items: center;
+}
+
+.nm2-home .nm2-holon-explorer__module {
+  display: grid;
+  justify-items: center;
+  gap: 0.25rem;
+  position: relative;
+  min-height: 6.5rem;
+  padding: 0.85rem 0.25rem;
+  margin-inline: auto;
+  width: min(100%, 10rem);
+  border: 1px solid transparent;
+  border-radius: 20px;
+  color: var(--nm2-muted);
+  background: var(--nm2-bg);
+  font: inherit;
+  cursor: pointer;
+  transition: color 180ms, background-color 180ms, border-color 180ms;
+}
+
+.nm2-home .nm2-holon-explorer__module-seat {
+  min-width: 0;
+}
+
+.nm2-home .nm2-holon-explorer__module:hover {
+  color: var(--nm2-text);
+  background: var(--nm2-surface);
+}
+
+.nm2-home .nm2-holon-explorer__module[aria-pressed="true"] {
+  color: var(--nm2-text);
+  border-color: var(--nm2-structure);
+  background: var(--nm2-surface);
+}
+
+.nm2-home .nm2-holon-explorer__module-mark {
+  display: block;
+  width: 1.75rem;
+  height: 1.25rem;
+  margin-block-end: 0.375rem;
+  border: 1px solid currentColor;
+  transform: skewY(-18deg);
+}
+
+.nm2-home .nm2-holon-explorer__module[aria-pressed="true"] .nm2-holon-explorer__module-mark {
+  background: var(--nm2-structure);
+}
+
+.nm2-home .nm2-holon-explorer__module-state {
+  font-size: 0.75rem;
+}
+
+.nm2-home .nm2-holon-explorer__detail {
+  min-height: 19rem;
+  padding-block: 1rem;
+}
+
+.nm2-home .nm2-holon-explorer__detail h3 {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  margin-block-start: 1.25rem;
+}
+
+.nm2-home .nm2-holon-explorer__detail .nm2-holon-explorer__role {
+  color: var(--nm2-text);
+  font-size: 1.125rem;
+}
+
+.nm2-home .nm2-holon-explorer__boundary {
+  margin-block-start: 3rem;
+  max-width: 80ch;
+}
+
+.nm2-home .nm2-evidence-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  margin-block: 2rem 2.5rem;
+  align-items: start;
+}
+
+.nm2-home .nm2-evidence-workbench__ledger {
+  padding-block-start: 2rem;
+}
+
+.nm2-home .nm2-evidence-workbench__entry {
+  display: grid;
+  justify-items: start;
+  gap: 0.625rem;
+  padding-block: 1.5rem 2rem;
+  border-block-start: 1px solid var(--nm2-line);
+}
+
+.nm2-home .nm2-evidence-workbench__entry:nth-child(2) {
+  margin-inline-start: clamp(1rem, 4vw, 4rem);
+}
+
+.nm2-home .nm2-evidence-workbench__entry:nth-child(3) {
+  margin-inline-start: clamp(2rem, 8vw, 8rem);
+}
+
+.nm2-home .nm2-evidence-workbench__select {
+  padding: 0.25rem 0;
+  min-height: 2.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--nm2-muted);
+  text-align: start;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  cursor: pointer;
+}
+
+.nm2-home .nm2-evidence-workbench__select:is(:hover, [aria-pressed="true"]) {
+  color: var(--nm2-text);
+}
+
+.nm2-home .nm2-evidence-workbench__select[aria-pressed="true"] {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.nm2-home .nm2-evidence-workbench__entry .nm2-action {
+  white-space: normal;
+  height: auto;
+  text-align: start;
+  justify-content: flex-start;
+}
+
+.nm2-home .nm2-evidence-workbench__art {
+  aspect-ratio: 16 / 9;
+}
+
+.nm2-home .nm2-evidence-workbench__study > .nm2-story-detail {
+  min-height: 10.5rem;
+  margin-block-start: 2rem;
+}
+
+.nm2-home .nm2-home-invitation {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  align-items: center;
+  gap: 2rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: 32px;
+  background: var(--nm2-surface);
+  overflow: clip;
+}
+
+.nm2-home .nm2-home-invitation__copy {
+  min-width: 0;
+}
+
+.nm2-home .nm2-home-invitation .nm2-section-heading {
+  margin-block-end: 1.5rem;
+}
+
+.nm2-home .nm2-home-invitation .nm2-section-heading__title {
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+}
+
+.nm2-home .nm2-home-invitation__art {
+  position: relative;
+  min-width: 0;
+  height: clamp(12rem, 20vw, 20rem);
+  color: var(--nm2-spectrum-ice);
+}
+
+/* No perpetual CSS loops: transitions only respond to discrete controls.
+   Motion and GSAP each own separate elements; provider pause is authoritative. */
+html:not([data-motion="on"]) .nm2-home *,
+html:not([data-motion="on"]) .nm2-home *::before,
+html:not([data-motion="on"]) .nm2-home *::after {
+  transition-duration: 0s;
+}
+
+@media (max-width: 60rem) {
+  .nm2-home .nm2-system-story,
+  .nm2-home .nm2-holon-explorer__composition {
+    grid-template-columns: 1fr;
+  }
+
+  .nm2-home .nm2-system-story__scene {
+    max-width: 48rem;
+  }
+
+  .nm2-home .nm2-home-workbench {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .nm2-home .nm2-holon-explorer__detail {
+    min-height: 13rem;
+  }
+
+  .nm2-home .nm2-system-story__reading .nm2-story-detail {
+    min-height: 7.5rem;
+  }
+}
+
+@media (max-width: 44rem) {
+  .nm2-home .nm2-home-workbench,
+  .nm2-home .nm2-home-scope,
+  .nm2-home .nm2-capability-story,
+  .nm2-home .nm2-holon-explorer__intro,
+  .nm2-home .nm2-evidence-workbench,
+  .nm2-home .nm2-home-invitation {
+    grid-template-columns: 1fr;
+  }
+
+  .nm2-home .nm2-home-project[data-featured="true"] {
+    padding: 1.5rem;
+  }
+
+  .nm2-home .nm2-home-workbench__copy {
+    padding-block-start: 0.5rem;
+  }
+
+  .nm2-home .nm2-home-scope {
+    padding-inline: 0;
+  }
+
+  .nm2-home .nm2-capability-story__figure {
+    width: 100%;
+  }
+
+  .nm2-home .nm2-capability-story__art {
+    aspect-ratio: 1;
+  }
+
+  .nm2-home .nm2-holon-explorer__intro {
+    gap: 1rem;
+    margin-block-end: 2rem;
+  }
+
+  .nm2-home .nm2-holon-explorer__modules {
+    gap: 1rem 0.5rem;
+  }
+
+  .nm2-home .nm2-holon-explorer__module {
+    font-size: 0.875rem;
+  }
+
+  .nm2-home .nm2-holon-explorer__map {
+    min-height: 24rem;
+  }
+
+  .nm2-home .nm2-evidence-workbench__ledger {
+    padding-block-start: 0;
+  }
+
+  .nm2-home .nm2-evidence-workbench__entry:nth-child(n) {
+    margin-inline-start: 0;
+  }
+
+  .nm2-home .nm2-home-invitation__art {
+    height: 10rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm2-home *,
+  .nm2-home *::before,
+  .nm2-home *::after {
+    transition-duration: 0s;
+  }
+}

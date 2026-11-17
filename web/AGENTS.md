@@ -9,8 +9,7 @@ Válido solo dentro de `web/`. Para el workspace, ver `../../AGENTS.md`.
    arquitectura: ya está decidida.
 2. **Descomponer** en pasos pequeños: un componente o una ruta por cambio.
    Proponer el plan en 1-3 líneas antes de escribir código si el cambio toca >2 archivos.
-3. **Probar siempre:** `npm run typecheck` tras cada cambio; `npm run build` antes de
-   dar por terminado. Ambos deben salir exit 0.
+3. **Validación manual del usuario:** indicar los comandos necesarios antes de ejecutarlos. En esta fase el usuario ejecuta npm run typecheck y npm run build y comparte los resultados; el agente no lanza tests, builds, tsc, servidores ni comandos equivalentes sin autorización explícita. Se permite inspeccionar el servidor que ya está activo y generar assets acordados. No declarar estos gates aprobados sin su salida.
 
 ## Estándares de código (no negociables)
 

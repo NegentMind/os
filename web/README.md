@@ -1,32 +1,108 @@
 # web/ — sitio de Negent Mind (Next.js + Cloudflare Workers vía OpenNext)
 
-Marketing bilingüe público en `/en` y `/es`. La superficie de producto (`/app`,
-`/login`, magic link Supabase) existe en código pero está **desactivada en el
-lanzamiento** (`NEXT_PUBLIC_APP_ENABLED=false` → 404).
+Marketing Orbital bilingüe, organización primero, con cinco páginas por locale.
+Stack: Next.js 15 App Router, React 19, Tailwind 4, shadcn/Radix, Motion y GSAP;
+Paper Shaders para el fondo progresivo del hero. La superficie de producto
+(`/app`, `/login`, magic link Supabase) permanece **desactivada**
+(`NEXT_PUBLIC_APP_ENABLED=false` → 404).
 
-## Setup
+## Rutas
 
-```powershell
-cd web
-npm install
-Copy-Item .env.example .env.local   # flags del sitio; Supabase solo si APP_ENABLED=true
-npm run dev
-```
+`[lang]` admite `en` y `es`; los slugs interiores se conservan entre idiomas.
+
+| Ruta | Contenido |
+|---|---|
+| `/[lang]` | Organización, trabajo actual y participación |
+| `/[lang]/projects` | Portafolio con estados activo / incubación / visión |
+| `/[lang]/projects/vantadb` | Flagship activo y enlaces a su repositorio/documentación |
+| `/[lang]/about` | Laboratorio: propósito, principios y fundador |
+| `/[lang]/contribute` | Contribución, Discussions, soporte, conducta y seguridad |
+
+`/` negocia `/en` o `/es` por `Accept-Language`. Las cinco páginas tienen
+metadata propia y forman el sitemap bilingüe. Las galerías
+`/[lang]/design-system` y `/[lang]/design-system/art` son **solo development**:
+`noindex`, fuera del sitemap y `notFound()` fuera de development.
 
 ## Configuración
 
 Todas las URLs y flags viven en `lib/site.ts` (`SITE_URL`, `ORG_URL`,
-`VANTADB_REPO`, `HANDBOOK_URL`, `APP_ENABLED`, `CONTACT_EMAIL`,
-`CONTACT_EMAIL_ENABLED`). No hardcodear URLs en componentes ni diccionarios.
+`VANTADB_REPO`, `VANTADB_DOCS`, enlaces de comunidad/gobernanza, `HANDBOOK_URL`,
+`APP_ENABLED`, `CONTACT_EMAIL`, `CONTACT_EMAIL_ENABLED`). No hardcodear URLs en
+componentes ni diccionarios. Handbook sigue en `null` y el email público tras
+flag `false`; no implicar que esos canales están habilitados. `.env.local`
+nunca se commitea.
 
 ## Estructura
 
-- `app/(marketing)/[lang]/` home EN/ES (`lib/i18n/{en,es}.ts`, `Dict = typeof en`).
+- `app/(marketing)/[lang]/`: cinco páginas y galerías internas. Su root layout
+  importa `app/orbital.css`, aplica `fontVarsV2` y comparte `MotionProvider`,
+  `SiteHeader`, `main#main-content` y `SiteFooter`.
+- `app/orbital.css`: entrada de tokens y estilos compartidos. Importa, en orden, `orbital-hero.css`, `orbital-pages.css`, `orbital-scenes.css`, `orbital-home.css` y `orbital-shell.css`; shell cierra las reglas entre superficies.
+- `components/nm/v2/`: composición interna sobre `components/ui/` (shadcn).
+- `lib/content/`: copy EN/ES; `lib/site-routes.ts`: cinco `PageId` y enlaces;
+  `lib/marketing-metadata.ts`: metadata por página.
 - `app/(product)/` `/login` y `/app` (gate `notFound()` si `APP_ENABLED` es false).
-- `app/robots.ts`, `app/sitemap.ts`, `app/icon.svg`, `public/og.png`.
-- `middleware.ts` negocia `/` → `/en` | `/es` por `Accept-Language`.
-- `.env.local` nunca se commitea.
+- `app/robots.ts`, `app/sitemap.ts`, `app/icon.svg`, `public/og.png` (1200×630).
+- `../brand/orbital/`: assets coordinados; copias para web en `public/brand/`.
+  El wordmark y el monograma son lettering SVG original, no una fuente completa.
+- `app/globals.css`, `lib/i18n/` y los componentes NM anteriores: V1 conservada
+  para producto/compatibilidad, no autoridad visual del marketing Orbital.
+
+La migración web no cambia Remotion ni el perfil GitHub publicado/congelado.
+Ver `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `PRODUCT.md` y `DESIGN.md`.
+
+## Shell, arte y movimiento
+
+`MotionProvider` centraliza pausa, preferencia del sistema y `html[data-motion]`. El control global está en el footer; el hero no tiene botón local. El sistema nunca oculta contenido ni espera a una animación. `prefers-reduced-motion` conserva arte estático y deshabilita el control cuando la preferencia del sistema prevalece.
+
+`SiteHeader` es una única navegación fija, transparente e integrada en el marco del hero al inicio. Motion observa posición/dirección de scroll; a partir de unos 72 px la barra se separa con un desplazamiento ascendente y una superficie flotante. El menú móvil sigue usando Sheet/Radix.
+
+Motion gestiona navegación, titulares `assemble`/`focus`/`trace` y respuesta a controles. GSAP gestiona la entrada acotada del hero y `ScrollScene` con ScrollTrigger: inicio `top 80%`, fin `bottom 25%`, `scrub: 0.5`. Nunca se importan ambos motores en un mismo componente ni se transforman desde dos motores los mismos wrappers. Los contextos se revierten al desmontar o pausar. Sin scroll hijack, pin ni pistas de 400vh.
+
+`FieldCanvas` ofrece `wave`, `orbit`, `network` y `memory`, con fallback SVG SSR determinista. Canvas 2D solo anima con movimiento permitido, intersección y pestaña visible; no necesita otra librería. El límite es 1.400 puntos desktop o 600 móvil/puntero grueso, DPR máximo 1,5 y objetivo de planificación de 30 fps, no rendimiento medido. `BlueprintScene` aporta cinco geometrías originales SVG isométricas; el tilt solo actúa con puntero fino. `ScrollScene`, puntero y loops usan wrappers distintos.
+
+`PageHero` comparte composición asimétrica entre Proyectos (`network`), VantaDB (`memory`), Laboratorio (`orbit`) y Contribuir (`wave`). La home alterna carbón con papel/plata y usa controles accesibles para explorar sistema, memoria, Scopegrain, holones y evidencia. El footer combina monograma, enlaces y campo monocromático, sin repetir el wordmark gigante. `ViewportFade` y `PointerFeedback` son decorativos, no capturan interacción y no sustituyen el cursor nativo.
+
+## Comandos manuales
+
+Los ejecuta el usuario desde `os/web`; no son gates ya aprobados.
+Para un entorno nuevo, instalar dependencias y copiar `.env.example` a
+`.env.local` sin sobrescribir una configuración existente:
+
+```powershell
+npm install
+if (-not (Test-Path .env.local)) { Copy-Item .env.example .env.local }
+```
+
+Validación pendiente del rediseño local:
+
+```powershell
+npm run typecheck
+npm run build
+```
+
+Antes de `npm run build`, detener el servidor de desarrollo para evitar
+escrituras simultáneas en `.next`.
+
+El arranque es manual con `npm run dev`. El servidor del usuario en el puerto
+3000 permanece activo durante el QA integrado; no detenerlo, reiniciarlo ni
+iniciar una segunda instancia. El agente no lanza ni reinicia servidores sin
+autorización explícita.
+
+## Estado local y referencias
+
+Las cinco páginas y la dirección Orbital están aprobadas y escritas localmente.
+La ronda de navegador de esta iteración está realizada: cinco rutas por idioma en escritorio, home y héroes interiores a 390×844, y hero a 1024×600. Se ejercieron selección de diagramas, menú móvil con Escape y retorno de foco, pausa/reanudación sin perder la selección y preferencia reducida real de Chromium. La consola de una sesión normal nueva no mostró errores ni el aviso espurio de movimiento reducido. Evidencias locales en `../brand/specimens/out/orbital-review-2026-11-17/`, incluida `final/`.
+
+Siguen pendientes `npm run typecheck` y `npm run build`, que ejecuta manualmente el usuario. Esta ronda no acredita despliegue, auditoría WCAG completa ni rendimiento medido. Las fotos de
+`../brand/specimens/out/redesign-before/` son baseline V1, no evidencia de Orbital.
+
+- Dirección aprobada: [`docs/dev/site-v2-design.md`](docs/dev/site-v2-design.md).
+- Plan: [`docs/dev/plans/2026-11-16-orbital-site-v2.md`](docs/dev/plans/2026-11-16-orbital-site-v2.md).
+- Los apartados de diagnóstico previo de esos registros describen el punto de
+  partida; los contratos locales de esta carpeta describen el código Orbital.
 
 ## Deploy
 
-Ver `DEPLOY.md` (dominio, OpenNext/Cloudflare, variables, Supabase, flags).
+Ver `DEPLOY.md` para el procedimiento de OpenNext/Cloudflare, dominio,
+variables, Supabase y flags. No se ha desplegado como parte de esta tarea.

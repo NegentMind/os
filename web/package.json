@@ -9,6 +9,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@paper-design/shaders": "0.0.82",
+    "@paper-design/shaders-react": "0.0.82",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.5.0",
     "@tailwindcss/postcss": "^4.3.5",

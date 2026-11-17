@@ -1,0 +1,63 @@
+{
+  "id": "orbital-strata-01",
+  "package": "@paper-design/shaders@0.0.82",
+  "width": 1920,
+  "height": 1080,
+  "params": {
+    "colors": [
+      "#101C27",
+      "#5BADA0",
+      "#465DCF",
+      "#965CCB",
+      "#DC5E89",
+      "#D9A45E",
+      "#B7CDD7",
+      "#101C27"
+    ],
+    "shape": "stripes",
+    "shapeScale": 0.38,
+    "proportion": 0.52,
+    "softness": 0.54,
+    "distortion": 0.17,
+    "swirl": 0.72,
+    "swirlIterations": 5,
+    "scale": 2.45,
+    "rotation": -32,
+    "offsetX": 0.12,
+    "offsetY": -0.08,
+    "frame": 24000,
+    "speed": 0.26,
+    "minPixelRatio": 1,
+    "maxPixelCount": 2073600
+  },
+  "capture": {
+    "renderer": "capture-plate.html: public ShaderMount + maintained warpFragmentShader; identical HeroWarp uniform mapping",
+    "letteringSource": "brand/orbital/orbital-source.svg",
+    "developmentRoute": "/en/design-system/art",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "speed": 0,
+    "grain": {
+      "seed": "0x4e4d3031",
+      "size": 192,
+      "opacity": 0.2,
+      "blend": "soft-light"
+    },
+    "source": "Orbital original SVG geometry; first-party Paper Warp art direction",
+    "rawSha256": "85d9eb8db92b471dfb591d65ca3de664af0516c2036e243f4684509f0e9e2419"
+  },
+  "wordmarkViewBox": "0 0 836 120",
+  "exports": {
+    "orbital-frame.png": "85d9eb8db92b471dfb591d65ca3de664af0516c2036e243f4684509f0e9e2419",
+    "orbital-grain.png": "eb66315472269e2aea331aaeb53f34a018f4d036f2c86140a3642212bc64e233",
+    "orbital-poster.webp": "db1fff79e477523b1da9dd112e9d35f8121582b84183834a894e9b1c6e0423dc",
+    "orbital-wordmark.svg": "aeb84e867816623b8af42c794f7d84eba7694298a39be25bed65de6c431f19d2",
+    "orbital-monogram.svg": "78c24db32ecd6029a808dcdc50abf729616ee45a13d8d1cebe4b9fc0bb860d86",
+    "orbital-icon.svg": "2c131942a6d7a1277e5d37d0a8ce630c93a46d32661ccc67493184fbd1b2b915",
+    "orbital-avatar.png": "782619728e04dfa1db899b114033a7da5d5a2237d9149adaa299cd62355957c6",
+    "orbital-banner.png": "73e3351416295961803d80e38628b79f0c6572fa9bcdb11e33a2055ce568145e",
+    "orbital-og.png": "3be92e73b7fb78335049e5a31e3b7d280cd6f6bd961a396120504f5f1e7fa29c"
+  }
+}

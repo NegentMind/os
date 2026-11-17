@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Orbital frozen Paper Warp plate</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101C27}
+#plate,.grain{position:fixed;inset:0;pointer-events:none}
+#plate{isolation:isolate}
+.grain{background:url("./orbital-grain.png") 0 0/192px 192px;opacity:.2;mix-blend-mode:soft-light}
+</style>
+<div id="plate"></div><div class="grain"></div>
+<script type="module">
+import {ShaderMount} from "../../web/node_modules/@paper-design/shaders/dist/shader-mount.js";
+import {warpFragmentShader, WarpPatterns} from "../../web/node_modules/@paper-design/shaders/dist/shaders/warp.js";
+import {defaultPatternSizing, ShaderFitOptions} from "../../web/node_modules/@paper-design/shaders/dist/shader-sizing.js";
+import {getShaderColorFromString} from "../../web/node_modules/@paper-design/shaders/dist/get-shader-color-from-string.js";
+import {getShaderNoiseTexture} from "../../web/node_modules/@paper-design/shaders/dist/get-shader-noise-texture.js";
+const p={...defaultPatternSizing,...{"colors":["#101C27","#5BADA0","#465DCF","#965CCB","#DC5E89","#D9A45E","#B7CDD7","#101C27"],"shape":"stripes","shapeScale":0.38,"proportion":0.52,"softness":0.54,"distortion":0.17,"swirl":0.72,"swirlIterations":5,"scale":2.45,"rotation":-32,"offsetX":0.12,"offsetY":-0.08,"frame":24000,"speed":0.26,"minPixelRatio":1,"maxPixelCount":2073600}};
+const noise=getShaderNoiseTexture(); await noise.decode();
+window.orbitalMount=new ShaderMount(document.querySelector("#plate"),warpFragmentShader,{
+u_colors:p.colors.map(getShaderColorFromString),u_colorsCount:p.colors.length,
+u_proportion:p.proportion,u_softness:p.softness,u_distortion:p.distortion,
+u_swirl:p.swirl,u_swirlIterations:p.swirlIterations,u_shapeScale:p.shapeScale,
+u_shape:WarpPatterns[p.shape],u_noiseTexture:noise,
+u_scale:p.scale,u_rotation:p.rotation,u_fit:ShaderFitOptions[p.fit],
+u_offsetX:p.offsetX,u_offsetY:p.offsetY,u_originX:p.originX,u_originY:p.originY,
+u_worldWidth:p.worldWidth,u_worldHeight:p.worldHeight
+},{preserveDrawingBuffer:true},0,p.frame,p.minPixelRatio,p.maxPixelCount);
+await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+document.body.dataset.artReady="true";
+</script></html>

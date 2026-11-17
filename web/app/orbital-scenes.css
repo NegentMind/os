@@ -1,0 +1,185 @@
+/*
+ * Original Orbital geometry. Imported by the shell owner, never by a scene.
+ * Transparent/currentColor art inherits its composing surface's semantic ink.
+ */
+.nm2-field {
+  position: relative;
+  inline-size: 100%;
+  min-inline-size: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.nm2-field__poster,
+.nm2-field__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+}
+
+.nm2-field__canvas[hidden] {
+  display: none;
+}
+
+/* The SVG is present in SSR and remains the error/reduced-motion surface. */
+.nm2-field[data-rendered="true"] > .nm2-field__poster {
+  visibility: hidden;
+}
+
+.nm2-blueprint {
+  position: relative;
+  inline-size: 100%;
+  min-inline-size: 0;
+  aspect-ratio: 32 / 25;
+  perspective: 900px;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.nm2-blueprint__tilt,
+.nm2-blueprint__svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.nm2-blueprint__tilt {
+  transform: rotateX(var(--nm2-scene-tilt-x, 0deg))
+    rotateY(var(--nm2-scene-tilt-y, 0deg));
+  transform-origin: center;
+  transition: transform 280ms ease-out;
+}
+
+.nm2-blueprint__svg {
+  overflow: visible;
+}
+
+.nm2-blueprint__svg path,
+.nm2-blueprint__svg line,
+.nm2-blueprint__svg polyline {
+  vector-effect: non-scaling-stroke;
+}
+
+.nm2-blueprint__solid {
+  opacity: 0.85;
+}
+
+.nm2-blueprint__secondary {
+  opacity: 0.48;
+}
+
+.nm2-blueprint__ports {
+  opacity: 0.65;
+}
+
+.nm2-blueprint__face {
+  fill: currentColor;
+  fill-opacity: 0.035;
+  stroke: none;
+}
+
+.nm2-blueprint__face--side {
+  fill-opacity: 0.065;
+}
+
+.nm2-blueprint__construction {
+  stroke-dasharray: 3 6;
+  opacity: 0.2;
+}
+
+.nm2-blueprint__ground {
+  opacity: 0.12;
+}
+
+.nm2-blueprint__node {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0.55;
+}
+
+/* CSS owns these inner groups; GSAP exclusively owns [data-float] above them.
+ * Loops are paused by default, including SSR and browsers without JS. */
+.nm2-blueprint__drift,
+.nm2-blueprint__layer {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: nm2-scene-suspend 14s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.nm2-blueprint__layer--0 {
+  animation-duration: 16s;
+}
+
+.nm2-blueprint__layer--1 {
+  animation-duration: 18s;
+  animation-delay: -5s;
+}
+
+.nm2-blueprint__layer--2 {
+  animation-duration: 20s;
+  animation-delay: -9s;
+}
+
+.nm2-blueprint[data-active="true"] .nm2-blueprint__drift,
+.nm2-blueprint[data-active="true"] .nm2-blueprint__layer {
+  animation-play-state: running;
+}
+
+@keyframes nm2-scene-suspend {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+/* Pointer tilt never extends to coarse/hoverless inputs. The activity hook
+ * also removes the pointer listeners and clears the properties when paused. */
+@media (hover: none), (pointer: coarse) {
+  .nm2-blueprint__tilt {
+    transform: none;
+    transition: none;
+  }
+}
+
+html[data-motion="off"] .nm2-blueprint .nm2-blueprint__drift,
+html[data-motion="off"] .nm2-blueprint .nm2-blueprint__layer {
+  animation-play-state: paused;
+}
+
+html[data-motion="off"] .nm2-blueprint .nm2-blueprint__tilt {
+  transform: none;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm2-blueprint .nm2-blueprint__drift,
+  .nm2-blueprint .nm2-blueprint__layer {
+    animation: none;
+  }
+
+  .nm2-blueprint .nm2-blueprint__tilt {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .nm2-field,
+  .nm2-blueprint {
+    display: none;
+  }
+}
+
+/* Deliberately no opacity/visibility/transform default on scroll roots or
+ * [data-draw]/[data-float]: content survives JS and dynamic-import failures. */
+.nm2-scroll-scene {
+  min-inline-size: 0;
+}

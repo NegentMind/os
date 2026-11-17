@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 836 120" fill="none" color="#F1F3F5" role="img" aria-labelledby="title"><title id="title">Negent Mind</title>
+      <g fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="bevel">
+        <path d="M12,96 V16 L56,96 V16"/><!-- N -->
+        <path transform="translate(80,0)" d="M52,16 H12 V96 H52 M12,56 H44"/><!-- E -->
+        <path transform="translate(154,0)" d="M68,34 A30,30 0 1 0 74,56 H46"/><!-- G -->
+        <path transform="translate(248,0)" d="M52,16 H12 V96 H52 M12,56 H44"/><!-- E -->
+        <path transform="translate(322,0)" d="M12,96 V16 L56,96 V16"/><!-- N -->
+        <path transform="translate(402,0)" d="M6,16 H58 M32,16 V96"/><!-- T -->
+        <path transform="translate(506,0)" d="M12,96 V16 L40,62 L68,16 V96"/><!-- M -->
+        <path transform="translate(596,0)" d="M18,16 V96"/><!-- I -->
+        <path transform="translate(642,0)" d="M12,96 V16 L56,96 V16"/><!-- N -->
+        <path transform="translate(722,0)" d="M12,16 V96 H38 A40,40 0 0 0 38,16 H12 Z"/><!-- D -->
+      </g>
+      <circle cx="822" cy="92" r="6" fill="currentColor"/>
+    </svg>

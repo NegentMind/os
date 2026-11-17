@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T08:20:50Z",
+  "title": "Design System: Negent Mind — Orbital",
+  "extensions": {
+    "colorMeta": {
+      "bg": { "role": "neutral", "displayName": "Negro base" },
+      "section": { "role": "neutral", "displayName": "Carbón de sección" },
+      "surface": { "role": "neutral", "displayName": "Carbón de superficie" },
+      "raised": { "role": "neutral", "displayName": "Grafito elevado" },
+      "text": { "role": "neutral", "displayName": "Plata de lectura" },
+      "muted": { "role": "neutral", "displayName": "Plata secundaria" },
+      "line": { "role": "neutral", "displayName": "Borde estructural" },
+      "structure": { "role": "neutral", "displayName": "Plata estructural" },
+      "action": { "role": "primary", "displayName": "Plata de acción" },
+      "on-action": { "role": "neutral", "displayName": "Negro sobre acción" },
+      "paper-bg": { "role": "neutral", "displayName": "Papel plata" },
+      "paper-ink": { "role": "neutral", "displayName": "Tinta sobre papel" },
+      "paper-muted": { "role": "neutral", "displayName": "Texto secundario sobre papel" },
+      "paper-line": { "role": "neutral", "displayName": "Línea sobre papel" },
+      "paper-panel": { "role": "neutral", "displayName": "Panel sobre papel" },
+      "spectrum-teal": { "role": "secondary", "displayName": "Espectro: teal" },
+      "spectrum-blue": { "role": "secondary", "displayName": "Espectro: azul" },
+      "spectrum-violet": { "role": "secondary", "displayName": "Espectro: violeta" },
+      "spectrum-rose": { "role": "secondary", "displayName": "Espectro: rosa" },
+      "spectrum-amber": { "role": "secondary", "displayName": "Espectro: ámbar" },
+      "spectrum-ice": { "role": "secondary", "displayName": "Espectro: hielo" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Outfit", "purpose": "Titulares; nunca sustituye al lettering Orbital." },
+      "body": { "displayName": "DM Sans", "purpose": "Explicaciones, navegación y acciones." },
+      "mono": { "displayName": "JetBrains Mono", "purpose": "Código e identificadores técnicos reales." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "hero-entrance", "value": "0.85s expo.out; stagger 0.085s", "purpose": "Entrada GSAP acotada de contenido ya visible." },
+      { "name": "navigation-pill", "value": "spring; stiffness 420; damping 36", "purpose": "Indicador de navegación con Motion." },
+      { "name": "scroll-scene", "value": "top 80% -> bottom 25%; scrub 0.5", "purpose": "Trazado SVG y desplazamiento acotado con GSAP/ScrollTrigger." },
+      { "name": "heading-effects", "value": "assemble / focus / trace", "purpose": "Titulares Motion con contenido visible desde SSR." },
+      { "name": "scene-suspend", "value": "14s ease-in-out alternate; translateY 0 -> -5px", "purpose": "Flotación SVG solo con movimiento permitido y escena visible." },
+      { "name": "link-state", "value": "0.15s ease", "purpose": "Cambio de color de enlaces; desactivado con movimiento reducido." }
+    ],
+    "breakpoints": [
+      { "name": "small-layout", "value": "40rem" },
+      { "name": "home-stories", "value": "44rem" },
+      { "name": "medium-layout", "value": "48rem" },
+      { "name": "desktop-navigation", "value": "64rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Acción principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Esquema estático de ActionLink sobre Button shadcn; el componente real añade borde material de dos capas.",
+      "html": "<a class=\"ds-action\" href=\"#projects\">Explorar proyectos</a>",
+      "css": ".ds-action{display:inline-flex;align-items:center;justify-content:center;min-height:2.25rem;padding:.5rem 1rem;border-radius:var(--nm2-radius-pill,999px);background:var(--nm2-action,#e7edf5);color:var(--nm2-on-action,#000);font-family:var(--font-body,'DM Sans',sans-serif);font-size:.875rem;font-weight:500;text-decoration:none}.ds-action:hover{background:color-mix(in srgb,var(--nm2-action,#e7edf5) 86%,var(--nm2-structure,#a7b4c7))}.ds-action:focus-visible{outline:2px solid var(--nm2-action,#e7edf5);outline-offset:3px}"
+    },
+    {
+      "name": "Acción secundaria",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Esquema estático de la acción secundaria; la implementación usa superficie neutra y borde material de dos capas.",
+      "html": "<a class=\"ds-secondary\" href=\"#contribute\">Contribuir</a>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:2.25rem;padding:.5rem 1rem;border:1px solid var(--nm2-line,#343b46);border-radius:var(--nm2-radius-pill,999px);background:transparent;color:var(--nm2-text,#f1f3f5);font-family:var(--font-body,'DM Sans',sans-serif);font-size:.875rem;font-weight:500;text-decoration:none}.ds-secondary:hover{border-color:var(--nm2-structure,#a7b4c7);background:var(--nm2-surface,#0e1013)}.ds-secondary:focus-visible{outline:2px solid var(--nm2-action,#e7edf5);outline-offset:3px}"
+    },
+    {
+      "name": "Enlace de texto",
+      "kind": "button",
+      "refersTo": "text-link",
+      "description": "Acción contextual sin otro bloque de color.",
+      "html": "<a class=\"ds-text-link\" href=\"#about\">Cómo trabajamos</a>",
+      "css": ".ds-text-link{display:inline-flex;padding:.5rem 0;color:var(--nm2-structure,#a7b4c7);font-family:var(--font-body,'DM Sans',sans-serif);font-size:.875rem;font-weight:500;text-decoration:none}.ds-text-link:hover{color:var(--nm2-text,#f1f3f5);text-decoration:underline;text-underline-offset:4px}.ds-text-link:focus-visible{outline:2px solid var(--nm2-action,#e7edf5);outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Navegación de escritorio",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Esquema estático del estado flotante. La barra real empieza transparente, integrada en el hero; el menú móvil usa Radix Sheet.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Principal\"><a href=\"#home\" aria-current=\"page\">Inicio</a><a href=\"#projects\">Proyectos</a><a href=\"#about\">El laboratorio</a></nav>",
+      "css": ".ds-nav{display:flex;flex-wrap:wrap;gap:.25rem;padding:.625rem 1.25rem;border:1px solid var(--nm2-line,#343b46);border-radius:var(--nm2-radius-pill,999px);background:var(--nm2-surface,#0e1013);font-family:var(--font-body,'DM Sans',sans-serif)}.ds-nav a{padding:.375rem .875rem;border-radius:var(--nm2-radius-pill,999px);color:var(--nm2-muted,#adb5c0);font-size:.9375rem;font-weight:500;text-decoration:none}.ds-nav a[aria-current]{background:var(--nm2-raised,#1c2026);color:var(--nm2-text,#f1f3f5)}.ds-nav a:hover{color:var(--nm2-text,#f1f3f5)}.ds-nav a:focus-visible{outline:2px solid var(--nm2-action,#e7edf5);outline-offset:3px}"
+    },
+    {
+      "name": "Estado de proyecto",
+      "kind": "chip",
+      "refersTo": "status-badge",
+      "description": "El texto comunica el estado; el color del punto solo lo refuerza.",
+      "html": "<span class=\"ds-status\">Activo</span>",
+      "css": ".ds-status{display:inline-flex;align-items:center;gap:.5rem;padding:.25rem .75rem;border:1px solid var(--nm2-line,#343b46);border-radius:var(--nm2-radius-pill,999px);background:var(--nm2-surface,#0e1013);color:var(--nm2-structure,#a7b4c7);font-family:var(--font-body,'DM Sans',sans-serif);font-size:.8125rem;font-weight:500;line-height:1.4}.ds-status::before{content:'';width:.5rem;height:.5rem;border-radius:50%;background:var(--nm2-spectrum-teal,#5bada0)}"
+    },
+    {
+      "name": "Proyecto",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "ProjectCard: superficie redondeada, nombre, resumen y estado explícito.",
+      "html": "<article class=\"ds-project\"><div class=\"ds-project-top\"><h3>VantaDB</h3><span class=\"ds-project-state\">Activo</span></div><p>Memoria persistente embebida y recuperación híbrida para agentes de IA.</p></article>",
+      "css": ".ds-project{display:flex;flex-direction:column;gap:.875rem;padding:clamp(1.5rem,3vw,2.25rem);border:1px solid color-mix(in srgb,var(--nm2-line,#343b46) 60%,transparent);border-radius:var(--nm2-radius-card,20px);background:var(--nm2-surface,#0e1013);font-family:var(--font-body,'DM Sans',sans-serif)}.ds-project-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}.ds-project h3{margin:0;color:var(--nm2-text,#f1f3f5);font-family:var(--font-heading,'Outfit',sans-serif);font-size:1.375rem;font-weight:600;line-height:1.2;letter-spacing:-.02em}.ds-project-state{display:inline-flex;align-items:center;gap:.5rem;padding:.25rem .75rem;border:1px solid var(--nm2-line,#343b46);border-radius:var(--nm2-radius-pill,999px);color:var(--nm2-structure,#a7b4c7);font-size:.8125rem;line-height:1.4}.ds-project-state::before{content:'';width:.5rem;height:.5rem;border-radius:50%;background:var(--nm2-spectrum-teal,#5bada0)}.ds-project p{margin:0;max-width:58ch;color:var(--nm2-muted,#adb5c0);line-height:1.6}"
+    },
+    {
+      "name": "Pregunta desplegable",
+      "kind": "custom",
+      "refersTo": "disclosure",
+      "description": "details/summary nativo; sigue funcionando sin JavaScript.",
+      "html": "<details class=\"ds-faq\"><summary>¿Negent Mind construye modelos?</summary><p>No. Construimos infraestructura y capacidades alrededor de modelos.</p></details>",
+      "css": ".ds-faq{border-bottom:1px solid var(--nm2-line,#343b46);font-family:var(--font-body,'DM Sans',sans-serif)}.ds-faq summary{display:flex;justify-content:space-between;gap:1.5rem;padding:1.125rem 0;color:var(--nm2-text,#f1f3f5);font-family:var(--font-heading,'Outfit',sans-serif);font-size:1.0625rem;font-weight:500;cursor:pointer;list-style:none}.ds-faq summary::after{content:'+';color:var(--nm2-structure,#a7b4c7)}.ds-faq[open] summary::after{transform:rotate(45deg)}.ds-faq summary:focus-visible{outline:2px solid var(--nm2-action,#e7edf5);outline-offset:3px;border-radius:4px}.ds-faq p{max-width:62ch;padding-bottom:1.25rem;color:var(--nm2-muted,#adb5c0);line-height:1.6}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Orbital / carbón y plata",
+    "overview": "Negent Mind presenta su trabajo como un laboratorio de ingeniería independiente. La organización va primero; VantaDB aporta una entrada concreta al trabajo existente. Carbón y plata organizan la lectura, mientras una materia fluida y cromática expresa el campo de posibilidades alrededor de los modelos.\n\nOrbital es lettering vectorial original, no la fuente de la interfaz. Los títulos Outfit, el texto DM Sans y las superficies redondeadas comparten una geometría amable sin homogeneizar las composiciones. El contenido y las acciones están disponibles desde el primer render; la animación es una mejora opcional.",
+    "keyCharacteristics": [
+      "Organización primero.",
+      "Carbón y plata funcionales; espectro expresivo acotado.",
+      "Lettering propio y tipografía redondeada.",
+      "Composiciones variadas con radios y contenedores compartidos.",
+      "Contenido inmediato y movimiento opcional."
+    ],
+    "rules": [
+      {
+        "name": "The Functional Silver Rule",
+        "body": "Texto de lectura y controles permanecen neutrales; el espectro no convierte las acciones en botones multicolores. El estado de proyecto siempre tiene etiqueta, no solo un punto de color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Lettering Is Not Type Rule",
+        "body": "Conservar el SVG original para la marca; usar las fuentes de interfaz para títulos, texto y código, sin reconstruir Orbital con letras tipográficas.",
+        "section": "typography"
+      },
+      {
+        "name": "The Immediate Content Rule",
+        "body": "La animación no gatea lectura, acciones ni navegación. Sin loader, relojes decorativos, telemetría falsa, scroll hijack ni pistas de 400vh.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Presentar primero la organización y enlazar trabajo verificable.",
+      "Mantener carbón y plata para lectura, estructura y acciones.",
+      "Reutilizar el espectro del hero en arte y detalles acotados.",
+      "Variar composiciones conservando radios, contenedores y ritmo comunes.",
+      "Ofrecer contenido inmediato, poster/fallback, pausa y reduced motion sin GPU.",
+      "Conservar foco visible, teclado y estados activo/incubación/visión escritos.",
+      "Mantener V1 como compatibilidad sin migrar Remotion ni el perfil publicado."
+    ],
+    "donts": [
+      "No presentar los glifos del logo como una fuente completa ni mezclar las paletas V1 y Orbital.",
+      "No usar neón, botones multicolores ni una jerarquía basada solo en bordes.",
+      "No ocultar contenido hasta que termine una entrada o cargue WebGL.",
+      "No añadir loaders, relojes, telemetría falsa, scroll hijack ni pistas de 400vh.",
+      "No mezclar GSAP y Motion en el mismo componente ni copiar el motor Paper.",
+      "No personalizar manualmente `components/ui/*`.",
+      "No inventar métricas, clientes, testimonios, capacidades, research/blog ni precios.",
+      "No presentar las fotos `redesign-before` como evidencia del rediseño ni declarar validación o despliegue sin resultados."
+    ]
+  }
+}
