@@ -226,35 +226,41 @@ function renderTear(input: RenderInput, bulge: Float32Array, lift: number) {
   }
 }
 
+// Chromatic = the hero warp adapted to the rift: the same swirl domain warp
+// and thin spectral ridges over a dark base, arriving at `to` at the bottom.
 function renderChromatic(input: RenderInput, bulge: Float32Array, lift: number) {
   const { data, width, height, time, from, to, params } = input;
   const intensity = params.intensity;
   const spectrum = params.spectrum;
-  const sharpness = 9.5;
+  const frame = Math.floor(time * 12);
   for (let y = 0; y < height; y += 1) {
     const ny = y / Math.max(1, height - 1);
     const envelope = Math.sin(ny * Math.PI);
+    const edge = Math.pow(envelope, 0.85);
     for (let x = 0; x < width; x += 1) {
       const nx = x / Math.max(1, width - 1);
       const ty = ny + (-lift + bulge[x]) * envelope;
-      const wave = (Math.sin(nx * 7 + time * 1.1) * 0.14
-        + Math.cos(nx * 15 - time * 0.75) * 0.05) * envelope * intensity;
-      const center = 0.5 + wave;
-      const spread = 0.065 * envelope * Math.max(0.2, intensity);
-      const sR = smoothstep(clamp01(0.5 + (ty - (center - spread)) * sharpness));
-      const sG = smoothstep(clamp01(0.5 + (ty - center) * sharpness));
-      const sB = smoothstep(clamp01(0.5 + (ty - (center + spread)) * sharpness));
-      const base = ny * (1 - envelope);
-      let r = from[0] + (to[0] - from[0]) * (base + sR * envelope);
-      let g = from[1] + (to[1] - from[1]) * (base + sG * envelope);
-      let b = from[2] + (to[2] - from[2]) * (base + sB * envelope);
-      const fringe = Math.abs(sB - sR) * spectrum;
-      if (fringe > 0) {
-        const tint = spectrumAt(nx * 0.6 + sG * 0.5 + time * 0.05);
-        r += (tint[0] - r) * fringe;
-        g += (tint[1] - g) * fringe;
-        b += (tint[2] - b) * fringe;
-      }
+      const k = smoothstep(ty);
+      let r = from[0] + (to[0] - from[0]) * k;
+      let g = from[1] + (to[1] - from[1]) * k;
+      let b = from[2] + (to[2] - from[2]) * k;
+      const warpX = (Math.sin(nx * 4.5 + ny * 2.5 + time * 0.4) * 0.35
+        + Math.cos(ny * 6 - nx * 3 - time * 0.3) * 0.2) * intensity;
+      const warpY = (Math.cos(nx * 3.5 - ny * 4 + time * 0.35) * 0.35
+        + Math.sin(nx * 5 + ny * 3.5 - time * 0.28) * 0.2) * intensity;
+      const wave = Math.sin(
+        (nx + warpX) * 7.5 + (ny + warpY) * 5 + time * 0.9,
+      );
+      const ridge = Math.pow(Math.abs(wave), 1.6);
+      const liquid = spectrumAt(
+        nx * 1.6 + warpX * 1.8 - ny * 0.7 + time * 0.1,
+      );
+      const mask = Math.max(0, 1 - ridge * 1.15) * edge
+        * Math.min(1, 0.3 + spectrum * 0.9);
+      const grain = (hash(x, y, frame) - 0.5) * 26 * edge * intensity;
+      r += (liquid[0] - r) * mask + grain;
+      g += (liquid[1] - g) * mask + grain;
+      b += (liquid[2] - b) * mask + grain;
       write(data, (y * width + x) * 4, r, g, b);
     }
   }
