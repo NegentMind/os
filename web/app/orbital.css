@@ -26,11 +26,12 @@
   --nm2-structure: #a7b4c7;
   --nm2-action: #e7edf5;
   --nm2-on-action: #000000;
-  --nm2-paper-bg: #e7edf5;
+  --nm2-paper-bg: #ffffff;
   --nm2-paper-ink: #111418;
   --nm2-paper-muted: #4d5662;
-  --nm2-paper-line: #afbac8;
-  --nm2-paper-panel: #dae1ea;
+  --nm2-paper-line: #d3d9e1;
+  --nm2-paper-panel: #f2f4f7;
+  --nm2-paper-raised: #e6eaf0;
 
   /* Canonical spectrum names (art hues; controls stay neutral). */
   --nm2-spectrum-teal: #5bada0;

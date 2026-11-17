@@ -13,7 +13,7 @@ import {warpFragmentShader, WarpPatterns} from "../../web/node_modules/@paper-de
 import {defaultPatternSizing, ShaderFitOptions} from "../../web/node_modules/@paper-design/shaders/dist/shader-sizing.js";
 import {getShaderColorFromString} from "../../web/node_modules/@paper-design/shaders/dist/get-shader-color-from-string.js";
 import {getShaderNoiseTexture} from "../../web/node_modules/@paper-design/shaders/dist/get-shader-noise-texture.js";
-const p={...defaultPatternSizing,...{"colors":["#101C27","#5BADA0","#465DCF","#965CCB","#DC5E89","#D9A45E","#B7CDD7","#101C27"],"shape":"stripes","shapeScale":0.38,"proportion":0.52,"softness":0.54,"distortion":0.17,"swirl":0.72,"swirlIterations":5,"scale":2.45,"rotation":-32,"offsetX":0.12,"offsetY":-0.08,"frame":24000,"speed":0.32,"minPixelRatio":1,"maxPixelCount":2073600}};
+const p={...defaultPatternSizing,...{"colors":["#101C27","#5BADA0","#465DCF","#965CCB","#DC5E89","#D9A45E","#B7CDD7","#101C27"],"shape":"stripes","shapeScale":0.38,"proportion":0.52,"softness":0.54,"distortion":0.17,"swirl":0.72,"swirlIterations":5,"scale":2.45,"rotation":-32,"offsetX":0.12,"offsetY":-0.08,"frame":24000,"speed":0.42,"minPixelRatio":1,"maxPixelCount":2073600}};
 const noise=getShaderNoiseTexture(); await noise.decode();
 window.orbitalMount=new ShaderMount(document.querySelector("#plate"),warpFragmentShader,{
 u_colors:p.colors.map(getShaderColorFromString),u_colorsCount:p.colors.length,

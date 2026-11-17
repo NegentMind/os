@@ -20,7 +20,7 @@
   --nm2-muted: var(--nm2-paper-muted);
   --nm2-line: var(--nm2-paper-line);
   --nm2-surface: var(--nm2-paper-panel);
-  --nm2-raised: var(--nm2-paper-panel);
+  --nm2-raised: var(--nm2-paper-raised);
   --nm2-action: var(--nm2-paper-ink);
   --nm2-on-action: var(--nm2-paper-bg);
   --nm2-structure: var(--nm2-paper-ink);
@@ -137,9 +137,11 @@
   pointer-events: auto;
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
-  transition: background-color 600ms ease, border-color 600ms ease,
-    backdrop-filter 600ms ease, -webkit-backdrop-filter 600ms ease,
-    box-shadow 600ms ease;
+  transition: background-color 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+    backdrop-filter 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+    -webkit-backdrop-filter 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 1000ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nm2-header__bar[data-floating="true"] {
@@ -147,6 +149,7 @@
   border-color: color-mix(in srgb, var(--nm2-structure) 45%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 28%);
 }
 
 .nm2-header__brand {
@@ -326,11 +329,20 @@
   display: inline-block;
 }
 
-.nm2-animated-heading--trace .nm2-animated-heading__mask {
+.nm2-animated-heading--assemble .nm2-animated-heading__mask {
   overflow: clip;
   vertical-align: bottom;
   padding-block-end: 0.08em;
   margin-block-end: -0.08em;
+}
+
+.nm2-animated-heading--trace,
+.nm2-animated-heading--trace .nm2-animated-heading__line {
+  display: block;
+}
+
+.nm2-animated-heading--decode .nm2-animated-heading__word {
+  white-space: nowrap;
 }
 
 /* Inner-page opener: text and actions remain independent of decorative art. */
@@ -342,11 +354,12 @@
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(24px, 4vw, 64px);
   width: calc(100% - 2 * var(--nm2-frame-gap));
-  min-height: clamp(480px, 70svh, 720px);
+  min-height: clamp(560px, 86svh, 960px);
   margin: var(--nm2-frame-gap) auto;
   padding: 104px clamp(24px, 5vw, 80px) 48px;
   border-radius: var(--nm2-radius-hero);
   background: var(--nm2-section);
+  overflow: clip;
 }
 
 .nm2-page-hero__content {
@@ -386,6 +399,7 @@
   position: relative;
   align-self: stretch;
   min-width: 0;
+  z-index: 1;
   min-height: 300px;
   color: var(--nm2-structure);
 }
@@ -401,12 +415,22 @@
   pointer-events: none;
 }
 
-.nm2-page-hero__field {
+.nm2-page-hero > .nm2-page-hero__field {
   position: absolute;
   inset: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
+  aspect-ratio: auto;
+  color: var(--nm2-structure);
   opacity: 0.7;
+  mask-image: linear-gradient(to right, rgb(0 0 0 / 22%) 0%, rgb(0 0 0 / 30%) 38%, #000 72%);
+  -webkit-mask-image: linear-gradient(to right, rgb(0 0 0 / 22%) 0%, rgb(0 0 0 / 30%) 38%, #000 72%);
+}
+
+.nm2-page-hero > .nm2-page-hero__field > * {
+  width: 100%;
+  height: 100%;
 }
 
 .nm2-page-hero__geometry {
@@ -598,8 +622,14 @@
   position: fixed;
   inset: auto 0 0;
   z-index: 40;
-  height: 24px;
+  height: clamp(72px, 9vh, 112px);
   pointer-events: none;
+}
+
+@media (max-width: 47.999rem) {
+  .nm2-viewport-fade {
+    height: 64px;
+  }
 }
 
 .nm2-viewport-fade__layer {
@@ -617,29 +647,29 @@
   }
 
   .nm2-viewport-fade__layer:nth-child(2) {
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     mask-image: linear-gradient(to bottom, transparent 15%, black 50%);
     -webkit-mask-image: linear-gradient(to bottom, transparent 15%, black 50%);
   }
 
   .nm2-viewport-fade__layer:nth-child(3) {
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     mask-image: linear-gradient(to bottom, transparent 35%, black 70%);
     -webkit-mask-image: linear-gradient(to bottom, transparent 35%, black 70%);
   }
 
   .nm2-viewport-fade__layer:nth-child(4) {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     mask-image: linear-gradient(to bottom, transparent 55%, black 85%);
     -webkit-mask-image: linear-gradient(to bottom, transparent 55%, black 85%);
   }
 
   .nm2-viewport-fade__layer:nth-child(5) {
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     mask-image: linear-gradient(to bottom, transparent 72%, black 100%);
     -webkit-mask-image: linear-gradient(to bottom, transparent 72%, black 100%);
   }
@@ -657,7 +687,7 @@ body:has(:focus-visible) .nm2-pointer-feedback {
 
 /* Keyboard focus keeps scroll clearance above the optical strip. */
 .nm2-site :focus-visible {
-  scroll-margin-block-end: 40px;
+  scroll-margin-block-end: 120px;
 }
 
 /* Native cursor is never replaced. This ring never receives pointer input. */
@@ -687,6 +717,7 @@ body:has(:focus-visible) .nm2-pointer-feedback {
 
   .nm2-page-hero {
     grid-template-columns: minmax(0, 1fr);
+    min-height: clamp(520px, 80svh, 760px);
     padding: 104px 24px 24px;
     gap: 1rem;
   }

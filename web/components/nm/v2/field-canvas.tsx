@@ -134,7 +134,9 @@ function projectField(
   t: number,
   pointer: Pointer,
 ) {
-  const reach = Math.min(width * 0.24, height * 0.6, 180);
+  const reach = variant === "network"
+    ? Math.min(width * 0.3, 240)
+    : Math.min(width * 0.24, height * 0.6, 180);
   for (const point of field.points) {
     const { u, v, layer } = point;
     point.light = 0;
@@ -174,9 +176,10 @@ function projectField(
         const distance = Math.hypot(point.x - pointer.x, point.y - pointer.y);
         point.light = Math.max(0, 1 - distance / reach) ** 2;
       }
-      point.radius = 0.95 + point.light * 0.55;
-      point.alpha = Math.min(0.58, 0.18 + (1 - v) * 0.12
-        + Math.sin(u * 4 + v * 3 + t * 0.18) * 0.045 + point.light * 0.3);
+      point.radius = 0.95 + point.light * 0.9;
+      const base = 0.18 + (1 - v) * 0.12
+        + Math.sin(u * 4 + v * 3 + t * 0.18) * 0.045;
+      point.alpha = Math.min(0.95, base * (1 + point.light * 1.2));
     }
   }
 }
@@ -356,6 +359,17 @@ export function FieldCanvas({
           context.beginPath();
           context.arc(point.x, point.y, point.radius, 0, TAU);
           context.fill();
+        }
+        if (variant === "network" && pointer.present) {
+          context.lineWidth = 0.8;
+          for (const point of field.points) {
+            if (point.light < 0.12) continue;
+            context.globalAlpha = point.light * 0.4;
+            context.beginPath();
+            context.moveTo(pointer.x, pointer.y);
+            context.lineTo(point.x, point.y);
+            context.stroke();
+          }
         }
         context.globalAlpha = 1;
         surface.hidden = false;

@@ -71,14 +71,14 @@ export function SiteHeader({ lang, copy }: { lang: Locale; copy: NavCopy }) {
   const current = pageFromPath(pathname);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const next = latest > 72;
+    const next = floatingRef.current ? latest >= 40 : latest > 96;
     if (next === floatingRef.current) return;
     floatingRef.current = next;
     setFloating(next);
   });
 
   useEffect(() => {
-    const next = window.scrollY > 72;
+    const next = window.scrollY > 96;
     floatingRef.current = next;
     setFloating(next);
   }, []);
@@ -131,8 +131,8 @@ export function SiteHeader({ lang, copy }: { lang: Locale; copy: NavCopy }) {
       <header className="nm2-header">
           <motion.div
             initial={false}
-            animate={{ y: floating ? -4 : 0 }}
-            transition={{ duration: canAnimate ? 0.6 : 0, ease: [0.22, 1, 0.36, 1] }}
+            animate={{ y: floating ? -6 : 0 }}
+            transition={{ duration: canAnimate ? 1.1 : 0, ease: [0.16, 1, 0.3, 1] }}
             className="nm2-header__bar"
             data-floating={floating || undefined}
           >

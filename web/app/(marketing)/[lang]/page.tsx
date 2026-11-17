@@ -34,9 +34,9 @@ export default async function Home({ params }: MarketingPageProps) {
       <div id="top">
         <Hero lang={lang} copy={c.hero} />
       </div>
-      <Section id="org" className="nm2-statement-section nm2-section--paper">
+      <Section id="org" className="nm2-statement-section nm2-section--paper" dither>
         <div className="nm2-editorial">
-          <SectionHeading title={h.statement.title} id="org-title" />
+          <SectionHeading title={h.statement.title} id="org-title" effect="assemble" />
           <div className="nm2-prose">
             <p className="nm2-lead">{h.statement.body}</p>
             <p>{h.statement.aside}</p>
@@ -45,9 +45,13 @@ export default async function Home({ params }: MarketingPageProps) {
         </div>
         <SystemStory copy={h.statement.system} caption={c.common.conceptual} />
       </Section>
-      <Section id="work" className="nm2-work-section">
+      <Section
+        id="work"
+        className="nm2-work-section"
+        backdrop={<FieldCanvas variant="wave" className="nm2-backdrop-field nm2-backdrop-field--wave" />}
+      >
         <span id="status" className="nm2-anchor" aria-hidden="true" />
-        <SectionHeading title={h.work.title} description={h.work.description} />
+        <SectionHeading title={h.work.title} description={h.work.description} effect="trace" />
         <span id="engine" className="nm2-anchor" aria-hidden="true" />
         <ProjectCard
           name={h.work.vantadbName}
@@ -89,16 +93,20 @@ export default async function Home({ params }: MarketingPageProps) {
         </div>
       </Section>
       <Section id="modules" className="nm2-capability-section">
-        <SectionHeading title={h.capabilities.title} description={h.capabilities.description} effect="trace" />
+        <SectionHeading title={h.capabilities.title} description={h.capabilities.description} effect="decode" />
         <CapabilityStory copy={h.capabilities} caption={c.common.conceptual} />
       </Section>
-      <Section id="holons" className="nm2-home-holons">
-        <SectionHeading title={h.holons.title} effect="assemble" />
+      <Section
+        id="holons"
+        className="nm2-home-holons"
+        backdrop={<FieldCanvas variant="orbit" className="nm2-backdrop-field nm2-backdrop-field--orbit" />}
+      >
+        <SectionHeading title={h.holons.title} effect="focus" />
         <HolonExplorer copy={h.holons} visionLabel={c.common.vision} caption={c.common.conceptual} />
       </Section>
-      <Section id="proof" className="nm2-section--paper nm2-home-evidence">
+      <Section id="proof" className="nm2-section--paper nm2-home-evidence" dither>
         <span id="oss" className="nm2-anchor" aria-hidden="true" />
-        <SectionHeading title={h.method.title} description={h.method.description} effect="focus" />
+        <SectionHeading title={h.method.title} description={h.method.description} effect="trace" />
         <EvidenceWorkbench
           copy={h.method}
           links={{ repository: VANTADB_REPO, documentation: VANTADB_DOCS, discussions: DISCUSSIONS_URL }}
@@ -109,7 +117,7 @@ export default async function Home({ params }: MarketingPageProps) {
       </Section>
       <Section id="faq" className="nm2-faq-section">
         <div className="nm2-editorial">
-          <SectionHeading title={h.faqTitle} />
+          <SectionHeading title={h.faqTitle} effect="assemble" />
           <Faq items={h.faq} />
         </div>
       </Section>
