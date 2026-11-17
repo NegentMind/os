@@ -40,7 +40,7 @@ export default async function Home({ params }: MarketingPageProps) {
       <div id="top">
         <Hero lang={lang} copy={c.hero} />
       </div>
-      <SectionTransition id="org-in" variant="iridescent" />
+      <SectionTransition id="org-in" variant="chromatic" />
       <Section id="org" className="nm2-statement-section nm2-section--paper">
         <div className="nm2-editorial">
           <SectionHeading title={h.statement.title} id="org-title" effect="assemble" />
