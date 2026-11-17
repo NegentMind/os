@@ -19,8 +19,18 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: calc(100svh - 2 * var(--nm2-frame-gap));
-  padding: 104px clamp(32px, 4.5vw, 72px) clamp(44px, 5.5svh, 68px);
+  /* Signature geometry lives here so the straddle math stays in sync.
+     The overhang is part of the hero's visual height: reserving it keeps
+     the full wordmark above the fold instead of clipped by the viewport. */
+  --nm2-hero-sign-h: 27svh;
+  --nm2-hero-sign-out: 0.4;
+  --nm2-hero-pad-b: clamp(44px, 5.5svh, 68px);
+  --nm2-hero-sign-reserved: max(
+    0px,
+    var(--nm2-hero-sign-h) * var(--nm2-hero-sign-out) - var(--nm2-hero-pad-b)
+  );
+  min-height: calc(100svh - 2 * var(--nm2-frame-gap) - var(--nm2-hero-sign-reserved));
+  padding: 104px clamp(32px, 4.5vw, 72px) var(--nm2-hero-pad-b);
 }
 
 .nm2-hero__intro {
@@ -32,7 +42,7 @@
   max-width: 14ch;
   margin: 0;
   font-family: var(--font-heading, var(--font-outfit)), sans-serif;
-  font-size: clamp(3rem, 5.7vw, 5.5rem);
+  font-size: clamp(3rem, min(5.7vw, 8svh), 5.5rem);
   font-weight: 450;
   line-height: 1.025;
   letter-spacing: -0.035em;
@@ -109,14 +119,14 @@
 }
 
 /* Signature straddles the frame's bottom edge: the in-flow slot is only the
-   ~60% of the wordmark that sits inside the frame; the rest is absolutely
-   positioned past the border. Keeping the slot short preserves the ~100svh
-   hero so the straddle is visible at first paint.
+   part of the wordmark that sits inside the frame; the rest is absolutely
+   positioned past the border. The overhang is reserved inside the viewport
+   (see --nm2-hero-sign-reserved) so the full mark lands on the fold.
    mix-blend difference stays — white is the inversion operand, not an accent. */
 .nm2-hero__signature {
   position: relative;
   width: 100%;
-  height: calc(27svh * 0.6);
+  height: calc(var(--nm2-hero-sign-h) * (1 - var(--nm2-hero-sign-out)));
   margin-top: clamp(48px, 7svh, 96px);
   mix-blend-mode: difference;
 }
@@ -124,9 +134,9 @@
 .nm2-hero__signature .nm2-hero__wordmark {
   position: absolute;
   left: 50%;
-  bottom: calc(27svh * -0.4);
+  bottom: calc(var(--nm2-hero-sign-h) * var(--nm2-hero-sign-out) * -1);
   display: block;
-  height: 27svh;
+  height: var(--nm2-hero-sign-h);
   width: auto;
   overflow: visible;
   transform: translateX(-50%);
@@ -214,7 +224,7 @@
 }
 
 .nm2-hero[data-fullbleed="true"] .nm2-hero__content {
-  min-height: 100svh;
+  min-height: calc(100svh - var(--nm2-hero-sign-reserved));
 }
 
 /* Section-scoped warp mount (e.g. home invitation): absolute fill with a
@@ -239,7 +249,9 @@
 
 @media (min-width: 768px) and (max-height: 650px) {
   .nm2-hero__content {
-    padding: 104px clamp(28px, 4vw, 64px) 36px;
+    --nm2-hero-sign-h: 20svh;
+    --nm2-hero-pad-b: 36px;
+    padding: 104px clamp(28px, 4vw, 64px) var(--nm2-hero-pad-b);
   }
 
   .nm2-hero__title {
@@ -252,13 +264,7 @@
   }
 
   .nm2-hero__signature {
-    height: calc(20svh * 0.6);
     margin-top: 32px;
-  }
-
-  .nm2-hero__signature .nm2-hero__wordmark {
-    height: 20svh;
-    bottom: calc(20svh * -0.4);
   }
 
   .nm2-hero__note {
@@ -268,7 +274,10 @@
 
 @media (max-width: 767px) {
   .nm2-hero__content {
-    padding: 104px 24px 40px;
+    --nm2-hero-sign-h: 18svh;
+    --nm2-hero-sign-out: 0.36;
+    --nm2-hero-pad-b: 40px;
+    padding: 104px 24px var(--nm2-hero-pad-b);
   }
 
   .nm2-hero__title {
@@ -304,13 +313,7 @@
   }
 
   .nm2-hero__signature {
-    height: calc(18svh * 0.64);
     margin-top: auto;
-  }
-
-  .nm2-hero__signature .nm2-hero__wordmark {
-    height: 18svh;
-    bottom: calc(18svh * -0.36);
   }
 
   .nm2-hero-art__shade {
