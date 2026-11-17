@@ -13,7 +13,11 @@ export type NavCopy = {
 };
 
 export type HeroCopy = {
+  /** Static title text ending before the rotating word (usually with a colon). */
   title: string;
+  /** Words rendered in Orbital lettering inside the title; first word is the
+   *  static fallback. Also joined into the accessible title text. */
+  titleWords: readonly string[];
   description: string;
   primaryAction: string;
   secondaryAction: string;
@@ -26,6 +30,8 @@ export type HeroCopy = {
 export type FooterCopy = {
   statement: string;
   independence: string;
+  sections: string;
+  projects: string;
   resources: string;
   discussions: string;
   handbook: string;
@@ -34,4 +40,5 @@ export type FooterCopy = {
   security: string;
   trademark: string;
   contactPending: string;
+  builtOpen: string;
 };

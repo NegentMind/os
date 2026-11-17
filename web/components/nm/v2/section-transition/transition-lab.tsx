@@ -18,11 +18,27 @@ import {
   type TransitionParams,
   type TransitionVariant,
 } from "@/components/nm/v2/section-transition/variants";
+import {
+  HERO_BACKGROUNDS,
+  isHeroBackgroundVariant,
+  type HeroBackgroundVariant,
+} from "@/components/nm/v2/hero-preset";
 
 export type BandConfig = {
   variant: TransitionVariant;
   params: TransitionParams;
   height: number | null;
+};
+
+/** Hero overrides owned by the lab: frame and animated background. */
+export type HeroLabConfig = {
+  fullbleed: boolean;
+  background: HeroBackgroundVariant;
+};
+
+const DEFAULT_HERO: HeroLabConfig = {
+  fullbleed: false,
+  background: "warp-stripes",
 };
 
 type Band = { id: string; variant: TransitionVariant };
@@ -41,6 +57,8 @@ type LabContextValue = {
   update: (patch: Partial<BandConfig>) => void;
   setVariant: (variant: TransitionVariant) => void;
   reset: () => void;
+  hero: HeroLabConfig;
+  setHero: (patch: Partial<HeroLabConfig>) => void;
 };
 
 const STORAGE_KEY = "nm2-transition-lab";
@@ -77,7 +95,25 @@ function toBandConfig(value: unknown): BandConfig | null {
   };
 }
 
-function readStored(): { overrides: Overrides; target: string; open: boolean } | null {
+function toHeroConfig(value: unknown): HeroLabConfig {
+  if (typeof value !== "object" || value === null) return DEFAULT_HERO;
+  const record = value as Record<string, unknown>;
+  return {
+    fullbleed: record.fullbleed === true,
+    background: isHeroBackgroundVariant(record.background)
+      ? record.background
+      : DEFAULT_HERO.background,
+  };
+}
+
+type Stored = {
+  overrides: Overrides;
+  target: string;
+  open: boolean;
+  hero: HeroLabConfig;
+};
+
+function readStored(): Stored | null {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
@@ -95,13 +131,14 @@ function readStored(): { overrides: Overrides; target: string; open: boolean } |
       overrides,
       target: typeof record.target === "string" ? record.target : ALL,
       open: record.open === true,
+      hero: toHeroConfig(record.hero),
     };
   } catch {
     return null;
   }
 }
 
-function writeStored(value: { overrides: Overrides; target: string; open: boolean }) {
+function writeStored(value: Stored) {
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
   } catch {
@@ -116,6 +153,7 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
   const [target, setTarget] = useState(ALL);
   const [bands, setBands] = useState<readonly Band[]>([]);
   const [overrides, setOverrides] = useState<Overrides>({});
+  const [hero, setHeroState] = useState<HeroLabConfig>(DEFAULT_HERO);
 
   useEffect(() => {
     const flag = new URLSearchParams(window.location.search).get("transitions") === "1";
@@ -126,6 +164,7 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
       setOverrides(stored.overrides);
       setTarget(stored.target);
       setOpen(stored.open);
+      setHeroState(stored.hero);
     }
     setEnabled(true);
     setHydrated(true);
@@ -133,8 +172,8 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return;
-    writeStored({ overrides, target, open });
-  }, [hydrated, overrides, target, open]);
+    writeStored({ overrides, target, open, hero });
+  }, [hydrated, overrides, target, open, hero]);
 
   const register = useCallback((id: string, variant: TransitionVariant) => {
     setBands((prev) => prev.some((b) => b.id === id)
@@ -183,10 +222,15 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
     });
   }, [target]);
 
+  const setHero = useCallback((patch: Partial<HeroLabConfig>) => {
+    setHeroState((prev) => ({ ...prev, ...patch }));
+  }, []);
+
   const value = useMemo<LabContextValue>(() => ({
     enabled, open, setOpen, target, setTarget, bands, overrides,
-    resolve, register, update, setVariant, reset,
-  }), [enabled, open, target, bands, overrides, resolve, register, update, setVariant, reset]);
+    resolve, register, update, setVariant, reset, hero, setHero,
+  }), [enabled, open, target, bands, overrides, resolve, register, update,
+    setVariant, reset, hero, setHero]);
 
   const currentConfig = useMemo(() => currentFor(target), [currentFor, target]);
 
@@ -205,6 +249,15 @@ export function useTransitionOverride(
   const register = ctx?.register;
   useEffect(() => register?.(id, variant), [register, id, variant]);
   return ctx?.resolve(id);
+}
+
+/**
+ * Lab-controlled hero overrides. Null outside the provider or when the lab is
+ * disabled, so the hero always falls back to its canonical layout.
+ */
+export function useHeroLabConfig(): HeroLabConfig | null {
+  const ctx = useContext(LabContext);
+  return ctx?.enabled ? ctx.hero : null;
 }
 
 function Slider({
@@ -249,6 +302,7 @@ export function TransitionLab() {
   const targetId = useId();
   const regionId = useId();
   const [copied, setCopied] = useState<"idle" | "ok" | "error">("idle");
+  const heroFullbleedId = useId();
   const open = ctx?.open ?? false;
 
   useEffect(() => {
@@ -259,7 +313,7 @@ export function TransitionLab() {
   }, [open]);
 
   if (!ctx || !ctx.enabled || !current) return null;
-  const { setOpen, target, setTarget, bands, update, setVariant, reset } = ctx;
+  const { setOpen, target, setTarget, bands, update, setVariant, reset, hero, setHero } = ctx;
   const { variant, params, height } = current;
   const showCell = variant === "dither" || variant === "blocks";
   const showSpectrum = variant === "chromatic" || variant === "iridescent";
@@ -371,6 +425,30 @@ export function TransitionLab() {
         ) : null}
         <Slider label="Altura de banda (px)" value={height ?? 240} min={120} max={360} step={4}
           onChange={(v) => update({ height: v })} />
+
+        <p className="nm2-transition-lab__group">Hero</p>
+        <div className="nm2-transition-lab__row">
+          <label htmlFor={heroFullbleedId}>A todo el viewport</label>
+          <input
+            id={heroFullbleedId}
+            type="checkbox"
+            checked={hero.fullbleed}
+            onChange={(event) => setHero({ fullbleed: event.target.checked })}
+          />
+        </div>
+        <div className="nm2-transition-lab__variants" role="group" aria-label="Fondo del hero">
+          {HERO_BACKGROUNDS.map((bg) => (
+            <button
+              key={bg.id}
+              type="button"
+              className="nm2-transition-lab__button"
+              aria-pressed={hero.background === bg.id}
+              onClick={() => setHero({ background: bg.id })}
+            >
+              {bg.label}
+            </button>
+          ))}
+        </div>
 
         <p className="nm2-transition-lab__readout">{readout}</p>
         <div className="nm2-transition-lab__actions">

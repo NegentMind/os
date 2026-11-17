@@ -15,6 +15,8 @@ export const es: SiteCopy = {
   footer: {
     statement: "Infraestructura alrededor del modelo. Construida en abierto.",
     independence: "Un laboratorio independiente. Aún no constituido como empresa.",
+    sections: "Secciones",
+    projects: "Proyectos",
     resources: "Recursos",
     discussions: "Discusiones",
     handbook: "Handbook",
@@ -23,9 +25,11 @@ export const es: SiteCopy = {
     security: "Política de seguridad",
     trademark: "Política de marcas",
     contactPending: "Correo aún no disponible. Encuéntranos en GitHub.",
+    builtOpen: "hecho en abierto",
   },
   hero: {
-    title: "Lo que un modelo no trae de fábrica.",
+    title: "Lo que un modelo no trae de fábrica:",
+    titleWords: ["MEMORIA", "OJOS", "VOZ", "MANOS"],
     description:
       "Infraestructura open source para agentes de IA. Memoria persistente hoy; percepción, razonamiento y acción verificable como visión de largo plazo.",
     primaryAction: "Explorar proyectos",

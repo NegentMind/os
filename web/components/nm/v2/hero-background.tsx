@@ -9,6 +9,9 @@ import {
   type ReactNode,
 } from "react";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
+import { FieldCanvas, type FieldVariant } from "@/components/nm/v2/field-canvas";
+import { HERO_WARP_PRESETS } from "@/components/nm/v2/hero-preset";
+import { useHeroLabConfig } from "@/components/nm/v2/section-transition/transition-lab";
 
 const HeroWarp = dynamic(
   () => import("@/components/nm/v2/hero-warp").then((module) => module.HeroWarp),
@@ -38,11 +41,39 @@ class ArtBoundary extends Component<
   }
 }
 
+const FIELD_VARIANTS = {
+  "wave-field": "wave",
+  "orbit-field": "orbit",
+  "network-field": "network",
+} as const satisfies Record<string, FieldVariant>;
+
 export function HeroBackground({ className = "" }: { className?: string }) {
   const host = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   const [started, setStarted] = useState(false);
   const { canAnimate, reducedMotion } = useSiteMotion();
+  const lab = useHeroLabConfig();
+  const background = lab?.background ?? "warp-stripes";
+  const warpPreset =
+    background in HERO_WARP_PRESETS
+      ? HERO_WARP_PRESETS[background as keyof typeof HERO_WARP_PRESETS]
+      : null;
+  const fieldVariant =
+    background in FIELD_VARIANTS
+      ? FIELD_VARIANTS[background as keyof typeof FIELD_VARIANTS]
+      : null;
+
+  // The fullbleed toggle lives on the section itself so layout CSS never has
+  // to know about the lab.
+  useEffect(() => {
+    const hero = host.current?.closest<HTMLElement>(".nm2-hero");
+    if (!hero) return;
+    if (lab?.fullbleed) hero.dataset.fullbleed = "true";
+    else delete hero.dataset.fullbleed;
+    return () => {
+      delete hero.dataset.fullbleed;
+    };
+  }, [lab?.fullbleed]);
 
   useEffect(() => {
     const element = host.current;
@@ -70,14 +101,24 @@ export function HeroBackground({ className = "" }: { className?: string }) {
     <div
       ref={host}
       className={`nm2-hero-art ${className}`}
+      data-art-variant={background}
       aria-hidden="true"
     >
       {/* This local poster is also the immediate SSR/no-JS/error surface. */}
       <div className="nm2-hero-art__poster" />
-      {started && !reducedMotion && (
+      {started && !reducedMotion && warpPreset && (
         <ArtBoundary>
-          <HeroWarp animate={canAnimate && inView} />
+          <HeroWarp
+            key={warpPreset.id}
+            animate={canAnimate && inView}
+            preset={warpPreset}
+          />
         </ArtBoundary>
+      )}
+      {started && !reducedMotion && fieldVariant && (
+        <div className="nm2-hero-art__field">
+          <FieldCanvas variant={fieldVariant} interactive />
+        </div>
       )}
       <div className="nm2-hero-art__grain" />
       <div className="nm2-hero-art__shade" />

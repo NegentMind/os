@@ -15,6 +15,8 @@ export const en = {
   footer: {
     statement: "Infrastructure around the model. Built in the open.",
     independence: "An independent lab. Not yet incorporated.",
+    sections: "Sections",
+    projects: "Projects",
     resources: "Resources",
     discussions: "Discussions",
     handbook: "Handbook",
@@ -23,9 +25,11 @@ export const en = {
     security: "Security policy",
     trademark: "Trademark policy",
     contactPending: "Email not yet available. Find us on GitHub.",
+    builtOpen: "built in the open",
   } satisfies FooterCopy,
   hero: {
-    title: "What a model doesn't come with.",
+    title: "What a model doesn't ship with:",
+    titleWords: ["MEMORY", "SIGHT", "VOICE", "HANDS"],
     description:
       "Open-source infrastructure for AI agents. Persistent memory today; perception, reasoning and verifiable action as our long-term direction.",
     primaryAction: "Explore projects",

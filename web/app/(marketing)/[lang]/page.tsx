@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
 import { ActionLink } from "@/components/nm/v2/action-link";
+import { ArtMount } from "@/components/nm/v2/art-mount";
 import { CapabilityStory } from "@/components/nm/v2/capability-story";
 import { EvidenceWorkbench } from "@/components/nm/v2/evidence-workbench";
 import { Faq } from "@/components/nm/v2/faq";
 import { FieldCanvas } from "@/components/nm/v2/field-canvas";
 import { Hero } from "@/components/nm/v2/hero";
+import { HERO_ART_ALT } from "@/components/nm/v2/hero-preset";
 import { HolonExplorer } from "@/components/nm/v2/holon-explorer";
 import { MemoryDemo } from "@/components/nm/v2/memory-demo";
 import { ProjectCard } from "@/components/nm/v2/project-card";
@@ -86,7 +88,7 @@ export default async function Home({ params }: MarketingPageProps) {
           </div>
         </ProjectCard>
         <div className="nm2-home-scope">
-          <div className="nm2-home-scope__ledger" data-scroll-reveal="">
+          <div className="nm2-home-scope__ledger nm2-tone-section" data-scroll-reveal="">
             <div className="nm2-ledger-name">
               <h3>{h.work.scopegrainName}</h3>
               <StatusBadge status="incubation" label={c.common.incubation} />
@@ -132,16 +134,14 @@ export default async function Home({ params }: MarketingPageProps) {
         </div>
       </Section>
       <Section id="contribute" className="nm2-invitation-section">
-        <div className="nm2-home-invitation">
+        <div className="nm2-home-invitation nm2-tone-dark">
+          <ArtMount preset={HERO_ART_ALT} className="nm2-home-invitation__art" />
           <div className="nm2-home-invitation__copy">
             <SectionHeading title={h.invitation.title} description={h.invitation.body} effect="focus" />
             <div className="nm2-actions">
               <ActionLink href={hrefFor(lang, "contribute")}>{h.invitation.action}</ActionLink>
               <ActionLink href={ORG_URL} external variant="text">{c.nav.github}</ActionLink>
             </div>
-          </div>
-          <div className="nm2-home-invitation__art" aria-hidden="true">
-            <FieldCanvas variant="wave" />
           </div>
         </div>
       </Section>

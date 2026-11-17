@@ -45,22 +45,13 @@ export function SiteFooter({
   copy: FooterCopy;
   motionCopy: MotionPreferenceCopy;
 }) {
+  const year = new Date().getFullYear();
   return (
-    <footer className="nm2-footer" aria-labelledby="footer-statement">
+    <footer className="nm2-footer nm2-tone-section" aria-labelledby="footer-statement">
       <FieldCanvas variant="network" className="nm2-footer__field" interactive />
       <div className="nm2-container nm2-footer__content">
         <div className="nm2-footer__grid">
-          <div>
-            <Link
-              href={hrefFor(lang, "home")}
-              aria-label={`Negent Mind — ${nav.home}`}
-              className="nm2-footer__brand"
-            >
-              <BrandMark
-                variant="monogram"
-                decorative
-              />
-            </Link>
+          <div className="nm2-footer__lead">
             <h2 id="footer-statement" className="nm2-footer__statement">{copy.statement}</h2>
             <p className="nm2-footer__independence">{copy.independence}</p>
             <p className="nm2-footer__contact">
@@ -72,7 +63,28 @@ export function SiteFooter({
             </p>
           </div>
           <div className="nm2-footer__cols">
-            <div>
+            <nav aria-label={copy.sections}>
+              <h2 className="nm2-footer__heading">{copy.sections}</h2>
+              <ul className="nm2-footer__list">
+                {NAV_ITEMS.map(({ page, key }) => (
+                  <li key={page}>
+                    <Link href={hrefFor(lang, page)}>{nav[key]}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <nav aria-label={copy.projects}>
+              <h2 className="nm2-footer__heading">{copy.projects}</h2>
+              <ul className="nm2-footer__list">
+                <li>
+                  <Link href={hrefFor(lang, "vantadb")}>VantaDB</Link>
+                </li>
+                <li>
+                  <Link href={hrefFor(lang, "projects")}>ScopeGrain</Link>
+                </li>
+              </ul>
+            </nav>
+            <nav aria-label={copy.resources}>
               <h2 className="nm2-footer__heading">{copy.resources}</h2>
               <ul className="nm2-footer__list">
                 <li>
@@ -90,15 +102,6 @@ export function SiteFooter({
                     </span>
                   )}
                 </li>
-              </ul>
-            </div>
-            <nav>
-              <ul className="nm2-footer__list">
-                {NAV_ITEMS.map(({ page, key }) => (
-                  <li key={page}>
-                    <Link href={hrefFor(lang, page)}>{nav[key]}</Link>
-                  </li>
-                ))}
                 <li>
                   <ExtLink href={CODE_OF_CONDUCT_URL}>{copy.conduct}</ExtLink>
                 </li>
@@ -112,7 +115,15 @@ export function SiteFooter({
             </nav>
           </div>
         </div>
-        <div className="nm2-footer__preferences">
+        <div className="nm2-footer__base">
+          <Link
+            href={hrefFor(lang, "home")}
+            aria-label={`Negent Mind — ${nav.home}`}
+            className="nm2-footer__brand"
+          >
+            <BrandMark variant="monogram" decorative />
+          </Link>
+          <p className="nm2-footer__legal">© {year} Negent Mind · {copy.builtOpen}</p>
           <MotionPreference copy={motionCopy} />
         </div>
       </div>

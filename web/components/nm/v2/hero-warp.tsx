@@ -11,20 +11,23 @@ import {
   WarpPatterns,
   type WarpUniforms,
 } from "@paper-design/shaders";
-import { HERO_ART } from "@/components/nm/v2/hero-preset";
+import { HERO_ART, type HeroArtPreset } from "@/components/nm/v2/hero-preset";
 
 export function HeroWarp({
   animate = false,
   capture = false,
+  preset = HERO_ART,
 }: {
   animate?: boolean;
   capture?: boolean;
+  /** Art preset; remount (key) to change — uniforms freeze at construction. */
+  preset?: HeroArtPreset;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const mount = useRef<ShaderMount | null>(null);
   const pointerPoint = useRef({
-    x: HERO_ART.params.offsetX,
-    y: HERO_ART.params.offsetY,
+    x: preset.params.offsetX,
+    y: preset.params.offsetY,
   });
   const latestAnimate = useRef(animate);
   const failed = useRef(false);
@@ -32,8 +35,8 @@ export function HeroWarp({
 
   useEffect(() => {
     latestAnimate.current = animate;
-    mount.current?.setSpeed(animate && !capture ? HERO_ART.params.speed : 0);
-  }, [animate, capture]);
+    mount.current?.setSpeed(animate && !capture ? preset.params.speed : 0);
+  }, [animate, capture, preset]);
 
   useEffect(() => {
     const currentHost = host.current;
@@ -80,7 +83,7 @@ export function HeroWarp({
 
     async function initialize() {
       try {
-        const p = { ...defaultPatternSizing, ...HERO_ART.params };
+        const p = { ...defaultPatternSizing, ...preset.params };
         const noise = getShaderNoiseTexture();
         if (!noise) throw new Error("Paper noise texture is unavailable.");
         await noise.decode();
@@ -94,7 +97,7 @@ export function HeroWarp({
           u_swirl: p.swirl,
           u_swirlIterations: p.swirlIterations,
           u_shapeScale: p.shapeScale,
-          u_shape: WarpPatterns[p.shape],
+          u_shape: WarpPatterns[p.shape ?? "stripes"],
           u_noiseTexture: noise,
           u_scale: p.scale,
           u_rotation: p.rotation,
@@ -134,7 +137,7 @@ export function HeroWarp({
 
     void initialize();
     return cleanup;
-  }, [capture]);
+  }, [capture, preset]);
 
   // Pointer steering: one reusable tween eases the shader offset by at most
   // ±0.03 around the frozen canonical values. Attached to .nm2-hero so no
@@ -160,8 +163,8 @@ export function HeroWarp({
         context = scoped;
         scoped.add(() => {
           const base = {
-            x: HERO_ART.params.offsetX,
-            y: HERO_ART.params.offsetY,
+            x: preset.params.offsetX,
+            y: preset.params.offsetY,
           };
           const point = pointerPoint.current;
           const apply = () => {
@@ -234,7 +237,7 @@ export function HeroWarp({
       disposed = true;
       stop();
     };
-  }, [status, animate, capture]);
+  }, [status, animate, capture, preset]);
 
   if (status === "failed") return null;
 

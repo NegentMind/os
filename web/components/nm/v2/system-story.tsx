@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { motion } from "motion/react";
 import { BlueprintScene } from "@/components/nm/v2/blueprint-scene";
+import { CoreOrb } from "@/components/nm/v2/core-orb";
 import { ScrollScene } from "@/components/nm/v2/scroll-scene";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
 import type { SiteCopy } from "@/lib/content/en";
@@ -10,9 +11,11 @@ import type { SiteCopy } from "@/lib/content/en";
 type SystemStoryProps = {
   copy: SiteCopy["home"]["statement"]["system"];
   caption: string;
+  /** "orb" is the v2 default; pass "blueprint" to restore the diagram scene. */
+  art?: "orb" | "blueprint";
 };
 
-export function SystemStory({ copy, caption }: SystemStoryProps) {
+export function SystemStory({ copy, caption, art = "orb" }: SystemStoryProps) {
   const [selected, setSelected] = useState(0);
   const { canAnimate } = useSiteMotion();
   const id = useId();
@@ -22,12 +25,20 @@ export function SystemStory({ copy, caption }: SystemStoryProps) {
     <div className="nm2-system-story" data-selected={selected}>
       <ScrollScene className="nm2-system-story__scene">
         <figure>
-          <div className="nm2-system-story__art" aria-hidden="true">
-            <BlueprintScene
-              variant="system"
-              labels={copy.items.map((item) => item.label)}
-              selected={selected}
-            />
+          <div
+            className="nm2-system-story__art"
+            data-art={art}
+            aria-hidden={art === "orb" ? "true" : undefined}
+          >
+            {art === "orb" ? (
+              <CoreOrb />
+            ) : (
+              <BlueprintScene
+                variant="system"
+                labels={copy.items.map((item) => item.label)}
+                selected={selected}
+              />
+            )}
           </div>
           <figcaption>{caption}</figcaption>
         </figure>
