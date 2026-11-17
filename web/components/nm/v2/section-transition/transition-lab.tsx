@@ -23,11 +23,14 @@ import {
   isHeroBackgroundVariant,
   type HeroBackgroundVariant,
 } from "@/components/nm/v2/hero-preset";
+import type { HeadingEffect } from "@/components/nm/v2/animated-heading";
 
 export type BandConfig = {
   variant: TransitionVariant;
   params: TransitionParams;
   height: number | null;
+  /** Lab-only: swap the band's from/to tones. */
+  flip?: boolean;
 };
 
 /** Hero overrides owned by the lab: frame and animated background. */
@@ -36,10 +39,30 @@ export type HeroLabConfig = {
   background: HeroBackgroundVariant;
 };
 
+/** Composition overrides owned by the lab: page scenes and heading effect. */
+export type CompositionLabConfig = {
+  /** Art plate of the #org system story. */
+  orgArt: "orb" | "blueprint";
+  /** Effect applied to every AnimatedHeading; null keeps each call site's. */
+  heading: HeadingEffect | null;
+};
+
 const DEFAULT_HERO: HeroLabConfig = {
   fullbleed: false,
   background: "warp-stripes",
 };
+
+const DEFAULT_COMPOSITION: CompositionLabConfig = {
+  orgArt: "orb",
+  heading: null,
+};
+
+const HEADING_EFFECTS: readonly { id: HeadingEffect; label: string }[] = [
+  { id: "assemble", label: "Assemble" },
+  { id: "focus", label: "Focus" },
+  { id: "trace", label: "Trace" },
+  { id: "decode", label: "Decode" },
+];
 
 type Band = { id: string; variant: TransitionVariant };
 type Overrides = Record<string, BandConfig>;
@@ -59,6 +82,8 @@ type LabContextValue = {
   reset: () => void;
   hero: HeroLabConfig;
   setHero: (patch: Partial<HeroLabConfig>) => void;
+  composition: CompositionLabConfig;
+  setComposition: (patch: Partial<CompositionLabConfig>) => void;
 };
 
 const STORAGE_KEY = "nm2-transition-lab";
@@ -88,11 +113,13 @@ function toBandConfig(value: unknown): BandConfig | null {
     return null;
   }
   const height = isFiniteNumber(record.height) ? record.height : null;
-  return {
+  const config: BandConfig = {
     variant: record.variant,
     params: { intensity, speed, cell, spectrum },
     height,
   };
+  if (record.flip === true) config.flip = true;
+  return config;
 }
 
 function toHeroConfig(value: unknown): HeroLabConfig {
@@ -106,11 +133,25 @@ function toHeroConfig(value: unknown): HeroLabConfig {
   };
 }
 
+function isHeadingEffect(value: unknown): value is HeadingEffect {
+  return HEADING_EFFECTS.some((effect) => effect.id === value);
+}
+
+function toCompositionConfig(value: unknown): CompositionLabConfig {
+  if (typeof value !== "object" || value === null) return DEFAULT_COMPOSITION;
+  const record = value as Record<string, unknown>;
+  return {
+    orgArt: record.orgArt === "blueprint" ? "blueprint" : "orb",
+    heading: isHeadingEffect(record.heading) ? record.heading : null,
+  };
+}
+
 type Stored = {
   overrides: Overrides;
   target: string;
   open: boolean;
   hero: HeroLabConfig;
+  composition: CompositionLabConfig;
 };
 
 function readStored(): Stored | null {
@@ -132,6 +173,7 @@ function readStored(): Stored | null {
       target: typeof record.target === "string" ? record.target : ALL,
       open: record.open === true,
       hero: toHeroConfig(record.hero),
+      composition: toCompositionConfig(record.composition),
     };
   } catch {
     return null;
@@ -154,6 +196,9 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
   const [bands, setBands] = useState<readonly Band[]>([]);
   const [overrides, setOverrides] = useState<Overrides>({});
   const [hero, setHeroState] = useState<HeroLabConfig>(DEFAULT_HERO);
+  const [composition, setCompositionState] = useState<CompositionLabConfig>(
+    DEFAULT_COMPOSITION,
+  );
 
   useEffect(() => {
     const flag = new URLSearchParams(window.location.search).get("transitions") === "1";
@@ -165,6 +210,7 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
       setTarget(stored.target);
       setOpen(stored.open);
       setHeroState(stored.hero);
+      setCompositionState(stored.composition);
     }
     setEnabled(true);
     setHydrated(true);
@@ -172,8 +218,8 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return;
-    writeStored({ overrides, target, open, hero });
-  }, [hydrated, overrides, target, open, hero]);
+    writeStored({ overrides, target, open, hero, composition });
+  }, [hydrated, overrides, target, open, hero, composition]);
 
   const register = useCallback((id: string, variant: TransitionVariant) => {
     setBands((prev) => prev.some((b) => b.id === id)
@@ -226,11 +272,16 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
     setHeroState((prev) => ({ ...prev, ...patch }));
   }, []);
 
+  const setComposition = useCallback((patch: Partial<CompositionLabConfig>) => {
+    setCompositionState((prev) => ({ ...prev, ...patch }));
+  }, []);
+
   const value = useMemo<LabContextValue>(() => ({
     enabled, open, setOpen, target, setTarget, bands, overrides,
     resolve, register, update, setVariant, reset, hero, setHero,
+    composition, setComposition,
   }), [enabled, open, target, bands, overrides, resolve, register, update,
-    setVariant, reset, hero, setHero]);
+    setVariant, reset, hero, setHero, composition, setComposition]);
 
   const currentConfig = useMemo(() => currentFor(target), [currentFor, target]);
 
@@ -258,6 +309,16 @@ export function useTransitionOverride(
 export function useHeroLabConfig(): HeroLabConfig | null {
   const ctx = useContext(LabContext);
   return ctx?.enabled ? ctx.hero : null;
+}
+
+/**
+ * Lab-controlled composition overrides (scene art, heading effects). Null
+ * outside the provider or when the lab is disabled, so every consumer keeps
+ * its own defaults.
+ */
+export function useCompositionLabConfig(): CompositionLabConfig | null {
+  const ctx = useContext(LabContext);
+  return ctx?.enabled ? ctx.composition : null;
 }
 
 function Slider({
@@ -303,7 +364,11 @@ export function TransitionLab() {
   const regionId = useId();
   const [copied, setCopied] = useState<"idle" | "ok" | "error">("idle");
   const heroFullbleedId = useId();
+  const flipId = useId();
   const open = ctx?.open ?? false;
+  const bands = ctx?.bands ?? [];
+  const target = ctx?.target ?? ALL;
+  const [measuredHeight, setMeasuredHeight] = useState<number | null>(null);
 
   useEffect(() => {
     if (!open && restoreFocus.current) {
@@ -312,8 +377,20 @@ export function TransitionLab() {
     }
   }, [open]);
 
+  // The slider starts at the band's effective height, not a guessed constant.
+  useEffect(() => {
+    const id = !target || target === ALL ? bands?.[0]?.id : target;
+    const element = id
+      ? document.getElementById(`transition-${id}`)
+      : null;
+    setMeasuredHeight(
+      element ? Math.round(element.getBoundingClientRect().height) : null,
+    );
+  }, [target, bands]);
+
   if (!ctx || !ctx.enabled || !current) return null;
-  const { setOpen, target, setTarget, bands, update, setVariant, reset, hero, setHero } = ctx;
+  const { setOpen, setTarget, update, setVariant, reset, hero, setHero,
+    composition, setComposition } = ctx;
   const { variant, params, height } = current;
   const showCell = variant === "dither" || variant === "blocks";
   const showSpectrum = variant === "chromatic" || variant === "iridescent";
@@ -321,12 +398,16 @@ export function TransitionLab() {
     update({ params: { ...params, [key]: value } });
   const readout = `${target} · ${variant} · i ${params.intensity} · v ${params.speed}`
     + `${showCell ? ` · c ${params.cell}` : ""}${showSpectrum ? ` · s ${params.spectrum}` : ""}`
-    + ` · h ${height ?? "auto"}`;
+    + ` · h ${height ?? "auto"}${current.flip ? " · invertida" : ""}`;
 
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(
-        JSON.stringify({ target, variant, params, height }, null, 2),
+        JSON.stringify(
+          { target, variant, params, height, ...(current.flip ? { flip: true } : {}) },
+          null,
+          2,
+        ),
       );
       setCopied("ok");
     } catch {
@@ -342,6 +423,7 @@ export function TransitionLab() {
   };
 
   if (!open) {
+    // aria-controls is omitted: the controlled region only exists while open.
     return (
       <div className="nm2-transition-lab" data-open="false">
         <button
@@ -349,7 +431,6 @@ export function TransitionLab() {
           type="button"
           className="nm2-transition-lab__pill"
           aria-expanded="false"
-          aria-controls={regionId}
           onClick={() => setOpen(true)}
         >
           Transiciones
@@ -423,8 +504,18 @@ export function TransitionLab() {
           <Slider label="Espectro" value={params.spectrum} min={0} max={1} step={0.05}
             onChange={(v) => setParam("spectrum", v)} />
         ) : null}
-        <Slider label="Altura de banda (px)" value={height ?? 240} min={120} max={360} step={4}
+        <Slider label="Altura de banda (px)"
+          value={height ?? measuredHeight ?? 288} min={120} max={360} step={4}
           onChange={(v) => update({ height: v })} />
+        <div className="nm2-transition-lab__row">
+          <label htmlFor={flipId}>Invertir origen → destino</label>
+          <input
+            id={flipId}
+            type="checkbox"
+            checked={current.flip === true}
+            onChange={(event) => update({ flip: event.target.checked })}
+          />
+        </div>
 
         <p className="nm2-transition-lab__group">Hero</p>
         <div className="nm2-transition-lab__row">
@@ -446,6 +537,42 @@ export function TransitionLab() {
               onClick={() => setHero({ background: bg.id })}
             >
               {bg.label}
+            </button>
+          ))}
+        </div>
+
+        <p className="nm2-transition-lab__group">Composición</p>
+        <div className="nm2-transition-lab__variants" role="group" aria-label="Arte de la sección org">
+          {(["orb", "blueprint"] as const).map((art) => (
+            <button
+              key={art}
+              type="button"
+              className="nm2-transition-lab__button"
+              aria-pressed={composition.orgArt === art}
+              onClick={() => setComposition({ orgArt: art })}
+            >
+              {art === "orb" ? "Orbe" : "Blueprint"}
+            </button>
+          ))}
+        </div>
+        <div className="nm2-transition-lab__variants" role="group" aria-label="Efecto de los titulares">
+          <button
+            type="button"
+            className="nm2-transition-lab__button"
+            aria-pressed={composition.heading === null}
+            onClick={() => setComposition({ heading: null })}
+          >
+            Auto
+          </button>
+          {HEADING_EFFECTS.map((effect) => (
+            <button
+              key={effect.id}
+              type="button"
+              className="nm2-transition-lab__button"
+              aria-pressed={composition.heading === effect.id}
+              onClick={() => setComposition({ heading: effect.id })}
+            >
+              {effect.label}
             </button>
           ))}
         </div>

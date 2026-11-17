@@ -6,6 +6,7 @@ import { BlueprintScene } from "@/components/nm/v2/blueprint-scene";
 import { CoreOrb } from "@/components/nm/v2/core-orb";
 import { ScrollScene } from "@/components/nm/v2/scroll-scene";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
+import { useCompositionLabConfig } from "@/components/nm/v2/section-transition/transition-lab";
 import type { SiteCopy } from "@/lib/content/en";
 
 type SystemStoryProps = {
@@ -20,18 +21,22 @@ export function SystemStory({ copy, caption, art = "orb" }: SystemStoryProps) {
   const { canAnimate } = useSiteMotion();
   const id = useId();
   const current = copy.items[selected];
+  // The TransitionLab composition toggle overrides the canonical orb.
+  const labArt = useCompositionLabConfig()?.orgArt;
+  const effectiveArt = labArt ?? art;
 
   return (
     <div className="nm2-system-story" data-selected={selected}>
       <ScrollScene className="nm2-system-story__scene">
         <figure>
+          {/* The orb is a real toggle (focusable), so the wrapper stays in
+              the a11y tree; BlueprintScene hides its own decorative SVG. */}
           <div
             className="nm2-system-story__art"
-            data-art={art}
-            aria-hidden={art === "orb" ? "true" : undefined}
+            data-art={effectiveArt}
           >
-            {art === "orb" ? (
-              <CoreOrb />
+            {effectiveArt === "orb" ? (
+              <CoreOrb actionLabel={copy.orbAction} />
             ) : (
               <BlueprintScene
                 variant="system"

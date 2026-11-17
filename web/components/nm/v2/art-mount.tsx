@@ -90,6 +90,7 @@ export function ArtMount({
           <HeroWarp animate={canAnimate && inView} preset={preset} />
         </ArtBoundary>
       )}
+      <div className="nm2-art-mount__grain" />
     </div>
   );
 }

@@ -95,7 +95,9 @@
 
 .nm2-site {
   min-height: 100dvh;
-  padding-block-end: calc(3rem + env(safe-area-inset-bottom, 0px));
+  /* Only the iOS home-indicator clearance stays: the footer's own
+     frame-gap margin already defines the bottom rhythm. */
+  padding-block-end: env(safe-area-inset-bottom, 0px);
   background: var(--nm2-bg);
   color: var(--nm2-text);
   font-family: var(--font-body);

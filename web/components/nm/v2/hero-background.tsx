@@ -45,6 +45,7 @@ const FIELD_VARIANTS = {
   "wave-field": "wave",
   "orbit-field": "orbit",
   "network-field": "network",
+  "memory-field": "memory",
 } as const satisfies Record<string, FieldVariant>;
 
 export function HeroBackground({ className = "" }: { className?: string }) {
@@ -63,17 +64,19 @@ export function HeroBackground({ className = "" }: { className?: string }) {
       ? FIELD_VARIANTS[background as keyof typeof FIELD_VARIANTS]
       : null;
 
-  // The fullbleed toggle lives on the section itself so layout CSS never has
-  // to know about the lab.
+  // The fullbleed toggle and the active art variant live on the section
+  // itself so layout/legibility CSS never has to know about the lab.
   useEffect(() => {
     const hero = host.current?.closest<HTMLElement>(".nm2-hero");
     if (!hero) return;
+    hero.dataset.artVariant = background;
     if (lab?.fullbleed) hero.dataset.fullbleed = "true";
     else delete hero.dataset.fullbleed;
     return () => {
       delete hero.dataset.fullbleed;
+      delete hero.dataset.artVariant;
     };
-  }, [lab?.fullbleed]);
+  }, [lab?.fullbleed, background]);
 
   useEffect(() => {
     const element = host.current;
@@ -117,7 +120,11 @@ export function HeroBackground({ className = "" }: { className?: string }) {
       )}
       {started && !reducedMotion && fieldVariant && (
         <div className="nm2-hero-art__field">
-          <FieldCanvas variant={fieldVariant} interactive />
+          <FieldCanvas
+            variant={fieldVariant}
+            interactive
+            pointerHost=".nm2-hero"
+          />
         </div>
       )}
       <div className="nm2-hero-art__grain" />

@@ -165,12 +165,19 @@
 .nm2-blueprint--system .nm2-blueprint__node-card--3 { left: 82%; top: 84%; }
 .nm2-blueprint--system .nm2-blueprint__node-card--4 { left: 18%; top: 84%; }
 
-:is(.nm2-blueprint--memory, .nm2-blueprint--evidence, .nm2-blueprint--capabilities)
-  .nm2-blueprint__node-card--0 { left: 17%; top: 50%; }
-:is(.nm2-blueprint--memory, .nm2-blueprint--evidence, .nm2-blueprint--capabilities)
+/* Memory/evidence read as a descending cascade (see STAIR_CONNECTORS in
+   blueprint-scene.tsx): card centers at 20% / 50% / 80% so the plate uses
+   its full height instead of a thin middle strip. */
+:is(.nm2-blueprint--memory, .nm2-blueprint--evidence)
+  .nm2-blueprint__node-card--0 { left: 17%; top: 20%; }
+:is(.nm2-blueprint--memory, .nm2-blueprint--evidence)
   .nm2-blueprint__node-card--1 { left: 50%; top: 50%; }
-:is(.nm2-blueprint--memory, .nm2-blueprint--evidence, .nm2-blueprint--capabilities)
-  .nm2-blueprint__node-card--2 { left: 83%; top: 50%; }
+:is(.nm2-blueprint--memory, .nm2-blueprint--evidence)
+  .nm2-blueprint__node-card--2 { left: 83%; top: 80%; }
+
+.nm2-blueprint--capabilities .nm2-blueprint__node-card--0 { left: 17%; top: 50%; }
+.nm2-blueprint--capabilities .nm2-blueprint__node-card--1 { left: 50%; top: 50%; }
+.nm2-blueprint--capabilities .nm2-blueprint__node-card--2 { left: 83%; top: 50%; }
 
 .nm2-blueprint__node-icon {
   flex: none;

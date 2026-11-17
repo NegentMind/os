@@ -30,7 +30,9 @@ export function RotatingWord({ words }: { words: readonly string[] }) {
 
   return (
     <span className="nm2-rotating-word" aria-hidden="true" aria-live="off">
-      <AnimatePresence mode="wait" initial={false}>
+      {/* Sync mode: entering and exiting words overlap (items are absolutely
+          stacked in CSS), so the headline never shows an empty slot. */}
+      <AnimatePresence initial={false}>
         <motion.span
           key={word}
           className="nm2-rotating-word__item"

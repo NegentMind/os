@@ -206,18 +206,20 @@ function renderTear(input: RenderInput, bulge: Float32Array, lift: number) {
     for (let x = 0; x < width; x += 1) {
       const cx = Math.floor(x / shard);
       const nx = x / Math.max(1, width - 1);
-      const jagged1 = Math.sin(nx * 14 + time * 0.3) * 0.14;
+      // Softened default: the tear keeps a torn silhouette but no longer
+      // reads as harsh noise next to the quieter dither/blocks bands.
+      const jagged1 = Math.sin(nx * 14 + time * 0.3) * 0.055;
       const mod = (nx * 17) % 1;
-      const jagged2 = Math.abs(mod - 0.5) * 0.32;
-      const micro = hash(cx, cy, 0) * 0.12;
+      const jagged2 = Math.abs(mod - 0.5) * 0.12;
+      const micro = hash(cx, cy, 0) * 0.045;
       const tearLine = 0.42 + (jagged1 + jagged2 + micro) * intensity
         + (lift - bulge[x]) * edge;
       const dist = ny - tearLine;
       let k: number;
-      if (dist < -0.06) k = 0;
-      else if (dist > 0.08) k = 1;
+      if (dist < -0.07) k = 0;
+      else if (dist > 0.09) k = 1;
       else {
-        const edgeNorm = (dist + 0.06) / 0.14;
+        const edgeNorm = (dist + 0.07) / 0.16;
         k = Math.max(0, Math.min(LEVELS - 1, Math.floor(edgeNorm * LEVELS)))
           / (LEVELS - 1);
       }

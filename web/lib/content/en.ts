@@ -88,6 +88,7 @@ export const en = {
       aside: "For independent developers and engineers building agents. Start with the software that exists; read the rest as a direction, not a feature list.",
       system: {
         controls: "Explore the conceptual system",
+        orbAction: "Pin or release the accent color",
         boundary: "A model at the center, capabilities around it. This is a conceptual system, not a list of modules Negent Mind currently ships.",
         items: [
           { label: "Model", body: "The model is the center of this diagram, not the whole application. The surrounding system determines which context and tools it can use." },

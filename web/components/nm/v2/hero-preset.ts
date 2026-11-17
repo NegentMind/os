@@ -94,6 +94,7 @@ export const HERO_BACKGROUNDS = [
   { id: "wave-field", label: "Campo · wave" },
   { id: "orbit-field", label: "Campo · orbit" },
   { id: "network-field", label: "Campo · network" },
+  { id: "memory-field", label: "Campo · memory" },
   { id: "poster", label: "Póster fijo" },
 ] as const;
 

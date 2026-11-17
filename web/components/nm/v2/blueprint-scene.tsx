@@ -56,6 +56,11 @@ const SYSTEM_SPOKES = [
 ];
 const FLOW_CONNECTORS = ["M192 210H230", "M403.2 210H441"];
 
+/* Three-node semantic plates read as a descending cascade so the drawing
+   occupies the full plate instead of a thin middle strip. Node cards sit at
+   20% / 50% / 80% (see orbital-scenes.css); elbows meet the card edges. */
+const STAIR_CONNECTORS = ["M192 84L237 210", "M403 210L448 336"];
+
 /* Scope/evidence studies: one exploded sheet, three clean parallelograms. */
 const SHEET = "M170 160L400 110L470 260L240 310Z";
 
@@ -140,7 +145,12 @@ export function BlueprintScene({
         fill="none"
       >
         {semantic ? (
-          (variant === "system" ? SYSTEM_SPOKES : FLOW_CONNECTORS).map(
+          (variant === "system"
+            ? SYSTEM_SPOKES
+            : variant === "memory" || variant === "evidence"
+              ? STAIR_CONNECTORS
+              : FLOW_CONNECTORS
+          ).map(
             (d, index) => (
               <g key={d}>
                 <path className="nm2-blueprint__connector" d={d} />

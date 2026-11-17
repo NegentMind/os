@@ -109,10 +109,19 @@ function createField(variant: FieldVariant, compact: boolean, poster = false): F
       if (variant === "orbit") {
         filaments.push([...indices, indices[0]]);
       } else if (
+        variant === "network" ||
         (variant === "wave" && row % 3 === 0) ||
         (variant === "memory" && (row % 4 === 0 || row === rows - 1))
       ) {
         filaments.push(indices);
+      }
+    }
+    // Ambient lattice: the network reads as a net even without a pointer.
+    if (variant === "network") {
+      for (let col = 0; col < columns; col += 1) {
+        filaments.push(
+          Array.from({ length: rows }, (_, row) => base + row * columns + col),
+        );
       }
     }
     if (variant === "memory") {
@@ -233,10 +242,17 @@ export function FieldCanvas({
   variant,
   className = "",
   interactive = false,
+  pointerHost,
 }: {
   variant: FieldVariant;
   className?: string;
   interactive?: boolean;
+  /**
+   * Selector for the element that owns pointer listeners. Needed when the
+   * field is a non-ancestor sibling of the section's hit targets (e.g. the
+   * hero art layer): events never bubble through the field's own parent.
+   */
+  pointerHost?: string;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -262,7 +278,10 @@ export function FieldCanvas({
     const pointer: Pointer = { ...STILL_POINTER };
     // Observe pointer activity without turning this decorative layer into a
     // hit target or stealing interactions from the composing section.
-    const pointerHost = element.parentElement ?? element;
+    const pointerHostEl =
+      (pointerHost ? element.closest<HTMLElement>(pointerHost) : null)
+      ?? element.parentElement
+      ?? element;
     let listening = false;
 
     const onPointerMove = (event: PointerEvent) => {
@@ -279,13 +298,13 @@ export function FieldCanvas({
       if (allowed === listening) return;
       listening = allowed;
       if (allowed) {
-        pointerHost.addEventListener("pointermove", onPointerMove, { passive: true });
-        pointerHost.addEventListener("pointerleave", resetPointer, { passive: true });
-        pointerHost.addEventListener("pointercancel", resetPointer, { passive: true });
+        pointerHostEl.addEventListener("pointermove", onPointerMove, { passive: true });
+        pointerHostEl.addEventListener("pointerleave", resetPointer, { passive: true });
+        pointerHostEl.addEventListener("pointercancel", resetPointer, { passive: true });
       } else {
-        pointerHost.removeEventListener("pointermove", onPointerMove);
-        pointerHost.removeEventListener("pointerleave", resetPointer);
-        pointerHost.removeEventListener("pointercancel", resetPointer);
+        pointerHostEl.removeEventListener("pointermove", onPointerMove);
+        pointerHostEl.removeEventListener("pointerleave", resetPointer);
+        pointerHostEl.removeEventListener("pointercancel", resetPointer);
         resetPointer();
       }
     };
@@ -328,7 +347,10 @@ export function FieldCanvas({
         context.fillStyle = color;
         context.strokeStyle = color;
         context.lineWidth = 0.65;
-        context.globalAlpha = variant === "memory" ? 0.085 : 0.06;
+        context.globalAlpha =
+          variant === "memory" ? 0.085
+          : variant === "network" ? 0.045
+          : 0.06;
         for (const indices of field.filaments) {
           context.beginPath();
           indices.forEach((index, position) => {
@@ -430,7 +452,7 @@ export function FieldCanvas({
       fail(error);
     }
     return dispose;
-  }, [active, interactive, variant]);
+  }, [active, interactive, pointerHost, variant]);
 
   return (
     <div

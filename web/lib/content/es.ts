@@ -88,6 +88,7 @@ export const es: SiteCopy = {
       aside: "Para desarrolladores independientes e ingenieros de agentes. Empieza por el software que existe; lee el resto como una dirección, no como una lista de funciones.",
       system: {
         controls: "Explorar el sistema conceptual",
+        orbAction: "Fijar o liberar el color de acento",
         boundary: "Un modelo en el centro, capacidades a su alrededor. Es un sistema conceptual, no una lista de módulos que Negent Mind ofrece hoy.",
         items: [
           { label: "Modelo", body: "El modelo es el centro de este diagrama, no toda la aplicación. El sistema que lo rodea determina qué contexto y herramientas puede usar." },

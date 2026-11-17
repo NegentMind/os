@@ -88,9 +88,11 @@ marco fluido de ancho `calc(100% - 2 * var(--nm2-frame-gap))`, con gap `12px`
 (8px por debajo de 768px) y sin máximo de 1760px. El hero
 reserva 104px para la navegación superpuesta y puede crecer en móvil o zoom.
 `app/orbital-shell.css` define la barra flotante a ancho de marco y el layout
-asimétrico de `PageHero`, con altura mínima `clamp(480px, 70svh, 720px)`.
+asimétrico de `PageHero`, con altura mínima `clamp(560px, 86svh, 960px)`
+(`clamp(520px, 80svh, 760px)` por debajo de 768px).
 
 Secciones con padding vertical `clamp(3.5rem, 8vw, 7rem)`. Contenedor común,
+ensanchado a `88rem` solo en home (`orbital-home.css`),
 texto con medida de lectura y composiciones variadas: proyecto destacado,
 ledger, diagramas y pasajes editoriales, no una cuadrícula de cards idénticas.
 Fill, diferencias tonales y espacio dan profundidad; bordes secundarios,
@@ -101,7 +103,11 @@ sin neón ni sombras/glows como identidad funcional.
 `components/nm/v2/` contiene BrandMark, ActionLink, Surface, Section,
 SectionHeading/AnimatedHeading, PageHero, StatusBadge, ProjectCard, Faq,
 SiteHeader/SiteFooter, hero, FieldCanvas, BlueprintScene, ScrollScene,
-MotionPreference, ViewportFade y PointerFeedback.
+MotionPreference, ViewportFade y PointerFeedback. Las escenas SVG con
+etiquetas HTML posicionadas por porcentaje (`BlueprintScene`, conexiones de
+`HolonExplorer`) usan `preserveAspectRatio="none"` a propósito —un `meet`
+con letterboxing desalinearía las tarjetas—; `MemoryStack`, sin capa HTML,
+conserva `xMidYMid meet`.
 Se compone sobre la base shadcn new-york en `components/ui/`:
 
 - `ActionLink` compone el **Button** existente y conserva las variantes
@@ -161,9 +167,9 @@ El núcleo puro está en `variants.ts` (`renderVariant`). Cinco variantes, con s
 | `chromatic` | 1 · 1 · 3 · 0,55 | Dispersión por canal; el espectro del hero tiñe el borde |
 | `iridescent` | 1 · 1 · 3 · 1 | Grano iridiscente con la paleta del hero |
 
-El scroll desplaza la frontera (±0,12·`intensity`) y el puntero fino la abomba con una gaussiana; el grano es un hash determinista, no `Math.random`. Home usa `org-in` (iridescent), `org-out` (dither), `proof-in` (tear) y `proof-out` (blocks).
+El scroll desplaza la frontera (±0,12·`intensity`) y el puntero fino la abomba con una gaussiana; el grano es un hash determinista, no `Math.random`. Home usa `org-in` (chromatic), `org-out` (dither), `proof-in` (tear) y `proof-out` (blocks).
 
-`TransitionLab` es una herramienta de desarrollo: solo aparece con `NODE_ENV=development` o `?transitions=1`, permite cambiar variante, parámetros y altura en vivo, y guarda la configuración en `localStorage` (`nm2-transition-lab`). No forma parte del diseño publicado.
+`TransitionLab` es una herramienta de desarrollo: solo aparece con `NODE_ENV=development` o `?transitions=1`, permite cambiar variante, parámetros y altura en vivo, invertir `from`/`to` por banda, elegir el fondo del hero (warp, campos `wave`/`orbit`/`network`/`memory` o póster), alternar el arte de `#org` (orbe ↔ blueprint) y forzar un efecto de titulares; guarda la configuración en `localStorage` (`nm2-transition-lab`). No forma parte del diseño publicado.
 
 ## Accesibilidad y revisión pendiente
 

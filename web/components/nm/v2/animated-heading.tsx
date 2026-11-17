@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { stagger, useAnimate, useInView } from "motion/react";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
+import { useCompositionLabConfig } from "@/components/nm/v2/section-transition/transition-lab";
 
 export type HeadingEffect = "assemble" | "focus" | "trace" | "decode";
 
@@ -40,10 +41,21 @@ export function AnimatedHeading({
   const prepared = useRef(false);
   const played = useRef(false);
   const { canAnimate } = useSiteMotion();
+  // The TransitionLab composition toggle overrides the call-site effect.
+  const labEffect = useCompositionLabConfig()?.heading;
+  const effective = labEffect ?? effect;
+  const lastEffect = useRef(effective);
 
   useEffect(() => {
     const element = scope.current;
     if (!element) return;
+    // A live lab change re-arms preparation for the next pass; already
+    // visible headings keep their readable state instead of replaying.
+    if (lastEffect.current !== effective) {
+      lastEffect.current = effective;
+      prepared.current = false;
+      played.current = false;
+    }
     const words = Array.from(element.querySelectorAll<HTMLElement>(WORD));
     const line = element.querySelector<HTMLElement>(".nm2-animated-heading__line");
     let raf = 0;
@@ -71,11 +83,11 @@ export function AnimatedHeading({
         played.current = true;
         return;
       }
-      if (effect === "trace" && line) {
+      if (effective === "trace" && line) {
         animate(line, { clipPath: "inset(0 100% 0 0)" }, { duration: 0 });
-      } else if (effect === "focus") {
+      } else if (effective === "focus") {
         animate(words, { opacity: 0.2, filter: "blur(10px)" }, { duration: 0 });
-      } else if (effect === "decode") {
+      } else if (effective === "decode") {
         for (const word of words) {
           word.style.minWidth = `${word.getBoundingClientRect().width}px`;
           setWordText(word, randomGlyphs(word.dataset.text ?? "", 0));
@@ -89,19 +101,19 @@ export function AnimatedHeading({
     played.current = true;
 
     const delay = stagger(Math.min(0.055, 0.35 / Math.max(1, words.length - 1)));
-    if (effect === "trace" && line) {
+    if (effective === "trace" && line) {
       controls = animate(
         line,
         { clipPath: "inset(0 0% 0 0)" },
         { duration: 1.1, ease: EASE },
       );
-    } else if (effect === "focus") {
+    } else if (effective === "focus") {
       controls = animate(
         words,
         { opacity: 1, filter: "blur(0px)" },
         { duration: 1, delay, ease: EASE },
       );
-    } else if (effect === "decode") {
+    } else if (effective === "decode") {
       const originals = words.map((word) => word.dataset.text ?? "");
       const total = originals.reduce((sum, word) => sum + word.length, 0);
       const start = performance.now();
@@ -139,7 +151,7 @@ export function AnimatedHeading({
       cancelAnimationFrame(raf);
       controls?.stop();
     };
-  }, [animate, canAnimate, effect, inView, scope]);
+  }, [animate, canAnimate, effective, inView, scope]);
 
   // The visual split is hidden from assistive tech; sr-only carries the title.
   return (
@@ -148,7 +160,7 @@ export function AnimatedHeading({
       <span
         ref={scope}
         aria-hidden="true"
-        className={`nm2-animated-heading nm2-animated-heading--${effect}`}
+        className={`nm2-animated-heading nm2-animated-heading--${effective}`}
       >
         <span className="nm2-animated-heading__line">
           {text.split(/(\s+)/).map((word, index) =>

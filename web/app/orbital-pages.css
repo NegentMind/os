@@ -482,7 +482,7 @@
 
 .nm2-holon-names li {
   padding: 0.75rem 1.25rem;
-  border: 1px dashed var(--nm2-line);
+  border: 1px solid var(--nm2-line);
   border-radius: var(--nm2-radius-sm);
   font-family: var(--font-heading);
   font-size: clamp(1.125rem, 2vw, 1.5rem);

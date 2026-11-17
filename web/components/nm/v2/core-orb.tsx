@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useSceneActivity } from "@/components/nm/v2/field-canvas";
 import { HERO_ART } from "@/components/nm/v2/hero-preset";
 
@@ -106,11 +106,39 @@ function OrbPoster() {
   );
 }
 
-export function CoreOrb({ className = "" }: { className?: string }) {
+export function CoreOrb({
+  className = "",
+  actionLabel,
+}: {
+  className?: string;
+  /** Accessible name for the pin toggle; required because the orb is a button. */
+  actionLabel: string;
+}) {
   const root = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const time = useRef(0);
   const active = useSceneActivity(root);
+  // Mirror of the pinned spectrum index: ref feeds the draw loop, state feeds
+  // aria-pressed. A null value means the point cycles the spectrum.
+  const pinnedRef = useRef<number | null>(null);
+  const drawRef = useRef<(() => void) | null>(null);
+  const [pinned, setPinned] = useState<number | null>(null);
+
+  const togglePin = useCallback(() => {
+    const next = pinnedRef.current === null
+      ? Math.floor(time.current / COLOR_DWELL) % SPECTRUM.length
+      : null;
+    pinnedRef.current = next;
+    setPinned(next);
+    // Keyboard toggles must repaint even while the loop is paused.
+    drawRef.current?.();
+  }, []);
+
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    togglePin();
+  };
 
   useEffect(() => {
     const element = root.current;
@@ -127,7 +155,6 @@ export function CoreOrb({ className = "" }: { className?: string }) {
     let boost = 1;
     let boostTarget = 1;
     const pointer = { x: 0, y: 0, present: false };
-    let pinned: number | null = null;
     let resizeObserver: ResizeObserver | null = null;
     const context = surface.getContext("2d", { alpha: true });
     if (!context) return;
@@ -190,7 +217,7 @@ export function CoreOrb({ className = "" }: { className?: string }) {
       // The single colored point — spectrum cycle or pinned hue.
       const dotColor = colorAt(
         time.current,
-        pinned !== null ? pinned % SPECTRUM.length : null,
+        pinnedRef.current !== null ? pinnedRef.current % SPECTRUM.length : null,
       );
       context.globalAlpha = 0.5;
       context.fillStyle = dotColor;
@@ -205,6 +232,7 @@ export function CoreOrb({ className = "" }: { className?: string }) {
       surface.hidden = false;
       element.dataset.rendered = "true";
     };
+    drawRef.current = draw;
 
     const tick = (now: number) => {
       raf = 0;
@@ -245,16 +273,9 @@ export function CoreOrb({ className = "" }: { className?: string }) {
       pointer.present = false;
       boostTarget = 1;
     };
-    const onClick = (event: MouseEvent) => {
-      const rect = element.getBoundingClientRect();
-      const cx = rect.width / 2;
-      const cy = rect.height / 2;
-      const d = Math.hypot(event.clientX - rect.left - cx, event.clientY - rect.top - cy);
-      if (d > 22) return;
-      pinned = pinned === null
-        ? Math.floor(time.current / COLOR_DWELL) % SPECTRUM.length
-        : null;
-      draw();
+    const onClick = () => {
+      // role="button" semantics: the whole orb toggles, not only the dot.
+      togglePin();
     };
 
     resize();
@@ -278,15 +299,26 @@ export function CoreOrb({ className = "" }: { className?: string }) {
       element.removeEventListener("pointerleave", resetPointer);
       element.removeEventListener("pointercancel", resetPointer);
       element.removeEventListener("click", onClick);
+      drawRef.current = null;
       delete element.dataset.rendered;
       surface.hidden = true;
       surface.width = 0;
       surface.height = 0;
     };
-  }, [active]);
+  }, [active, togglePin]);
 
   return (
-    <div ref={root} className={`nm2-core-orb ${className}`} aria-hidden="true">
+    // The orb is an honest toggle (pin/release the accent color), so it is a
+    // real keyboard-reachable button — never a click handler on hidden div.
+    <div
+      ref={root}
+      className={`nm2-core-orb ${className}`}
+      role="button"
+      tabIndex={0}
+      aria-pressed={pinned !== null}
+      aria-label={actionLabel}
+      onKeyDown={onKeyDown}
+    >
       <OrbPoster />
       <canvas ref={canvas} className="nm2-core-orb__canvas" hidden />
     </div>

@@ -51,7 +51,7 @@ function LangSwitch({ lang, copy }: { lang: Locale; copy: NavCopy }) {
             href={hrefForLocale(l)}
             hrefLang={l}
             data-current={l === lang || undefined}
-            aria-current={l === lang ? "true" : undefined}
+            aria-current={l === lang ? "page" : undefined}
           >
             {l.toUpperCase()}
           </Link>

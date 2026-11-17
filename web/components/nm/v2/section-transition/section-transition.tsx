@@ -40,6 +40,7 @@ type Effective = {
   variant: TransitionVariant;
   params: TransitionParams;
   height: number | null;
+  flip?: boolean;
 };
 
 // Converts the `to` color contribution into transparency so the band's own
@@ -103,6 +104,14 @@ export function SectionTransition({
   };
   const config = useRef(effective);
   config.current = effective;
+  // Lab-only inversion: swap the declared tones so the band reads
+  // destination → origin without touching the section props.
+  const fromTone: Tone = effective.flip
+    ? (from === "dark" ? "light" : "dark")
+    : from;
+  const toTone: Tone = effective.flip
+    ? (to === "dark" ? "light" : "dark")
+    : to;
 
   useEffect(() => {
     const element = container.current;
@@ -193,21 +202,21 @@ export function SectionTransition({
         width: image.width,
         height: image.height,
         time,
-        from: swatch[from],
-        to: swatch[to],
+        from: swatch[fromTone],
+        to: swatch[toTone],
         params: current.params,
         progress,
         pointerX: pointer,
       });
-      dissolveTo(image.data, swatch[from], swatch[to]);
+      dissolveTo(image.data, swatch[fromTone], swatch[toTone]);
       bufferContext.putImageData(image, 0, 0);
       const smooth = VARIANTS.find((v) => v.id === current.variant)?.smooth ?? false;
       context.imageSmoothingEnabled = smooth;
       context.drawImage(buffer, 0, 0, surface.width, surface.height);
-      if (element.dataset.ready !== "true") {
-        const [r, g, b] = swatch[to];
-        element.style.background = `rgb(${r} ${g} ${b})`;
-      }
+      // Cheap every paint; keeps the band's base color correct when the lab
+      // flips from/to on a live band.
+      const [r, g, b] = swatch[toTone];
+      element.style.background = `rgb(${r} ${g} ${b})`;
       element.dataset.ready = "true";
     };
     paintRef.current = paint;
@@ -290,15 +299,15 @@ export function SectionTransition({
       window.removeEventListener("pointermove", onPointerMove);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [canAnimate, from, to]);
+  }, [canAnimate, fromTone, toTone]);
 
   return (
     <div
       ref={container}
       id={`transition-${id}`}
       className="nm2-transition"
-      data-from={from}
-      data-to={to}
+      data-from={fromTone}
+      data-to={toTone}
       aria-hidden="true"
     >
       <canvas ref={canvas} className="nm2-transition__canvas" />
