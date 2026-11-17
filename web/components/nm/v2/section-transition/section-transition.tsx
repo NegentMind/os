@@ -150,14 +150,19 @@ export function SectionTransition({
       const rect = element.getBoundingClientRect();
       if (rect.width <= 0 || rect.height <= 0) return false;
       const compact = rect.width < 768;
+      const smooth =
+        VARIANTS.find((v) => v.id === config.current.variant)?.smooth ?? false;
       const renderWidth = Math.round(
         compact
-          ? Math.min(240, Math.max(160, rect.width / 3))
-          : Math.min(480, Math.max(200, rect.width / 3)),
+          ? Math.min(smooth ? 480 : 320, Math.max(160, rect.width / 1.6))
+          : Math.min(smooth ? 960 : 640, Math.max(240, rect.width / 1.5)),
       );
       const renderHeight = Math.max(
         16,
-        Math.min(200, Math.round((renderWidth * rect.height) / rect.width)),
+        Math.min(
+          smooth ? 360 : 260,
+          Math.round((renderWidth * rect.height) / rect.width),
+        ),
       );
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       surface.width = Math.max(1, Math.round(rect.width * dpr));
@@ -172,9 +177,7 @@ export function SectionTransition({
     };
 
     const paint = () => {
-      if (!image) {
-        if (!resize() || !image) return;
-      }
+      if (!resize() || !image) return;
       if (!colors) readColors();
       if (!colors) return;
       const rect = element.getBoundingClientRect();
