@@ -149,7 +149,7 @@ no una sexta página pública.
 
 ## Transiciones entre secciones
 
-`SectionTransition` (`components/nm/v2/section-transition/`) es una banda de ancho completo, sin márgenes negativos, de altura `clamp(160px, 20vw, 288px)` (128px por debajo de 768px). Pinta un canvas a baja resolución (hasta 480×200; 240 de ancho en móvil) escalado, entre el fondo `--nm2-bg` y el papel `--nm2-paper-bg`; `from`/`to` invierten el sentido. Sin JS queda un degradado CSS. Solo anima si el movimiento está permitido, la banda es visible y la pestaña activa (≈30 fps como objetivo de planificación); con movimiento reducido o pausa se pinta un único frame estático y sin listeners.
+`SectionTransition` (`components/nm/v2/section-transition/`) es una banda de ancho completo, sin márgenes negativos, de altura `clamp(160px, 20vw, 288px)` (128px por debajo de 768px). Pinta un canvas a baja resolución (hasta 480×200; 240 de ancho en móvil) escalado, entre el fondo `--nm2-bg` y el papel `--nm2-paper-bg`; `from`/`to` invierten el sentido. El canvas disuelve el lado `to` en alfa y la propia banda toma el color de destino como fondo CSS, de modo que el tono de unión es siempre exactamente el de la sección adyacente (sin «caja» de otro color). Sin JS queda un degradado CSS. Solo anima si el movimiento está permitido, la banda es visible y la pestaña activa (≈30 fps como objetivo de planificación); con movimiento reducido o pausa se pinta un único frame estático y sin listeners.
 
 El núcleo puro está en `variants.ts` (`renderVariant`). Cinco variantes, con sus valores por defecto (`intensity`, `speed`, `cell`, `spectrum`):
 

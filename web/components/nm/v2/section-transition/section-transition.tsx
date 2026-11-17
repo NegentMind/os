@@ -42,6 +42,44 @@ type Effective = {
   height: number | null;
 };
 
+// Converts the `to` color contribution into transparency so the band's own
+// background (set to the destination tone) shows through — the seam can never
+// drift to a different tint. t is recovered by projecting each pixel onto the
+// from→to axis; the solid rgb is un-composited so `rgb′·(1-t) + to·t = c`.
+function dissolveTo(data: Uint8ClampedArray, from: Rgb, to: Rgb): void {
+  const dr = to[0] - from[0];
+  const dg = to[1] - from[1];
+  const db = to[2] - from[2];
+  const len2 = dr * dr + dg * dg + db * db || 1;
+  for (let i = 0; i < data.length; i += 4) {
+    const t = Math.min(
+      1,
+      Math.max(
+        0,
+        ((data[i] - from[0]) * dr +
+          (data[i + 1] - from[1]) * dg +
+          (data[i + 2] - from[2]) * db) /
+          len2,
+      ),
+    );
+    const keep = 1 - t;
+    if (keep <= 0.001) {
+      data[i + 3] = 0;
+      continue;
+    }
+    data[i] = Math.min(255, Math.max(0, Math.round((data[i] - to[0] * t) / keep)));
+    data[i + 1] = Math.min(
+      255,
+      Math.max(0, Math.round((data[i + 1] - to[1] * t) / keep)),
+    );
+    data[i + 2] = Math.min(
+      255,
+      Math.max(0, Math.round((data[i + 2] - to[2] * t) / keep)),
+    );
+    data[i + 3] = Math.round(keep * 255);
+  }
+}
+
 export function SectionTransition({
   id,
   variant,
@@ -158,10 +196,15 @@ export function SectionTransition({
         progress,
         pointerX: pointer,
       });
+      dissolveTo(image.data, swatch[from], swatch[to]);
       bufferContext.putImageData(image, 0, 0);
       const smooth = VARIANTS.find((v) => v.id === current.variant)?.smooth ?? false;
       context.imageSmoothingEnabled = smooth;
       context.drawImage(buffer, 0, 0, surface.width, surface.height);
+      if (element.dataset.ready !== "true") {
+        const [r, g, b] = swatch[to];
+        element.style.background = `rgb(${r} ${g} ${b})`;
+      }
       element.dataset.ready = "true";
     };
     paintRef.current = paint;
