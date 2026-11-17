@@ -30,11 +30,12 @@ no se borran ni se migran sus pipelines en esta fase.
 | `--nm2-structure` | `#A7B4C7` | Estructura, enlaces y detalles |
 | `--nm2-action` | `#E7EDF5` | Acción primaria y foco |
 | `--nm2-on-action` | `#000000` | Texto sobre acción primaria |
-| `--nm2-paper-bg` | `#E7EDF5` | Fondo papel/plata |
+| `--nm2-paper-bg` | `#FFFFFF` | Fondo papel, de borde a borde |
 | `--nm2-paper-ink` | `#111418` | Tinta principal sobre papel |
 | `--nm2-paper-muted` | `#4D5662` | Texto secundario sobre papel |
-| `--nm2-paper-line` | `#AFBAC8` | Líneas sobre papel |
-| `--nm2-paper-panel` | `#DAE1EA` | Paneles sobre papel |
+| `--nm2-paper-line` | `#D3D9E1` | Líneas sobre papel |
+| `--nm2-paper-panel` | `#F2F4F7` | Superficies y tarjetas sobre papel |
+| `--nm2-paper-raised` | `#E6EAF0` | Superficies elevadas sobre papel |
 | `--nm2-spectrum-teal` | `#5BADA0` | Material expresivo |
 | `--nm2-spectrum-blue` | `#465DCF` | Material expresivo |
 | `--nm2-spectrum-violet` | `#965CCB` | Material expresivo |
@@ -42,7 +43,7 @@ no se borran ni se migran sus pipelines en esta fase.
 | `--nm2-spectrum-amber` | `#D9A45E` | Material expresivo |
 | `--nm2-spectrum-ice` | `#B7CDD7` | Material expresivo |
 
-Una sola identidad, sin selector de tema. `.nm2-section--paper` cambia juntos fondo, tinta, texto secundario, líneas, paneles y roles de acción; no es un segundo tema. Tokens de papel: `--nm2-paper-bg` `#E7EDF5`, `--nm2-paper-ink` `#111418`, `--nm2-paper-muted` `#4D5662`, `--nm2-paper-line` `#AFBAC8`, `--nm2-paper-panel` `#DAE1EA`.
+Una sola identidad, sin selector de tema. `.nm2-section--paper` cambia juntos fondo, tinta, texto secundario, líneas, paneles y roles de acción; no es un segundo tema. Tokens de papel: `--nm2-paper-bg` `#FFFFFF`, `--nm2-paper-ink` `#111418`, `--nm2-paper-muted` `#4D5662`, `--nm2-paper-line` `#D3D9E1`, `--nm2-paper-panel` `#F2F4F7`, `--nm2-paper-raised` `#E6EAF0`.
 
 Los aliases `--nm2-art-*` apuntan a `--nm2-spectrum-*`: no definen otra
 paleta. El hero usa además `#101C27` como sombreado de material expresivo,
@@ -145,6 +146,24 @@ no una sexta página pública.
 - Sin loader bloqueante, relojes decorativos, telemetría falsa, scroll
   hijack ni pistas de 400vh. Sin afirmaciones de rendimiento, FPS o tamaño
   de bundle medidos: no hay resultados que las sostengan.
+
+## Transiciones entre secciones
+
+`SectionTransition` (`components/nm/v2/section-transition/`) es una banda de ancho completo, sin márgenes negativos, de altura `clamp(160px, 20vw, 288px)` (128px por debajo de 768px). Pinta un canvas a baja resolución (hasta 480×200; 240 de ancho en móvil) escalado, entre el fondo `--nm2-bg` y el papel `--nm2-paper-bg`; `from`/`to` invierten el sentido. Sin JS queda un degradado CSS. Solo anima si el movimiento está permitido, la banda es visible y la pestaña activa (≈30 fps como objetivo de planificación); con movimiento reducido o pausa se pinta un único frame estático y sin listeners.
+
+El núcleo puro está en `variants.ts` (`renderVariant`). Cinco variantes, con sus valores por defecto (`intensity`, `speed`, `cell`, `spectrum`):
+
+| Variante | Defaults | Notas |
+|---|---|---|
+| `dither` | 1 · 1 · 2 · 0 | Bayer 8×8 con celda `cell` |
+| `blocks` | 1 · 1 · 3 · 0 | Celdas `cell*2` con desplazamiento por filas |
+| `tear` | 1 · 1 · 3 · 0 | Frontera dentada con astillas |
+| `chromatic` | 1 · 1 · 3 · 0,55 | Dispersión por canal; el espectro del hero tiñe el borde |
+| `iridescent` | 1 · 1 · 3 · 1 | Grano iridiscente con la paleta del hero |
+
+El scroll desplaza la frontera (±0,12·`intensity`) y el puntero fino la abomba con una gaussiana; el grano es un hash determinista, no `Math.random`. Home usa `org-in` (iridescent), `org-out` (dither), `proof-in` (tear) y `proof-out` (blocks).
+
+`TransitionLab` es una herramienta de desarrollo: solo aparece con `NODE_ENV=development` o `?transitions=1`, permite cambiar variante, parámetros y altura en vivo, y guarda la configuración en `localStorage` (`nm2-transition-lab`). No forma parte del diseño publicado.
 
 ## Accesibilidad y revisión pendiente
 

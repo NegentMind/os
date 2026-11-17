@@ -11,6 +11,11 @@ import { ProjectCard } from "@/components/nm/v2/project-card";
 import { ScopeStudy } from "@/components/nm/v2/scope-study";
 import { Section } from "@/components/nm/v2/section";
 import { SectionHeading } from "@/components/nm/v2/section-heading";
+import { SectionTransition } from "@/components/nm/v2/section-transition/section-transition";
+import {
+  TransitionLab,
+  TransitionLabProvider,
+} from "@/components/nm/v2/section-transition/transition-lab";
 import { StatusBadge } from "@/components/nm/v2/status-badge";
 import { SystemStory } from "@/components/nm/v2/system-story";
 import { getSiteCopy } from "@/lib/content";
@@ -30,11 +35,13 @@ export default async function Home({ params }: MarketingPageProps) {
   const h = c.home;
 
   return (
+    <TransitionLabProvider>
     <div className="nm2-home">
       <div id="top">
         <Hero lang={lang} copy={c.hero} />
       </div>
-      <Section id="org" className="nm2-statement-section nm2-section--paper" dither>
+      <SectionTransition id="org-in" variant="iridescent" />
+      <Section id="org" className="nm2-statement-section nm2-section--paper">
         <div className="nm2-editorial">
           <SectionHeading title={h.statement.title} id="org-title" effect="assemble" />
           <div className="nm2-prose">
@@ -45,6 +52,7 @@ export default async function Home({ params }: MarketingPageProps) {
         </div>
         <SystemStory copy={h.statement.system} caption={c.common.conceptual} />
       </Section>
+      <SectionTransition id="org-out" variant="dither" from="light" to="dark" />
       <Section
         id="work"
         className="nm2-work-section"
@@ -104,7 +112,8 @@ export default async function Home({ params }: MarketingPageProps) {
         <SectionHeading title={h.holons.title} effect="focus" />
         <HolonExplorer copy={h.holons} visionLabel={c.common.vision} caption={c.common.conceptual} />
       </Section>
-      <Section id="proof" className="nm2-section--paper nm2-home-evidence" dither>
+      <SectionTransition id="proof-in" variant="tear" />
+      <Section id="proof" className="nm2-section--paper nm2-home-evidence">
         <span id="oss" className="nm2-anchor" aria-hidden="true" />
         <SectionHeading title={h.method.title} description={h.method.description} effect="trace" />
         <EvidenceWorkbench
@@ -115,6 +124,7 @@ export default async function Home({ params }: MarketingPageProps) {
         />
         <ActionLink href={hrefFor(lang, "about")} variant="text">{h.method.methodAction}</ActionLink>
       </Section>
+      <SectionTransition id="proof-out" variant="blocks" from="light" to="dark" />
       <Section id="faq" className="nm2-faq-section">
         <div className="nm2-editorial">
           <SectionHeading title={h.faqTitle} effect="assemble" />
@@ -135,6 +145,8 @@ export default async function Home({ params }: MarketingPageProps) {
           </div>
         </div>
       </Section>
+      <TransitionLab />
     </div>
+    </TransitionLabProvider>
   );
 }
