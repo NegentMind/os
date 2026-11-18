@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Orbital v2 — variant renderer</title>
+<style>
+  :root{
+    --carbon:#070809; --carbon2:#0e1013; --silver:#f1f3f5; --muted:#adb5c0;
+    --teal:#5bada0; --blue:#465dcf; --violet:#965ccb; --rose:#dc5e89;
+    --amber:#d9a45e; --ice:#b7cdd7; --ink:#101c27;
+  }
+  html,body{margin:0;padding:0;background:transparent}
+  body{display:inline-block}
+  #stage{position:relative;overflow:hidden;background:var(--carbon)}
+  #stage.transparent{background:transparent}
+  .abs{position:absolute;inset:0}
+  .warp{background:url("../orbital-frame.png") center/cover no-repeat}
+  .warp-mono{filter:saturate(.12) contrast(1.08) brightness(.8)}
+  .veil60{background:rgba(7,8,9,.60)}
+  .veil45{background:rgba(7,8,9,.45)}
+  .veil35{background:rgba(7,8,9,.35)}
+  .grain{position:absolute;inset:0;pointer-events:none;
+    background:url("../orbital-grain.png") 0 0/192px 192px;
+    opacity:.2;mix-blend-mode:soft-light}
+  img.mark{position:absolute;display:block}
+  svg.layer{position:absolute;display:block}
+</style>
+<div id="stage"></div>
+<script>
+const Q = new URLSearchParams(location.search);
+const A = Q.get("a") || "banner";
+const V = +(Q.get("v") || "1");
+const SIZES = {banner:[2400,800], "banner-gh":[1920,480], icon:[512,512], avatar:[512,512], og:[1200,630]};
+const [W,H] = SIZES[A];
+const stage = document.getElementById("stage");
+stage.style.width = W+"px"; stage.style.height = H+"px";
+
+const frameURL = "../orbital-frame.png";
+const el = (tag, css, parent=stage)=>{const d=document.createElement(tag);d.style.cssText=css;parent.appendChild(d);return d};
+const img = (src, css)=>{const i=el("img",css);i.src=src;i.className="mark";return i};
+
+function warp(css="", extra=""){ return el("div", `position:absolute;inset:0;background:url('${frameURL}') center/cover no-repeat;${css}${extra}`); }
+function veil(op){ return el("div", `position:absolute;inset:0;background:rgba(7,8,9,${op})`); }
+function grain(){ el("div","").className="grain"; }
+function wordmark(css){ return img("../orbital-wordmark.svg", css); }
+function monogram(css){ return img("../orbital-monogram.svg", css); }
+
+/* Spectrum sweep used for thin orbital rings */
+const SPECTRUM_STOPS = `<stop offset="0" stop-color="#5bada0"/><stop offset=".2" stop-color="#465dcf"/><stop offset=".4" stop-color="#965ccb"/><stop offset=".6" stop-color="#dc5e89"/><stop offset=".8" stop-color="#d9a45e"/><stop offset="1" stop-color="#b7cdd7"/>`;
+
+function orbitRingSVG(w,h,{rx,ry,tilt,stroke,dotAngle}){
+  const cx=w/2, cy=h/2;
+  const a=dotAngle*Math.PI/180, t=tilt*Math.PI/180;
+  const px=cx+Math.cos(a)*rx*Math.cos(t)-Math.sin(a)*ry*Math.sin(t);
+  const py=cy+Math.cos(a)*rx*Math.sin(t)+Math.sin(a)*ry*Math.cos(t);
+  const s=document.createElementNS("http://www.w3.org/2000/svg","svg");
+  s.setAttribute("viewBox",`0 0 ${w} ${h}`); s.classList.add("layer");
+  s.style.cssText=`left:0;top:0;width:${w}px;height:${h}px`;
+  s.innerHTML=`<defs><linearGradient id="spec" x1="0" y1="0" x2="1" y2="1">${SPECTRUM_STOPS}</linearGradient></defs>
+    <g transform="rotate(${tilt} ${cx} ${cy})"><ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="url(#spec)" stroke-width="${stroke}" opacity=".85"/></g>
+    <circle cx="${px}" cy="${py}" r="${stroke*2.4}" fill="#b7cdd7"/>`;
+  stage.appendChild(s); return s;
+}
+
+function coreOrbSVG(size){
+  const c=size/2;
+  const s=document.createElementNS("http://www.w3.org/2000/svg","svg");
+  s.setAttribute("viewBox",`0 0 ${size} ${size}`); s.classList.add("layer");
+  const R=size*0.37, dot=`0.1 ${Math.max(6,size*0.02)}`;
+  s.innerHTML=`<defs>
+    <radialGradient id="core" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#b7cdd7"/><stop offset=".45" stop-color="#5bada0"/><stop offset="1" stop-color="#465dcf"/>
+    </radialGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#5bada0" stop-opacity=".30"/><stop offset="1" stop-color="#5bada0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="${c}" cy="${c}" r="${size*0.32}" fill="url(#glow)"/>
+  <g fill="none" stroke="#f1f3f5" stroke-linecap="round">
+    <circle cx="${c}" cy="${c}" r="${R}" stroke-width="${size*0.006}" stroke-dasharray="${dot}" opacity=".72"/>
+    <g transform="rotate(-24 ${c} ${c})"><ellipse cx="${c}" cy="${c}" rx="${R}" ry="${R*0.42}" stroke-width="${size*0.005}" stroke-dasharray="${dot}" opacity=".5"/></g>
+    <g transform="rotate(38 ${c} ${c})"><ellipse cx="${c}" cy="${c}" rx="${R}" ry="${R*0.60}" stroke-width="${size*0.005}" stroke-dasharray="${dot}" opacity=".34"/></g>
+  </g>
+  <circle cx="${c}" cy="${c}" r="${size*0.062}" fill="url(#core)"/>
+  <circle cx="${c}" cy="${c}" r="${size*0.062}" fill="none" stroke="#f1f3f5" stroke-opacity=".35" stroke-width="${size*0.002}"/>`;
+  stage.appendChild(s); return s;
+}
+
+/* ---------- BANNER family (banner / banner-gh / og share comps) ---------- */
+const WM_RATIO = 836/120, MN_RATIO = 180/120, PADX = () => W*0.07;
+const fitWM = (maxH, maxW) => Math.min(maxH, maxW/WM_RATIO);
+function bannerV1(){ /* Strata */
+  warp(); veil(.60); grain();
+  wordmark(`left:7%;top:50%;height:${fitWM(H*0.24, W*0.60)}px;transform:translateY(-50%)`);
+}
+function bannerV2(){ /* Spectrum */
+  el("div",`position:absolute;inset:0;background:linear-gradient(180deg,#0e1013 0%,#070809 55%)`);
+  /* spectral band inside lower third */
+  el("div",`position:absolute;left:0;right:0;bottom:${H*0.10}px;height:${H*0.20}px;
+    background:url('${frameURL}') 50% 55%/${W}px auto no-repeat;
+    box-shadow:inset 0 1px 0 rgba(241,243,245,.14)`);
+  const monoH=H*0.24, monoW=monoH*MN_RATIO;
+  const wmH=fitWM(H*0.22, W-2*PADX()-monoW-W*0.05);
+  wordmark(`left:7%;top:${H*0.38}px;height:${wmH}px;transform:translateY(-50%)`);
+  monogram(`right:7%;top:${H*0.38}px;height:${monoH}px;transform:translateY(-50%)`);
+  grain();
+}
+function bannerV3(){ /* Core */
+  const w=warp(); w.classList.add("warp-mono"); veil(.35); grain();
+  const orb=coreOrbSVG(H*0.78);
+  orb.style.cssText=`right:${W*0.055}px;top:50%;width:${H*0.78}px;height:${H*0.78}px;transform:translateY(-50%)`;
+  wordmark(`left:7%;top:50%;height:${fitWM(H*0.24, W*0.52)}px;transform:translateY(-50%)`);
+}
+
+/* ---------- ICON 512x512 ---------- */
+function iconV1(){ /* NM on rounded carbon */
+  const pad=W*0.02;
+  el("div",`position:absolute;inset:0;border-radius:${W*0.24}px;overflow:hidden;
+    background:linear-gradient(160deg,#0e1013 0%,#070809 62%);
+    box-shadow:inset 0 0 0 1px rgba(241,243,245,.07)`);
+  monogram(`left:50%;top:50%;width:78%;transform:translate(-50%,-50%)`);
+}
+function iconV2(){ /* NM on warp mini-crop */
+  const host=el("div",`position:absolute;inset:0;border-radius:${W*0.24}px;overflow:hidden`);
+  const w=document.createElement("div");
+  w.style.cssText=`position:absolute;inset:0;background:url('${frameURL}') 42% 56%/1250px auto no-repeat;transform:scale(1.06)`;
+  host.appendChild(w);
+  const v=document.createElement("div");
+  v.style.cssText=`position:absolute;inset:0;background:rgba(7,8,9,.55)`;
+  host.appendChild(v);
+  monogram(`left:50%;top:50%;width:76%;transform:translate(-50%,-50%);
+    filter:drop-shadow(0 ${W*0.008}px ${W*0.03}px rgba(7,8,9,.55))`);
+}
+function iconV3(){ /* silver NM + registration dot on transparent */
+  stage.classList.add("transparent");
+  const s=document.createElementNS("http://www.w3.org/2000/svg","svg");
+  s.setAttribute("viewBox","0 0 180 120"); s.classList.add("layer");
+  s.style.cssText=`left:50%;top:50%;width:84%;transform:translate(-50%,-50%)`;
+  s.innerHTML=`<g fill="none" stroke="#f1f3f5" stroke-width="13" stroke-linejoin="bevel">
+      <path d="M12,96 V16 L56,96 V16"/>
+      <path transform="translate(82,0)" d="M12,96 V16 L40,62 L68,16 V96"/>
+    </g><circle cx="170" cy="92" r="7" fill="#5bada0"/>`;
+  stage.appendChild(s);
+}
+
+/* ---------- AVATAR 512x512 ---------- */
+function avatarV1(){ /* current: warp center-crop + 60% veil + monogram */
+  warp(); veil(.60); grain();
+  monogram(`left:50%;top:50%;width:64%;transform:translate(-50%,-50%)`);
+}
+function avatarV2(){ /* carbon + thin spectral orbital ring + monogram */
+  el("div",`position:absolute;inset:0;background:radial-gradient(120% 120% at 50% 38%,#0e1013 0%,#070809 62%)`);
+  orbitRingSVG(W,H,{rx:W*0.40,ry:H*0.235,tilt:-18,stroke:W*0.0045,dotAngle:32});
+  monogram(`left:50%;top:50%;width:52%;transform:translate(-50%,-50%)`);
+  grain();
+}
+function avatarV3(){ /* core-orb, no letters */
+  el("div",`position:absolute;inset:0;background:radial-gradient(120% 120% at 50% 42%,#0e1013 0%,#070809 60%)`);
+  const orb=coreOrbSVG(W);
+  orb.style.cssText=`left:0;top:0;width:${W}px;height:${H}px`;
+  grain();
+}
+
+const F={
+  banner:{1:bannerV1,2:bannerV2,3:bannerV3},
+  "banner-gh":{1:bannerV1,2:bannerV2,3:bannerV3},
+  og:{1:bannerV1,2:bannerV2,3:bannerV3},
+  icon:{1:iconV1,2:iconV2,3:iconV3},
+  avatar:{1:avatarV1,2:avatarV2,3:avatarV3},
+};
+(F[A]&&F[A][V]||(()=>{document.title="unknown "+A+" "+V}))();
+document.body.dataset.ready="1";
+</script>

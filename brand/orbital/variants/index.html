@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orbital v2 — brand asset variants</title>
+<style>
+body{margin:0;background:#0b0c0e;color:#adb5c0;font:14px/1.5 system-ui,sans-serif;padding:40px}
+header{max-width:1100px;margin:0 auto 32px}
+h1{color:#f1f3f5;font-size:22px;font-weight:600;letter-spacing:.04em;margin:0 0 6px}
+.sub{color:#6b7280;margin:0}
+.sub code{color:#5bada0}
+section{max-width:1100px;margin:0 auto 48px;border-top:1px solid #23282f;padding-top:20px}
+h2{color:#f1f3f5;font-size:15px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 4px}
+.note{color:#6b7280;font-size:12px;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid.wide{grid-template-columns:1fr;gap:24px}
+.fig{margin:0}
+.fig b{color:#f1f3f5;font-size:13px;display:block}
+.fig span{color:#5bada0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:1px 0 6px}
+.fig img{display:block;width:100%;border:1px solid #23282f;background:#000}
+.fig .desc{color:#6b7280;font-size:12px;margin-top:6px}
+.pair{display:flex;gap:16px;align-items:flex-end;margin-top:8px}
+.pair figure{margin:0;text-align:center}
+.pair figcaption{font-size:10px;color:#6b7280;margin-top:3px}
+.checker{background:repeating-conic-gradient(#3a3f45 0 25%,#22262b 0 50%) 0 0/12px 12px}
+.circle{border-radius:50%}
+nav{max-width:1100px;margin:0 auto 24px;font-size:12px}
+nav a{color:#5bada0;margin-right:16px;text-decoration:none}
+nav a:hover{text-decoration:underline}
+</style>
+<header>
+  <h1>Orbital v2 — variantes de assets de marca</h1>
+  <p class="sub">Carbón + plata, espectro puntual del hero warp, lettering Orbital. Elige una variante por asset;
+  los nombres de archivo están en <code>brand/orbital/variants/</code>. Capturado con Chromium, deviceScaleFactor 1.
+  Los assets actuales de <code>brand/orbital/</code> no se han tocado.</p>
+</header>
+<nav>
+  <a href="preview-banner.html">preview-banner</a><a href="preview-icon.html">preview-icon</a><a href="preview-avatar.html">preview-avatar</a><a href="preview-og.html">preview-og</a>
+</nav>
+
+<section>
+  <h2>Banner — 2400×800 (GitHub: 1920×480)</h2>
+  <p class="note">Cada celda muestra el master 2400×800; la mini inferior es la versión 1920×480 para perfil de GitHub.</p>
+  <div class="grid">
+    <figure class="fig"><b>v1 — Strata</b><span>banner-v1.png / banner-gh-v1.png</span>
+      <img src="banner-v1.png"><img src="banner-gh-v1.png" style="margin-top:6px">
+      <div class="desc">Crop full-bleed del warp + velo carbón 60% + wordmark plata a la izquierda.</div></figure>
+    <figure class="fig"><b>v2 — Spectrum</b><span>banner-v2.png / banner-gh-v2.png</span>
+      <img src="banner-v2.png"><img src="banner-gh-v2.png" style="margin-top:6px">
+      <div class="desc">Campo carbón limpio + franja espectral del warp en el tercio inferior + wordmark + monograma.</div></figure>
+    <figure class="fig"><b>v3 — Core</b><span>banner-v3.png / banner-gh-v3.png</span>
+      <img src="banner-v3.png"><img src="banner-gh-v3.png" style="margin-top:6px">
+      <div class="desc">Warp casi monocromo (desaturado) + core-orb a la derecha + wordmark.</div></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Icon / Favicon — 512×512 masters</h2>
+  <p class="note">Del ganador se exportarán después 64 SVG / 48 / 180. Las filas muestran legibilidad a 64 / 32 / 16 px.</p>
+  <div class="grid">
+    <figure class="fig"><b>v1 — Carbon</b><span>icon-v1.png</span>
+      <img src="icon-v1.png">
+      <div class="pair"><figure><img src="icon-v1.png" width="64"><figcaption>64</figcaption></figure><figure><img src="icon-v1.png" width="32"><figcaption>32</figcaption></figure><figure><img src="icon-v1.png" width="16"><figcaption>16</figcaption></figure></div>
+      <div class="desc">NM sobre cuadrado carbón redondeado (evolución del orbital-icon.svg actual).</div></figure>
+    <figure class="fig"><b>v2 — Warp</b><span>icon-v2.png</span>
+      <img src="icon-v2.png">
+      <div class="pair"><figure><img src="icon-v2.png" width="64"><figcaption>64</figcaption></figure><figure><img src="icon-v2.png" width="32"><figcaption>32</figcaption></figure><figure><img src="icon-v2.png" width="16"><figcaption>16</figcaption></figure></div>
+      <div class="desc">Monograma sobre mini-crop del warp con espectro visible.</div></figure>
+    <figure class="fig"><b>v3 — Mark</b><span>icon-v3.png · transparente</span>
+      <img src="icon-v3.png" class="checker">
+      <div class="pair"><figure class="checker"><img src="icon-v3.png" width="64"><figcaption>64</figcaption></figure><figure class="checker"><img src="icon-v3.png" width="32"><figcaption>32</figcaption></figure><figure class="checker"><img src="icon-v3.png" width="16"><figcaption>16</figcaption></figure></div>
+      <div class="desc">Trazo NM plata + punto de registro teal sobre transparente.</div></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Avatar — 512×512</h2>
+  <p class="note">Las miniaturas circulares simulan el crop de GitHub/X.</p>
+  <div class="grid">
+    <figure class="fig"><b>v1 — Plate</b><span>avatar-v1.png</span>
+      <img src="avatar-v1.png">
+      <div class="pair"><figure><img class="circle" src="avatar-v1.png" width="64"><figcaption>64</figcaption></figure><figure><img class="circle" src="avatar-v1.png" width="32"><figcaption>32</figcaption></figure></div>
+      <div class="desc">Monograma centrado sobre center-crop del warp + velo 60% (equivale al actual).</div></figure>
+    <figure class="fig"><b>v2 — Orbit</b><span>avatar-v2.png</span>
+      <img src="avatar-v2.png">
+      <div class="pair"><figure><img class="circle" src="avatar-v2.png" width="64"><figcaption>64</figcaption></figure><figure><img class="circle" src="avatar-v2.png" width="32"><figcaption>32</figcaption></figure></div>
+      <div class="desc">Monograma sobre carbón puro + anillo orbital espectral fino.</div></figure>
+    <figure class="fig"><b>v3 — Core-orb</b><span>avatar-v3.png</span>
+      <img src="avatar-v3.png">
+      <div class="pair"><figure><img class="circle" src="avatar-v3.png" width="64"><figcaption>64</figcaption></figure><figure><img class="circle" src="avatar-v3.png" width="32"><figcaption>32</figcaption></figure></div>
+      <div class="desc">Core-orb sin letras — identidad por forma.</div></figure>
+  </div>
+</section>
+
+<section>
+  <h2>OG image — 1200×630</h2>
+  <p class="note">Mismas composiciones que el banner adaptadas al ratio social.</p>
+  <div class="grid wide">
+    <figure class="fig"><b>v1 — Strata</b><span>og-v1.png</span><img src="og-v1.png"></figure>
+    <figure class="fig"><b>v2 — Spectrum</b><span>og-v2.png</span><img src="og-v2.png"></figure>
+    <figure class="fig"><b>v3 — Core</b><span>og-v3.png</span><img src="og-v3.png"></figure>
+  </div>
+</section>
