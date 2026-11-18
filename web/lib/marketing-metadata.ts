@@ -35,12 +35,12 @@ export async function metadataForPage(
       title,
       description,
       type: "website",
-      siteName: "Negent Mind",
+      siteName: "NEGENT MIND",
       url: path,
       locale: lang === "es" ? "es_ES" : "en_US",
       alternateLocale: lang === "es" ? "en_US" : "es_ES",
       images: [
-        { url: "/og.png", width: 1200, height: 630, alt: "Negent Mind" },
+        { url: "/og.png", width: 1200, height: 630, alt: "NEGENT MIND" },
       ],
     },
     twitter: {

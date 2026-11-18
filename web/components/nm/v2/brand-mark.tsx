@@ -45,7 +45,7 @@ export function BrandMark({
       viewBox={isWordmark ? "0 0 836 120" : "0 0 180 120"}
       className={["nm2-brandmark", className].filter(Boolean).join(" ")}
       role={decorative ? undefined : "img"}
-      aria-label={decorative ? undefined : "Negent Mind"}
+      aria-label={decorative ? undefined : "NEGENT MIND"}
       aria-hidden={decorative || undefined}
       focusable="false"
     >

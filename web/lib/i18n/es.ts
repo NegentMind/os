@@ -4,12 +4,12 @@ import { ORG_URL, VANTADB_REPO, displayUrl } from "@/lib/site";
 /* Diccionario español — espejo estructural de en.ts. */
 export const es: Dict = {
   meta: {
-    title: "Negent Mind — Orden desde el caos",
+    title: "NEGENT MIND — Orden desde el caos",
     description:
       "Investigación aplicada en IA e ingeniería de producto: infraestructura para una IA agéntica persistente, controlable, eficiente y confiable.",
   },
   nav: {
-    homeAria: "Negent Mind, inicio",
+    homeAria: "NEGENT MIND, inicio",
     navAria: "Secciones",
     langAria: "Idioma",
     links: [
@@ -50,7 +50,7 @@ export const es: Dict = {
     label: "[ 01 / LA ORGANIZACIÓN ]",
     title: "Los agentes brillan en la inferencia",
     qual: "y son amnésicos por defecto.",
-    sub: "Negent Mind es un laboratorio independiente de investigación aplicada en IA e ingeniería de producto que construye infraestructura para agentes IA — memoria, percepción, verificación, ejecución. Un motor ya está publicado; el resto del mapa es especificación escrita, etiquetada como visión.",
+    sub: "NEGENT MIND es un laboratorio independiente de investigación aplicada en IA e ingeniería de producto que construye infraestructura para agentes IA — memoria, percepción, verificación, ejecución. Un motor ya está publicado; el resto del mapa es especificación escrita, etiquetada como visión.",
     problems: [
       {
         name: "La memoria en Markdown se pudre",
@@ -250,7 +250,7 @@ export const es: Dict = {
     },
     founder: {
       title: "Un fundador, trabajando a la vista.",
-      body: "Negent Mind es un laboratorio independiente dirigido por su fundador — aún no es una entidad empresarial constituida. Sin capital de riesgo, sin página de equipo que inflar — el motor entregado y este mapa de capacidades son toda la extensión del trabajo público, declarada a escala honesta.",
+      body: "NEGENT MIND es un laboratorio independiente dirigido por su fundador — aún no es una entidad empresarial constituida. Sin capital de riesgo, sin página de equipo que inflar — el motor entregado y este mapa de capacidades son toda la extensión del trabajo público, declarada a escala honesta.",
     },
     contact: {
       title: "Una línea directa.",
@@ -342,7 +342,7 @@ export const es: Dict = {
       {
         name: "No es un framework de agentes",
         detail:
-          "Negent Mind no orquesta razonamiento ni bucles de prompts. Construye el substrato del que el razonamiento lee y al que escribe.",
+          "NEGENT MIND no orquesta razonamiento ni bucles de prompts. Construye el substrato del que el razonamiento lee y al que escribe.",
       },
       {
         name: "No es un servicio alojado",
@@ -375,7 +375,7 @@ export const es: Dict = {
     label: "[ 10 / CÓDIGO ABIERTO ]",
     title: "Construido en público.",
     qual: "súmate.",
-    sub: "Negent Mind es un laboratorio independiente de investigación aplicada en IA. El motor es Apache-2.0: léelo, haz fork, embébelo en tu agente — y ayuda a decidir qué se construye después.",
+    sub: "NEGENT MIND es un laboratorio independiente de investigación aplicada en IA. El motor es Apache-2.0: léelo, haz fork, embébelo en tu agente — y ayuda a decidir qué se construye después.",
     ctaRepo: displayUrl(VANTADB_REPO).replace("github.com/", ""),
     ctaOrg: "NegentMind org",
     cards: [
@@ -398,7 +398,7 @@ export const es: Dict = {
         plan: "La organización",
         amount: "Abierto",
         per: "specs antes que código",
-        desc: "Negent Mind escribe sus especificaciones de capacidades como RFCs internos; un resumen público vivirá en el Handbook. El código publicado, el trabajo en incubación y la visión se etiquetan como tales.",
+        desc: "NEGENT MIND escribe sus especificaciones de capacidades como RFCs internos; un resumen público vivirá en el Handbook. El código publicado, el trabajo en incubación y la visión se etiquetan como tales.",
         inc: "CÓMO SUMARSE",
         rows: [
           ["lee", "el mapa de capacidades y sus etiquetas de estado"],
@@ -416,7 +416,7 @@ export const es: Dict = {
     title: "Preguntado, respondido.",
     items: [
       {
-        q: "¿Qué es exactamente Negent Mind?",
+        q: "¿Qué es exactamente NEGENT MIND?",
         a: "Un laboratorio independiente de investigación aplicada en IA e ingeniería de producto que construye infraestructura para una IA agéntica persistente, controlable, eficiente y confiable. VantaDB, el motor de memoria embebido, es su primer proyecto publicado. Scopegrain está en incubación y aún no se ha publicado. Todo lo demás en esta página es un mapa de capacidades a largo plazo — especificaciones escritas, no productos.",
       },
       {
@@ -447,7 +447,7 @@ export const es: Dict = {
     ],
     handbook: "Handbook",
     handbookPending: "Handbook — se publica en diciembre de 2026",
-    legal: "© {year} Negent Mind · Apache-2.0",
+    legal: "© {year} NEGENT MIND · Apache-2.0",
     pending: "Privacidad y Términos pendientes de publicación.",
   },
 };

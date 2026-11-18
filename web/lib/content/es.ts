@@ -41,27 +41,27 @@ export const es: SiteCopy = {
   },
   meta: {
     home: {
-      title: "Negent Mind — Infraestructura alrededor del modelo",
+      title: "NEGENT MIND — Infraestructura alrededor del modelo",
       description:
         "Un laboratorio independiente de infraestructura open source para agentes de IA. Conoce VantaDB, nuestro proyecto principal de memoria persistente.",
     },
     projects: {
-      title: "Proyectos — Negent Mind",
+      title: "Proyectos — NEGENT MIND",
       description:
         "VantaDB está activo. Scopegrain está en incubación. Conoce los proyectos y la diferencia entre software disponible y nuestra visión de largo plazo.",
     },
     vantadb: {
-      title: "VantaDB — Memoria embebida para agentes de IA | Negent Mind",
+      title: "VantaDB — Memoria embebida para agentes de IA | NEGENT MIND",
       description:
         "Memoria persistente y recuperación híbrida para agentes de IA. Núcleo Rust, bindings Python y TypeScript, operación local-first y núcleo Apache-2.0.",
     },
     about: {
-      title: "El laboratorio — Negent Mind",
+      title: "El laboratorio — NEGENT MIND",
       description:
-        "Por qué existe Negent Mind, cómo trabajamos y hacia dónde vamos. Un laboratorio independiente que construye capacidades componibles alrededor de modelos de IA.",
+        "Por qué existe NEGENT MIND, cómo trabajamos y hacia dónde vamos. Un laboratorio independiente que construye capacidades componibles alrededor de modelos de IA.",
     },
     contribute: {
-      title: "Contribuir — Negent Mind",
+      title: "Contribuir — NEGENT MIND",
       description:
         "Mejora la documentación, comunica un fallo reproducible o aporta un cambio acotado. Consulta la guía de contribución o pregunta en GitHub Discussions.",
     },
@@ -84,16 +84,16 @@ export const es: SiteCopy = {
   home: {
     statement: {
       title: "El modelo es un comienzo, no el sistema completo.",
-      body: "Un agente necesita dónde guardar lo importante, cómo recuperar contexto y límites para lo que puede hacer. Negent Mind construye infraestructura alrededor de modelos para no rehacer esas capacidades en cada proyecto.",
+      body: "Un agente necesita dónde guardar lo importante, cómo recuperar contexto y límites para lo que puede hacer. NEGENT MIND construye infraestructura alrededor de modelos para no rehacer esas capacidades en cada proyecto.",
       aside: "Para desarrolladores independientes e ingenieros de agentes. Empieza por el software que existe; lee el resto como una dirección, no como una lista de funciones.",
       system: {
         controls: "Explorar el sistema conceptual",
         orbAction: "Fijar o liberar el color de acento",
-        boundary: "Un modelo en el centro, capacidades a su alrededor. Es un sistema conceptual, no una lista de módulos que Negent Mind ofrece hoy.",
+        boundary: "Un modelo en el centro, capacidades a su alrededor. Es un sistema conceptual, no una lista de módulos que NEGENT MIND ofrece hoy.",
         items: [
           { label: "Modelo", body: "El modelo es el centro de este diagrama, no toda la aplicación. El sistema que lo rodea determina qué contexto y herramientas puede usar." },
           { label: "Memoria", body: "Conservar y recuperar contexto puede dar continuidad a una aplicación más allá de una interacción. La memoria persistente es nuestro punto de partida concreto con VantaDB." },
-          { label: "Percepción", body: "Un sistema puede necesitar convertir información entrante en contexto utilizable. Aquí, la percepción es una responsabilidad conceptual, no un módulo disponible de Negent Mind." },
+          { label: "Percepción", body: "Un sistema puede necesitar convertir información entrante en contexto utilizable. Aquí, la percepción es una responsabilidad conceptual, no un módulo disponible de NEGENT MIND." },
           { label: "Acción", body: "Un sistema puede conectar un modelo con herramientas dentro de los límites que fija la aplicación. Este diagrama no anuncia un producto de ejecución." },
           { label: "Verificación", body: "Contrastar un resultado es una responsabilidad distinta de generar una respuesta. Es una dirección de diseño, no una garantía de que las respuestas de un modelo estén verificadas." },
         ],
@@ -131,7 +131,7 @@ export const es: SiteCopy = {
     holons: {
       title: "Una pieza por sí misma. Parte de algo mayor.",
       definition: "Un holón tiene una función propia y, al mismo tiempo, forma parte de un sistema mayor.",
-      usage: "En Negent Mind usamos esta idea para ordenar capacidades que podrían colaborar sin perder una responsabilidad clara.",
+      usage: "En NEGENT MIND usamos esta idea para ordenar capacidades que podrían colaborar sin perder una responsabilidad clara.",
       boundary: "Es un mapa de diseño a largo plazo, no nueve productos disponibles. Cardinal no es otro nombre de VantaDB.",
       controls: "Explorar los nueve holones",
       items: [
@@ -177,7 +177,7 @@ export const es: SiteCopy = {
     faqTitle: "Qué hay aquí y qué no.",
     faq: [
       {
-        question: "¿Negent Mind construye modelos?",
+        question: "¿NEGENT MIND construye modelos?",
         answer: "No. Construimos infraestructura y capacidades alrededor de modelos. VantaDB, nuestro proyecto principal actual, se centra en memoria persistente y recuperación híbrida para agentes de IA.",
       },
       {
@@ -192,7 +192,7 @@ export const es: SiteCopy = {
   },
   projects: {
     title: "Software, con su estado a la vista.",
-    description: "Negent Mind construye proyectos independientes y componibles alrededor de modelos de IA. Esto es lo activo, lo que aún es un prototipo y lo que sigue siendo una dirección.",
+    description: "NEGENT MIND construye proyectos independientes y componibles alrededor de modelos de IA. Esto es lo activo, lo que aún es un prototipo y lo que sigue siendo una dirección.",
     vantadb: {
       summary: "Memoria persistente embebida y recuperación híbrida para agentes de IA.",
       body: "El proyecto principal actual. Un motor Rust local-first con bindings documentados de Python y TypeScript. Las aplicaciones pueden guardar y recuperar contexto entre sesiones sin exigir un servicio en la nube.",
@@ -211,7 +211,7 @@ export const es: SiteCopy = {
   },
   vantadb: {
     title: "El contexto debería durar más que la sesión.",
-    description: "VantaDB es memoria persistente embebida y recuperación híbrida para agentes de IA. Es el proyecto principal actual de Negent Mind, no la totalidad del laboratorio.",
+    description: "VantaDB es memoria persistente embebida y recuperación híbrida para agentes de IA. Es el proyecto principal actual de NEGENT MIND, no la totalidad del laboratorio.",
     intro: "Mantén la memoria en la aplicación, sin que un servicio en la nube sea un requisito. Un núcleo Rust se ocupa del almacenamiento y la recuperación, con bindings de Python y TypeScript documentados en el repositorio.",
     diagram: {
       title: "Persistir. Recuperar. Reutilizar.",
@@ -273,7 +273,7 @@ export const es: SiteCopy = {
   },
   about: {
     title: "Construir lo que rodea al modelo.",
-    description: "Negent Mind es un laboratorio independiente de infraestructura y capacidades para agentes de IA. Empezamos por la memoria persistente y mantenemos una visión más amplia, expresamente de largo plazo.",
+    description: "NEGENT MIND es un laboratorio independiente de infraestructura y capacidades para agentes de IA. Empezamos por la memoria persistente y mantenemos una visión más amplia, expresamente de largo plazo.",
     mission: {
       title: "Un modelo no es un agente completo.",
       body: "Memoria, percepción, razonamiento, acción y verificación requieren infraestructura además de modelos. Trabajamos en piezas útiles de ese sistema, como proyectos independientes que puedan sostenerse por sí mismos.",
@@ -298,7 +298,7 @@ export const es: SiteCopy = {
       title: "Un laboratorio con un mantenedor al que puedes nombrar.",
       name: "Eros",
       role: "Fundador y mantenedor",
-      body: "Negent Mind es actualmente un laboratorio independiente, aún no constituido como empresa. Eros mantiene el trabajo; las contribuciones y las conversaciones técnicas pasan por GitHub.",
+      body: "NEGENT MIND es actualmente un laboratorio independiente, aún no constituido como empresa. Eros mantiene el trabajo; las contribuciones y las conversaciones técnicas pasan por GitHub.",
       action: "Eros en GitHub",
     },
     invitation: {

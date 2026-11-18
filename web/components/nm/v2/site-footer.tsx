@@ -118,12 +118,12 @@ export function SiteFooter({
         <div className="nm2-footer__base">
           <Link
             href={hrefFor(lang, "home")}
-            aria-label={`Negent Mind — ${nav.home}`}
+            aria-label={`NEGENT MIND — ${nav.home}`}
             className="nm2-footer__brand"
           >
             <BrandMark variant="monogram" decorative />
           </Link>
-          <p className="nm2-footer__legal">© {year} Negent Mind · {copy.builtOpen}</p>
+          <p className="nm2-footer__legal">© {year} NEGENT MIND · {copy.builtOpen}</p>
           <MotionPreference copy={motionCopy} />
         </div>
       </div>

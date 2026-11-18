@@ -5,9 +5,9 @@ import "../globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Negent Mind",
+  title: "NEGENT MIND",
   description:
-    "Negent Mind — Applied AI Research & Product Engineering: infrastructure for persistent, controllable, efficient and trustworthy agentic AI.",
+    "NEGENT MIND — Applied AI Research & Product Engineering: infrastructure for persistent, controllable, efficient and trustworthy agentic AI.",
   robots: { index: false, follow: false },
 };
 

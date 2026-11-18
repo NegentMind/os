@@ -139,7 +139,7 @@ export function SiteHeader({ lang, copy }: { lang: Locale; copy: NavCopy }) {
             <Link
               href={hrefFor(lang, "home")}
               className="nm2-header__brand"
-              aria-label={`Negent Mind — ${copy.home}`}
+              aria-label={`NEGENT MIND — ${copy.home}`}
             >
               <BrandMark variant="wordmark" decorative />
             </Link>

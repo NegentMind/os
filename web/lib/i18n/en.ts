@@ -9,12 +9,12 @@ type PhaseTone = "shipped" | "build" | "rfc";
 
 export const en = {
   meta: {
-    title: "Negent Mind — Order out of chaos",
+    title: "NEGENT MIND — Order out of chaos",
     description:
       "Applied AI Research & Product Engineering: infrastructure for persistent, controllable, efficient and trustworthy agentic AI.",
   },
   nav: {
-    homeAria: "Negent Mind, home",
+    homeAria: "NEGENT MIND, home",
     navAria: "Sections",
     langAria: "Language",
     links: [
@@ -55,7 +55,7 @@ export const en = {
     label: "[ 01 / THE ORGANIZATION ]",
     title: "Agents are brilliant at inference",
     qual: "and amnesiac by default.",
-    sub: "Negent Mind is an independent applied AI research and product engineering lab building infrastructure for AI agents — memory, perception, verification, execution. One engine is shipping; the rest of the map is written specification, labelled as vision.",
+    sub: "NEGENT MIND is an independent applied AI research and product engineering lab building infrastructure for AI agents — memory, perception, verification, execution. One engine is shipping; the rest of the map is written specification, labelled as vision.",
     problems: [
       {
         name: "Markdown memory rots",
@@ -271,7 +271,7 @@ export const en = {
     },
     founder: {
       title: "One founder, working in the open.",
-      body: "Negent Mind is an independent, founder-led lab — not yet an incorporated company. No venture backing, no team page to inflate — the shipped engine and this capability map are the full extent of the public work, stated at honest scale.",
+      body: "NEGENT MIND is an independent, founder-led lab — not yet an incorporated company. No venture backing, no team page to inflate — the shipped engine and this capability map are the full extent of the public work, stated at honest scale.",
     },
     contact: {
       title: "A direct line.",
@@ -363,7 +363,7 @@ export const en = {
       {
         name: "Not an agent framework",
         detail:
-          "Negent Mind does not orchestrate reasoning or prompt loops. It builds the substrate the reasoning reads from and writes to.",
+          "NEGENT MIND does not orchestrate reasoning or prompt loops. It builds the substrate the reasoning reads from and writes to.",
       },
       {
         name: "Not a hosted service",
@@ -396,7 +396,7 @@ export const en = {
     label: "[ 10 / OPEN SOURCE ]",
     title: "Built in public.",
     qual: "join in.",
-    sub: "Negent Mind is an independent applied AI research lab. The engine is Apache-2.0: read it, fork it, embed it in your agent — and help decide what gets built next.",
+    sub: "NEGENT MIND is an independent applied AI research lab. The engine is Apache-2.0: read it, fork it, embed it in your agent — and help decide what gets built next.",
     ctaRepo: displayUrl(VANTADB_REPO).replace("github.com/", ""),
     ctaOrg: "NegentMind org",
     cards: [
@@ -419,7 +419,7 @@ export const en = {
         plan: "The organization",
         amount: "Open",
         per: "specs before code",
-        desc: "Negent Mind writes its capability specifications as internal RFCs; a public summary will live in the Handbook. Released code, work in incubation and vision are labelled as such.",
+        desc: "NEGENT MIND writes its capability specifications as internal RFCs; a public summary will live in the Handbook. Released code, work in incubation and vision are labelled as such.",
         inc: "HOW TO JOIN",
         rows: [
           ["read", "the capability map and its status labels"],
@@ -437,7 +437,7 @@ export const en = {
     title: "Asked, answered.",
     items: [
       {
-        q: "What is Negent Mind exactly?",
+        q: "What is NEGENT MIND exactly?",
         a: "An independent applied AI research and product engineering lab building infrastructure for persistent, controllable, efficient and trustworthy agentic AI. VantaDB, the embedded memory engine, is its first released project. Scopegrain is in incubation and not yet released. Everything else on this page is a long-term capability map — written specifications, not products.",
       },
       {
@@ -468,7 +468,7 @@ export const en = {
     ],
     handbook: "Handbook",
     handbookPending: "Handbook — publishing December 2026",
-    legal: "© {year} Negent Mind · Apache-2.0",
+    legal: "© {year} NEGENT MIND · Apache-2.0",
     pending: "Privacy and Terms pending publication.",
   },
 };

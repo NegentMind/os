@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: MarketingPageProps): Promise<
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   return {
-    title: `${getSiteCopy(lang).common.gallery} — Negent Mind`,
+    title: `${getSiteCopy(lang).common.gallery} — NEGENT MIND`,
     robots: { index: false, follow: false },
   };
 }
