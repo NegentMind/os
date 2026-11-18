@@ -12,6 +12,16 @@ orbital-display.ttf + orbital-display.woff2. Filled <circle> elements in
 a glyph SVG (the i/j tittle, colon/period dots, same r6 geometry as the
 registration dot) are merged as filled outlines, not stroked.
 
+Accented glyphs (v0.4) are composed here, not stored as SVGs: the
+diacritic marks are parametric geometry appended to the base letter's
+path data. Capitals reuse verbatim the mark geometry already shipped in
+web/components/nm/v2/orbital-glyphs.tsx (acute rising 12×10 into
+y<0, angular zigzag tilde, r5 dieresis dots); lowercase marks hang in
+the tittle zone with their lowest point at y=40; the cedilla is an
+angular hook under the baseline (y≈96..114), echoing the comma tail.
+í drops the i tittle. Advance/sidebearings are copied from the base
+letter, including its OPTICAL/OPTICAL_LOWER correction.
+
 Geometry source: ./glyphs/*.svg + ./glyphs/lowercase/*.svg +
 ./glyphs/punct/*.svg — same table as
 web/components/nm/v2/orbital-glyphs.tsx and font/specimen.html.
@@ -95,6 +105,63 @@ PUNCT = {
 # ASCII-less apostrophe in copy that already uses U+2019.
 PUNCT_ALIASES = {0x2010: "hyphen"}
 OPTICAL_PUNCT: dict[str, int] = {}
+
+# --- diacritic marks (SVG units, appended to the base letter's path) ---------
+# Capital marks reproduce verbatim the composites already shipped in
+# web/components/nm/v2/orbital-glyphs.tsx (they paint above cap y=16 in
+# negative y; the stem-less top bars reach y≈9.5 of ink, so the acute sits
+# deliberately tight). Lowercase marks hang in the tittle zone with their
+# lowest endpoint at y=40 (≈45 ink, ~4.5 over x-height ink at 49.5).
+# `ax` is the accent anchor: the optical center of the base letterform.
+
+
+def _acute(ax: float, yb: float) -> str:
+    """Acute bar rising to the right: 12 wide, 10 tall, butt ends."""
+    return f"M{ax - 6:g},{yb:g} L{ax + 6:g},{yb - 10:g}"
+
+
+def _tilde(ax: float, yb: float) -> str:
+    """Angular zigzag tilde (no curves — the face is bevel-joined)."""
+    return (
+        f"M{ax - 13.5:g},{yb:g} L{ax - 4.5:g},{yb - 7:g} "
+        f"L{ax + 4.5:g},{yb - 1:g} L{ax + 13.5:g},{yb - 6:g}"
+    )
+
+
+def _dieresis(ax: float, cy: float) -> list[tuple[float, float, float]]:
+    """Two filled dots r5 (as shipped in the web composite; the r6
+    registration dot reads too heavy above cap height)."""
+    return [(ax - 8, cy, 5), (ax + 8, cy, 5)]
+
+
+def _cedilla(ax: float) -> str:
+    """Angular hook under the baseline — echoes the comma tail."""
+    return f"M{ax + 6:g},96 L{ax - 8:g},106 L{ax - 2:g},114"
+
+
+# name -> (codepoint, base letter, svg subdir, extra path d, extra circles,
+#          drop base filled dots). Anchors chosen per letterform (apex/stem/
+# bowl center), matching the deployed composite where it exists.
+ACCENTED: dict[str, tuple[int, str, str, str, list, bool]] = {
+    "Aacute":    (0x00C1, "A", "", _acute(36, 6), [], False),
+    "Ccedilla":  (0x00C7, "C", "", _cedilla(34.6), [], False),
+    "Eacute":    (0x00C9, "E", "", _acute(32, 6), [], False),
+    "Iacute":    (0x00CD, "I", "", _acute(18, 6), [], False),
+    "Ntilde":    (0x00D1, "N", "", _tilde(35.5, 2), [], False),
+    "Oacute":    (0x00D3, "O", "", _acute(38, 6), [], False),
+    "Uacute":    (0x00DA, "U", "", _acute(36, 6), [], False),
+    "Udieresis": (0x00DC, "U", "", "", _dieresis(36, -2), False),
+    "Yacute":    (0x00DD, "Y", "", _acute(34, 6), [], False),
+    "aacute":    (0x00E1, "a", "lowercase", _acute(32, 40), [], False),
+    "ccedilla":  (0x00E7, "c", "lowercase", _cedilla(27.3), [], False),
+    "eacute":    (0x00E9, "e", "lowercase", _acute(28, 40), [], False),
+    "iacute":    (0x00ED, "i", "lowercase", _acute(12, 40), [], True),
+    "ntilde":    (0x00F1, "n", "lowercase", _tilde(32, 40), [], False),
+    "oacute":    (0x00F3, "o", "lowercase", _acute(32, 40), [], False),
+    "uacute":    (0x00FA, "u", "lowercase", _acute(32, 40), [], False),
+    "udieresis": (0x00FC, "u", "lowercase", "", _dieresis(32, 40), False),
+    "yacute":    (0x00FD, "y", "lowercase", _acute(32, 40), [], False),
+}
 
 # --- tiny SVG path parser (M/L/H/V/A/Z, absolute only) -----------------------
 TOKEN = re.compile(r"([MLHVAZ])([^MLHVAZ]*)")
@@ -289,11 +356,15 @@ def read_glyph(
 
 
 def main() -> None:
-    glyph_order = [".notdef", "space", "period"] + LETTERS + LOWER + list(PUNCT)
+    glyph_order = (
+        [".notdef", "space", "period"]
+        + LETTERS + LOWER + list(PUNCT) + list(ACCENTED)
+    )
     cmap: dict[int, str] = {0x20: "space", 0x2E: "period"}
     cmap.update({ord(ch): ch for ch in LETTERS + LOWER})
     cmap.update({code: name for name, code in PUNCT.items()})
     cmap.update(PUNCT_ALIASES)
+    cmap.update({code: name for name, (code, *_rest) in ACCENTED.items()})
 
     glyphs: dict[str, object] = {}
     metrics: dict[str, tuple[int, int]] = {}
@@ -334,29 +405,52 @@ def main() -> None:
         )
         metrics[name] = (advance, LSB)
 
+    # Accented glyphs: base letter outline + composed mark. Metrics are
+    # copied verbatim from the base letter so accents change zero spacing.
+    for name, (_code, base, sub, mark_d, mark_circles, drop_dots) in (
+        ACCENTED.items()
+    ):
+        d, w, circles = read_glyph(base, sub)
+        if drop_dots:
+            circles = []
+        combined_d = " ".join(chunk for chunk in (d, mark_d) if chunk)
+        glyphs[name] = outline_to_tt(
+            svg_path_to_skia(combined_d) if combined_d else None,
+            LSB,
+            circles + mark_circles,
+        )
+        optical = (
+            OPTICAL.get(base, 0) if not sub else OPTICAL_LOWER.get(base, 0)
+        )
+        advance = round(w * SCALE + LSB + RSB + optical)
+        metrics[name] = (advance, LSB)
+
     fb = FontBuilder(UPM, isTTF=True)
     fb.setupGlyphOrder(glyph_order)
     fb.setupCharacterMap(cmap)
     fb.setupGlyf(glyphs)
     fb.setupHorizontalMetrics(metrics)
-    fb.setupHorizontalHeader(ascent=820, descent=-240)
+    # v0.4: ascent raised 820 -> 940. The capital tilde's ink tops out at
+    # ~y_svg=-10 (~929 font units); hhea/usWin must cover it or accents clip.
+    fb.setupHorizontalHeader(ascent=940, descent=-240)
     fb.setupNameTable({
         "familyName": "Orbital Display",
         "styleName": "Regular",
-        "uniqueFontIdentifier": "Negent Mind; Orbital Display; 0.3.0",
+        "uniqueFontIdentifier": "Negent Mind; Orbital Display; 0.4.0",
         "fullName": "Orbital Display Regular",
         "psName": "OrbitalDisplay-Regular",
-        "version": "Version 0.3.0",
+        "version": "Version 0.4.0",
         "description": "MVP display face built from the Orbital logo "
-                       "construction. A-Z + a-z + punctuation + space + "
-                       "registration dot. Development build; see SPECIMEN.md.",
+                       "construction. A-Z + a-z + punctuation + Spanish "
+                       "diacritics + space + registration dot. "
+                       "Development build; see SPECIMEN.md.",
         "licenseDescription": "Unreleased development build. License pending.",
     })
     fb.setupOS2(
         sTypoAscender=780,
         sTypoDescender=-200,
         sTypoLineGap=60,
-        usWinAscent=820,
+        usWinAscent=940,
         usWinDescent=240,
         sCapHeight=700,
         sxHeight=350,

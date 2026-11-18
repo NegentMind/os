@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Orbital Display v0.3 — preview of the REAL font file (orbital-display.woff2).
+<!-- Orbital Display v0.4 — preview of the REAL font file (orbital-display.woff2).
      Open this file in a browser; the font loads via @font-face, so what you see
      is exactly what the compiled font renders — not the source SVGs. -->
 <html lang="es">
@@ -47,13 +47,26 @@
 </style>
 </head>
 <body>
-  <h1>Orbital Display — v0.3 preview</h1>
-  <div class="note">Fuente real via <code>@font-face</code> (woff2). Cobertura: A–Z + a–z + puntuación + espacio + punto. Sin kerning, dígitos ni acentos.</div>
+  <h1>Orbital Display — v0.4 preview</h1>
+  <div class="note">Fuente real via <code>@font-face</code> (woff2). Cobertura: A–Z + a–z + puntuación + diacríticos españoles + espacio + punto. Sin kerning ni dígitos.</div>
 
   <h2>Alfabeto</h2>
   <div class="orbital alpha">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
   <div class="orbital alpha">abcdefghijklmnopqrstuvwxyz</div>
   <div class="orbital alpha">.,:;?!'&#x2019;&quot;-&#x2013;&#x2014;()/&#xB7;+&#xBF;&#xA1;&amp;%</div>
+  <div class="orbital alpha">&#xC1;&#xC9;&#xCD;&#xD3;&#xDA;&#xDD; &#xD1;&#xDC;&#xC7;</div>
+  <div class="orbital alpha">&#xE1;&#xE9;&#xED;&#xF3;&#xFA;&#xFD; &#xF1;&#xFC;&#xE7;</div>
+
+  <h2>Diacríticos — palabras reales de la web</h2>
+  <div class="orbital" style="font-size:44px; line-height:1.6;">
+    Recuperaci&#xF3;n &#xB7; cat&#xE1;logo &#xB7; c&#xF3;digo &#xB7; &#xFA;til<br>
+    &#xBF;C&#xF3;mo? direcci&#xF3;n &#xB7; NI&#xD1;O<br>
+    Colaboraci&#xF3;n &#xB7; s&#xED; &#xB7; deber&#xED;a
+  </div>
+  <div class="orbital" style="font-size:26px; line-height:1.5; max-width:60ch; margin-top:12px;">
+    El veloz murci&#xE9;lago hind&#xFA; com&#xED;a feliz cardillo y kiwi.
+    Ma&#xF1;ana, ping&#xFC;ino, acci&#xF3;n, coraz&#xF3;n, cig&#xFC;e&#xF1;a, Par&#xED;s.
+  </div>
 
   <h2>Puntuación en frase</h2>
   <div class="orbital" style="font-size:34px; line-height:1.5; max-width:64ch;">
@@ -106,6 +119,6 @@
 
   <h2>Prueba libre</h2>
   <textarea class="orbital" spellcheck="false">Negent Mind.</textarea>
-  <label>Escribe aquí — A–Z, a–z, puntuación, espacio y punto existen; dígitos y acentos caen a fallback.</label>
+  <label>Escribe aquí — A–Z, a–z, puntuación, acentos españoles, espacio y punto existen; los dígitos caen a fallback.</label>
 </body>
 </html>

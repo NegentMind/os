@@ -36,6 +36,13 @@
 <div class="row" id="alphabet-lower"></div>
 <h2>Punctuation (glyphs/punct)</h2>
 <div class="row" id="punct"></div>
+<h2>Accented — diacríticos ES (composed in build-font.py, v0.4)</h2>
+<div class="row" id="accented"></div>
+<h2>Accent checks</h2>
+<div class="word"><label>Recuperación · catálogo · código · útil</label><svg data-word="Recuperación catálogo código útil"></svg></div>
+<div class="word"><label>¿Cómo? dirección · NIÑO</label><svg data-word="¿Cómo? dirección NIÑO"></svg></div>
+<div class="word"><label>Colaboración sí debería</label><svg data-word="Colaboración sí debería"></svg></div>
+<div class="word"><label>murciélago hindú · mañana pingüino · cigüeña París</label><svg data-word="murciélago hindú mañana pingüino cigüeña París"></svg></div>
 <h2>Punctuation checks</h2>
 <div class="word"><label>¿HOLA? ¡OJO!</label><svg data-word="¿HOLA? ¡OJO!"></svg></div>
 <div class="word"><label>LOCAL-FIRST — MEMORIA, CONTEXTO: IDEAS.</label><svg data-word="LOCAL-FIRST — MEMORIA, CONTEXTO: IDEAS."></svg></div>
@@ -143,8 +150,30 @@ const GLYPHS = {
   "¿": { d: "M48,98 A20,20 0 1 1 28,78 L28,64", w: 64, dots: [[28, 40, 6]] },
   "¡": { d: "M20,62 V116", w: 40, dots: [[20, 40, 6]] },
   "&": { d: "M48,32 A14,14 0 1 0 46,46 L20,72 A20,20 0 1 0 60,72 L72,96", w: 84 },
-  "%": { d: "M64,16 L16,96 M18,22 A11,11 0 1 0 18,44 A11,11 0 1 0 18,22 Z M62,74 A11,11 0 1 0 62,96 A11,11 0 1 0 62,74 Z", w: 80 },
+  "%": { d: "M64,16 L16,96 M18,22 A11,11 0 1 0 18,44 A11,11 0 1 0 18,22 Z M62,74 A11,11 0 1 0 62,74 Z", w: 80 },
+  // accented — composite: base letter + mark (same geometry as
+  // build-font.py ACCENTED / web orbital-glyphs.tsx). Caps paint in y<0
+  // (viewBox of the cells is raised for this row); í drops the tittle.
+  "Á": { d: "M10,96 L34,16 L58,96 M20,68 H48 M30,6 L42,-4", w: 68, above: true },
+  "É": { d: "M52,16 H12 V96 H52 M12,56 H44 M26,6 L38,-4", w: 64, above: true },
+  "Í": { d: "M18,16 V96 M12,6 L24,-4", w: 36, above: true },
+  "Ó": { d: "M38,16 A30,40 0 1 0 38,96 A30,40 0 1 0 38,16 Z M32,6 L44,-4", w: 78, above: true },
+  "Ú": { d: "M12,16 V72 A24,24 0 0 0 60,72 V16 M30,6 L42,-4", w: 72, above: true },
+  "Ý": { d: "M8,16 L34,56 L60,16 M34,56 V96 M28,6 L40,-4", w: 68, above: true },
+  "Ñ": { d: "M12,96 V16 L56,96 V16 M22,2 L31,-5 L40,1 L49,-4", w: 68, above: true },
+  "Ü": { d: "M12,16 V72 A24,24 0 0 0 60,72 V16", w: 72, dots: [[28, -2, 5], [44, -2, 5]], above: true },
+  "Ç": { d: "M74.6,30.3 A40,40 0 1 0 74.6,81.7 M40.6,96 L26.6,106 L32.6,114", w: 82 },
+  "á": { d: "M32,56 A20,20 0 1 0 32,96 A20,20 0 1 0 32,56 Z M52,56 V96 M26,40 L38,30", w: 64 },
+  "é": { d: "M47.3,63.1 A20,20 0 1 0 47.3,88.9 M13,76 H48 M22,40 L34,30", w: 60 },
+  "í": { d: "M12,56 V96 M6,40 L18,30", w: 30 },
+  "ó": { d: "M32,56 A20,20 0 1 0 32,96 A20,20 0 1 0 32,56 Z M26,40 L38,30", w: 64 },
+  "ú": { d: "M12,56 V76 A20,20 0 0 0 52,76 V56 M26,40 L38,30", w: 64 },
+  "ý": { d: "M12,56 L32,80 L52,56 M32,80 V96 A20,20 0 0 1 12,116 M26,40 L38,30", w: 64 },
+  "ñ": { d: "M12,56 V96 M12,76 A20,20 0 0 1 52,76 V96 M18.5,40 L27.5,33 L36.5,39 L45.5,34", w: 64 },
+  "ü": { d: "M12,56 V76 A20,20 0 0 0 52,76 V56", w: 64, dots: [[24, 40, 5], [40, 40, 5]] },
+  "ç": { d: "M47.3,63.1 A20,20 0 1 0 47.3,88.9 M33.3,96 L19.3,106 L25.3,114", w: 60 },
 };
+const ACCENTED_CHARS = "ÁÉÍÓÚÝÑÜÇáéíóúýñüç";
 const PUNCT_CHARS = ".,:;?!'’\"-–—()/·+¿¡&%";
 const GAP = 16;
 const NS = "http://www.w3.org/2000/svg";
@@ -174,16 +203,19 @@ function glyphPaths(letter, dx) {
 
 function wordSvg(word, target) {
   let x = 0;
+  let above = false;
   const paths = [];
   for (const ch of word) {
     if (ch === " ") { x += 34; continue; }
     const g = GLYPHS[ch];
     if (!g) { x += 40; continue; }
+    if (g.above) above = true;
     paths.push(...glyphPaths(ch, x));
     x += g.w + GAP;
   }
   x -= GAP;
-  target.setAttribute("viewBox", `0 0 ${x} 120`);
+  // Cap marks paint in y<0: raise the viewBox or they clip.
+  target.setAttribute("viewBox", above ? `0 -30 ${x} 150` : `0 0 ${x} 120`);
   const g = document.createElementNS(NS, "g");
   g.setAttribute("fill", "none");
   g.setAttribute("stroke", "currentColor");
@@ -196,13 +228,14 @@ function wordSvg(word, target) {
 const alpha = document.getElementById("alphabet");
 const alphaLower = document.getElementById("alphabet-lower");
 const punct = document.getElementById("punct");
+const accented = document.getElementById("accented");
 
 function makeCell(ch, parent) {
   const g = GLYPHS[ch];
   const cell = document.createElement("div");
   cell.className = "cell";
   const svg = document.createElementNS(NS, "svg");
-  svg.setAttribute("viewBox", "0 0 96 120");
+  svg.setAttribute("viewBox", g.above ? "0 -30 96 150" : "0 0 96 120");
   const grp = document.createElementNS(NS, "g");
   grp.setAttribute("fill", "none");
   grp.setAttribute("stroke", "currentColor");
@@ -222,6 +255,7 @@ for (let i = 65; i <= 122; i++) {
   makeCell(String.fromCharCode(i), i <= 90 ? alpha : alphaLower);
 }
 for (const ch of PUNCT_CHARS) makeCell(ch, punct);
+for (const ch of ACCENTED_CHARS) makeCell(ch, accented);
 
 // Logo verbatim from orbital-source.svg
 const logo = document.getElementById("logo");

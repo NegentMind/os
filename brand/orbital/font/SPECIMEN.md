@@ -1,9 +1,10 @@
 # Orbital Display — MVP
 
-Estado: **build de desarrollo 0.3.0**, no es una fuente publicada ni aprobada
+Estado: **build de desarrollo 0.4.0**, no es una fuente publicada ni aprobada
 para uso tipográfico general. Implementa la primera hoja de
-`../TYPEFACE-STUDY.md` más la puntuación de uso real: mayúsculas A–Z,
-minúsculas a–z, puntuación, espacio y el punto de registro.
+`../TYPEFACE-STUDY.md` más la puntuación de uso real y los diacríticos
+españoles: mayúsculas A–Z, minúsculas a–z, puntuación, acentos/tilde/
+diéresis/cedilla, espacio y el punto de registro.
 
 ## Qué contiene
 
@@ -17,8 +18,9 @@ minúsculas a–z, puntuación, espacio y el punto de registro.
   puntos rellenos r6 = geometría del punto de registro).
 - `build-font.py` — pipeline reproducible: parsea los SVG, expande el trazo a
   contornos cerrados (skia-pathops, butt caps + bevel joins), une los
-  círculos rellenos, escala a UPM 1024 (cap 700, baseline 0), aplica
-  sidebearings y emite TTF + WOFF2.
+  círculos rellenos, compone los diacríticos sobre la letra base (tabla
+  `ACCENTED`), escala a UPM 1024 (cap 700, baseline 0), aplica sidebearings
+  y emite TTF + WOFF2.
 - `orbital-display.ttf` / `orbital-display.woff2` — exports generados.
 - `specimen.html` — mesa de glifos (paths centerline, como en el logo).
 - `preview.html` — prueba de render de la fuente compilada.
@@ -32,7 +34,9 @@ minúsculas a–z, puntuación, espacio y el punto de registro.
 - Espacio (U+0020) y punto de registro en U+002E (relleno, no trazo).
 - Puntuación (20): `,` `:` `;` `?` `!` `'` `’` `"` `-` `–` `—` `(` `)` `/`
   `·` `+` `¿` `¡` `&` `%`. U+002D duplica como U+2010 (hyphen).
-- Total: 75 glifos en la fuente compilada.
+- Diacríticos ES (18, v0.4): `Á É Í Ó Ú Ý Ñ Ü Ç` + `á é í ó ú ý ñ ü ç`.
+  Compuestos en `build-font.py` (tabla `ACCENTED`), no hay SVGs propios.
+- Total: 93 glifos en la fuente compilada.
 
 ## Decisiones de diseño — minúsculas (revisables)
 
@@ -111,10 +115,41 @@ minúsculas a–z, puntuación, espacio y el punto de registro.
 - Métricas: avance uniforme `w*SCALE + 52+52` (`OPTICAL_PUNCT` existe para
   correcciones futuras). El punto U+002E conserva sus métricas heredadas.
 
+## Decisiones de diseño — diacríticos (v0.4, revisables)
+
+- **Composición en build, no SVGs**: las marcas son geometría paramétrica en
+  `build-font.py` (`_acute`, `_tilde`, `_dieresis`, `_cedilla`) anclada a un
+  `ax` por letra (centro óptico: ápice, asta o centro del bowl). Las
+  mayúsculas replican **verbatim** los compuestos ya desplegados en
+  `web/components/nm/v2/orbital-glyphs.tsx` — la fuente y el renderer SVG de
+  la web dibujan ahora la misma marca.
+- **Agudo = barra diagonal** `M{ax-6},{yb} L{ax+6},{yb-10}` (12×10 unidades,
+  sube a la derecha; cap: `yb=6`, minúscula: `yb=40`). Con trazo 13 lee como
+  un pequeño rombo — coherente con el lenguaje de la fuente.
+- **Tilde = zigzag angular** `M{ax-13.5},{y} L{ax-4.5},{y-7} L{ax+4.5},{y-1}
+  L{ax+13.5},{y-6}` — decisión heredada del composite web (la fuente es
+  bevel-joins; una tilde de arcos sería foránea a la gramática). En ñ
+  minúscula puede leer como "techo" a tamaños pequeños: candidata débil.
+- **Diéresis = doble punto r5** (no r6): r5 es lo que ya se desplegó en el
+  composite web; el punto r6 de registro lee pesado sobre cap. Minúsculas:
+  `cy=40`, `±8`.
+- **Cedilla = gancho angular** `M{ax+6},96 L{ax-8},106 L{ax-2},114`, eco de
+  la cola de la coma; tinta hasta y≈119 (−192 funits) dentro del descender.
+- **Aire**: caps — marcas con tinta desde y≈2-3 (agudo casi roza la barra
+  superior a y=9.5, gap ~1.5u: apretado pero es lo aprobado en producción);
+  minúsculas — extremo inferior de la marca en y=40 → tinta ≈45, gap ~4.5u
+  sobre la tinta de x-height (49.5), ritmo de la zona del tittle (cy=34).
+- **í** elimina el tittle antes de componer el agudo (asta limpia + marca).
+- **Métricas**: advance y sidebearings idénticos a la letra base, incluyendo
+  su corrección `OPTICAL`/`OPTICAL_LOWER` — los acentos no alteran el ritmo.
+- **usWinAscent/hhea 820→940**: la tinta de la tilde capital llega a y_svg
+  ≈ −10 (~929 funits). `sTypoAscender` se mantiene en 780; `usWinDescent`
+  240 cubre la cedilla (−192).
+
 ## Pendiente (no fingir que está hecho)
 
-- Dígitos, acentos españoles (ÁÉÍÓÚ Ñ Ü áéíóú ñ ü) — la web compone los
-  acentos como glifos compuestos en `orbital-glyphs.tsx`, la fuente aún no.
+- **Dígitos** — fuera de alcance deliberado en v0.4: ningún título de la web
+  los usa. El mapa SVG `orbital-glyphs.tsx` tampoco los compone todavía.
 - Kerning (GPOS): los pares con diagonales (AV, WA, TY, LY, y ahora los
   pares con v/w/y minúsculas) están flojos.
 - Overshoots ópticos: las curvas tocan 16/56/96 sin sobresalir; a tamaños
