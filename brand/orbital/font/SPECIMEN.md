@@ -1,10 +1,12 @@
 # Orbital Display — MVP
 
-Estado: **build de desarrollo 0.4.0**, no es una fuente publicada ni aprobada
+Estado: **build de desarrollo 0.4.1**, no es una fuente publicada ni aprobada
 para uso tipográfico general. Implementa la primera hoja de
 `../TYPEFACE-STUDY.md` más la puntuación de uso real y los diacríticos
 españoles: mayúsculas A–Z, minúsculas a–z, puntuación, acentos/tilde/
-diéresis/cedilla, espacio y el punto de registro.
+diéresis/cedilla, espacio y el punto de registro. v0.4.1 = pase de
+visibilidad de puntuación con el estilo del wordmark (trazo 13 bevel +
+punto r6 como firma).
 
 ## Qué contiene
 
@@ -83,37 +85,60 @@ diéresis/cedilla, espacio y el punto de registro.
 - Métricas: ancho variable por letra, sidebearing base 52+52 con correcciones
   ópticas manuales (`OPTICAL` en build-font.py). Sin kerning.
 
-## Decisiones de diseño — puntuación (revisables)
+## Decisiones de diseño — puntuación (v0.4.1, revisables)
 
-- **Puntos r6 rellenos** (`,;:!?¡·.` y parte de `?`): misma geometría que el
-  punto de registro y el tittle — los signos se anclan a una única forma de
-  punto. Puntos sobre baseline en cy=92; punto alto en cy=58 (línea x-height).
+Pase de visibilidad: los signos adoptan la firma del wordmark — trazo 13
+bevel + **punto sólido r6** — y geometría con más masa. Misma tabla en
+`web/components/nm/v2/orbital-glyphs.tsx` (paridad verbatim).
+
+- **Puntos r6 rellenos — decisión mantenida.** Se evaluó subir a r7-8 para
+  ganar visibilidad y se descartó: r6 es la geometría literal del punto de
+  registro (cierre del logo), compartida con `,:;!?¡·.`, `’` y el tittle de
+  i/j. Un punto mayor rompería el invariante "una sola forma de punto" de
+  la marca. La visibilidad se ganó con masa de trazo (ganchos, chevrones),
+  no con puntos más grandes.
 - **Guiones `-` `–` `—` y `+` en y=56** (línea media / centro óptico de las
-  capitales): decisión de display en versales, donde el guion coincide con
-  la barra de E/F/H. En corrido con minúsculas leen ligeramente altos —
-  candidato a bajar a ~y=66 si se usa en texto mixto.
-- **`,` `;` `'`**: coma = punto r6 + cola diagonal recta a descender (y=116),
-  gramática angular coherente con el resto de la fuente. `'` (quotesingle)
-  es tick vertical; `’` (quoteright) es tick diagonal — distinguibles, ambos
-  deliberadamente simples.
-- **`?`**: arco r20 (la familia de bowls) abierto abajo-izquierda + asta +
-  punto; **`¿`/`¡`** son la rotación 180° exacta de `?`/`!`: el bowl baja a
-  la línea de descendentes y el punto queda en la zona de x-height.
-- **`(` `)`**: media elipse r30×50 entre cap (16) y descender (116).
-- **`/`** diagonal cap→baseline; **`%`** con dos círculos r11 trazados
-  (misma lectura "anillo" que O) + diagonal; **`&`** = bucle superior r14
-  abierto + diagonal + bowl inferior r20 con cola de salida a baseline.
+  capitales): mantenidos — coinciden con la barra de E/F/H, lectura
+  deliberada en versales. En corrido con minúsculas leen ligeramente altos
+  — candidato a bajar a ~y=66 si se usa en texto mixto.
+- **`,` `;`** = punto r6 (cy=84) + **gancho angular de dos segmentos**
+  `M26,90 L14,108 L8,116` — la cola recta fina de v0.4 se perdía a tamaños
+  medios; el codo bevel da masa y recorrido horizontal. La parte "coma" del
+  `;` es idéntica a la `,`.
+- **`'` `"` `’`**: `'` (quotesingle) = barra inclinada con codo
+  `M22,16 L16,34 L12,44`; `"` (quotedbl) = el mismo módulo por duplicado;
+  `’` (quoteright, U+2019) = **mini-coma elevada**: punto r6 en cy=22 +
+  gancho `M26,28 L16,42 L12,48` — la forma formalmente correcta de
+  apóstrofe, ya no un tick confundible con I/asta.
+- **`?`**: arco r20 abierto abajo-izquierda + asta alargada (V68→V72) +
+  punto r6; **`¿`/`¡`** son la **rotación 180° exacta** de `?`/`!` en el
+  mismo box (axis y=66): v0.4.1 corrige el ¿ heredado (punto de arranque
+  del arco desplazado y caja estrecha w64→w68). El bowl llega a descender
+  y=116; el punto queda en cy=40 (zona x-height).
+- **`!`** = barra V16→70 + punto r6 (asta +2 por consistencia con `?`).
+- **`(` `)`**: **chevron** `M46,16 L16,66 L46,116` (vértice en el centro
+  óptico y=66) — la media elipse fina se perdía a tamaños medios; el
+  ángulo es nativo de la gramática bevel/línea y lee como delimitador
+  inequívoco. Riesgo asumido: leen como angle-brackets ⟨ ⟩ (la fuente no
+  tiene `<` `>`, no colisionan).
+- **`/`** diagonal cap→baseline; **`%`** con anillos **r14** (era r11, se
+  empastaban): anillo superior con centerline apoyada en cap y=16,
+  inferior en baseline y=96, diagonal despejada; w 80→88.
+- **`&`** reconstruido: **anillo superior cerrado r13** + diagonal que
+  cruza a un **bowl-U r19** abierto arriba + cola de salida a baseline.
+  El contraforma cerrado es la señal del & — la versión v0.4 leía como un
+  "8" fragmentado.
 - Glifos flojos honestos:
-  - **`&`** lee correcto pero es el más apretado del set — el bucle superior
-    puede leerse como un "8" fragmentado; candidato a geometría propia.
-  - **`,`**: la cola recta es funcional pero seca; una cola con arco r12-14
-    sería más tipográfica si molesta.
-  - **`'` `’`**: ticks muy simples; `’` como mini-coma elevada sería más
-    correcta formalmente.
+  - **`%`**: los anillos r14 muestran el kink bevel en la unión de semicircos
+    (mismo rasgo que O); si molesta, el anillo pediría construcción
+    continua.
+  - **`(` `)`** chevron: revisar si en titulares grandes el vértice y=66
+    parece demasiado mecánico vs la curva humana del resto.
   - **`¿` `¡`**: el punto en cy=40 queda alto respecto a convención
     (x-height); revisar en contexto de frase.
 - Métricas: avance uniforme `w*SCALE + 52+52` (`OPTICAL_PUNCT` existe para
-  correcciones futuras). El punto U+002E conserva sus métricas heredadas.
+  correcciones futuras). `%` ganó 8 unidades de caja. El punto U+002E
+  conserva sus métricas heredadas.
 
 ## Decisiones de diseño — diacríticos (v0.4, revisables)
 

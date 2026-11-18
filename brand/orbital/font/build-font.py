@@ -436,13 +436,14 @@ def main() -> None:
     fb.setupNameTable({
         "familyName": "Orbital Display",
         "styleName": "Regular",
-        "uniqueFontIdentifier": "Negent Mind; Orbital Display; 0.4.0",
+        "uniqueFontIdentifier": "Negent Mind; Orbital Display; 0.4.1",
         "fullName": "Orbital Display Regular",
         "psName": "OrbitalDisplay-Regular",
-        "version": "Version 0.4.0",
+        "version": "Version 0.4.1",
         "description": "MVP display face built from the Orbital logo "
                        "construction. A-Z + a-z + punctuation + Spanish "
-                       "diacritics + space + registration dot. "
+                       "diacritics + space + registration dot. 0.4.1: "
+                       "punctuation visibility pass (wordmark style). "
                        "Development build; see SPECIMEN.md.",
         "licenseDescription": "Unreleased development build. License pending.",
     })

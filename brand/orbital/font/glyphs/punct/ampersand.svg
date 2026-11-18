@@ -1,6 +1,8 @@
 <!-- Orbital glyph ampersand (&) — stroke 13, bevel joins, lines y=16/56/96.
-     descender y=116.
+     descender y=116. v0.4.1: rebuilt — closed top ring r13 + diagonal
+     crossing to a U-bowl r19 open at top + exit tail to baseline right.
+     The closed counter is the & signal; v0.4 read as a fragmented 8.
      Source of truth for this mark; build-font.py consumes it. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84 120">
-  <path d="M48,32 A14,14 0 1 0 46,46 L20,72 A20,20 0 1 0 60,72 L72,96" fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="bevel"/>
+  <path d="M46,16 A13,13 0 1 0 46,42 A13,13 0 1 0 46,16 Z M54,38 L26,64 A19,19 0 0 0 62,70 L74,96" fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="bevel"/>
 </svg>

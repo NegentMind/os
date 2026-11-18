@@ -11,9 +11,13 @@
  * map stays for glyphs the font does not cover yet (accented capitals,
  * digits) and for canvas/SVG-only contexts that cannot load a webfont.
  *
- * Punctuation mirrors glyphs/punct/*.svg (v0.3): baseline dots at cy=92,
+ * Punctuation mirrors glyphs/punct/*.svg (v0.4.1): baseline dots at cy=92,
  * upper dots at cy=58, ¿/¡ are the exact 180° rotation of ?/!. Filled r6
  * circles reuse the registration-dot geometry and render as `dots`.
+ * v0.4.1 visibility pass: comma/semicolon gain an angular hook (dot r6 +
+ * two-segment tail to the descender), quotes become slanted elbow bars /
+ * raised-comma marks, parens are chevrons, % rings grow r11→r14, & is a
+ * closed top ring + crossing + U-bowl (no longer a fragmented 8).
  *
  * Accented capitals (Á É Í Ó Ú Ñ Ü) are composites: base letter + a mark
  * drawn above the cap line in negative y. .nm2-orbital-word already sets
@@ -67,26 +71,26 @@ export const ORBITAL_GLYPHS: Readonly<Record<string, OrbitalGlyph>> = {
   "Ü": { d: "M12,16 V72 A24,24 0 0 0 60,72 V16", w: 72, dots: [[28, -2, 5], [44, -2, 5]] },
   // Punctuation — mirrors glyphs/punct/*.svg.
   ".": { d: "", w: 36, dots: [[18, 92, 6]] },
-  ",": { d: "M26,91 L13,116", w: 40, dots: [[24, 86, 6]] },
+  ",": { d: "M26,90 L14,108 L8,116", w: 40, dots: [[24, 84, 6]] },
   ":": { d: "", w: 36, dots: [[18, 58, 6], [18, 92, 6]] },
-  ";": { d: "M26,91 L13,116", w: 40, dots: [[24, 58, 6], [24, 86, 6]] },
-  "?": { d: "M20,36 A20,20 0 1 1 40,56 L40,68", w: 68, dots: [[40, 92, 6]] },
-  "!": { d: "M20,16 V68", w: 40, dots: [[20, 92, 6]] },
-  "'": { d: "M18,16 V44", w: 36 },
-  "’": { d: "M24,16 L12,44", w: 36 },
-  "\"": { d: "M14,16 V44 M34,16 V44", w: 48 },
+  ";": { d: "M26,90 L14,108 L8,116", w: 40, dots: [[24, 58, 6], [24, 84, 6]] },
+  "?": { d: "M20,36 A20,20 0 1 1 40,56 L40,72", w: 68, dots: [[40, 92, 6]] },
+  "!": { d: "M20,16 V70", w: 40, dots: [[20, 92, 6]] },
+  "'": { d: "M22,16 L16,34 L12,44", w: 36 },
+  "’": { d: "M26,28 L16,42 L12,48", w: 36, dots: [[24, 22, 6]] },
+  "\"": { d: "M18,16 L12,34 L10,44 M38,16 L32,34 L30,44", w: 48 },
   "-": { d: "M12,56 H40", w: 52 },
   "–": { d: "M6,56 H60", w: 66 },
   "—": { d: "M4,56 H92", w: 96 },
-  "(": { d: "M44,16 A30,50 0 0 0 44,116", w: 56 },
-  ")": { d: "M12,16 A30,50 0 0 1 12,116", w: 56 },
+  "(": { d: "M46,16 L16,66 L46,116", w: 56 },
+  ")": { d: "M10,16 L40,66 L10,116", w: 56 },
   "/": { d: "M54,16 L14,96", w: 68 },
   "·": { d: "", w: 36, dots: [[18, 58, 6]] },
   "+": { d: "M30,36 V76 M10,56 H50", w: 60 },
-  "¿": { d: "M48,98 A20,20 0 1 1 28,78 L28,64", w: 64, dots: [[28, 40, 6]] },
+  "¿": { d: "M48,96 A20,20 0 1 0 28,76 L28,60", w: 68, dots: [[28, 40, 6]] },
   "¡": { d: "M20,62 V116", w: 40, dots: [[20, 40, 6]] },
-  "&": { d: "M48,32 A14,14 0 1 0 46,46 L20,72 A20,20 0 1 0 60,72 L72,96", w: 84 },
-  "%": { d: "M64,16 L16,96 M18,22 A11,11 0 1 0 18,44 A11,11 0 1 0 18,22 Z M62,74 A11,11 0 1 0 62,96 A11,11 0 1 0 62,74 Z", w: 80 },
+  "&": { d: "M46,16 A13,13 0 1 0 46,42 A13,13 0 1 0 46,16 Z M54,38 L26,64 A19,19 0 0 0 62,70 L74,96", w: 84 },
+  "%": { d: "M69,16 L19,96 M23,16 A14,14 0 1 0 23,44 A14,14 0 1 0 23,16 Z M65,68 A14,14 0 1 0 65,96 A14,14 0 1 0 65,68 Z", w: 88 },
 };
 
 const SPACE_ADVANCE = 34;
