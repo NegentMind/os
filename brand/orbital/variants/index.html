@@ -15,7 +15,11 @@ h2{color:#f1f3f5;font-size:15px;letter-spacing:.14em;text-transform:uppercase;ma
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .grid.wide{grid-template-columns:1fr;gap:24px}
 .fig{margin:0}
-.fig b{color:#f1f3f5;font-size:13px;display:block}
+.fig b{color:#f1f3f5;font-size:13px;display:inline-block}
+.badge{display:inline-block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  padding:1px 6px;border-radius:3px;margin-left:8px;vertical-align:2px}
+.badge.main{background:#5bada0;color:#070809;font-weight:700}
+.badge.alt{border:1px solid #3a3f45;color:#6b7280}
 .fig span{color:#5bada0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:1px 0 6px}
 .fig img{display:block;width:100%;border:1px solid #23282f;background:#000}
 .fig .desc{color:#6b7280;font-size:12px;margin-top:6px}
@@ -30,9 +34,11 @@ nav a:hover{text-decoration:underline}
 </style>
 <header>
   <h1>Orbital v2 — variantes de assets de marca</h1>
-  <p class="sub">Carbón + plata, espectro puntual del hero warp, lettering Orbital. Elige una variante por asset;
-  los nombres de archivo están en <code>brand/orbital/variants/</code>. Capturado con Chromium, deviceScaleFactor 1.
-  Los assets actuales de <code>brand/orbital/</code> no se han tocado.</p>
+  <p class="sub">Carbón + plata, espectro puntual del hero warp, lettering Orbital.
+  Selección cerrada: <b style="color:#5bada0">PRINCIPAL</b> = elegida por el usuario,
+  <b style="color:#6b7280">ALTERNATIVA</b> = conservada para un futuro cambio.
+  Banner y OG salen modificados de <code>brand/orbital/banner-final/</code>
+  (wordmark centrado grande, fade de bordes, esquinas redondeadas, GIF animado).</p>
 </header>
 <nav>
   <a href="preview-banner.html">preview-banner</a><a href="preview-icon.html">preview-icon</a><a href="preview-avatar.html">preview-avatar</a><a href="preview-og.html">preview-og</a>
@@ -42,13 +48,15 @@ nav a:hover{text-decoration:underline}
   <h2>Banner — 2400×800 (GitHub: 1920×480)</h2>
   <p class="note">Cada celda muestra el master 2400×800; la mini inferior es la versión 1920×480 para perfil de GitHub.</p>
   <div class="grid">
-    <figure class="fig"><b>v1 — Strata</b><span>banner-v1.png / banner-gh-v1.png</span>
+    <figure class="fig"><b>v1 — Strata</b><em class="badge main">Principal</em><span>banner-v1.png / banner-gh-v1.png · mod → banner-final/</span>
       <img src="banner-v1.png"><img src="banner-gh-v1.png" style="margin-top:6px">
-      <div class="desc">Crop full-bleed del warp + velo carbón 60% + wordmark plata a la izquierda.</div></figure>
-    <figure class="fig"><b>v2 — Spectrum</b><span>banner-v2.png / banner-gh-v2.png</span>
+      <div class="desc">Crop full-bleed del warp + velo carbón 60% + wordmark plata a la izquierda.
+        <b style="color:#adb5c0">Seleccionada con cambios</b>: wordmark centrado grande, fade a
+        transparencia en los 4 bordes, esquinas redondeadas y GIF Ken Burns → <code>../banner-final/</code>.</div></figure>
+    <figure class="fig"><b>v2 — Spectrum</b><em class="badge alt">Alternativa</em><span>banner-v2.png / banner-gh-v2.png</span>
       <img src="banner-v2.png"><img src="banner-gh-v2.png" style="margin-top:6px">
       <div class="desc">Campo carbón limpio + franja espectral del warp en el tercio inferior + wordmark + monograma.</div></figure>
-    <figure class="fig"><b>v3 — Core</b><span>banner-v3.png / banner-gh-v3.png</span>
+    <figure class="fig"><b>v3 — Core</b><em class="badge alt">Alternativa</em><span>banner-v3.png / banner-gh-v3.png</span>
       <img src="banner-v3.png"><img src="banner-gh-v3.png" style="margin-top:6px">
       <div class="desc">Warp casi monocromo (desaturado) + core-orb a la derecha + wordmark.</div></figure>
   </div>
@@ -58,15 +66,15 @@ nav a:hover{text-decoration:underline}
   <h2>Icon / Favicon — 512×512 masters</h2>
   <p class="note">Del ganador se exportarán después 64 SVG / 48 / 180. Las filas muestran legibilidad a 64 / 32 / 16 px.</p>
   <div class="grid">
-    <figure class="fig"><b>v1 — Carbon</b><span>icon-v1.png</span>
+    <figure class="fig"><b>v1 — Carbon</b><em class="badge main">Principal</em><span>icon-v1.png · → web/public/apple-touch-icon.png + favicon-{48,32}.png + web/app/icon.svg</span>
       <img src="icon-v1.png">
       <div class="pair"><figure><img src="icon-v1.png" width="64"><figcaption>64</figcaption></figure><figure><img src="icon-v1.png" width="32"><figcaption>32</figcaption></figure><figure><img src="icon-v1.png" width="16"><figcaption>16</figcaption></figure></div>
       <div class="desc">NM sobre cuadrado carbón redondeado (evolución del orbital-icon.svg actual).</div></figure>
-    <figure class="fig"><b>v2 — Warp</b><span>icon-v2.png</span>
+    <figure class="fig"><b>v2 — Warp</b><em class="badge alt">Alternativa</em><span>icon-v2.png</span>
       <img src="icon-v2.png">
       <div class="pair"><figure><img src="icon-v2.png" width="64"><figcaption>64</figcaption></figure><figure><img src="icon-v2.png" width="32"><figcaption>32</figcaption></figure><figure><img src="icon-v2.png" width="16"><figcaption>16</figcaption></figure></div>
       <div class="desc">Monograma sobre mini-crop del warp con espectro visible.</div></figure>
-    <figure class="fig"><b>v3 — Mark</b><span>icon-v3.png · transparente</span>
+    <figure class="fig"><b>v3 — Mark</b><em class="badge alt">Alternativa</em><span>icon-v3.png · transparente</span>
       <img src="icon-v3.png" class="checker">
       <div class="pair"><figure class="checker"><img src="icon-v3.png" width="64"><figcaption>64</figcaption></figure><figure class="checker"><img src="icon-v3.png" width="32"><figcaption>32</figcaption></figure><figure class="checker"><img src="icon-v3.png" width="16"><figcaption>16</figcaption></figure></div>
       <div class="desc">Trazo NM plata + punto de registro teal sobre transparente.</div></figure>
@@ -77,15 +85,15 @@ nav a:hover{text-decoration:underline}
   <h2>Avatar — 512×512</h2>
   <p class="note">Las miniaturas circulares simulan el crop de GitHub/X.</p>
   <div class="grid">
-    <figure class="fig"><b>v1 — Plate</b><span>avatar-v1.png</span>
+    <figure class="fig"><b>v1 — Plate</b><em class="badge main">Principal</em><span>avatar-v1.png · → ../orbital-avatar.png</span>
       <img src="avatar-v1.png">
       <div class="pair"><figure><img class="circle" src="avatar-v1.png" width="64"><figcaption>64</figcaption></figure><figure><img class="circle" src="avatar-v1.png" width="32"><figcaption>32</figcaption></figure></div>
       <div class="desc">Monograma centrado sobre center-crop del warp + velo 60% (equivale al actual).</div></figure>
-    <figure class="fig"><b>v2 — Orbit</b><span>avatar-v2.png</span>
+    <figure class="fig"><b>v2 — Orbit</b><em class="badge alt">Alternativa</em><span>avatar-v2.png</span>
       <img src="avatar-v2.png">
       <div class="pair"><figure><img class="circle" src="avatar-v2.png" width="64"><figcaption>64</figcaption></figure><figure><img class="circle" src="avatar-v2.png" width="32"><figcaption>32</figcaption></figure></div>
       <div class="desc">Monograma sobre carbón puro + anillo orbital espectral fino.</div></figure>
-    <figure class="fig"><b>v3 — Core-orb</b><span>avatar-v3.png</span>
+    <figure class="fig"><b>v3 — Core-orb</b><em class="badge alt">Alternativa</em><span>avatar-v3.png</span>
       <img src="avatar-v3.png">
       <div class="pair"><figure><img class="circle" src="avatar-v3.png" width="64"><figcaption>64</figcaption></figure><figure><img class="circle" src="avatar-v3.png" width="32"><figcaption>32</figcaption></figure></div>
       <div class="desc">Core-orb sin letras — identidad por forma.</div></figure>
@@ -96,8 +104,8 @@ nav a:hover{text-decoration:underline}
   <h2>OG image — 1200×630</h2>
   <p class="note">Mismas composiciones que el banner adaptadas al ratio social.</p>
   <div class="grid wide">
-    <figure class="fig"><b>v1 — Strata</b><span>og-v1.png</span><img src="og-v1.png"></figure>
-    <figure class="fig"><b>v2 — Spectrum</b><span>og-v2.png</span><img src="og-v2.png"></figure>
-    <figure class="fig"><b>v3 — Core</b><span>og-v3.png</span><img src="og-v3.png"></figure>
+    <figure class="fig"><b>v1 — Strata</b><em class="badge main">Principal</em><span>og-v1.png · mod → ../og-final.png → web/public/og.png</span><img src="og-v1.png"></figure>
+    <figure class="fig"><b>v2 — Spectrum</b><em class="badge alt">Alternativa</em><span>og-v2.png</span><img src="og-v2.png"></figure>
+    <figure class="fig"><b>v3 — Core</b><em class="badge alt">Alternativa</em><span>og-v3.png</span><img src="og-v3.png"></figure>
   </div>
 </section>

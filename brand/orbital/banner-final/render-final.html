@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Orbital v2 — final asset renderer</title>
+<style>
+  :root{--carbon:#070809;--carbon2:#0e1013;--silver:#f1f3f5}
+  html,body{margin:0;padding:0;background:transparent}
+  body{display:inline-block}
+  #stage{position:relative;overflow:hidden;background:transparent}
+  #stage.flat{background:var(--carbon)}
+  .grain{position:absolute;inset:0;pointer-events:none;
+    background:url("../orbital-grain.png") 0 0/192px 192px;
+    opacity:.2;mix-blend-mode:soft-light}
+</style>
+<div id="stage"></div>
+<script>
+/* Final banner comp = Strata v1 modified per selection:
+   - wordmark centered + larger (~WMF of width, default 66%)
+   - warp crop animates on a closed sinusoidal path (seamless loop, param t in [0,1))
+   - 4-edge fade to transparency (FX/FY fractions) inside a rounded card (RAD)
+   - matte=1 puts an opaque carbon rounded-rect behind the card so the fade reads
+     as a vignette to carbon (GIF-safe: GIF alpha is binary) while corners stay
+     transparent. flat=1 makes the whole stage opaque carbon (apple-touch-icon).
+   Params: a=banner|banner-gh|og|icon  w,h=px override  t=0..1  matte=1  flat=1
+           wm=0.66  fx=0.10  fy=0.12                                       */
+const Q = new URLSearchParams(location.search);
+const A = Q.get("a") || "banner";
+const SIZES = {banner:[2400,800], "banner-gh":[1920,480], og:[1200,630], icon:[512,512]};
+let [W,H] = SIZES[A] || SIZES.banner;
+if (Q.get("w")) W = +Q.get("w");
+if (Q.get("h")) H = +Q.get("h");
+const T = +(Q.get("t") || "0");
+const MATTE = Q.get("matte") === "1";
+const FLAT  = Q.get("flat") === "1";
+const WMF = +(Q.get("wm") || "0.66");
+const FX  = +(Q.get("fx") || "0.10");
+const FY  = +(Q.get("fy") || "0.12");
+const STILL = Q.get("still") === "1";   // exact cover, no overscan (sharp static masters)
+const RAD = A === "og" ? 0 : Math.round(Math.min(32, Math.max(12, W*0.012)));
+
+const stage = document.getElementById("stage");
+stage.style.width = W+"px"; stage.style.height = H+"px";
+if (FLAT) stage.classList.add("flat");
+const el = (tag, css, parent=stage)=>{const d=document.createElement(tag);d.style.cssText=css;parent.appendChild(d);return d};
+const pending = [];
+function tracked(src){
+  const i = new Image();
+  pending.push(new Promise(r=>{ i.addEventListener("load", r); i.addEventListener("error", r); }));
+  i.src = src;
+  return i;
+}
+
+function bannerComp(){
+  if (MATTE) el("div", `position:absolute;inset:0;border-radius:${RAD}px;background:var(--carbon)`);
+  const card = el("div", `position:absolute;inset:0;border-radius:${RAD}px;overflow:hidden`);
+  const fx = Math.round(FX*W), fy = Math.round(FY*H);
+  const mh = `linear-gradient(to right, transparent 0px, black ${fx}px, black ${W-fx}px, transparent ${W}px)`;
+  const mv = `linear-gradient(to bottom, transparent 0px, black ${fy}px, black ${H-fy}px, transparent ${H}px)`;
+  card.style.webkitMaskImage = `${mh}, ${mv}`;
+  card.style.webkitMaskComposite = "source-in";
+  card.style.maskImage = `${mh}, ${mv}`;
+  card.style.maskComposite = "intersect";
+
+  const warp = tracked("../orbital-frame.png");
+  warp.style.cssText = "position:absolute;left:50%;top:50%";
+  card.appendChild(warp);               // first child: veil/grain/wordmark stay on top
+  const place = () => {
+    const c = Math.max(W/warp.naturalWidth, H/warp.naturalHeight) * (STILL ? 1 : 1.11);
+    const w = warp.naturalWidth*c, h = warp.naturalHeight*c;
+    const z  = STILL ? 1 : 1 + 0.045*Math.sin(2*Math.PI*T); // zoom breathing ±4.5%
+    const dx = 0.018*W*Math.sin(2*Math.PI*T);              // pan x, same period -> seamless
+    const dy = 0.028*H*Math.cos(2*Math.PI*T);              // pan y
+    warp.style.width = w+"px"; warp.style.height = h+"px";
+    warp.style.transform = `translate(-50%,-50%) translate(${dx}px,${dy}px) scale(${z})`;
+  };
+  if (warp.complete && warp.naturalWidth) place(); else warp.addEventListener("load", place);
+
+  el("div","position:absolute;inset:0;background:rgba(7,8,9,.60)",card);
+  el("div","",card).className = "grain";
+  const wm = tracked("../orbital-wordmark.svg");
+  wm.style.cssText = `position:absolute;left:50%;top:50%;width:${Math.round(W*WMF)}px;transform:translate(-50%,-50%)`;
+  card.appendChild(wm);
+}
+
+function iconComp(){ /* NM on rounded carbon — v1 "Carbon" */
+  const R = Math.round(W*0.24);
+  el("div",`position:absolute;inset:0;border-radius:${R}px;overflow:hidden;
+    background:linear-gradient(160deg,#0e1013 0%,#070809 62%);
+    box-shadow:inset 0 0 0 1px rgba(241,243,245,.07)`);
+  const m = tracked("../orbital-monogram.svg");
+  m.style.cssText = "position:absolute;left:50%;top:50%;width:78%;transform:translate(-50%,-50%)";
+  stage.appendChild(m);
+}
+
+(A === "icon" ? iconComp : bannerComp)();
+Promise.all(pending).then(()=>{ requestAnimationFrame(()=>{ requestAnimationFrame(()=>{ document.body.dataset.ready = "1"; }); }); });
+</script>
+</html>
