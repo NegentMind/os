@@ -2,9 +2,12 @@ import { BookOpen, Bug, GitPullRequest } from "lucide-react";
 import { notFound } from "next/navigation";
 import { ActionLink } from "@/components/nm/v2/action-link";
 import { Faq } from "@/components/nm/v2/faq";
+import { FieldCanvas } from "@/components/nm/v2/field-canvas";
+import { PageCta } from "@/components/nm/v2/page-cta";
 import { PageHero } from "@/components/nm/v2/page-hero";
 import { Section } from "@/components/nm/v2/section";
 import { SectionHeading } from "@/components/nm/v2/section-heading";
+import { SectionTransition } from "@/components/nm/v2/section-transition/section-transition";
 import { Surface } from "@/components/nm/v2/surface";
 import { getSiteCopy } from "@/lib/content";
 import { isLocale } from "@/lib/i18n";
@@ -26,15 +29,23 @@ export default async function ContributePage({ params }: MarketingPageProps) {
   const p = c.contribute;
 
   return (
-    <>
+    <div className="nm2-page">
       <PageHero title={p.title} description={p.description} variant="wave">
         <div className="nm2-actions">
           <ActionLink href={DISCUSSIONS_URL} external>{c.common.discussions}</ActionLink>
           <ActionLink href={CONTRIBUTING_URL} external variant="secondary">{c.common.contributionGuide}</ActionLink>
         </div>
       </PageHero>
-      <Section className="nm2-contribution-section">
-        <SectionHeading title={p.pathsTitle} />
+      <Section
+        className="nm2-contribution-section"
+        backdrop={
+          <FieldCanvas
+            variant="wave"
+            className="nm2-backdrop-field nm2-backdrop-field--wave"
+          />
+        }
+      >
+        <SectionHeading title={p.pathsTitle} effect="assemble" />
         <div className="nm2-contribution-paths">
           {p.paths.map((path, index) => {
             const Icon = PATH_ICONS[index];
@@ -51,7 +62,7 @@ export default async function ContributePage({ params }: MarketingPageProps) {
       </Section>
       <Section className="nm2-contribution-expectations">
         <div className="nm2-editorial">
-          <SectionHeading title={p.expectations.title} />
+          <SectionHeading title={p.expectations.title} effect="assemble" />
           <div className="nm2-prose">
             <p className="nm2-lead">{p.expectations.body}</p>
             <p>{p.expectations.note}</p>
@@ -61,7 +72,7 @@ export default async function ContributePage({ params }: MarketingPageProps) {
       </Section>
       <Section className="nm2-conversation-section">
         <Surface tone="spectrum" className="nm2-invitation">
-          <SectionHeading title={p.conversation.title} description={p.conversation.body} />
+          <SectionHeading title={p.conversation.title} description={p.conversation.body} effect="assemble" />
           <div className="nm2-actions">
             <ActionLink href={DISCUSSIONS_URL} external>{c.common.discussions}</ActionLink>
             <ActionLink href={SUPPORT_URL} external variant="text">{p.conversation.support}</ActionLink>
@@ -69,7 +80,7 @@ export default async function ContributePage({ params }: MarketingPageProps) {
         </Surface>
       </Section>
       <Section className="nm2-safety-section">
-        <SectionHeading title={p.safety.title} />
+        <SectionHeading title={p.safety.title} effect="assemble" />
         <div className="nm2-safety">
           <article>
             <h3>{p.safety.conductTitle}</h3>
@@ -83,10 +94,19 @@ export default async function ContributePage({ params }: MarketingPageProps) {
           </article>
         </div>
       </Section>
-      <Section id="faq" className="nm2-faq-section">
-        <SectionHeading title={p.faqTitle} />
+      <SectionTransition id="contribute-paper" variant="tear" />
+      <Section id="faq" className="nm2-faq-section nm2-section--paper">
+        <SectionHeading title={p.faqTitle} effect="assemble" />
         <Faq items={p.faq} />
+        <PageCta
+          title={p.closing.title}
+          description={p.closing.body}
+          action={{ href: CONTRIBUTING_URL, label: c.common.contributionGuide, external: true }}
+          secondary={{ href: DISCUSSIONS_URL, label: c.common.discussions, external: true }}
+          variant="wave"
+          effect="assemble"
+        />
       </Section>
-    </>
+    </div>
   );
 }

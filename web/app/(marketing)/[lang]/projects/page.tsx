@@ -1,9 +1,12 @@
 import { notFound } from "next/navigation";
 import { ActionLink } from "@/components/nm/v2/action-link";
-import { ProjectCard } from "@/components/nm/v2/project-card";
+import { FieldCanvas } from "@/components/nm/v2/field-canvas";
+import { PageCta } from "@/components/nm/v2/page-cta";
 import { PageHero } from "@/components/nm/v2/page-hero";
+import { ProjectCard } from "@/components/nm/v2/project-card";
 import { Section } from "@/components/nm/v2/section";
 import { SectionHeading } from "@/components/nm/v2/section-heading";
+import { SectionTransition } from "@/components/nm/v2/section-transition/section-transition";
 import { StatusBadge } from "@/components/nm/v2/status-badge";
 import { getSiteCopy } from "@/lib/content";
 import { isLocale } from "@/lib/i18n";
@@ -22,9 +25,17 @@ export default async function ProjectsPage({ params }: MarketingPageProps) {
   const p = c.projects;
 
   return (
-    <>
+    <div className="nm2-page">
       <PageHero title={p.title} description={p.description} variant="network" />
-      <Section className="nm2-portfolio">
+      <Section
+        className="nm2-portfolio"
+        backdrop={
+          <FieldCanvas
+            variant="network"
+            className="nm2-backdrop-field nm2-backdrop-field--network"
+          />
+        }
+      >
         <ProjectCard
           name="VantaDB"
           summary={p.vantadb.summary}
@@ -61,16 +72,25 @@ export default async function ProjectsPage({ params }: MarketingPageProps) {
           </div>
         </ProjectCard>
       </Section>
-      <Section className="nm2-vision-boundary">
+      <SectionTransition id="projects-paper" variant="blocks" />
+      <Section className="nm2-vision-boundary nm2-section--paper">
         <div className="nm2-editorial">
-          <SectionHeading title={p.boundary.title} />
+          <SectionHeading title={p.boundary.title} effect="trace" />
           <div className="nm2-prose">
             <p>{p.boundary.body}</p>
             <StatusBadge status="vision" label={c.common.vision} />
             <ActionLink href={`${hrefFor(lang, "about")}#vision`} variant="text">{p.boundary.action}</ActionLink>
           </div>
         </div>
+        <PageCta
+          title={p.closing.title}
+          description={p.closing.body}
+          action={{ href: hrefFor(lang, "vantadb"), label: c.common.exploreVantadb }}
+          secondary={{ href: hrefFor(lang, "contribute"), label: c.nav.contribute }}
+          variant="network"
+          effect="trace"
+        />
       </Section>
-    </>
+    </div>
   );
 }

@@ -208,6 +208,10 @@ export const es: SiteCopy = {
       body: "Los nueve holones describen una visión de largo plazo. No son nueve paquetes que puedes instalar. Cardinal forma parte de esa visión; no es otro nombre para VantaDB.",
       action: "Entender la dirección del laboratorio",
     },
+    closing: {
+      title: "Empieza por el software que existe.",
+      body: "VantaDB está activo y documentado; Scopegrain es trabajo público en curso. Los repositorios son la fuente honesta.",
+    },
   },
   vantadb: {
     title: "El contexto debería durar más que la sesión.",
@@ -362,6 +366,10 @@ export const es: SiteCopy = {
         answer: "Los holones son una visión de largo plazo, no nueve repositorios activos ni una lista de tareas preparada. Empieza por los proyectos existentes y conversa sobre una propuesta acotada antes de abordar una implementación grande.",
       },
     ],
+    closing: {
+      title: "Trae el próximo cambio concreto.",
+      body: "La guía de contribución explica el flujo; Discussions es donde una pregunta se convierte en plan.",
+    },
   },
   gallery: {
     title: "La sala de componentes Orbital.",

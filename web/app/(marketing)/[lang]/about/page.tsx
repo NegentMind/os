@@ -1,9 +1,12 @@
 import { notFound } from "next/navigation";
 import { ActionLink } from "@/components/nm/v2/action-link";
 import { BrandMark } from "@/components/nm/v2/brand-mark";
+import { FieldCanvas } from "@/components/nm/v2/field-canvas";
+import { PageCta } from "@/components/nm/v2/page-cta";
 import { PageHero } from "@/components/nm/v2/page-hero";
 import { Section } from "@/components/nm/v2/section";
 import { SectionHeading } from "@/components/nm/v2/section-heading";
+import { SectionTransition } from "@/components/nm/v2/section-transition/section-transition";
 import { StatusBadge } from "@/components/nm/v2/status-badge";
 import { Surface } from "@/components/nm/v2/surface";
 import { getSiteCopy } from "@/lib/content";
@@ -29,11 +32,11 @@ export default async function AboutPage({ params }: MarketingPageProps) {
   const a = c.about;
 
   return (
-    <>
+    <div className="nm2-page">
       <PageHero title={a.title} description={a.description} variant="orbit" />
       <Section className="nm2-mission-section">
         <div className="nm2-editorial">
-          <SectionHeading title={a.mission.title} />
+          <SectionHeading title={a.mission.title} effect="focus" />
           <div className="nm2-prose">
             <p className="nm2-lead">{a.mission.body}</p>
             <p>{a.mission.boundary}</p>
@@ -41,7 +44,7 @@ export default async function AboutPage({ params }: MarketingPageProps) {
         </div>
       </Section>
       <Section id="principles" className="nm2-principles-section">
-        <SectionHeading title={a.principles.title} />
+        <SectionHeading title={a.principles.title} effect="focus" />
         <dl className="nm2-principles">
           {a.principles.items.map((item) => (
             <div key={item.title}>
@@ -51,8 +54,17 @@ export default async function AboutPage({ params }: MarketingPageProps) {
           ))}
         </dl>
       </Section>
-      <Section id="vision" className="nm2-vision-section">
-        <SectionHeading title={a.vision.title} description={a.vision.description} />
+      <Section
+        id="vision"
+        className="nm2-vision-section"
+        backdrop={
+          <FieldCanvas
+            variant="orbit"
+            className="nm2-backdrop-field nm2-backdrop-field--orbit"
+          />
+        }
+      >
+        <SectionHeading title={a.vision.title} description={a.vision.description} effect="focus" />
         <Surface className="nm2-holon-map">
           <div className="nm2-holon-map-header">
             <StatusBadge status="vision" label={c.common.vision} />
@@ -64,9 +76,10 @@ export default async function AboutPage({ params }: MarketingPageProps) {
           <p className="nm2-holon-note">{a.vision.note}</p>
         </Surface>
       </Section>
-      <Section className="nm2-founder-section">
+      <SectionTransition id="about-paper" variant="iridescent" />
+      <Section className="nm2-founder-section nm2-section--paper">
         <div className="nm2-editorial">
-          <SectionHeading title={a.founder.title} />
+          <SectionHeading title={a.founder.title} effect="focus" />
           <div className="nm2-founder">
             <BrandMark variant="monogram" className="nm2-founder-mark" decorative />
             <div>
@@ -77,13 +90,14 @@ export default async function AboutPage({ params }: MarketingPageProps) {
             </div>
           </div>
         </div>
+        <PageCta
+          title={a.invitation.title}
+          description={a.invitation.body}
+          action={{ href: hrefFor(lang, "contribute"), label: a.invitation.action }}
+          variant="orbit"
+          effect="focus"
+        />
       </Section>
-      <Section className="nm2-invitation-section">
-        <Surface tone="spectrum" className="nm2-invitation">
-          <SectionHeading title={a.invitation.title} description={a.invitation.body} />
-          <ActionLink href={hrefFor(lang, "contribute")}>{a.invitation.action}</ActionLink>
-        </Surface>
-      </Section>
-    </>
+    </div>
   );
 }

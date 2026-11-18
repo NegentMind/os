@@ -854,3 +854,145 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
+
+/* ---- interior page grammar ------------------------------------------
+   Same contract as home: each page is one carbon flow that enters a
+   single paper chapter through one transition band and closes with a
+   dark PageCta card. Scoped to .nm2-page so the home keeps its own. */
+
+.nm2-page .nm2-section--paper {
+  position: relative;
+  isolation: isolate;
+  background: var(--nm2-paper-bg);
+}
+
+.nm2-page .nm2-section--paper > * {
+  position: relative;
+  z-index: 1;
+}
+
+.nm2-page .nm2-section--paper :focus-visible {
+  outline-color: var(--nm2-text);
+}
+
+.nm2-page .nm2-section--paper ::selection {
+  background: var(--nm2-text);
+  color: var(--nm2-section);
+}
+
+/* Same quiet monochrome grain as home's paper chapters. */
+.nm2-page .nm2-section--paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--nm2-structure) 8%, transparent) 1px,
+    transparent 1.6px
+  );
+  background-size: 26px 26px;
+  mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+}
+
+/* Backdrop field: the PageHero's variant drawn softly inside one section. */
+.nm2-page .nm2-section:has(> .nm2-backdrop-field) {
+  position: relative;
+  overflow: clip;
+}
+
+.nm2-page .nm2-section:has(> .nm2-backdrop-field) > .nm2-container {
+  position: relative;
+  z-index: 1;
+}
+
+.nm2-page .nm2-backdrop-field {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  z-index: 0;
+  inline-size: 100%;
+  block-size: 78%;
+  aspect-ratio: auto;
+  color: var(--nm2-structure);
+  opacity: 0.7;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+}
+
+/* Orbit wraps the whole section instead of fading out at mid-height. */
+.nm2-page .nm2-backdrop-field--orbit {
+  inset-block: 0;
+  block-size: 100%;
+  opacity: 0.4;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+}
+
+/* The memory layers read centered, not anchored to the top edge. */
+.nm2-page .nm2-backdrop-field--memory {
+  inset-block: 0;
+  block-size: 100%;
+  opacity: 0.5;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+
+@media (forced-colors: active) {
+  .nm2-page .nm2-backdrop-field,
+  .nm2-page .nm2-section--paper::before {
+    display: none;
+  }
+}
+
+/* Closing card: a carbon panel inside the paper chapter — the inverse
+   of the light surface, so the page ends carbón sobre papel. */
+.nm2-page-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  margin-block-start: var(--nm2-block-gap);
+  padding: clamp(2rem, 5vw, 4rem);
+  border-radius: var(--nm2-radius-hero);
+}
+
+.nm2-page-cta__field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  aspect-ratio: auto;
+  color: var(--nm2-structure);
+  opacity: 0.6;
+  mask-image: linear-gradient(to right, rgb(0 0 0 / 30%) 0%, rgb(0 0 0 / 55%) 45%, #000 100%);
+  -webkit-mask-image: linear-gradient(to right, rgb(0 0 0 / 30%) 0%, rgb(0 0 0 / 55%) 45%, #000 100%);
+}
+
+.nm2-page-cta__field > * {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.nm2-page-cta__copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  max-width: 40rem;
+}
+
+.nm2-page-cta .nm2-section-heading {
+  margin-block-end: 1.75rem;
+}
+
+.nm2-page-cta .nm2-section-heading__title {
+  font-size: clamp(2rem, 3.5vw, 3.25rem);
+}
+
+@media (forced-colors: active) {
+  .nm2-page-cta__field {
+    display: none;
+  }
+}

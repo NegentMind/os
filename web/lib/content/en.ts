@@ -208,6 +208,10 @@ export const en = {
       body: "The nine holons describe a long-term vision. They are not nine packages you can install. Cardinal is part of that vision; it is not another name for VantaDB.",
       action: "Understand the lab's direction",
     },
+    closing: {
+      title: "Start with the software that exists.",
+      body: "VantaDB is active and documented; Scopegrain is public work in progress. The repositories are the honest source of truth.",
+    },
   },
   vantadb: {
     title: "Context should outlive the session.",
@@ -362,6 +366,10 @@ export const en = {
         answer: "The holons are a long-term vision, not nine active repositories or a ready-made issue list. Start with the existing projects and discuss a scoped proposal before committing to a large implementation.",
       },
     ],
+    closing: {
+      title: "Bring the next concrete change.",
+      body: "The contribution guide explains the workflow; Discussions is where a question becomes a plan.",
+    },
   },
   gallery: {
     title: "The Orbital component room.",
