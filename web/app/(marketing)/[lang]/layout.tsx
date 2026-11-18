@@ -26,7 +26,7 @@ export default async function LocaleLayout({
   if (!isLocale(lang)) notFound();
   const copy = getSiteCopy(lang);
   return (
-    <html lang={lang} className={fontVarsV2}>
+    <html lang={lang} className={fontVarsV2} data-headings="orbital">
       <body className="nm2-site">
         {/* LCP: the hero poster is a CSS background on .nm2-hero-art__poster;
             preloading here lets the browser fetch the webp while CSS still

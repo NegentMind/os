@@ -53,7 +53,7 @@ export type CompositionLabConfig = {
   orgArt: "orb" | "blueprint";
   /** Effect applied to every AnimatedHeading; null keeps each call site's. */
   heading: HeadingEffect | null;
-  /** Render section titles in Orbital lettering instead of type. */
+  /** Orbital lettering is the shipped default; false restores animated type. */
   orbitalHeadings: boolean;
 };
 
@@ -64,7 +64,7 @@ const DEFAULT_HERO: HeroLabConfig = {
 const DEFAULT_COMPOSITION: CompositionLabConfig = {
   orgArt: "orb",
   heading: null,
-  orbitalHeadings: false,
+  orbitalHeadings: true,
 };
 
 /* Exported for the lazily loaded panel; part of the internal lab contract. */
@@ -157,7 +157,8 @@ function toCompositionConfig(value: unknown): CompositionLabConfig {
   return {
     orgArt: record.orgArt === "blueprint" ? "blueprint" : "orb",
     heading: isHeadingEffect(record.heading) ? record.heading : null,
-    orbitalHeadings: record.orbitalHeadings === true,
+    // Orbital is the shipped default; only an explicit stored false opts out.
+    orbitalHeadings: record.orbitalHeadings !== false,
   };
 }
 
@@ -236,17 +237,15 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
     writeStored({ overrides, target, open, hero, composition });
   }, [hydrated, overrides, target, open, hero, composition]);
 
-  // Mirror the orbital-headings eval variant on <html> so any heading
-  // renderer (and CSS) can read it without the context.
+  // Mirror the headings mode on <html> so any heading renderer (and CSS)
+  // can read it without the context. "orbital" is the shipped default —
+  // the layout emits it server-side; the lab flips it to "sans".
   useEffect(() => {
     if (!enabled) return;
-    if (composition.orbitalHeadings) {
-      document.documentElement.dataset.headings = "orbital";
-    } else {
-      delete document.documentElement.dataset.headings;
-    }
+    document.documentElement.dataset.headings =
+      composition.orbitalHeadings ? "orbital" : "sans";
     return () => {
-      delete document.documentElement.dataset.headings;
+      document.documentElement.dataset.headings = "orbital";
     };
   }, [enabled, composition.orbitalHeadings]);
 

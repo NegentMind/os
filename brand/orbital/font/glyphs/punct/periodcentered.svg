@@ -1,0 +1,6 @@
+<!-- Orbital glyph periodcentered (·) — stroke 13, bevel joins, lines y=16/56/96.
+     descender y=116. Filled r6 dots share the registration-dot geometry.
+     Source of truth for this mark; build-font.py consumes it. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 120">
+  <circle cx="18" cy="58" r="6" stroke="none" fill="currentColor"/>
+</svg>

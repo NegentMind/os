@@ -34,6 +34,12 @@
 <div class="row" id="alphabet"></div>
 <h2>Alphabet a–z (x-height 56, descender 116)</h2>
 <div class="row" id="alphabet-lower"></div>
+<h2>Punctuation (glyphs/punct)</h2>
+<div class="row" id="punct"></div>
+<h2>Punctuation checks</h2>
+<div class="word"><label>¿HOLA? ¡OJO!</label><svg data-word="¿HOLA? ¡OJO!"></svg></div>
+<div class="word"><label>LOCAL-FIRST — MEMORIA, CONTEXTO: IDEAS.</label><svg data-word="LOCAL-FIRST — MEMORIA, CONTEXTO: IDEAS."></svg></div>
+<div class="word"><label>MEMORIA (VOZ) · OJOS &amp; MANOS + CIEN %</label><svg data-word="MEMORIA (VOZ) · OJOS & MANOS + CIEN %"></svg></div>
 <h2>Lowercase checks</h2>
 <div class="word"><label>negent mind.</label><svg data-word="negent mind."></svg></div>
 <div class="word"><label>memoria persistente</label><svg data-word="memoria persistente"></svg></div>
@@ -115,24 +121,55 @@ const GLYPHS = {
   x: { d: "M16,56 L48,96 M48,56 L16,96", w: 64 },
   y: { d: "M12,56 L32,80 L52,56 M32,80 V96 A20,20 0 0 1 12,116", w: 64 },
   z: { d: "M16,56 H46 L16,96 H48", w: 64 },
+  // punctuation — glyphs/punct/*.svg. Baseline dots cy=92, upper dots
+  // cy=58; ¿/¡ are the exact 180° rotation of ?/! (bowl to descender 116).
+  ".": { d: "", w: 36, dots: [[18, 92, 6]] },
+  ",": { d: "M26,91 L13,116", w: 40, dots: [[24, 86, 6]] },
+  ":": { d: "", w: 36, dots: [[18, 58, 6], [18, 92, 6]] },
+  ";": { d: "M26,91 L13,116", w: 40, dots: [[24, 58, 6], [24, 86, 6]] },
+  "?": { d: "M20,36 A20,20 0 1 1 40,56 L40,68", w: 68, dots: [[40, 92, 6]] },
+  "!": { d: "M20,16 V68", w: 40, dots: [[20, 92, 6]] },
+  "'": { d: "M18,16 V44", w: 36 },
+  "’": { d: "M24,16 L12,44", w: 36 },
+  "\"": { d: "M14,16 V44 M34,16 V44", w: 48 },
+  "-": { d: "M12,56 H40", w: 52 },
+  "–": { d: "M6,56 H60", w: 66 },
+  "—": { d: "M4,56 H92", w: 96 },
+  "(": { d: "M44,16 A30,50 0 0 0 44,116", w: 56 },
+  ")": { d: "M12,16 A30,50 0 0 1 12,116", w: 56 },
+  "/": { d: "M54,16 L14,96", w: 68 },
+  "·": { d: "", w: 36, dots: [[18, 58, 6]] },
+  "+": { d: "M30,36 V76 M10,56 H50", w: 60 },
+  "¿": { d: "M48,98 A20,20 0 1 1 28,78 L28,64", w: 64, dots: [[28, 40, 6]] },
+  "¡": { d: "M20,62 V116", w: 40, dots: [[20, 40, 6]] },
+  "&": { d: "M48,32 A14,14 0 1 0 46,46 L20,72 A20,20 0 1 0 60,72 L72,96", w: 84 },
+  "%": { d: "M64,16 L16,96 M18,22 A11,11 0 1 0 18,44 A11,11 0 1 0 18,22 Z M62,74 A11,11 0 1 0 62,96 A11,11 0 1 0 62,74 Z", w: 80 },
 };
+const PUNCT_CHARS = ".,:;?!'’\"-–—()/·+¿¡&%";
 const GAP = 16;
 const NS = "http://www.w3.org/2000/svg";
 
 function glyphPaths(letter, dx) {
   const g = GLYPHS[letter];
   if (!g) return null;
-  const p = document.createElementNS(NS, "path");
-  p.setAttribute("d", g.d);
-  if (dx) p.setAttribute("transform", `translate(${dx},0)`);
-  if (!g.dot) return [p];
-  const c = document.createElementNS(NS, "circle");
-  c.setAttribute("cx", g.dot[0] + (dx || 0));
-  c.setAttribute("cy", g.dot[1]);
-  c.setAttribute("r", g.dot[2]);
-  c.setAttribute("stroke", "none");
-  c.setAttribute("fill", "currentColor");
-  return [p, c];
+  const out = [];
+  if (g.d) {
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", g.d);
+    if (dx) p.setAttribute("transform", `translate(${dx},0)`);
+    out.push(p);
+  }
+  const dots = [...(g.dot ? [g.dot] : []), ...(g.dots || [])];
+  for (const [cx, cy, r] of dots) {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", cx + (dx || 0));
+    c.setAttribute("cy", cy);
+    c.setAttribute("r", r);
+    c.setAttribute("stroke", "none");
+    c.setAttribute("fill", "currentColor");
+    out.push(c);
+  }
+  return out;
 }
 
 function wordSvg(word, target) {
@@ -158,9 +195,9 @@ function wordSvg(word, target) {
 
 const alpha = document.getElementById("alphabet");
 const alphaLower = document.getElementById("alphabet-lower");
-for (let i = 65; i <= 122; i++) {
-  if (i > 90 && i < 97) continue;
-  const ch = String.fromCharCode(i);
+const punct = document.getElementById("punct");
+
+function makeCell(ch, parent) {
   const g = GLYPHS[ch];
   const cell = document.createElement("div");
   cell.className = "cell";
@@ -177,8 +214,14 @@ for (let i = 65; i <= 122; i++) {
   const label = document.createElement("span");
   label.textContent = `${ch} · w${g.w}`;
   cell.appendChild(label);
-  (i <= 90 ? alpha : alphaLower).appendChild(cell);
+  parent.appendChild(cell);
 }
+
+for (let i = 65; i <= 122; i++) {
+  if (i > 90 && i < 97) continue;
+  makeCell(String.fromCharCode(i), i <= 90 ? alpha : alphaLower);
+}
+for (const ch of PUNCT_CHARS) makeCell(ch, punct);
 
 // Logo verbatim from orbital-source.svg
 const logo = document.getElementById("logo");

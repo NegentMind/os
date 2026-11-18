@@ -158,9 +158,11 @@ export function AnimatedHeading({
   }, [animate, canAnimate, effective, inView, scope]);
 
   // The visual split is hidden from assistive tech; sr-only carries the title.
-  // Lab-only eval variant: Orbital lettering replaces the animated type —
-  // the letters are artwork, so the entrance choreography does not apply.
-  if (lab?.orbitalHeadings) {
+  // Orbital lettering is the shipped default for every section title; the
+  // lab toggle ("Titulares sans") is the only way back to animated type.
+  // Letters are artwork, so the entrance choreography does not apply.
+  const orbitalHeadings = lab?.orbitalHeadings ?? true;
+  if (orbitalHeadings) {
     return (
       <>
         <span className="sr-only">{text}</span>

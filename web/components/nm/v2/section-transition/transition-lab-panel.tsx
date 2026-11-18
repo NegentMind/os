@@ -249,13 +249,13 @@ export function TransitionLabPanel() {
           ))}
         </div>
         <div className="nm2-transition-lab__row">
-          <label htmlFor={orbitalHeadingsId}>Titulares en Orbital</label>
+          <label htmlFor={orbitalHeadingsId}>Titulares sans (Outfit)</label>
           <input
             id={orbitalHeadingsId}
             type="checkbox"
-            checked={composition.orbitalHeadings}
+            checked={!composition.orbitalHeadings}
             onChange={(event) =>
-              setComposition({ orbitalHeadings: event.target.checked })
+              setComposition({ orbitalHeadings: !event.target.checked })
             }
           />
         </div>

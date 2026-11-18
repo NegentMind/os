@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Orbital Display v0 — preview of the REAL font file (orbital-display.woff2).
+<!-- Orbital Display v0.3 — preview of the REAL font file (orbital-display.woff2).
      Open this file in a browser; the font loads via @font-face, so what you see
      is exactly what the compiled font renders — not the source SVGs. -->
 <html lang="es">
@@ -47,12 +47,19 @@
 </style>
 </head>
 <body>
-  <h1>Orbital Display — v0.2 preview</h1>
-  <div class="note">Fuente real via <code>@font-face</code> (woff2). Cobertura: A–Z + a–z + espacio + punto. Sin kerning ni dígitos.</div>
+  <h1>Orbital Display — v0.3 preview</h1>
+  <div class="note">Fuente real via <code>@font-face</code> (woff2). Cobertura: A–Z + a–z + puntuación + espacio + punto. Sin kerning, dígitos ni acentos.</div>
 
   <h2>Alfabeto</h2>
   <div class="orbital alpha">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
   <div class="orbital alpha">abcdefghijklmnopqrstuvwxyz</div>
+  <div class="orbital alpha">.,:;?!'&#x2019;&quot;-&#x2013;&#x2014;()/&#xB7;+&#xBF;&#xA1;&amp;%</div>
+
+  <h2>Puntuación en frase</h2>
+  <div class="orbital" style="font-size:34px; line-height:1.5; max-width:64ch;">
+    &#xA1;Hola! &#xBF;Vale? — Claro: memoria, contexto.
+    VantaDB &#xB7; Scopegrain (local-first) — 100% embebido.
+  </div>
 
   <h2>Escalas — Negent Mind.</h2>
   <div class="orbital sizes">
@@ -99,6 +106,6 @@
 
   <h2>Prueba libre</h2>
   <textarea class="orbital" spellcheck="false">Negent Mind.</textarea>
-  <label>Escribe aquí — solo A–Z, a–z, espacio y punto existen; el resto cae a fallback.</label>
+  <label>Escribe aquí — A–Z, a–z, puntuación, espacio y punto existen; dígitos y acentos caen a fallback.</label>
 </body>
 </html>

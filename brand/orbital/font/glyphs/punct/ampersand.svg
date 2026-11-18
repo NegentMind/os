@@ -1,0 +1,6 @@
+<!-- Orbital glyph ampersand (&) — stroke 13, bevel joins, lines y=16/56/96.
+     descender y=116.
+     Source of truth for this mark; build-font.py consumes it. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84 120">
+  <path d="M48,32 A14,14 0 1 0 46,46 L20,72 A20,20 0 1 0 60,72 L72,96" fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="bevel"/>
+</svg>

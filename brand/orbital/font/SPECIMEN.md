@@ -1,9 +1,9 @@
 # Orbital Display — MVP
 
-Estado: **build de desarrollo 0.2.0**, no es una fuente publicada ni aprobada
+Estado: **build de desarrollo 0.3.0**, no es una fuente publicada ni aprobada
 para uso tipográfico general. Implementa la primera hoja de
-`../TYPEFACE-STUDY.md`: mayúsculas A–Z, minúsculas a–z, espacio y el punto
-de registro.
+`../TYPEFACE-STUDY.md` más la puntuación de uso real: mayúsculas A–Z,
+minúsculas a–z, puntuación, espacio y el punto de registro.
 
 ## Qué contiene
 
@@ -13,6 +13,8 @@ de registro.
   (x-height y=56, descender y=116; los `<circle>` rellenos son el tittle).
   Subdirectorio obligatorio: `a.svg` colisionaría con `A.svg` en un
   filesystem case-insensitive.
+- `glyphs/punct/*.svg` — 20 signos en el mismo contrato (trazo 13, bevel,
+  puntos rellenos r6 = geometría del punto de registro).
 - `build-font.py` — pipeline reproducible: parsea los SVG, expande el trazo a
   contornos cerrados (skia-pathops, butt caps + bevel joins), une los
   círculos rellenos, escala a UPM 1024 (cap 700, baseline 0), aplica
@@ -28,7 +30,9 @@ de registro.
   nuevas diseñadas sobre la misma gramática.
 - a–z completas (v0): las 26 diseñadas sobre la gramática del estudio.
 - Espacio (U+0020) y punto de registro en U+002E (relleno, no trazo).
-- Total: 55 glifos en la fuente compilada.
+- Puntuación (20): `,` `:` `;` `?` `!` `'` `’` `"` `-` `–` `—` `(` `)` `/`
+  `·` `+` `¿` `¡` `&` `%`. U+002D duplica como U+2010 (hyphen).
+- Total: 75 glifos en la fuente compilada.
 
 ## Decisiones de diseño — minúsculas (revisables)
 
@@ -75,9 +79,42 @@ de registro.
 - Métricas: ancho variable por letra, sidebearing base 52+52 con correcciones
   ópticas manuales (`OPTICAL` en build-font.py). Sin kerning.
 
+## Decisiones de diseño — puntuación (revisables)
+
+- **Puntos r6 rellenos** (`,;:!?¡·.` y parte de `?`): misma geometría que el
+  punto de registro y el tittle — los signos se anclan a una única forma de
+  punto. Puntos sobre baseline en cy=92; punto alto en cy=58 (línea x-height).
+- **Guiones `-` `–` `—` y `+` en y=56** (línea media / centro óptico de las
+  capitales): decisión de display en versales, donde el guion coincide con
+  la barra de E/F/H. En corrido con minúsculas leen ligeramente altos —
+  candidato a bajar a ~y=66 si se usa en texto mixto.
+- **`,` `;` `'`**: coma = punto r6 + cola diagonal recta a descender (y=116),
+  gramática angular coherente con el resto de la fuente. `'` (quotesingle)
+  es tick vertical; `’` (quoteright) es tick diagonal — distinguibles, ambos
+  deliberadamente simples.
+- **`?`**: arco r20 (la familia de bowls) abierto abajo-izquierda + asta +
+  punto; **`¿`/`¡`** son la rotación 180° exacta de `?`/`!`: el bowl baja a
+  la línea de descendentes y el punto queda en la zona de x-height.
+- **`(` `)`**: media elipse r30×50 entre cap (16) y descender (116).
+- **`/`** diagonal cap→baseline; **`%`** con dos círculos r11 trazados
+  (misma lectura "anillo" que O) + diagonal; **`&`** = bucle superior r14
+  abierto + diagonal + bowl inferior r20 con cola de salida a baseline.
+- Glifos flojos honestos:
+  - **`&`** lee correcto pero es el más apretado del set — el bucle superior
+    puede leerse como un "8" fragmentado; candidato a geometría propia.
+  - **`,`**: la cola recta es funcional pero seca; una cola con arco r12-14
+    sería más tipográfica si molesta.
+  - **`'` `’`**: ticks muy simples; `’` como mini-coma elevada sería más
+    correcta formalmente.
+  - **`¿` `¡`**: el punto en cy=40 queda alto respecto a convención
+    (x-height); revisar en contexto de frase.
+- Métricas: avance uniforme `w*SCALE + 52+52` (`OPTICAL_PUNCT` existe para
+  correcciones futuras). El punto U+002E conserva sus métricas heredadas.
+
 ## Pendiente (no fingir que está hecho)
 
-- Dígitos, puntuación completa, ¿¡, acentos españoles (ÁÉÍÓÚ Ñ Ü áéíóú ñ ü).
+- Dígitos, acentos españoles (ÁÉÍÓÚ Ñ Ü áéíóú ñ ü) — la web compone los
+  acentos como glifos compuestos en `orbital-glyphs.tsx`, la fuente aún no.
 - Kerning (GPOS): los pares con diagonales (AV, WA, TY, LY, y ahora los
   pares con v/w/y minúsculas) están flojos.
 - Overshoots ópticos: las curvas tocan 16/56/96 sin sobresalir; a tamaños

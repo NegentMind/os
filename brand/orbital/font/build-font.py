@@ -3,14 +3,17 @@
 Orbital Display — MVP font builder.
 
 Consumes the per-glyph centerline SVGs in ./glyphs (uppercase, stroke 13,
-bevel joins, construction lines y=16/56/96) and ./glyphs/lowercase
-(x-height y=56, ascender y=16, descender y=116), expands strokes into
-filled outlines with skia-pathops, and emits orbital-display.ttf +
-orbital-display.woff2. Filled <circle> elements in a glyph SVG (the i/j
-tittle, same r6 geometry as the registration dot) are merged as filled
-outlines, not stroked.
+bevel joins, construction lines y=16/56/96), ./glyphs/lowercase
+(x-height y=56, ascender y=16, descender y=116) and ./glyphs/punct
+(punctuation, same contract; baseline dots reuse the r6 registration
+dot, ¿/¡ are the 180°-rotated ?/! reaching the descender line), expands
+strokes into filled outlines with skia-pathops, and emits
+orbital-display.ttf + orbital-display.woff2. Filled <circle> elements in
+a glyph SVG (the i/j tittle, colon/period dots, same r6 geometry as the
+registration dot) are merged as filled outlines, not stroked.
 
-Geometry source: ./glyphs/*.svg + ./glyphs/lowercase/*.svg — same table as
+Geometry source: ./glyphs/*.svg + ./glyphs/lowercase/*.svg +
+./glyphs/punct/*.svg — same table as
 web/components/nm/v2/orbital-glyphs.tsx and font/specimen.html.
 
 Requirements: fontTools, skia-pathops, brotli (for WOFF2).
@@ -63,6 +66,35 @@ OPTICAL_LOWER = {
 
 LETTERS = [chr(c) for c in range(ord("A"), ord("Z") + 1)]
 LOWER = [chr(c) for c in range(ord("a"), ord("z") + 1)]
+
+# Punctuation (./glyphs/punct/<name>.svg) — glyph name -> codepoint.
+# Priority order first (the marks real copy uses), then the wider set.
+PUNCT = {
+    "comma": 0x002C,
+    "colon": 0x003A,
+    "semicolon": 0x003B,
+    "question": 0x003F,
+    "exclam": 0x0021,
+    "quotesingle": 0x0027,
+    "quoteright": 0x2019,
+    "quotedbl": 0x0022,
+    "hyphen": 0x002D,
+    "endash": 0x2013,
+    "emdash": 0x2014,
+    "parenleft": 0x0028,
+    "parenright": 0x0029,
+    "slash": 0x002F,
+    "periodcentered": 0x00B7,
+    "plus": 0x002B,
+    "questiondown": 0x00BF,
+    "exclamdown": 0x00A1,
+    "ampersand": 0x0026,
+    "percent": 0x0025,
+}
+# Hyphen-minus U+002D doubles as U+2010 HYPHEN; quoteright doubles as the
+# ASCII-less apostrophe in copy that already uses U+2019.
+PUNCT_ALIASES = {0x2010: "hyphen"}
+OPTICAL_PUNCT: dict[str, int] = {}
 
 # --- tiny SVG path parser (M/L/H/V/A/Z, absolute only) -----------------------
 TOKEN = re.compile(r"([MLHVAZ])([^MLHVAZ]*)")
@@ -197,14 +229,20 @@ def circle_path(cx: float, cy: float, r: float) -> pathops.Path:
 
 
 def outline_to_tt(
-    source: pathops.Path, lsb: float, circles: list[tuple[float, float, float]] = ()
+    source: pathops.Path | None,
+    lsb: float,
+    circles: list[tuple[float, float, float]] = (),
 ) -> "object":
     """Stroke -> union (+ filled circles) -> scale + flip -> TTGlyphPen glyph."""
     # pathops stroke() expands in place and returns None; union() draws the
-    # normalized result through an out-pen.
-    source.stroke(
-        STROKE, pathops.LineCap.BUTT_CAP, pathops.LineJoin.BEVEL_JOIN, 4.0
-    )
+    # normalized result through an out-pen. A None source means the glyph is
+    # dots only (colon, periodcentered).
+    if source is not None:
+        source.stroke(
+            STROKE, pathops.LineCap.BUTT_CAP, pathops.LineJoin.BEVEL_JOIN, 4.0
+        )
+    else:
+        source = pathops.Path()
     parts = [source] + [circle_path(cx, cy, r) for cx, cy, r in circles]
     merged = pathops.Path()
     pathops.union(parts, merged.getPen(), fix_winding=True)
@@ -226,29 +264,36 @@ def filled_circle(cx: float, cy: float, r: float, lsb: float) -> "object":
     return pen.glyph()
 
 
-def read_glyph(letter: str) -> tuple[str, float, list[tuple[float, float, float]]]:
-    sub = "lowercase" if letter.islower() else ""
-    path = os.path.join(GLYPH_DIR, sub, f"{letter}.svg")
+def read_glyph(
+    name: str, sub: str = ""
+) -> tuple[str | None, float, list[tuple[float, float, float]]]:
+    path = os.path.join(GLYPH_DIR, sub, f"{name}.svg")
     with open(path, encoding="utf-8") as f:
         svg = f.read()
+    # d may be absent for dot-only marks (colon, periodcentered).
     d = re.search(r'\bd="([^"]+)"', svg)
     w = re.search(r'viewBox="0 0 (\d+) 120"', svg)
-    if not d or not w:
-        sys.exit(f"glyphs/{sub + '/' if sub else ''}{letter}.svg: missing d or viewBox")
-    # Filled dot elements (i/j tittle): <circle cx cy r>, attribute order fixed.
+    if not w:
+        sys.exit(f"glyphs/{sub + '/' if sub else ''}{name}.svg: missing viewBox")
+    # Filled dot elements (tittle, colon dots): <circle cx cy r>,
+    # attribute order fixed.
     circles = [
         (float(m[0]), float(m[1]), float(m[2]))
         for m in re.findall(
             r'<circle[^>]*cx="([\d.]+)"\s+cy="([\d.]+)"\s+r="([\d.]+)"', svg
         )
     ]
-    return d.group(1), float(w.group(1)), circles
+    if not d and not circles:
+        sys.exit(f"glyphs/{sub + '/' if sub else ''}{name}.svg: no path or circle")
+    return (d.group(1) if d else None), float(w.group(1)), circles
 
 
 def main() -> None:
-    glyph_order = [".notdef", "space", "period"] + LETTERS + LOWER
+    glyph_order = [".notdef", "space", "period"] + LETTERS + LOWER + list(PUNCT)
     cmap: dict[int, str] = {0x20: "space", 0x2E: "period"}
     cmap.update({ord(ch): ch for ch in LETTERS + LOWER})
+    cmap.update({code: name for name, code in PUNCT.items()})
+    cmap.update(PUNCT_ALIASES)
 
     glyphs: dict[str, object] = {}
     metrics: dict[str, tuple[int, int]] = {}
@@ -261,19 +306,33 @@ def main() -> None:
 
     for letter in LETTERS:
         d, w, circles = read_glyph(letter)
-        glyphs[letter] = outline_to_tt(svg_path_to_skia(d), LSB, circles)
+        glyphs[letter] = outline_to_tt(
+            svg_path_to_skia(d) if d else None, LSB, circles
+        )
         advance = round(w * SCALE + LSB + RSB + OPTICAL.get(letter, 0))
         metrics[letter] = (advance, LSB)
 
     for letter in LOWER:
-        d, w, circles = read_glyph(letter)
-        glyphs[letter] = outline_to_tt(svg_path_to_skia(d), LSB, circles)
+        d, w, circles = read_glyph(letter, "lowercase")
+        glyphs[letter] = outline_to_tt(
+            svg_path_to_skia(d) if d else None, LSB, circles
+        )
         advance = round(w * SCALE + LSB + RSB + OPTICAL_LOWER.get(letter, 0))
         metrics[letter] = (advance, LSB)
 
     # Registration dot mapped to U+002E: faithful to the logo punctuation.
     glyphs["period"] = filled_circle(18, 92, 6, 24)
     metrics["period"] = (round(36 * SCALE + 48), 24)
+
+    for name in PUNCT:
+        d, w, circles = read_glyph(name, "punct")
+        glyphs[name] = outline_to_tt(
+            svg_path_to_skia(d) if d else None, LSB, circles
+        )
+        advance = round(
+            w * SCALE + LSB + RSB + OPTICAL_PUNCT.get(name, 0)
+        )
+        metrics[name] = (advance, LSB)
 
     fb = FontBuilder(UPM, isTTF=True)
     fb.setupGlyphOrder(glyph_order)
@@ -284,13 +343,13 @@ def main() -> None:
     fb.setupNameTable({
         "familyName": "Orbital Display",
         "styleName": "Regular",
-        "uniqueFontIdentifier": "Negent Mind; Orbital Display; 0.2.0",
+        "uniqueFontIdentifier": "Negent Mind; Orbital Display; 0.3.0",
         "fullName": "Orbital Display Regular",
         "psName": "OrbitalDisplay-Regular",
-        "version": "Version 0.2.0",
+        "version": "Version 0.3.0",
         "description": "MVP display face built from the Orbital logo "
-                       "construction. A-Z + a-z + space + registration dot. "
-                       "Development build; see SPECIMEN.md.",
+                       "construction. A-Z + a-z + punctuation + space + "
+                       "registration dot. Development build; see SPECIMEN.md.",
         "licenseDescription": "Unreleased development build. License pending.",
     })
     fb.setupOS2(
@@ -304,12 +363,14 @@ def main() -> None:
         usWeightClass=400,
         usWidthClass=5,
         achVendID="NMND",
-        ulUnicodeRange1=0x00000001,
         ulCodePageRange1=0x00000001,
         fsSelection=0x40,
         fsType=0,
     )
     fb.setupPost(keepGlyphNames=False)
+    # Let fontTools recompute ulUnicodeRange* from the final cmap (Basic
+    # Latin + Latin-1 Supplement + General Punctuation).
+    fb.font["OS/2"].recalcUnicodeRanges(fb.font)
 
     out_ttf = os.path.join(HERE, "orbital-display.ttf")
     fb.save(out_ttf)
