@@ -32,6 +32,14 @@
 <h1>Orbital — glyph table draft</h1>
 <h2>Alphabet A–Z (cell shows glyph width)</h2>
 <div class="row" id="alphabet"></div>
+<h2>Alphabet a–z (x-height 56, descender 116)</h2>
+<div class="row" id="alphabet-lower"></div>
+<h2>Lowercase checks</h2>
+<div class="word"><label>negent mind.</label><svg data-word="negent mind."></svg></div>
+<div class="word"><label>memoria persistente</label><svg data-word="memoria persistente"></svg></div>
+<div class="word"><label>vantadb scopegrain</label><svg data-word="vantadb scopegrain"></svg></div>
+<div class="word"><label>the quick brown fox jumps over lazy dog</label><svg data-word="the quick brown fox jumps over lazy dog"></svg></div>
+<div class="word"><label>el veloz murcielago hindu comia feliz cardillo y kiwi</label><svg data-word="el veloz murcielago hindu comia feliz cardillo y kiwi"></svg></div>
 <h2>Logo composition (reference paths verbatim)</h2>
 <div class="word lg"><label>NEGENT MIND.</label><svg id="logo"></svg></div>
 <h2>Rotating words — ES</h2>
@@ -79,6 +87,34 @@ const GLYPHS = {
   X: { d: "M12,16 L60,96 M60,16 L12,96", w: 72 },
   Y: { d: "M8,16 L34,56 L60,16 M34,56 V96", w: 68 },
   Z: { d: "M12,16 H56 L12,96 H58", w: 70 },
+  // lowercase — glyphs/lowercase/*.svg. x-height y=56, descender y=116.
+  // dot: [cx,cy,r] filled tittle (registration-dot geometry), not stroked.
+  a: { d: "M32,56 A20,20 0 1 0 32,96 A20,20 0 1 0 32,56 Z M52,56 V96", w: 64 },
+  b: { d: "M12,16 V96 M32,56 A20,20 0 1 0 32,96 A20,20 0 1 0 32,56 Z", w: 64 },
+  c: { d: "M47.3,63.1 A20,20 0 1 0 47.3,88.9", w: 60 },
+  d: { d: "M32,56 A20,20 0 1 0 32,96 A20,20 0 1 0 32,56 Z M52,16 V96", w: 64 },
+  e: { d: "M47.3,63.1 A20,20 0 1 0 47.3,88.9 M13,76 H48", w: 60 },
+  f: { d: "M26,96 V36 A20,20 0 0 1 46,16 M13,56 H39", w: 58 },
+  g: { d: "M32,56 A20,20 0 1 0 32,96 A20,20 0 1 0 32,56 Z M52,56 V96 A20,20 0 0 1 32,116", w: 64 },
+  h: { d: "M12,16 V96 M12,76 A20,20 0 0 1 52,76 V96", w: 64 },
+  i: { d: "M12,56 V96", w: 30, dot: [12, 34, 6] },
+  j: { d: "M26,56 V96 A20,20 0 0 1 6,116", w: 42, dot: [26, 34, 6] },
+  k: { d: "M12,16 V96 M50,56 L14,72 L52,96", w: 64 },
+  l: { d: "M12,16 V96", w: 24 },
+  m: { d: "M12,56 V96 M12,76 A20,20 0 0 1 52,76 V96 M52,76 A20,20 0 0 1 92,76 V96", w: 104 },
+  n: { d: "M12,56 V96 M12,76 A20,20 0 0 1 52,76 V96", w: 64 },
+  o: { d: "M32,56 A20,20 0 1 0 32,96 A20,20 0 1 0 32,56 Z", w: 64 },
+  p: { d: "M12,56 V116 M32,56 A20,20 0 1 0 32,96 A20,20 0 1 0 32,56 Z", w: 64 },
+  q: { d: "M32,56 A20,20 0 1 0 32,96 A20,20 0 1 0 32,56 Z M52,56 V116", w: 64 },
+  r: { d: "M12,56 V96 M12,76 A20,20 0 0 1 47.3,63.1", w: 60 },
+  s: { d: "M46,70 A14,14 0 0 0 18,70 L46,82 A14,14 0 0 1 18,82", w: 64 },
+  t: { d: "M24,16 V96 M12,56 H36", w: 48 },
+  u: { d: "M12,56 V76 A20,20 0 0 0 52,76 V56", w: 64 },
+  v: { d: "M14,56 L33,96 L52,56", w: 66 },
+  w: { d: "M12,56 V96 L46,72 L80,96 V56", w: 92 },
+  x: { d: "M16,56 L48,96 M48,56 L16,96", w: 64 },
+  y: { d: "M12,56 L32,80 L52,56 M32,80 V96 A20,20 0 0 1 12,116", w: 64 },
+  z: { d: "M16,56 H46 L16,96 H48", w: 64 },
 };
 const GAP = 16;
 const NS = "http://www.w3.org/2000/svg";
@@ -89,7 +125,14 @@ function glyphPaths(letter, dx) {
   const p = document.createElementNS(NS, "path");
   p.setAttribute("d", g.d);
   if (dx) p.setAttribute("transform", `translate(${dx},0)`);
-  return p;
+  if (!g.dot) return [p];
+  const c = document.createElementNS(NS, "circle");
+  c.setAttribute("cx", g.dot[0] + (dx || 0));
+  c.setAttribute("cy", g.dot[1]);
+  c.setAttribute("r", g.dot[2]);
+  c.setAttribute("stroke", "none");
+  c.setAttribute("fill", "currentColor");
+  return [p, c];
 }
 
 function wordSvg(word, target) {
@@ -99,8 +142,7 @@ function wordSvg(word, target) {
     if (ch === " ") { x += 34; continue; }
     const g = GLYPHS[ch];
     if (!g) { x += 40; continue; }
-    const p = glyphPaths(ch, x);
-    paths.push(p);
+    paths.push(...glyphPaths(ch, x));
     x += g.w + GAP;
   }
   x -= GAP;
@@ -115,7 +157,9 @@ function wordSvg(word, target) {
 }
 
 const alpha = document.getElementById("alphabet");
-for (let i = 65; i <= 90; i++) {
+const alphaLower = document.getElementById("alphabet-lower");
+for (let i = 65; i <= 122; i++) {
+  if (i > 90 && i < 97) continue;
   const ch = String.fromCharCode(i);
   const g = GLYPHS[ch];
   const cell = document.createElement("div");
@@ -127,13 +171,13 @@ for (let i = 65; i <= 90; i++) {
   grp.setAttribute("stroke", "currentColor");
   grp.setAttribute("stroke-width", "13");
   grp.setAttribute("stroke-linejoin", "bevel");
-  grp.appendChild(glyphPaths(ch, Math.max(0, (96 - g.w) / 2)));
+  for (const p of glyphPaths(ch, Math.max(0, (96 - g.w) / 2))) grp.appendChild(p);
   svg.appendChild(grp);
   cell.appendChild(svg);
   const label = document.createElement("span");
   label.textContent = `${ch} · w${g.w}`;
   cell.appendChild(label);
-  alpha.appendChild(cell);
+  (i <= 90 ? alpha : alphaLower).appendChild(cell);
 }
 
 // Logo verbatim from orbital-source.svg

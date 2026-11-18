@@ -1,0 +1,7 @@
+<!-- Orbital glyph h (lowercase) — stroke 13, bevel joins.
+     x-height y=56, baseline y=96, ascender y=16, descender y=116.
+     Bowl/arches r20 centered (32,76); dot = filled r6 (registration dot).
+     Source of truth for this letterform; build-font.py consumes it. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 120">
+  <path d="M12,16 V96 M12,76 A20,20 0 0 1 52,76 V96" fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="bevel"/>
+</svg>

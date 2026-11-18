@@ -2,11 +2,15 @@
 """
 Orbital Display — MVP font builder.
 
-Consumes the per-glyph centerline SVGs in ./glyphs (stroke 13, bevel joins,
-construction lines y=16/56/96), expands strokes into filled outlines with
-skia-pathops, and emits orbital-display.ttf + orbital-display.woff2.
+Consumes the per-glyph centerline SVGs in ./glyphs (uppercase, stroke 13,
+bevel joins, construction lines y=16/56/96) and ./glyphs/lowercase
+(x-height y=56, ascender y=16, descender y=116), expands strokes into
+filled outlines with skia-pathops, and emits orbital-display.ttf +
+orbital-display.woff2. Filled <circle> elements in a glyph SVG (the i/j
+tittle, same r6 geometry as the registration dot) are merged as filled
+outlines, not stroked.
 
-Geometry source: ./glyphs/*.svg — same table as
+Geometry source: ./glyphs/*.svg + ./glyphs/lowercase/*.svg — same table as
 web/components/nm/v2/orbital-glyphs.tsx and font/specimen.html.
 
 Requirements: fontTools, skia-pathops, brotli (for WOFF2).
@@ -36,7 +40,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 GLYPH_DIR = os.path.join(HERE, "glyphs")
 
 # --- source-space metrics ---------------------------------------------------
-# SVG coordinate system: cap top y=16, mid y=56, baseline y=96, stroke 13.
+# SVG coordinate system: cap top y=16, x-height y=56, baseline y=96,
+# descender y=116, stroke 13.
 STROKE = 13.0
 UPM = 1024
 # 80 SVG units of cap height -> 700 font units.
@@ -48,8 +53,16 @@ SPACE_ADVANCE = 300
 # Optical advance corrections (font units): measured edges are equal, so the
 # corrections compensate perceived density, not arithmetic.
 OPTICAL = {"T": -14, "I": -18, "L": -10, "Z": -8, "W": 12, "S": 8, "V": -6, "Y": -6}
+# Lowercase corrections: narrow stems and open letters run tighter; wide
+# letters (m, w) and the tense s get air.
+OPTICAL_LOWER = {
+    "i": -40, "j": -24, "l": -40, "f": -16, "t": -16, "r": -14,
+    "k": -10, "v": -8, "x": -8, "y": -10, "z": -6,
+    "s": 6, "m": 12, "w": 12,
+}
 
 LETTERS = [chr(c) for c in range(ord("A"), ord("Z") + 1)]
+LOWER = [chr(c) for c in range(ord("a"), ord("z") + 1)]
 
 # --- tiny SVG path parser (M/L/H/V/A/Z, absolute only) -----------------------
 TOKEN = re.compile(r"([MLHVAZ])([^MLHVAZ]*)")
@@ -170,15 +183,31 @@ def svg_path_to_skia(d: str) -> pathops.Path:
     return path
 
 
-def outline_to_tt(source: pathops.Path, lsb: float) -> "object":
-    """Stroke -> union -> scale + flip into font units -> TTGlyphPen glyph."""
+def circle_path(cx: float, cy: float, r: float) -> pathops.Path:
+    """Filled circle in SVG space (registration-dot geometry, r=6)."""
+    p = pathops.Path()
+    k = 0.5523 * r
+    p.moveTo(cx + r, cy)
+    p.cubicTo(cx + r, cy + k, cx + k, cy + r, cx, cy + r)
+    p.cubicTo(cx - k, cy + r, cx - r, cy + k, cx - r, cy)
+    p.cubicTo(cx - r, cy - k, cx - k, cy - r, cx, cy - r)
+    p.cubicTo(cx + k, cy - r, cx + r, cy - k, cx + r, cy)
+    p.close()
+    return p
+
+
+def outline_to_tt(
+    source: pathops.Path, lsb: float, circles: list[tuple[float, float, float]] = ()
+) -> "object":
+    """Stroke -> union (+ filled circles) -> scale + flip -> TTGlyphPen glyph."""
     # pathops stroke() expands in place and returns None; union() draws the
     # normalized result through an out-pen.
     source.stroke(
         STROKE, pathops.LineCap.BUTT_CAP, pathops.LineJoin.BEVEL_JOIN, 4.0
     )
+    parts = [source] + [circle_path(cx, cy, r) for cx, cy, r in circles]
     merged = pathops.Path()
-    pathops.union([source], merged.getPen(), fix_winding=True)
+    pathops.union(parts, merged.getPen(), fix_winding=True)
     # transform() returns a new Path; stroke()/simplify() mutate in place.
     merged = merged.transform(SCALE, 0, 0, -SCALE, lsb, BASELINE_SVG_Y * SCALE)
     merged.simplify(fix_winding=True, keep_starting_points=False)
@@ -189,34 +218,37 @@ def outline_to_tt(source: pathops.Path, lsb: float) -> "object":
 
 def filled_circle(cx: float, cy: float, r: float, lsb: float) -> "object":
     """Registration dot: filled, not stroked."""
-    p = pathops.Path()
-    k = 0.5523 * r
-    p.moveTo(cx + r, cy)
-    p.cubicTo(cx + r, cy + k, cx + k, cy + r, cx, cy + r)
-    p.cubicTo(cx - k, cy + r, cx - r, cy + k, cx - r, cy)
-    p.cubicTo(cx - r, cy - k, cx - k, cy - r, cx, cy - r)
-    p.cubicTo(cx + k, cy - r, cx + r, cy - k, cx + r, cy)
-    p.close()
-    p = p.transform(SCALE, 0, 0, -SCALE, lsb, BASELINE_SVG_Y * SCALE)
+    p = circle_path(cx, cy, r).transform(
+        SCALE, 0, 0, -SCALE, lsb, BASELINE_SVG_Y * SCALE
+    )
     pen = TTGlyphPen(None)
     p.draw(Cu2QuPen(pen, max_err=1.0))
     return pen.glyph()
 
 
-def read_glyph(letter: str) -> tuple[str, float]:
-    with open(os.path.join(GLYPH_DIR, f"{letter}.svg"), encoding="utf-8") as f:
+def read_glyph(letter: str) -> tuple[str, float, list[tuple[float, float, float]]]:
+    sub = "lowercase" if letter.islower() else ""
+    path = os.path.join(GLYPH_DIR, sub, f"{letter}.svg")
+    with open(path, encoding="utf-8") as f:
         svg = f.read()
     d = re.search(r'\bd="([^"]+)"', svg)
     w = re.search(r'viewBox="0 0 (\d+) 120"', svg)
     if not d or not w:
-        sys.exit(f"glyphs/{letter}.svg: missing d or viewBox")
-    return d.group(1), float(w.group(1))
+        sys.exit(f"glyphs/{sub + '/' if sub else ''}{letter}.svg: missing d or viewBox")
+    # Filled dot elements (i/j tittle): <circle cx cy r>, attribute order fixed.
+    circles = [
+        (float(m[0]), float(m[1]), float(m[2]))
+        for m in re.findall(
+            r'<circle[^>]*cx="([\d.]+)"\s+cy="([\d.]+)"\s+r="([\d.]+)"', svg
+        )
+    ]
+    return d.group(1), float(w.group(1)), circles
 
 
 def main() -> None:
-    glyph_order = [".notdef", "space", "period"] + LETTERS
+    glyph_order = [".notdef", "space", "period"] + LETTERS + LOWER
     cmap: dict[int, str] = {0x20: "space", 0x2E: "period"}
-    cmap.update({ord(ch): ch for ch in LETTERS})
+    cmap.update({ord(ch): ch for ch in LETTERS + LOWER})
 
     glyphs: dict[str, object] = {}
     metrics: dict[str, tuple[int, int]] = {}
@@ -228,9 +260,15 @@ def main() -> None:
     metrics["space"] = (SPACE_ADVANCE, 0)
 
     for letter in LETTERS:
-        d, w = read_glyph(letter)
-        glyphs[letter] = outline_to_tt(svg_path_to_skia(d), LSB)
+        d, w, circles = read_glyph(letter)
+        glyphs[letter] = outline_to_tt(svg_path_to_skia(d), LSB, circles)
         advance = round(w * SCALE + LSB + RSB + OPTICAL.get(letter, 0))
+        metrics[letter] = (advance, LSB)
+
+    for letter in LOWER:
+        d, w, circles = read_glyph(letter)
+        glyphs[letter] = outline_to_tt(svg_path_to_skia(d), LSB, circles)
+        advance = round(w * SCALE + LSB + RSB + OPTICAL_LOWER.get(letter, 0))
         metrics[letter] = (advance, LSB)
 
     # Registration dot mapped to U+002E: faithful to the logo punctuation.
@@ -242,26 +280,27 @@ def main() -> None:
     fb.setupCharacterMap(cmap)
     fb.setupGlyf(glyphs)
     fb.setupHorizontalMetrics(metrics)
-    fb.setupHorizontalHeader(ascent=820, descent=-160)
+    fb.setupHorizontalHeader(ascent=820, descent=-240)
     fb.setupNameTable({
         "familyName": "Orbital Display",
         "styleName": "Regular",
-        "uniqueFontIdentifier": "Negent Mind; Orbital Display; 0.1.0",
+        "uniqueFontIdentifier": "Negent Mind; Orbital Display; 0.2.0",
         "fullName": "Orbital Display Regular",
         "psName": "OrbitalDisplay-Regular",
-        "version": "Version 0.1.0",
-        "description": "MVP uppercase display face built from the Orbital logo "
-                       "construction. Development build; see SPECIMEN.md.",
+        "version": "Version 0.2.0",
+        "description": "MVP display face built from the Orbital logo "
+                       "construction. A-Z + a-z + space + registration dot. "
+                       "Development build; see SPECIMEN.md.",
         "licenseDescription": "Unreleased development build. License pending.",
     })
     fb.setupOS2(
         sTypoAscender=780,
-        sTypoDescender=-160,
+        sTypoDescender=-200,
         sTypoLineGap=60,
         usWinAscent=820,
-        usWinDescent=180,
+        usWinDescent=240,
         sCapHeight=700,
-        sxHeight=700,
+        sxHeight=350,
         usWeightClass=400,
         usWidthClass=5,
         achVendID="NMND",

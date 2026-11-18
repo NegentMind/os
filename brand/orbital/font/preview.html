@@ -47,48 +47,58 @@
 </style>
 </head>
 <body>
-  <h1>Orbital Display — v0 preview</h1>
-  <div class="note">Fuente real via <code>@font-face</code> (woff2). Cobertura: A–Z + espacio + punto. Sin kerning, sin minúsculas ni dígitos.</div>
+  <h1>Orbital Display — v0.2 preview</h1>
+  <div class="note">Fuente real via <code>@font-face</code> (woff2). Cobertura: A–Z + a–z + espacio + punto. Sin kerning ni dígitos.</div>
 
   <h2>Alfabeto</h2>
   <div class="orbital alpha">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+  <div class="orbital alpha">abcdefghijklmnopqrstuvwxyz</div>
 
-  <h2>Escalas — NEGENT MIND.</h2>
+  <h2>Escalas — Negent Mind.</h2>
   <div class="orbital sizes">
-    <div class="s144">NEGENT MIND.</div>
-    <div class="s96">NEGENT MIND.</div>
-    <div class="s64">NEGENT MIND.</div>
-    <div class="s48">NEGENT MIND.</div>
-    <div class="s32">NEGENT MIND.</div>
-    <div class="s24">NEGENT MIND.</div>
-    <div class="s16">NEGENT MIND.</div>
-    <div class="s12">NEGENT MIND.</div>
+    <div class="s144">Negent Mind.</div>
+    <div class="s96">Negent Mind.</div>
+    <div class="s64">Negent Mind.</div>
+    <div class="s48">Negent Mind.</div>
+    <div class="s32">Negent Mind.</div>
+    <div class="s24">Negent Mind.</div>
+    <div class="s16">Negent Mind.</div>
+    <div class="s12">Negent Mind.</div>
     <span class="fallback">12px ya es límite legible — la fuente es display.</span>
   </div>
 
-  <h2>Palabras del sistema</h2>
+  <h2>Palabras del sistema — mixtas</h2>
   <div class="orbital words">
-    <div class="w-xl">MEMORIA</div>
-    <div class="w-lg">OJOS · VOZ · MANOS</div>
-    <div class="w-md">VANTADB · SCOPEGRAIN</div>
-    <div class="w-sm">CARDINAL IRIS META EXECUTE</div>
-    <div class="w-sm">SAGE PLAN ORCHESTRA REVERB REASON</div>
+    <div class="w-xl">Memoria</div>
+    <div class="w-lg">VantaDB · ScopeGrain</div>
+    <div class="w-md">Memoria persistente</div>
+    <div class="w-md">Negent Mind · Orbital</div>
+    <div class="w-sm">Cardinal Iris Meta Execute</div>
+    <div class="w-sm">Sage Plan Orchestra Reverb Reason</div>
+  </div>
+
+  <h2>Textura de texto (párrafo)</h2>
+  <div class="orbital" style="font-size:26px; line-height:1.5; max-width:60ch;">
+    La memoria del sistema persiste entre sesiones. Cada agente observa,
+    razona y ejecuta sobre el mismo grafo de contexto. Negent Mind compone
+    esos holones en una sola superficie operativa.
   </div>
 
   <h2>Sobre papel (invertido)</h2>
   <div class="paper">
-    <div class="orbital w-lg">NEGENT MIND.</div>
-    <div class="orbital w-sm">MEMORIA PERSISTENTE</div>
+    <div class="orbital w-lg">Negent Mind.</div>
+    <div class="orbital w-sm">Memoria persistente</div>
   </div>
 
   <h2>Espectro</h2>
-  <div class="orbital w-lg spectrum">NEGENT MIND.</div>
+  <div class="orbital w-lg spectrum">Negent Mind.</div>
 
   <h2>Pares problemáticos (revisar avance óptico)</h2>
   <div class="orbital pairs">AV AW AY FA LT LV LW LY TA TE TI TO TU TV TW TY VA VO WA WE WO YA YE YO</div>
+  <div class="orbital pairs">av ay ev fa lt lv ly ta te ti to tu ty va vo wa we ya ye yo fi fj rt tt</div>
 
   <h2>Prueba libre</h2>
-  <textarea class="orbital" spellcheck="false">NEGENT MIND.</textarea>
-  <label>Escribe aquí — solo A–Z, espacio y punto existen; el resto cae a fallback.</label>
+  <textarea class="orbital" spellcheck="false">Negent Mind.</textarea>
+  <label>Escribe aquí — solo A–Z, a–z, espacio y punto existen; el resto cae a fallback.</label>
 </body>
 </html>
