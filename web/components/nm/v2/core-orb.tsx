@@ -91,7 +91,7 @@ function OrbPoster() {
       aria-hidden="true"
       focusable="false"
     >
-      <g fill="none" stroke="currentColor" strokeWidth="0.8" opacity="0.6">
+      <g fill="none" stroke="currentColor" strokeWidth="0.65" opacity="0.6">
         <circle cx="100" cy="100" r="78" />
         <ellipse cx="100" cy="100" rx="78" ry="24" />
         <ellipse cx="100" cy="100" rx="38" ry="78" />
@@ -169,9 +169,10 @@ export function CoreOrb({
       const points = projectPoints(rotation);
       context.clearRect(0, 0, width, height);
 
-      // Meridian frame in the section line color.
+      // Meridian frame in the section line color; the shared 0.65 ambient
+      // weight matches FieldCanvas filaments.
       context.strokeStyle = color;
-      context.lineWidth = 1;
+      context.lineWidth = 0.65;
       context.globalAlpha = 0.5;
       context.beginPath();
       context.arc(cx, cy, radius, 0, TAU);

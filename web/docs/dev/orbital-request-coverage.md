@@ -136,6 +136,47 @@ fix; use `lead-final-state.json` for the current computed blend/color.
 
 - User review of motion quality, graphic clarity and section transitions.
 - User's manual `npm run typecheck` and `npm run build` outputs.
-- The baseline limitations for the font and third-party references remain:
-  no complete font, no literal Strand extraction, no complete local Content
-  Architecture clone, and no claim of accessing protected Making Software art.
+- The baseline limitations for third-party references remain: no literal
+  Strand extraction, no complete local Content Architecture clone, and no
+  claim of accessing protected Making Software art.
+
+## Update — 2026-11-18
+
+Several baseline cells above describe the state at feedback time and are no
+longer current. Where they differ, the code wins:
+
+- **Item 12 (font): superseded.** Orbital Display v0.2 now exists as a real
+  display font (A–Z + a–z) under `../brand/orbital/font/`
+  (`orbital-display.ttf`, `orbital-display.woff2`, `build-font.py`, proofs).
+  It is brand material for display moments — the hero's rotating word and
+  the lab's `orbitalHeadings` eval (`<html data-headings="orbital">`) — not
+  an interface typeface. A fuller charset, metrics review and proofing
+  remain future font work.
+- **Transitions: shipped direction settled.** All four home bands render
+  `tear` at `height={360}`; its defaults are now `intensity 1.5, speed 2,
+  cell 3, spectrum 0`. `SectionTransition` gained an optional `height` prop
+  (`--nm2-transition-h`); the five variants stay available through the lab.
+- **Hero direction: fullbleed by default.** The shipped hero is full-bleed;
+  `data-fullbleed="false"` (lab only) restores the framed variant for
+  comparison. The wordmark intentionally overhangs the bottom edge
+  (`--nm2-hero-sign-*` reserves the drop), the intro splits headline/lede
+  asymmetrically, the rotating word carries Orbital lettering tinted by
+  `--nm2-rotor-ink`, and each page load picks one of the three warp
+  patterns at random. `HERO_SPECTRUM_TEXT` holds the spectrum hues that
+  read as ink on the dark art.
+- **Smooth scroll: implemented.** `components/nm/v2/smooth-scroll.tsx`
+  mounts Lenis (^1.3) only while motion is allowed, drives `lenis.raf`
+  from the GSAP ticker when available and handles `#` anchors locally with
+  `scroll-margin-top` clearance. Reduced motion or the footer pause
+  restores native scrolling.
+- **Rhythm: one spacing scale.** `--nm2-section-gap`, `--nm2-block-gap` and
+  `--nm2-band-space` (in `app/orbital.css`) replaced the loose per-section
+  clamps; sections adjacent to a transition band keep only `band-space`.
+- **Scene grammar: unified.** Structural strokes 1.5 / ambient 0.65,
+  node-cards as fill+border without box-shadow, mono micro-labels
+  (`0.6875rem`, `0.08em`), connectors whose selected state changes color
+  only, and radius tokens on cards/controls.
+- **Mono presence.** Paper sections and the home capability section carry a
+  low-alpha monochrome dot grain (CSS gradients, `--nm2-structure` at 8%)
+  so spectrum stays confined to transitions, the rotating word and small
+  state details.

@@ -1,5 +1,7 @@
 # ARCHITECTURE.md — estructura, patrones y decisiones
 
+Actualizado: 2026-11-18.
+
 Marketing Orbital escrito localmente; home, arte y shell aceptados estáticamente
 y la ronda de navegador realizada; typecheck/build manuales pendientes.
 Dirección aprobada en `docs/dev/site-v2-design.md` y ejecución en
@@ -98,10 +100,15 @@ soporte también salen de este módulo. No exponer URLs privadas de Notion.
 | `motion-provider.tsx` | Estado compartido de pausa y preferencia reducida; no gatea el contenido |
 | `site-header.tsx` | Navegación fija/flotante, cambio de idioma y menú móvil Sheet/Radix |
 | `page-hero.tsx` | Composición server asimétrica compartida por las cuatro rutas interiores |
-| `section-heading.tsx`, `animated-heading.tsx` | Interfaz de titulares y animaciones Motion `assemble`/`focus`/`trace`, visibles desde SSR |
+| `section-heading.tsx`, `animated-heading.tsx` | Interfaz de titulares y animaciones Motion `assemble`/`focus`/`trace`/`decode`, visibles desde SSR |
 | `field-canvas.tsx`, `blueprint-scene.tsx`, `scroll-scene.tsx` | Campos Canvas 2D con fallback SVG, geometrías originales y relaciones GSAP/ScrollTrigger |
-| `motion-preference.tsx`, `viewport-fade.tsx`, `pointer-feedback.tsx` | Control global en footer y efectos decorativos sin capturar interacción |
-| `hero-background.tsx`, `hero-warp.tsx`, `hero-preset.ts` | Poster y mejora WebGL progresiva con Paper; ciclo de vida del adaptador |
+| `core-orb.tsx` | Orbe-instrumento de `#org`: esfera de puntos en Canvas 2D con un punto espectral fijable; poster SVG como superficie SSR/reduced |
+| `section-transition/` | Bandas canvas entre tonos (`variants.ts` con 5 renderers puros), `section-transition.tsx` (prop `height` opcional) y `transition-lab.tsx` (herramienta dev) |
+| `system-story.tsx`, `memory-demo.tsx`, `scope-study.tsx`, `capability-story.tsx`, `holon-explorer.tsx`, `evidence-workbench.tsx` | Historias interactivas de home; cada una compone ScrollScene + una sola gramática gráfica |
+| `art-mount.tsx` | Monta presets de arte (warp Paper o campos) en superficies no-hero, p. ej. la tarjeta de invitación |
+| `smooth-scroll.tsx` | Lenis dinámico solo con movimiento permitido; raf sincronizado con GSAP; anchors con `scroll-margin-top` |
+| `motion-preference.tsx`, `viewport-fade.tsx`, `pointer-feedback.tsx` | Control global en footer y efectos decorativos sin capturar interacción; el fade se oculta bajo el hero |
+| `hero-background.tsx`, `hero-warp.tsx`, `hero-preset.ts` | Poster y mejora WebGL progresiva con Paper; pool de 3 warps elegido al azar por carga; fullbleed por defecto |
 | `hero-entrance.tsx` | Entrada CSS de primer render; sin reseteo asíncrono ni dependencia de GPU. |
 | `faq.tsx` | Disclosure nativo `details/summary`; no necesita otro motor ni dependencia |
 
@@ -109,7 +116,7 @@ soporte también salen de este módulo. No exponer URLs privadas de Notion.
 
 `SiteHeader` es una única navegación fija, transparente e integrada en el marco del hero al inicio. Motion observa posición/dirección de scroll; a partir de unos 72 px la barra se separa con un desplazamiento ascendente y una superficie flotante. El menú móvil sigue usando Sheet/Radix.
 
-CSS posee la entrada del hero en primer render. Motion gestiona navegación, titulares y controles. GSAP gestiona reveals de sección y decor acotado en `ScrollScene` (trazo `top 90%` a `center 55%`, flotación `top bottom` a `bottom top`, scrub 0.8) y el easing del puntero sobre el shader Paper. Los listeners se retiran al pausar o desmontar; el tween del puntero se cancela sin reiniciar el frame. Nunca se importan ambos motores en un mismo componente ni se transforman desde dos motores los mismos wrappers. Sin scroll hijack, pin ni pistas de 400vh.
+CSS posee la entrada del hero en primer render. Motion gestiona navegación, titulares y controles. GSAP gestiona reveals de sección y decor acotado en `ScrollScene` (trazo `top 90%` a `center 55%`, flotación `top bottom` a `bottom top`, scrub 0.8) y el easing del puntero sobre el shader Paper. `SmoothScroll` monta Lenis solo con movimiento permitido; su raf corre en el ticker de GSAP cuando el plugin está cargado, para que `ScrollTrigger` siga la posición suavizada. Los listeners se retiran al pausar o desmontar; el tween del puntero se cancela sin reiniciar el frame. Nunca se importan ambos motores en un mismo componente ni se transforman desde dos motores los mismos wrappers. Sin scroll hijack, pin ni pistas de 400vh.
 
 `FieldCanvas` ofrece `wave`, `orbit`, `network` y `memory`, con fallback SVG SSR determinista. Canvas 2D solo anima con movimiento permitido, intersección y pestaña visible; no necesita otra librería. El límite es 1.400 puntos desktop o 600 móvil/puntero grueso, DPR máximo 1,5 y objetivo de planificación de 30 fps, no rendimiento medido. `BlueprintScene` ofrece diagramas semánticos con etiquetas HTML e iconos Lucide cuando recibe `labels`, o sólidos SVG decorativos cuando no las recibe. `ScrollScene` posee su trazo y flotación; ya no hay tilt ni bucles de la geometría explicativa.
 
@@ -147,6 +154,9 @@ de FPS, rendimiento o bundle.
    wrappers transformados por ambos. Sin loader, scroll hijack, pin ni pistas de 400vh.
 6. **Estilos Orbital:** tokens `--nm2-*`, aliases Tailwind/shadcn y composición
    en `nm/v2`; preservar `components/ui/*` sin personalización manual.
+   El ritmo vertical es una escala de tres tokens (`--nm2-section-gap`,
+   `--nm2-block-gap`, `--nm2-band-space` en `app/orbital.css`); no introducir
+   paddings/márgenes de sección con valores sueltos.
 7. **Estados honestos.** Activo/incubación/visión se escriben; no dependen
    solo del color ni se convierten en telemetría simulada.
 
@@ -167,6 +177,9 @@ de FPS, rendimiento o bundle.
 `globals.css`, `fontVars`, `lib/i18n/Dict` y los componentes V1 permanecen.
 Los assets nuevos se coordinan en `../brand/orbital/` y se copian a
 `public/brand/`, `app/icon.svg` y `public/og.png`; ni Remotion ni el perfil
-GitHub congelado cambian por esta migración.
+GitHub congelado cambian por esta migración. `../brand/orbital/font/`
+hospeda **Orbital Display v0.2** (A–Z + a–z, `orbital-display.ttf/.woff2`):
+fuente de marca para momentos display, no de interfaz. El nombre de la
+organización se escribe NEGENT MIND en mayúsculas.
 
 Este mapa documenta código local. La ronda de navegador de esta iteración está realizada: cinco rutas por idioma en escritorio, home y héroes interiores a 390×844, y hero a 1024×600. Se ejercieron selección de diagramas, menú móvil con Escape y retorno de foco, pausa/reanudación sin perder la selección y preferencia reducida real de Chromium. La consola de una sesión normal nueva no mostró errores ni el aviso espurio de movimiento reducido. Evidencias locales en `../brand/specimens/out/orbital-review-2026-11-17/`, incluida `final/`. Siguen pendientes `npm run typecheck` y `npm run build`, que ejecuta manualmente el usuario. Esta ronda no acredita despliegue, auditoría WCAG completa ni rendimiento medido. Comandos y detalle operativo en `README.md`.

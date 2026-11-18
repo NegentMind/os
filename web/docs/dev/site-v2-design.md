@@ -10,6 +10,17 @@ Status: direction and five-page scope approved by the founder.
 Recorded in Notion Brand. Implementation is in progress.
 This is a design record, not a claim that the redesign is implemented.
 
+Implementation update (2026-11-18): the executable contract lives in
+`app/orbital.css` + `DESIGN_SYSTEM.md`. Since this record was written:
+Orbital Display v0.2 exists as a real display font (`brand/orbital/font/`,
+A–Z + a–z) for display moments only; the hero ships fullbleed with the
+wordmark overhanging the bottom edge and a spectrum-tinted rotating word;
+material section transitions are implemented (`SectionTransition`, five
+canvas variants, `tear` as the home default at `height={360}`); smooth
+scroll runs on Lenis under the motion contract; and the vertical rhythm is
+now a named three-token scale (`--nm2-section-gap`, `--nm2-block-gap`,
+`--nm2-band-space`). NEGENT MIND renders all-caps as a naming rule.
+
 ## Brief
 
 An organization-first, bilingual site for developers building AI agents.
@@ -101,11 +112,14 @@ organization site look like a database product.
 ### Brand And Type
 
 - Reuse the original SVG geometry from the approved Orbital specimen.
-  The brand is vector lettering, independent from editorial fonts.
+  The brand is vector lettering; it now also has a display cut
+  (Orbital Display v0.2, `brand/orbital/font/`), still independent from
+  editorial fonts — display moments only, never paragraph text.
 - Proposed editorial pairing: Outfit for headings and DM Sans for body.
   Both are available in the installed Next font API. Confirm visually
   before finalizing; do not use the Orbital paths for paragraph text.
-- Keep JetBrains Mono only for code and actual technical identifiers.
+- Keep JetBrains Mono only for code, technical identifiers and the
+  mono micro-labels of the shared scene grammar.
 - Use sentence case and comfortable reading widths rather than a page
   dominated by tracked uppercase and miniature labels.
 
@@ -135,7 +149,9 @@ Do not rely on color alone to distinguish project states.
 
 Define named radii for small controls, cards, large sections and pill
 controls. Round surfaces intentionally, not every element with a universal
-CSS selector. Use a single spacing scale and container system.
+CSS selector. Use a single spacing scale and container system —
+implemented as `--nm2-radius-*` plus the three-rung rhythm
+`--nm2-section-gap` / `--nm2-block-gap` / `--nm2-band-space`.
 
 Vary composition: a large featured project, a compact project ledger,
 an explanatory diagram and a quiet editorial passage can share tokens
@@ -169,8 +185,12 @@ a separate authority action.
 - Build an internal gallery rather than adding Storybook or publishing
   a component registry before there is another consumer.
 - Motion owns menu, accordion, hover/focus and small entrance interactions.
-- GSAP owns bounded scroll choreography and section transitions.
+- GSAP owns bounded scroll choreography and section reveals.
   Never animate the same DOM properties with both engines.
+- Lenis provides smooth scrolling only while motion is allowed; its raf
+  syncs with the GSAP ticker so ScrollTrigger follows the smoothed
+  position. Section transitions between carbon and paper are real
+  material bands (`SectionTransition` canvas variants), not scroll tricks.
 - No forced multi-screen scroll tracks or scroll hijacking on mobile.
 - Honor reduced motion, provide a pause control for ongoing decorative
   animation, and stop expensive work when hidden or off-screen.

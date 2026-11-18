@@ -1,5 +1,7 @@
 # DESIGN_SYSTEM.md — tokens, UI y reglas visuales
 
+Actualizado: 2026-11-18.
+
 ## Autoridad y límite V1
 
 Para **marketing Orbital**, los valores ejecutables viven en `app/orbital.css`,
@@ -58,18 +60,26 @@ la capa interna, no hex nuevos en el markup.
 
 ## Tipografía y geometría
 
-Orbital es **lettering SVG original**, separado de las fuentes de interfaz.
-`lib/fonts.ts` exporta `fontVarsV2` para el root layout de marketing.
+Orbital nació como **lettering SVG original**; desde 2026-11 existe además
+**Orbital Display v0.2**, una fuente real con A–Z y a–z construida desde la
+misma geometría (`../brand/orbital/font/`: `orbital-display.ttf/.woff2`,
+`build-font.py`, proofs). Es material de marca para momentos display —la
+palabra rotativa del hero y el toggle `orbitalHeadings` del TransitionLab
+(`<html data-headings="orbital">`)—, no fuente de interfaz: párrafos,
+navegación y controles siguen en Outfit/DM Sans. `lib/fonts.ts` exporta
+`fontVarsV2` para el root layout de marketing.
+
+Regla de nombre: la organización se escribe **NEGENT MIND en mayúsculas**
+en copy y documentación pública; el wordmark SVG ya la dibuja así.
 
 | Rol | Fuente | Uso implementado |
 |---|---|---|
 | Títulos | Outfit (`--font-heading`) | Hero `clamp(3rem, 5.7vw, 5.5rem)`; heading de sección `clamp(1.75rem, 3.4vw, 2.5rem)` |
 | Texto / UI | DM Sans (`--font-body`, `--font-sans`) | Body `1rem / 1.6`; lede `1.0625rem / 1.65` |
-| Código | JetBrains Mono (`--font-mono`) | Solo código/identificadores técnicos; specimen de código `0.75rem` |
+| Código | JetBrains Mono (`--font-mono`) | Código/identificadores + micro-etiquetas de diagrama (`0.6875rem`, tracking `0.08em`) |
 
 Los títulos usan sentence case, tracking ajustado y líneas equilibradas.
-Las medidas adaptativas concretas están extraídas en `DESIGN.md`; no hay
-una nueva rampa tipográfica ni una fuente llamada Orbital.
+Las medidas adaptativas concretas están extraídas en `DESIGN.md`.
 
 | Token | Valor |
 |---|---|
@@ -79,31 +89,66 @@ una nueva rampa tipográfica ni una fuente llamada Orbital.
 | `--nm2-radius-pill` | `999px` |
 | `--nm2-container` | `72rem` |
 | `--nm2-gutter` | `clamp(1.25rem, 4vw, 3rem)` |
-| `--nm2-frame-gap` | `clamp(12px, 1.66vw, 24px)` |
+| `--nm2-frame-gap` | `12px` (`8px` < 768px) |
+
+### Escala de ritmo única (2026-11-18)
+
+Tres peldaños gobiernan todo el espaciado vertical; los valores sueltos de
+sección están vetados. Los sublímites internos escalan con `calc()`, nunca
+con otra escala.
+
+| Token | Valor | Rol |
+|---|---|---|
+| `--nm2-section-gap` | `clamp(3rem, 6.5vw, 5.5rem)` | `padding-block` de `.nm2-section`, secciones `--paper` y footer |
+| `--nm2-block-gap` | `clamp(2rem, 4.5vw, 4rem)` | Entre bloques internos: heading, stories, ledgers, figuras |
+| `--nm2-band-space` | `clamp(1.75rem, 4.5vw, 3.5rem)` | Aire que conserva una sección junto a una banda `SectionTransition` |
+
+Regla estructural: una banda `SectionTransition` ya aporta la separación
+visual; `.nm2-transition + .nm2-section` usa `band-space` de entrada y
+`.nm2-section:has(+ .nm2-transition)` de salida, para que banda + padding
+no apilen hueco muerto. `nm2-page-intro` mantiene asimetría propia
+(`×1.15` arriba, `×0.6` abajo) sobre `section-gap`; `invitation-section` y
+`faq-section` arrancan a `×0.5` de `block-gap` salvo que una banda mande.
+Solo `min-height` donde ayude a la composición; nunca `height` fija que
+corte contenido.
 
 Radios y tokens de layout tienen su fuente en `app/orbital.css`;
-`app/orbital-hero.css` conserva el hero de dos columnas y el wordmark completo,
-con altura máxima de 20svh (16svh en pantallas bajas). Header y hero comparten
-marco fluido de ancho `calc(100% - 2 * var(--nm2-frame-gap))`, con gap `12px`
-(8px por debajo de 768px) y sin máximo de 1760px. El hero
+`app/orbital-hero.css` define el hero. **Fullbleed es la variante publicada
+por defecto** (ancho completo, sin radio); el atributo
+`data-fullbleed="false"` —que solo el TransitionLab escribe— recupera el
+marco fluido `calc(100% - 2 * var(--nm2-frame-gap))` para comparación.
+El wordmark Orbital sobresale intencionadamente del borde inferior
+(`--nm2-hero-sign-h` / `--nm2-hero-sign-out` / `--nm2-hero-sign-reserved`
+reservan la parte colgante para no cortarla) y la palabra rotativa usa
+lettering Orbital con tinta espectral vía `--nm2-rotor-ink`. El hero
 reserva 104px para la navegación superpuesta y puede crecer en móvil o zoom.
 `app/orbital-shell.css` define la barra flotante a ancho de marco y el layout
 asimétrico de `PageHero`, con altura mínima `clamp(560px, 86svh, 960px)`
 (`clamp(520px, 80svh, 760px)` por debajo de 768px).
 
-Secciones con padding vertical `clamp(3.5rem, 8vw, 7rem)`. Contenedor común,
+Secciones con `padding-block: var(--nm2-section-gap)`. Contenedor común,
 ensanchado a `88rem` solo en home (`orbital-home.css`),
 texto con medida de lectura y composiciones variadas: proyecto destacado,
 ledger, diagramas y pasajes editoriales, no una cuadrícula de cards idénticas.
 Fill, diferencias tonales y espacio dan profundidad; bordes secundarios,
 sin neón ni sombras/glows como identidad funcional.
 
+Las utilidades de tono `.nm2-tone-paper`, `.nm2-tone-dark` y
+`.nm2-tone-section` remapean juntos los roles semánticos `--nm2-*`
+(fondo, superficie, tinta, líneas, acción) para una región concreta —
+la tarjeta de invitación de home (`nm2-tone-dark` dentro de una zona
+clara) o el ledger de Scopegrain (`nm2-tone-section`). Nunca un cambio
+parcial de roles.
+
 ## Librería interna y primitivas
 
 `components/nm/v2/` contiene BrandMark, ActionLink, Surface, Section,
 SectionHeading/AnimatedHeading, PageHero, StatusBadge, ProjectCard, Faq,
-SiteHeader/SiteFooter, hero, FieldCanvas, BlueprintScene, ScrollScene,
-MotionPreference, ViewportFade y PointerFeedback. Las escenas SVG con
+SiteHeader/SiteFooter, hero, FieldCanvas, BlueprintScene, CoreOrb,
+ScrollScene, MotionPreference, ViewportFade, PointerFeedback, SmoothScroll,
+SectionTransition/TransitionLab y las historias de home (SystemStory,
+MemoryDemo, ScopeStudy, CapabilityStory, HolonExplorer, EvidenceWorkbench).
+Las escenas SVG con
 etiquetas HTML posicionadas por porcentaje (`BlueprintScene`, conexiones de
 `HolonExplorer`) usan `preserveAspectRatio="none"` a propósito —un `meet`
 con letterboxing desalinearía las tarjetas—; `MemoryStack`, sin capa HTML,
@@ -128,8 +173,27 @@ Las galerías `/[lang]/design-system` y `/[lang]/design-system/art` son de
 development, `noindex`, fuera del sitemap y 404 fuera de development;
 no una sexta página pública.
 
+## Gramática gráfica de escenas (2026-11-18)
+
+Una sola gramática visual gobierna diagramas, campos e historias:
+
+| Rasgo | Regla |
+|---|---|
+| Trazo estructural | `stroke-width: 1.5` en conectores, caras, placas e iconos de diagrama |
+| Trazo ambiental | `0.65` en filamentos de campo, guías y meridianos del orbe |
+| Nodos | `fill` de superficie + `border: 1px solid var(--nm2-line)` + `--nm2-radius-*`; selección invierte al par `action`/`on-action`; **sin sombras** |
+| Etiquetas | índice/estado en mono `0.6875rem` tracking `0.08em` muted; texto de etiqueta en sans `0.8125rem` |
+| Conectores | `--nm2-line` a 1.5; el estado seleccionado cambia solo el color (`--nm2-text` o trazo structure→text), nunca el grosor |
+| Espectro | puntual: bandas de transición, palabra rotativa, detalles de estado y arte acotado; nunca en controles ni texto de lectura |
+
 ## Material y movimiento
 
+- **Lenis** (`lenis` ^1.3) da smooth scroll al shell de marketing vía
+  `SmoothScroll`: import dinámico, vive solo con movimiento permitido —
+  reduced motion o la pausa del footer destruyen la instancia y restauran
+  el scroll nativo. Los anchors se manejan localmente (no la opción
+  `anchors` de Lenis) y `scrollTo` respeta `scroll-margin-top`; cuando GSAP
+  está cargado el ticker propio alimenta `lenis.raf` y `ScrollTrigger.update`.
 - **Paper Shaders 0.0.82 (Apache-2.0)** sustituye GLSL propio/runtime Framer.
   Runtime vanilla público `ShaderMount` + `warpFragmentShader` de
   `@paper-design/shaders`, con wrapper React local mínimo para
@@ -149,6 +213,9 @@ no una sexta página pública.
   El control global está en el footer; el hero no tiene botón local.
   `prefers-reduced-motion` conserva arte estático y deshabilita el control
   cuando la preferencia del sistema prevalece.
+- `ViewportFade` (borde óptico inferior) se oculta mientras el hero de home
+  cubre su franja (`data-hidden` vía IntersectionObserver); en páginas
+  interiores sin hero permanece visible.
 - Sin loader bloqueante, relojes decorativos, telemetría falsa, scroll
   hijack ni pistas de 400vh. Sin afirmaciones de rendimiento, FPS o tamaño
   de bundle medidos: no hay resultados que las sostengan.
@@ -163,13 +230,13 @@ El núcleo puro está en `variants.ts` (`renderVariant`). Cinco variantes, con s
 |---|---|---|
 | `dither` | 1 · 1 · 2 · 0 | Bayer 8×8 con celda `cell` |
 | `blocks` | 1 · 1 · 3 · 0 | Celdas `cell*2` con desplazamiento por filas |
-| `tear` | 1 · 1 · 3 · 0 | Frontera dentada con astillas |
+| `tear` | 1,5 · 2 · 3 · 0 | Frontera dentada con astillas; **variante por defecto de home** |
 | `chromatic` | 1 · 1 · 3 · 0,55 | Dispersión por canal; el espectro del hero tiñe el borde |
 | `iridescent` | 1 · 1 · 3 · 1 | Grano iridiscente con la paleta del hero |
 
-El scroll desplaza la frontera (±0,12·`intensity`) y el puntero fino la abomba con una gaussiana; el grano es un hash determinista, no `Math.random`. Home usa `org-in` (chromatic), `org-out` (dither), `proof-in` (tear) y `proof-out` (blocks).
+El scroll desplaza la frontera (±0,12·`intensity`) y el puntero fino la abomba con una gaussiana; el grano es un hash determinista, no `Math.random`. Home usa `tear` en las cuatro bandas (`org-in`, `org-out`, `proof-in`, `proof-out`) con `height={360}` — la altura es una prop opcional de `SectionTransition` que fija `--nm2-transition-h`; el lab sigue pudiendo sobreescribirla por banda. Las secciones adyacentes conservan solo `--nm2-band-space` de aire (ver la escala de ritmo).
 
-`TransitionLab` es una herramienta de desarrollo: solo aparece con `NODE_ENV=development` o `?transitions=1`, permite cambiar variante, parámetros y altura en vivo, invertir `from`/`to` por banda, elegir el fondo del hero (warp, campos `wave`/`orbit`/`network`/`memory` o póster), alternar el arte de `#org` (orbe ↔ blueprint) y forzar un efecto de titulares; guarda la configuración en `localStorage` (`nm2-transition-lab`). No forma parte del diseño publicado.
+`TransitionLab` es una herramienta de desarrollo: solo aparece con `NODE_ENV=development` o `?transitions=1`, permite cambiar variante, parámetros y altura en vivo, invertir `from`/`to` por banda, reenmarcar el hero (`fullbleed: false` recupera la variante enmarcada para comparación; fullbleed es el default publicado), alternar el arte de `#org` (orbe ↔ blueprint), forzar un efecto de titulares y evaluar titulares en lettering Orbital (`data-headings="orbital"`); guarda la configuración en `localStorage` (`nm2-transition-lab`). No forma parte del diseño publicado.
 
 ## Accesibilidad y revisión pendiente
 

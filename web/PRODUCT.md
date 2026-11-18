@@ -2,6 +2,8 @@
 
 <!-- impeccable:product-schema 1 -->
 
+<!-- Actualizado: 2026-11-18 -->
+
 ## Platform
 
 web
@@ -22,7 +24,7 @@ Negent Mind desarrolla infraestructura y arquitecturas alrededor de los modelos;
 
 Next.js 15 App Router + React 19 + Tailwind 4, shadcn/Radix, Motion, GSAP y Paper Shaders. `/` → `/en` | `/es` por middleware. Marketing en `app/(marketing)/[lang]` tiene home, `/projects`, `/projects/vantadb`, `/about` (Laboratorio) y `/contribute` bajo ambos locales. `lib/site-routes.ts` centraliza cinco `PageId`; `lib/marketing-metadata.ts` genera metadata propia y el sitemap incluye las cinco rutas bilingües.
 
-Dos root layouts independientes: marketing con `orbital.css`, `fontVarsV2`, `MotionProvider`, header, `main#main-content` y footer; producto con su compatibilidad V1. `/login` y `/app` siguen gated/desactivadas (`NEXT_PUBLIC_APP_ENABLED=false` → 404); Supabase Auth magic link y sesión server continúan en código. URLs/flags en `lib/site.ts`, copy nuevo en `lib/content/`, `lib/i18n/Dict` conservado para V1. Cloudflare Workers vía `@opennextjs/cloudflare` es la vía documentada, no evidencia de despliegue del rediseño. Sin CI; la práctica general de Git está en AGENTS.
+Dos root layouts independientes: marketing con `orbital.css`, `fontVarsV2`, `MotionProvider`, header, `main#main-content`, footer, `ViewportFade` y `SmoothScroll` (Lenis, solo con movimiento permitido); producto con su compatibilidad V1. `/login` y `/app` siguen gated/desactivadas (`NEXT_PUBLIC_APP_ENABLED=false` → 404); Supabase Auth magic link y sesión server continúan en código. URLs/flags en `lib/site.ts`, copy nuevo en `lib/content/`, `lib/i18n/Dict` conservado para V1. Cloudflare Workers vía `@opennextjs/cloudflare` es la vía documentada, no evidencia de despliegue del rediseño. Sin CI; la práctica general de Git está en AGENTS.
 
 ## Capabilities and Constraints
 
@@ -36,9 +38,9 @@ Dos root layouts independientes: marketing con `orbital.css`, `fontVarsV2`, `Mot
 
 ## Brand Commitments
 
-- Orbital / carbón y plata: dirección y cinco páginas aprobadas. La actualización de Notion Marca ya se efectuó y aprobó; no implica publicación de assets ni despliegue.
-- Orbital es lettering SVG original, no una fuente. Outfit para títulos, DM Sans para texto, JetBrains Mono solo para código. Radios y contenedores compartidos con composiciones variadas.
-- Marketing toma tokens de `app/orbital.css`: neutrales funcionales y seis tonos `--nm2-spectrum-*` para material expresivo acotado. Fill, tonos y espacio crean profundidad, sin neón ni botones multicolores.
+- Orbital / carbón y plata: dirección y cinco páginas aprobadas. La actualización de Notion Marca ya se efectuó y aprobó; no implica publicación de assets ni despliegue. El nombre público se escribe NEGENT MIND en mayúsculas.
+- Orbital es lettering SVG original y, desde 2026-11, también **Orbital Display v0.2** (A–Z + a–z en `../brand/orbital/font/`): fuente de marca solo para momentos display (palabra rotativa, titulares Orbital en evaluación). Outfit para títulos, DM Sans para texto, JetBrains Mono para código y micro-etiquetas técnicas. Radios, contenedores y una escala de ritmo de tres tokens (`--nm2-section-gap`, `--nm2-block-gap`, `--nm2-band-space`) compartidos con composiciones variadas.
+- Marketing toma tokens de `app/orbital.css`: neutrales funcionales y seis tonos `--nm2-spectrum-*` para material expresivo puntual (bandas de transición, palabra rotativa, detalles de estado, arte acotado). Fill, tonos y espacio crean profundidad, sin neón ni botones multicolores; los gráficos de sección comparten una gramática única (trazo 1.5/0.65, nodos fill+border sin sombra, etiquetas mono).
 - Paper Shaders 0.0.82 (Apache-2.0), API vanilla pública `ShaderMount` + `warpFragmentShader` con adaptador React mínimo para `try/catch`/cleanup. No GLSL propio/runtime Framer; no copiar el loop ni atribuir mejoras medidas de rendimiento.
 - Sin loader, relojes decorativos, telemetría falsa ni scroll hijack/tracks de 400vh. Contenido y acciones desde SSR; animación opcional.
 - Assets coordinados en `../brand/orbital/`, copias en `public/brand/`, favicon `app/icon.svg` y OG `public/og.png` (1200×630). V1 queda como compatibilidad: Remotion y perfil GitHub publicado/congelado no cambian.

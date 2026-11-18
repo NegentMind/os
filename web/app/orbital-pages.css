@@ -1,7 +1,7 @@
 /* Pages only. The foundation owns tokens, shared components and the container. */
 .nm2-section.nm2-page-intro {
-  padding-block-start: clamp(4rem, 9vw, 8rem);
-  padding-block-end: clamp(2rem, 5vw, 4rem);
+  padding-block-start: calc(var(--nm2-section-gap) * 1.15);
+  padding-block-end: calc(var(--nm2-section-gap) * 0.6);
 }
 
 .nm2-page-intro h1 {
@@ -112,7 +112,7 @@
   display: block;
   width: 100%;
   height: auto;
-  stroke-width: 1.25;
+  stroke-width: 1.5;
 }
 
 .nm2-art-orbit {
@@ -280,7 +280,7 @@
 }
 
 .nm2-section.nm2-invitation-section {
-  padding-block-start: 2rem;
+  padding-block-start: calc(var(--nm2-block-gap) * 0.5);
 }
 
 .nm2-invitation {
@@ -335,7 +335,7 @@
 
 .nm2-product-thesis {
   max-width: 60ch;
-  margin-block-end: clamp(3rem, 6vw, 5rem);
+  margin-block-end: calc(var(--nm2-block-gap) * 1.25);
   font-family: var(--font-heading);
   font-size: clamp(1.5rem, 3vw, 2.25rem);
   line-height: 1.4;
@@ -371,7 +371,7 @@
 .nm2-mechanism-symbol > svg:first-child {
   width: 2.5rem;
   height: 2.5rem;
-  stroke-width: 1.25;
+  stroke-width: 1.5;
 }
 
 .nm2-mechanism-symbol .nm2-mechanism-arrow {
@@ -568,16 +568,16 @@
 }
 
 .nm2-section.nm2-faq-section {
-  padding-block-start: 2rem;
+  padding-block-start: calc(var(--nm2-block-gap) * 0.5);
 }
 
 /* Development gallery: the same components, not imitations of their states. */
 .nm2-section.nm2-gallery-section {
-  padding-block: 3rem;
+  padding-block: calc(var(--nm2-block-gap) * 0.75);
 }
 
 .nm2-gallery-subheading {
-  margin-block-start: 3rem;
+  margin-block-start: calc(var(--nm2-block-gap) * 0.75);
 }
 
 .nm2-gallery-brand {
