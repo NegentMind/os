@@ -1,0 +1,94 @@
+<!doctype html>
+<!-- Orbital Display v0 — preview of the REAL font file (orbital-display.woff2).
+     Open this file in a browser; the font loads via @font-face, so what you see
+     is exactly what the compiled font renders — not the source SVGs. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Orbital Display v0 — font preview</title>
+<style>
+  @font-face {
+    font-family: "Orbital Display";
+    src: url("orbital-display.woff2") format("woff2"),
+         url("orbital-display.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 40px; background: #070809; color: #f1f3f5;
+         font-family: system-ui, sans-serif; }
+  .orbital { font-family: "Orbital Display", sans-serif; }
+  h1 { font-size: 12px; font-weight: 600; letter-spacing: .1em;
+       text-transform: uppercase; color: #6b7280; margin: 0 0 4px; }
+  .note { font: 12px/1.5 ui-monospace, monospace; color: #4b5563; margin-bottom: 32px; }
+  .note code { color: #9aa4b2; }
+  h2 { font-size: 10px; font-weight: 500; letter-spacing: .08em;
+       text-transform: uppercase; color: #4b5563; margin: 36px 0 10px; }
+  .alpha { font-size: 44px; letter-spacing: .04em; line-height: 1.5;
+           word-break: break-all; }
+  .sizes div { line-height: 1.25; margin: 4px 0; }
+  .s144 { font-size: 144px; } .s96 { font-size: 96px; } .s64 { font-size: 64px; }
+  .s48 { font-size: 48px; } .s32 { font-size: 32px; } .s24 { font-size: 24px; }
+  .s16 { font-size: 16px; } .s12 { font-size: 12px; }
+  .words div { margin: 6px 0; }
+  .w-xl { font-size: 96px; } .w-lg { font-size: 56px; }
+  .w-md { font-size: 36px; } .w-sm { font-size: 22px; }
+  .paper { background: #fff; color: #111418; padding: 24px; border-radius: 10px; }
+  .spectrum { background: linear-gradient(90deg,#5BADA0,#465DCF,#965CCB,#DC5E89,#D9A45E);
+              -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .pairs { font-size: 30px; line-height: 1.7; }
+  .fallback { font-family: system-ui, sans-serif; color: #6b7280; font-size: 11px; }
+  label { display:block; font:10px/1 ui-monospace,monospace; color:#4b5563; margin:14px 0 4px; }
+  textarea { width: 100%; min-height: 90px; background: #0e1114; color: #f1f3f5;
+             border: 1px solid #232b38; border-radius: 8px; padding: 12px;
+             font-family: "Orbital Display", sans-serif; font-size: 40px; }
+</style>
+</head>
+<body>
+  <h1>Orbital Display — v0 preview</h1>
+  <div class="note">Fuente real via <code>@font-face</code> (woff2). Cobertura: A–Z + espacio + punto. Sin kerning, sin minúsculas ni dígitos.</div>
+
+  <h2>Alfabeto</h2>
+  <div class="orbital alpha">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+
+  <h2>Escalas — NEGENT MIND.</h2>
+  <div class="orbital sizes">
+    <div class="s144">NEGENT MIND.</div>
+    <div class="s96">NEGENT MIND.</div>
+    <div class="s64">NEGENT MIND.</div>
+    <div class="s48">NEGENT MIND.</div>
+    <div class="s32">NEGENT MIND.</div>
+    <div class="s24">NEGENT MIND.</div>
+    <div class="s16">NEGENT MIND.</div>
+    <div class="s12">NEGENT MIND.</div>
+    <span class="fallback">12px ya es límite legible — la fuente es display.</span>
+  </div>
+
+  <h2>Palabras del sistema</h2>
+  <div class="orbital words">
+    <div class="w-xl">MEMORIA</div>
+    <div class="w-lg">OJOS · VOZ · MANOS</div>
+    <div class="w-md">VANTADB · SCOPEGRAIN</div>
+    <div class="w-sm">CARDINAL IRIS META EXECUTE</div>
+    <div class="w-sm">SAGE PLAN ORCHESTRA REVERB REASON</div>
+  </div>
+
+  <h2>Sobre papel (invertido)</h2>
+  <div class="paper">
+    <div class="orbital w-lg">NEGENT MIND.</div>
+    <div class="orbital w-sm">MEMORIA PERSISTENTE</div>
+  </div>
+
+  <h2>Espectro</h2>
+  <div class="orbital w-lg spectrum">NEGENT MIND.</div>
+
+  <h2>Pares problemáticos (revisar avance óptico)</h2>
+  <div class="orbital pairs">AV AW AY FA LT LV LW LY TA TE TI TO TU TV TW TY VA VO WA WE WO YA YE YO</div>
+
+  <h2>Prueba libre</h2>
+  <textarea class="orbital" spellcheck="false">NEGENT MIND.</textarea>
+  <label>Escribe aquí — solo A–Z, espacio y punto existen; el resto cae a fallback.</label>
+</body>
+</html>

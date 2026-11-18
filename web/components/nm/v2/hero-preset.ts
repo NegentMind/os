@@ -68,7 +68,7 @@ export const HERO_ART_ALT: HeroArtPreset = Object.freeze({
     swirl: 0.5,
     speed: 0.3,
     rotation: -18,
-  },
+  } satisfies WarpProps,
 });
 
 /** Clone the canonical art with another base pattern (TransitionLab hero). */

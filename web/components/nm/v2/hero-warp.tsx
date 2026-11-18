@@ -26,8 +26,8 @@ export function HeroWarp({
   const host = useRef<HTMLDivElement>(null);
   const mount = useRef<ShaderMount | null>(null);
   const pointerPoint = useRef({
-    x: preset.params.offsetX,
-    y: preset.params.offsetY,
+    x: preset.params.offsetX ?? 0,
+    y: preset.params.offsetY ?? 0,
   });
   const latestAnimate = useRef(animate);
   const failed = useRef(false);
@@ -88,15 +88,16 @@ export function HeroWarp({
         if (!noise) throw new Error("Paper noise texture is unavailable.");
         await noise.decode();
         if (disposed) return;
+        const colors = p.colors ?? HERO_ART.params.colors;
         const uniforms = {
-          u_colors: p.colors.map(getShaderColorFromString),
-          u_colorsCount: p.colors.length,
-          u_proportion: p.proportion,
-          u_softness: p.softness,
-          u_distortion: p.distortion,
-          u_swirl: p.swirl,
-          u_swirlIterations: p.swirlIterations,
-          u_shapeScale: p.shapeScale,
+          u_colors: colors.map(getShaderColorFromString),
+          u_colorsCount: colors.length,
+          u_proportion: p.proportion ?? 0.5,
+          u_softness: p.softness ?? 0,
+          u_distortion: p.distortion ?? 0,
+          u_swirl: p.swirl ?? 0,
+          u_swirlIterations: p.swirlIterations ?? 1,
+          u_shapeScale: p.shapeScale ?? 1,
           u_shape: WarpPatterns[p.shape ?? "stripes"],
           u_noiseTexture: noise,
           u_scale: p.scale,
@@ -109,8 +110,8 @@ export function HeroWarp({
           u_worldWidth: p.worldWidth,
           u_worldHeight: p.worldHeight,
         } satisfies WarpUniforms;
-        pointerPoint.current.x = p.offsetX;
-        pointerPoint.current.y = p.offsetY;
+        pointerPoint.current.x = p.offsetX ?? 0;
+        pointerPoint.current.y = p.offsetY ?? 0;
         const created = new ShaderMount(
           element,
           warpFragmentShader,
@@ -163,8 +164,8 @@ export function HeroWarp({
         context = scoped;
         scoped.add(() => {
           const base = {
-            x: preset.params.offsetX,
-            y: preset.params.offsetY,
+            x: preset.params.offsetX ?? 0,
+            y: preset.params.offsetY ?? 0,
           };
           const point = pointerPoint.current;
           const apply = () => {
