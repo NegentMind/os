@@ -7,7 +7,7 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
-import { Sculpture, type ShapeName } from "@/components/nm/sculpture";
+import { Sculpture, type ShapeName } from "@/components/nm/v1/sculpture";
 import type { Dict } from "@/lib/i18n";
 
 /*

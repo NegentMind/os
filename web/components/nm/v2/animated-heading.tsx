@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { stagger, useAnimate, useInView } from "motion/react";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
-import { OrbitalWord } from "@/components/nm/v2/orbital-glyphs";
 import { useCompositionLabConfig } from "@/components/nm/v2/section-transition/transition-lab";
 
 export type HeadingEffect = "assemble" | "focus" | "trace" | "decode";
@@ -43,8 +42,8 @@ export function AnimatedHeading({
   const played = useRef(false);
   const { canAnimate } = useSiteMotion();
   // The TransitionLab composition toggles override the call-site rendering:
-  // `orbital` swaps the word-split type for Orbital lettering outright,
-  // `heading` only swaps which entrance effect plays on the type.
+  // `orbital` switches the same word split between the Orbital Display
+  // face and Outfit; `heading` only swaps which entrance effect plays.
   const lab = useCompositionLabConfig();
   const labEffect = lab?.heading;
   const effective = labEffect ?? effect;
@@ -157,30 +156,28 @@ export function AnimatedHeading({
     };
   }, [animate, canAnimate, effective, inView, scope]);
 
-  // The visual split is hidden from assistive tech; sr-only carries the title.
-  // Orbital lettering is the shipped default for every section title; the
-  // lab toggle ("Titulares sans") is the only way back to animated type.
-  // Letters are artwork, so the entrance choreography does not apply.
+  // Orbital headings are the shipped default for every section title: the
+  // same word split rendered in the real Orbital Display face
+  // (nm2-animated-heading--orbital), so the entrance effects apply to
+  // actual text. The lab toggle ("Titulares sans") restores Outfit.
+  // Accessibility: Orbital mode exposes the words as real text — no
+  // sr-only duplicate would be needed; sans mode keeps the split
+  // aria-hidden with the sr-only copy (its pre-font contract). The
+  // decode effect briefly scrambles the visible text in both modes.
   const orbitalHeadings = lab?.orbitalHeadings ?? true;
-  if (orbitalHeadings) {
-    return (
-      <>
-        <span className="sr-only">{text}</span>
-        <span aria-hidden="true" className="nm2-orbital-heading">
-          {text.split(/\s+/).filter(Boolean).map((word, index) => (
-            <OrbitalWord key={`${word}-${index}`} word={word} />
-          ))}
-        </span>
-      </>
-    );
-  }
   return (
     <>
-      <span className="sr-only">{text}</span>
+      {!orbitalHeadings && <span className="sr-only">{text}</span>}
       <span
         ref={scope}
-        aria-hidden="true"
-        className={`nm2-animated-heading nm2-animated-heading--${effective}`}
+        aria-hidden={orbitalHeadings ? undefined : true}
+        className={[
+          "nm2-animated-heading",
+          `nm2-animated-heading--${effective}`,
+          orbitalHeadings ? "nm2-animated-heading--orbital" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
       >
         <span className="nm2-animated-heading__line">
           {text.split(/(\s+)/).map((word, index) =>

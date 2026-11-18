@@ -3,17 +3,17 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
-import { OrbitalWord } from "@/components/nm/v2/orbital-glyphs";
 import { HERO_SPECTRUM_TEXT } from "@/components/nm/v2/hero-preset";
 
 const INTERVAL_MS = 2400;
 
 /**
- * Cycles Orbital-lettered words inside the hero title. Each step advances
- * both the word and its ink through the approved spectrum (the two dark
- * bookends are excluded; they are base, not ink). Decorative: the h1
- * carries the full accessible text, so this block is aria-hidden and keeps
- * a stable first word without JS and under reduced/paused motion.
+ * Cycles words in the real Orbital Display face inside the hero title.
+ * Each step advances both the word and its ink through the approved
+ * spectrum (the two dark bookends are excluded; they are base, not ink).
+ * Decorative: the h1 carries the full accessible text, so this block is
+ * aria-hidden and keeps a stable first word without JS and under
+ * reduced/paused motion.
  */
 export function RotatingWord({
   words,
@@ -58,7 +58,7 @@ export function RotatingWord({
           exit={canAnimate ? { y: "0.28em", opacity: 0, filter: "blur(6px)" } : undefined}
           transition={{ duration: 0.42, ease: [0.32, 0.72, 0, 1] }}
         >
-          <OrbitalWord word={word} />
+          {word}
         </motion.span>
       </AnimatePresence>
     </span>

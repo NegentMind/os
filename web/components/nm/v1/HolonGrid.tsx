@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { HalftoneCanvas } from "@/components/nm/HalftoneCanvas";
+import { HalftoneCanvas } from "@/components/nm/v1/HalftoneCanvas";
 import type { Dict } from "@/lib/i18n";
 
 /*

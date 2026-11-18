@@ -410,19 +410,17 @@ html.lenis body {
   white-space: nowrap;
 }
 
-/* Lab eval variant (html[data-headings="orbital"]): section titles drawn as
-   Orbital lettering, one SVG word per text word so long titles still wrap.
-   The glyph box is 120 units with caps at 80, so ~1.05em tracks the title's
-   cap height instead of the smaller body scale. */
-.nm2-orbital-heading {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 0.35em;
-  row-gap: 0.18em;
-}
-
-.nm2-orbital-heading .nm2-orbital-word {
-  height: 1.05em;
+/* Orbital headings (default; html[data-headings="orbital"]): the same
+   word split as the sans variant rendered in the compiled Orbital
+   Display face, so entrance effects apply to real text. The woff2 covers
+   A–Z/a–z and its punctuation set only — accents and digits fall through
+   to Outfit. 0.12em tracking keeps the cadence of the SVG lettering
+   (16-unit gap on the 120-unit glyph box). */
+.nm2-animated-heading--orbital {
+  font-family: var(--font-orbital-display), var(--font-outfit), system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 /* Inner-page opener: text and actions remain independent of decorative art. */

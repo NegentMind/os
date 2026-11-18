@@ -103,6 +103,9 @@
   --font-body: var(--font-dm-sans), system-ui, sans-serif;
   /* v2 display face; legacy --font-display utility resolves to Outfit here. */
   --font-display: var(--font-outfit), system-ui, sans-serif;
+  /* Orbital Display (next/font/local, --font-orbital-display on <html>).
+     Glyphs outside A–Z/a–z/punctuation fall through to Outfit. */
+  --font-orbital: var(--font-orbital-display), var(--font-outfit), system-ui, sans-serif;
 }
 
 .nm2-site {

@@ -1,3 +1,11 @@
+/*
+ * Partially retired: `LOCALES`, `isLocale`, `Locale` and the `Dict` type
+ * are still the locale contract of the live site and the restored V1
+ * library (`components/nm/v1/`). The dictionary CONTENT (`en.ts`/`es.ts`,
+ * `getDictionary`) is dead — the copy served by the current site lives in
+ * `lib/content/{es,en}.ts`; do not edit these dicts expecting visible
+ * changes on the site.
+ */
 import { en, type Dict } from "./en";
 import { es } from "./es";
 

@@ -1,20 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { HalftoneKind } from "@/lib/marketing-types";
 
 /*
  * Halftone/line canvas engine ported from webTemplates/nice-squash-242352
  * (FeatureCanvas.tsx): six small animated instruments drawn with 2D
  * canvas — chip scan, halftone sphere, flow graph, bars, grid wave,
  * orbit ring. Retokenized: ink→Bone, accent→Pulse, dim→Fog.
+ *
+ * `HalftoneKind` lives in `lib/marketing-types` (single source — the V1
+ * i18n dict types `kind` from there); re-exported so legacy consumers
+ * keep this import site.
  */
-export type HalftoneKind =
-  | "runtime"
-  | "memory"
-  | "orchestration"
-  | "observability"
-  | "evaluations"
-  | "security";
+export type { HalftoneKind };
 
 const INK = "#EDEAE3";
 const ACC = "#8B7CFF";

@@ -81,27 +81,34 @@
   text-wrap: pretty;
 }
 
-/* Orbital-lettered rotating word: SVG art sized in em so it tracks the
-   title across breakpoints. Decorative — the h1 carries the full text.
-   Ink cycles through the approved spectrum via --nm2-rotor-ink. */
+/* Rotating word in the real Orbital Display face, sized in em so it
+   tracks the title across breakpoints (cap 700/1024 ≈ the SVG lettering
+   scale). Decorative — the h1 carries the full text. Ink cycles through
+   the approved spectrum via --nm2-rotor-ink. */
 .nm2-rotating-word {
   /* Grid stacking is what actually overlaps the AnimatePresence pair:
      the entering word shares the slot instead of rendering below it.
-     The row is pinned to 100% — an `auto` row would size to the SVG's
-     intrinsic height and break the 1.05em type scale. */
+     The row is pinned to 100% so the em scale cannot drift. */
   display: grid;
   grid-template-rows: 100%;
   height: 1.05em;
   margin-top: 0.14em;
+  font-family: var(--font-orbital-display), var(--font-outfit), system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
   color: var(--nm2-rotor-ink, var(--nm2-text, #f1f3f5));
   transition: color 700ms ease;
 }
 
 .nm2-rotating-word__item {
   grid-area: 1 / 1;
-  display: block;
+  display: flex;
+  align-items: center;
   height: 100%;
   min-width: 0;
+  white-space: nowrap;
 }
 
 .nm2-orbital-word {

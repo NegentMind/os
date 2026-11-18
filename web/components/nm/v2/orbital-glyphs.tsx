@@ -5,6 +5,12 @@
  * logo geometry from brand/orbital/orbital-source.svg; the rest follow the
  * same construction. Keep this table in sync with the font masters.
  *
+ * STATUS: fallback/library, not the live path. Site headings and the hero
+ * rotating word render in the compiled font (next/font/local,
+ * --font-orbital-display → web/public/fonts/orbital-display.woff2). This
+ * map stays for glyphs the font does not cover yet (accented capitals,
+ * digits) and for canvas/SVG-only contexts that cannot load a webfont.
+ *
  * Punctuation mirrors glyphs/punct/*.svg (v0.3): baseline dots at cy=92,
  * upper dots at cy=58, ¿/¡ are the exact 180° rotation of ?/!. Filled r6
  * circles reuse the registration-dot geometry and render as `dots`.

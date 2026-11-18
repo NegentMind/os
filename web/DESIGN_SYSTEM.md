@@ -13,10 +13,14 @@ typecheck/build manuales pendientes, no un despliegue ni una auditoría de
 accesibilidad aprobada.
 
 `app/globals.css`, `lib/i18n/Dict` y las fuentes V1 se conservan para la
-compatibilidad del contexto de producto; los **componentes V1 de
-`components/nm/` fueron eliminados** (quedaba un solo import vivo —el tipo
-`HalftoneKind`, ahora en `lib/marketing-types.ts`—). **No sincronizar
-Orbital a `../media/remotion/src/tokens.ts` ni al perfil GitHub
+compatibilidad del contexto de producto. Los componentes V1, eliminados en
+`2281bb9`, fueron **restaurados como biblioteca legado reutilizable en
+`components/nm/v1/`** (2026-11-18): fuera de producción, conservados para
+reutilización y rediseño —no código muerto—; si se adoptan en una
+superficie Orbital hay que retokenizarlos a `--nm2-*`. El tipo
+`HalftoneKind` sigue en `lib/marketing-types.ts` como fuente única y
+`nm/v1/HalftoneCanvas.tsx` lo re-exporta. **No sincronizar Orbital a
+`../media/remotion/src/tokens.ts` ni al perfil GitHub
 publicado/congelado.** Void/Bone/Pulse y Chakra Petch/Inter dejan de ser
 autoridad para marketing, no se borran ni se migran sus pipelines en esta
 fase.
@@ -64,24 +68,41 @@ la capa interna, no hex nuevos en el markup.
 ## Tipografía y geometría
 
 Orbital nació como **lettering SVG original**; desde 2026-11 existe además
-**Orbital Display v0.2**, una fuente real con A–Z y a–z construida desde la
-misma geometría (`../brand/orbital/font/`: `orbital-display.ttf/.woff2`,
-`build-font.py`, proofs). Es material de marca para momentos display —la
-palabra rotativa del hero y el toggle `orbitalHeadings` del TransitionLab
-(`<html data-headings="orbital">`)—, no fuente de interfaz: párrafos,
-navegación y controles siguen en Outfit/DM Sans. `lib/fonts.ts` exporta
-`fontVarsV2` para el root layout de marketing.
+**Orbital Display v0.3**, una fuente real compilada desde la misma
+geometría (`../brand/orbital/font/`: `orbital-display.ttf/.woff2`,
+`build-font.py`, proofs) y **servida en la web como font-face real**
+(`next/font/local` en `lib/fonts.ts` → `--font-orbital-display` en
+`<html>`, alias `--font-orbital` en `@theme`; archivo en
+`public/fonts/orbital-display.woff2`). Es material de marca para momentos
+display —los titulares de sección por defecto
+(`nm2-animated-heading--orbital`, efectos de entrada aplicados al texto),
+la palabra rotativa del hero y el toggle `orbitalHeadings` del
+TransitionLab (`<html data-headings="orbital">` ⇄ `"sans"` vuelve a
+Outfit)—, no fuente de interfaz: párrafos, navegación y controles siguen
+en Outfit/DM Sans. `lib/fonts.ts` exporta `fontVarsV2` para el root
+layout de marketing.
+
+Cobertura de la fuente (75 glifos): A–Z, a–z, espacio y 20 signos de
+puntuación —**sin acentos ni dígitos**. Los caracteres no cubiertos caen a
+Outfit por la pila de `font-family` (varias líneas de titulares en ES
+contienen á/é/í/ó/ú; verificar al ampliar el set). El mapa SVG de
+`nm/v2/orbital-glyphs.tsx` queda como biblioteca/fallback para glifos sin
+fuente y contextos sin webfont.
 
 Regla de nombre: la organización se escribe **NEGENT MIND en mayúsculas**
 en copy y documentación pública; el wordmark SVG ya la dibuja así.
 
 | Rol | Fuente | Uso implementado |
 |---|---|---|
-| Títulos | Outfit (`--font-heading`) | Hero `clamp(3rem, 5.7vw, 5.5rem)`; heading de sección `clamp(1.75rem, 3.4vw, 2.5rem)` |
+| Display | Orbital Display (`--font-orbital-display`) | Titulares de sección (tracking `0.12em`, mayúsculas) y palabra rotativa del hero |
+| Títulos | Outfit (`--font-heading`) | Hero `clamp(3rem, 5.7vw, 5.5rem)`; fallback de titulares y de glifos no cubiertos por Orbital Display |
 | Texto / UI | DM Sans (`--font-body`, `--font-sans`) | Body `1rem / 1.6`; lede `1.0625rem / 1.65` |
 | Código | JetBrains Mono (`--font-mono`) | Código/identificadores + micro-etiquetas de diagrama (`0.6875rem`, tracking `0.08em`) |
 
-Los títulos usan sentence case, tracking ajustado y líneas equilibradas.
+Los títulos Outfit usan sentence case, tracking ajustado y líneas
+equilibradas; los titulares Orbital Display se renderizan en mayúsculas
+(`text-transform`) con tracking `0.12em`, la cadencia del lettering SVG
+(gap de 16 unidades sobre la caja de 120).
 Las medidas adaptativas concretas están extraídas en `DESIGN.md`.
 
 | Token | Valor |
@@ -122,8 +143,8 @@ por defecto** (ancho completo, sin radio); el atributo
 marco fluido `calc(100% - 2 * var(--nm2-frame-gap))` para comparación.
 El wordmark Orbital sobresale intencionadamente del borde inferior
 (`--nm2-hero-sign-h` / `--nm2-hero-sign-out` / `--nm2-hero-sign-reserved`
-reservan la parte colgante para no cortarla) y la palabra rotativa usa
-lettering Orbital con tinta espectral vía `--nm2-rotor-ink`. El hero
+reservan la parte colgante para no cortarla) y la palabra rotativa usa la
+fuente Orbital Display con tinta espectral vía `--nm2-rotor-ink`. El hero
 reserva 104px para la navegación superpuesta y puede crecer en móvil o zoom.
 `app/orbital-shell.css` define la barra flotante a ancho de marco y el layout
 asimétrico de `PageHero`, con altura mínima `clamp(560px, 86svh, 960px)`
@@ -144,6 +165,11 @@ clara) o el ledger de Scopegrain (`nm2-tone-section`). Nunca un cambio
 parcial de roles.
 
 ## Librería interna y primitivas
+
+La biblioteca interna está documentada pieza a pieza en
+`components/nm/README.md`: `nm/v1/` (legado reutilizable), `nm/v2/`
+(activa) y `components/ui/` (shadcn). Regla vigente: todo elemento de la
+página vive en la biblioteca para reutilizarse.
 
 `components/nm/v2/` contiene BrandMark, ActionLink, Surface, Section,
 SectionHeading/AnimatedHeading, PageHero, PageCta, StatusBadge, ProjectCard,
@@ -181,8 +207,9 @@ Se compone sobre la base shadcn new-york en `components/ui/`:
 - Menú móvil mediante **Sheet** generado con shadcn/Radix; conservar sus
   comportamientos de foco, cierre y teclado.
 - FAQ con **`details/summary` nativo**; no requiere otra dependencia.
-- Conservar `button`, `input`, `label` y `sheet` sin personalización manual
-  en `components/ui/*` (`card` se eliminó: no tenía ningún import).
+- Conservar `button`, `card`, `input`, `label` y `sheet` sin
+  personalización manual en `components/ui/*` (`card` se restauró con la
+  biblioteca; aún sin import vivo).
   Variantes, composición y tokens propios van en `nm/v2`, no en la
   primitiva regenerable.
 - Iconos de UI con `lucide-react`; marca con su geometría SVG original.
@@ -266,7 +293,7 @@ El núcleo puro está en `variants.ts` (`renderVariant`). Cinco variantes, con s
 
 El scroll desplaza la frontera (±0,12·`intensity`) y el puntero fino la abomba con una gaussiana; el grano es un hash determinista, no `Math.random`. Home usa `tear` en las cuatro bandas (`org-in`, `org-out`, `proof-in`, `proof-out`) con `height={360}` — la altura es una prop opcional de `SectionTransition` que fija `--nm2-transition-h`; el lab sigue pudiendo sobreescribirla por banda. Las secciones adyacentes conservan solo `--nm2-band-space` de aire (ver la escala de ritmo).
 
-`TransitionLab` es una herramienta de desarrollo: solo aparece con `NODE_ENV=development` o `?transitions=1`, permite cambiar variante, parámetros y altura en vivo, invertir `from`/`to` por banda, reenmarcar el hero (`fullbleed: false` recupera la variante enmarcada para comparación; fullbleed es el default publicado), alternar el arte de `#org` (orbe ↔ blueprint), forzar un efecto de titulares y evaluar titulares en lettering Orbital (`data-headings="orbital"`); guarda la configuración en `localStorage` (`nm2-transition-lab`). No forma parte del diseño publicado ni del bundle público: `transition-lab.tsx` conserva solo contexto, provider, storage y los hooks que leen los componentes vivos; la UI del panel vive en `transition-lab-panel.tsx` tras un límite `next/dynamic` (`ssr: false`) que solo se descarga cuando el lab está activo.
+`TransitionLab` es una herramienta de desarrollo: solo aparece con `NODE_ENV=development` o `?transitions=1`, permite cambiar variante, parámetros y altura en vivo, invertir `from`/`to` por banda, reenmarcar el hero (`fullbleed: false` recupera la variante enmarcada para comparación; fullbleed es el default publicado), alternar el arte de `#org` (orbe ↔ blueprint), forzar un efecto de titulares y evaluar titulares en la fuente Orbital Display real (`data-headings="orbital"` ⇄ `"sans"` = Outfit); guarda la configuración en `localStorage` (`nm2-transition-lab`). No forma parte del diseño publicado ni del bundle público: `transition-lab.tsx` conserva solo contexto, provider, storage y los hooks que leen los componentes vivos; la UI del panel vive en `transition-lab-panel.tsx` tras un límite `next/dynamic` (`ssr: false`) que solo se descarga cuando el lab está activo.
 
 ## Accesibilidad y revisión pendiente
 

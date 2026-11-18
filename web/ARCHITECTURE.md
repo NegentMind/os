@@ -38,20 +38,23 @@ web/
 │       ├── login/login-form.tsx  # Client Component (magic link)
 │       └── app/page.tsx      # Gate notFound() + sesión obligatoria (redirect /login)
 ├── components/
+│   ├── nm/README.md          # Biblioteca interna: nm/v1 legado, nm/v2 activa, ui shadcn
+│   ├── nm/v1/                # Biblioteca legado V1 (restaurada 2026-11-18; reutilizable, fuera de producción)
 │   ├── nm/v2/                # Marca, secciones, acciones, proyectos, FAQ, shell y hero Orbital
-│   └── ui/                   # shadcn — NO editar a mano; `npx shadcn add <x>` (button/input/label/sheet)
+│   └── ui/                   # shadcn — NO editar a mano; `npx shadcn add <x>` (button/card/input/label/sheet)
 ├── lib/
 │   ├── site.ts               # URLs externas y flags (ver abajo)
 │   ├── site-routes.ts        # PageId, PUBLIC_PAGES, hrefFor(lang, page)
 │   ├── marketing-metadata.ts # Metadata localizada por página
 │   ├── marketing-types.ts    # Contratos compartidos de copy y estados de proyecto
 │   ├── content/              # Nuevo copy: EN canónico, ES con la misma forma; getSiteCopy
-│   ├── i18n/                 # Locale y Dict V1 conservados para compatibilidad
-│   ├── fonts.ts              # next/font: fontVarsV2 y fontVars V1 independientes
+│   ├── i18n/                 # Contrato vivo (LOCALES/isLocale/Locale/Dict); contenido de diccionarios retirado → copy real en lib/content/
+│   ├── fonts.ts              # next/font: fontVarsV2 (Outfit, DM Sans, JetBrains, Orbital Display local) y fontVars V1 independientes
 │   ├── utils.ts              # cn()
 │   ├── supabaseClient.ts     # Browser client
 │   └── supabaseServer.ts     # Server client (cookies)
 ├── public/brand/             # Copias de assets Orbital locales, incluido poster
+├── public/fonts/             # orbital-display.woff2 (servido vía next/font/local)
 ├── public/og.png             # OG Orbital 1200×630
 └── hooks/
 ```
@@ -173,14 +176,22 @@ de FPS, rendimiento o bundle.
 
 ## Compatibilidad y validación pendiente
 
-`globals.css`, `fontVars` y `lib/i18n/Dict` permanecen; los componentes V1
-de `components/nm/` fueron eliminados (2026-11-18) tras mover su único
-import vivo (`HalftoneKind`) a `lib/marketing-types.ts`.
+`globals.css`, `fontVars` y `lib/i18n/Dict` permanecen. Los componentes V1
+eliminados en `2281bb9` fueron restaurados como **biblioteca legado en
+`components/nm/v1/`** (2026-11-18): conservados para reutilización y
+rediseño, fuera del bundle de producción al no tener imports vivos.
+`HalftoneKind` sigue en `lib/marketing-types.ts` como fuente única y
+`nm/v1/HalftoneCanvas.tsx` lo re-exporta. La regla del proyecto —todo
+elemento vive en la biblioteca interna— está en `components/nm/README.md`.
 Los assets nuevos se coordinan en `../brand/orbital/` y se copian a
 `public/brand/`, `app/icon.svg` y `public/og.png`; ni Remotion ni el perfil
 GitHub congelado cambian por esta migración. `../brand/orbital/font/`
-hospeda **Orbital Display v0.2** (A–Z + a–z, `orbital-display.ttf/.woff2`):
-fuente de marca para momentos display, no de interfaz. El nombre de la
-organización se escribe NEGENT MIND en mayúsculas.
+hospeda **Orbital Display v0.3** (A–Z + a–z + puntuación,
+`orbital-display.ttf/.woff2`): se sirve como font-face real
+(`next/font/local` → `--font-orbital-display`, archivo en
+`public/fonts/`) para titulares y la palabra rotativa; caracteres fuera de
+cobertura (acentos, dígitos) caen a Outfit por la pila de `font-family`.
+El mapa SVG de `nm/v2/orbital-glyphs.tsx` queda como biblioteca/fallback.
+El nombre de la organización se escribe NEGENT MIND en mayúsculas.
 
 Este mapa documenta código local. La ronda de navegador de esta iteración está realizada: cinco rutas por idioma en escritorio, home y héroes interiores a 390×844, y hero a 1024×600. Se ejercieron selección de diagramas, menú móvil con Escape y retorno de foco, pausa/reanudación sin perder la selección y preferencia reducida real de Chromium. La consola de una sesión normal nueva no mostró errores ni el aviso espurio de movimiento reducido. Evidencias locales en `../brand/specimens/out/orbital-review-2026-11-17/`, incluida `final/`. Siguen pendientes `npm run typecheck` y `npm run build`, que ejecuta manualmente el usuario. Esta ronda no acredita despliegue, auditoría WCAG completa ni rendimiento medido. Comandos y detalle operativo en `README.md`.

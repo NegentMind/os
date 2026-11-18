@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { FlipText } from "@/components/nm/FlipText";
-import { useLuminance } from "@/components/nm/useLuminance";
+import { FlipText } from "@/components/nm/v1/FlipText";
+import { useLuminance } from "@/components/nm/v1/useLuminance";
 import { LOCALES, type Dict, type Locale } from "@/lib/i18n";
 import { ORG_URL } from "@/lib/site";
 

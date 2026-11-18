@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { AsciiField, type FieldStats } from "@/components/nm/AsciiField";
-import { EntropyTrace } from "@/components/nm/EntropyTrace";
-import { InstrumentCounter } from "@/components/nm/InstrumentCounter";
-import { SectionHeading } from "@/components/nm/SectionHeading";
+import { AsciiField, type FieldStats } from "@/components/nm/v1/AsciiField";
+import { EntropyTrace } from "@/components/nm/v1/EntropyTrace";
+import { InstrumentCounter } from "@/components/nm/v1/InstrumentCounter";
+import { SectionHeading } from "@/components/nm/v1/SectionHeading";
 import type { Dict } from "@/lib/i18n";
 
 const ZERO: FieldStats = { entropy: 0, resolved: 0, fps: 0 };
