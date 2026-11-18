@@ -71,7 +71,7 @@ export const HERO_ART_ALT: HeroArtPreset = Object.freeze({
   } satisfies WarpProps,
 });
 
-/** Clone the canonical art with another base pattern (TransitionLab hero). */
+/** Clone the canonical art with another base pattern. */
 export function heroWarpPreset(shape: WarpPattern): HeroArtPreset {
   return Object.freeze({
     id: `${HERO_ART.id}--${shape}`,
@@ -79,29 +79,26 @@ export function heroWarpPreset(shape: WarpPattern): HeroArtPreset {
   });
 }
 
-/** Stable preset per lab warp variant — shared references, never re-cloned. */
+/**
+ * The hero's live-art pool: one of these warps is picked at random on every
+ * page load (no persistence). Shared references, never re-cloned.
+ */
 export const HERO_WARP_PRESETS = Object.freeze({
   "warp-stripes": HERO_ART,
   "warp-checks": heroWarpPreset("checks"),
   "warp-edge": heroWarpPreset("edge"),
 });
 
-/** Animated-background choices the TransitionLab can pin onto the hero. */
-export const HERO_BACKGROUNDS = [
-  { id: "warp-stripes", label: "Warp · stripes" },
-  { id: "warp-checks", label: "Warp · checks" },
-  { id: "warp-edge", label: "Warp · edge" },
-  { id: "wave-field", label: "Campo · wave" },
-  { id: "orbit-field", label: "Campo · orbit" },
-  { id: "network-field", label: "Campo · network" },
-  { id: "memory-field", label: "Campo · memory" },
-  { id: "poster", label: "Póster fijo" },
-] as const;
+export const HERO_WARP_IDS = Object.freeze(
+  Object.keys(HERO_WARP_PRESETS) as (keyof typeof HERO_WARP_PRESETS)[],
+);
 
-export type HeroBackgroundVariant = (typeof HERO_BACKGROUNDS)[number]["id"];
+export type HeroWarpId = (typeof HERO_WARP_IDS)[number];
 
-export function isHeroBackgroundVariant(
-  value: unknown,
-): value is HeroBackgroundVariant {
-  return HERO_BACKGROUNDS.some((v) => v.id === value);
-}
+/**
+ * The spectrum hues that read as ink on the hero's dark art — the two
+ * `#101C27` bookends of the palette are the base, not a text color.
+ */
+export const HERO_SPECTRUM_TEXT: readonly string[] = Object.freeze(
+  HERO_ART.params.colors.slice(1, -1),
+);

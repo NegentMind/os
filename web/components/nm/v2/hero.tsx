@@ -10,6 +10,8 @@ import { RotatingWord } from "@/components/nm/v2/rotating-word";
 /**
  * Content and navigation are server-rendered. The two client leaves enhance
  * this composition; neither WebGL nor an entrance animation gates the page.
+ * Hierarchy: headline with the spectrum-inked rotating word, one support
+ * line off-axis, the actions anchored left, and the quiet note trailing.
  */
 export function Hero({ lang, copy }: { lang: Locale; copy: HeroCopy }) {
   return (
@@ -22,21 +24,19 @@ export function Hero({ lang, copy }: { lang: Locale; copy: HeroCopy }) {
             <RotatingWord words={copy.titleWords} />
             <span className="sr-only">{copy.titleWords.join(", ")}</span>
           </h1>
+          <p className="nm2-hero__lede" data-hero-reveal>
+            {copy.description}
+          </p>
+          <div className="nm2-hero__actions" data-hero-reveal>
+            <ActionLink href={hrefFor(lang, "projects")} variant="primary">
+              {copy.primaryAction}
+            </ActionLink>
+            <ActionLink href={hrefFor(lang, "contribute")} variant="secondary">
+              {copy.secondaryAction}
+            </ActionLink>
+          </div>
         </div>
         <div className="nm2-hero__meta">
-          <div className="nm2-hero__aside">
-            <p className="nm2-hero__description" data-hero-reveal>
-              {copy.description}
-            </p>
-            <div className="nm2-hero__actions" data-hero-reveal>
-              <ActionLink href={hrefFor(lang, "projects")} variant="primary">
-                {copy.primaryAction}
-              </ActionLink>
-              <ActionLink href={hrefFor(lang, "contribute")} variant="secondary">
-                {copy.secondaryAction}
-              </ActionLink>
-            </div>
-          </div>
           <p className="nm2-hero__note">{copy.note}</p>
         </div>
         <div className="nm2-hero__signature" data-hero-reveal>

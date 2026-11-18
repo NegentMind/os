@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { stagger, useAnimate, useInView } from "motion/react";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
+import { OrbitalWord } from "@/components/nm/v2/orbital-glyphs";
 import { useCompositionLabConfig } from "@/components/nm/v2/section-transition/transition-lab";
 
 export type HeadingEffect = "assemble" | "focus" | "trace" | "decode";
@@ -41,8 +42,11 @@ export function AnimatedHeading({
   const prepared = useRef(false);
   const played = useRef(false);
   const { canAnimate } = useSiteMotion();
-  // The TransitionLab composition toggle overrides the call-site effect.
-  const labEffect = useCompositionLabConfig()?.heading;
+  // The TransitionLab composition toggles override the call-site rendering:
+  // `orbital` swaps the word-split type for Orbital lettering outright,
+  // `heading` only swaps which entrance effect plays on the type.
+  const lab = useCompositionLabConfig();
+  const labEffect = lab?.heading;
   const effective = labEffect ?? effect;
   const lastEffect = useRef(effective);
 
@@ -154,6 +158,20 @@ export function AnimatedHeading({
   }, [animate, canAnimate, effective, inView, scope]);
 
   // The visual split is hidden from assistive tech; sr-only carries the title.
+  // Lab-only eval variant: Orbital lettering replaces the animated type —
+  // the letters are artwork, so the entrance choreography does not apply.
+  if (lab?.orbitalHeadings) {
+    return (
+      <>
+        <span className="sr-only">{text}</span>
+        <span aria-hidden="true" className="nm2-orbital-heading">
+          {text.split(/\s+/).filter(Boolean).map((word, index) => (
+            <OrbitalWord key={`${word}-${index}`} word={word} />
+          ))}
+        </span>
+      </>
+    );
+  }
   return (
     <>
       <span className="sr-only">{text}</span>

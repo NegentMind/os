@@ -84,11 +84,15 @@ function dissolveTo(data: Uint8ClampedArray, from: Rgb, to: Rgb): void {
 export function SectionTransition({
   id,
   variant,
+  height = null,
   from = "dark",
   to = "light",
 }: {
   id: string;
   variant: TransitionVariant;
+  /** Baseline band height in px; CSS clamps it when unset. The lab can
+   *  still override it per band. */
+  height?: number | null;
   from?: Tone;
   to?: Tone;
 }) {
@@ -96,11 +100,11 @@ export function SectionTransition({
   const canvas = useRef<HTMLCanvasElement>(null);
   const paintRef = useRef<(() => void) | null>(null);
   const { canAnimate } = useSiteMotion();
-  const override = useTransitionOverride(id, variant);
+  const override = useTransitionOverride(id, variant, height);
   const effective: Effective = override ?? {
     variant,
     params: DEFAULT_PARAMS[variant],
-    height: null,
+    height,
   };
   const config = useRef(effective);
   config.current = effective;

@@ -28,10 +28,10 @@ export const es: SiteCopy = {
     builtOpen: "hecho en abierto",
   },
   hero: {
-    title: "Lo que un modelo no trae de fábrica:",
+    title: "Alrededor del modelo:",
     titleWords: ["MEMORIA", "OJOS", "VOZ", "MANOS"],
     description:
-      "Infraestructura open source para agentes de IA. Memoria persistente hoy; percepción, razonamiento y acción verificable como visión de largo plazo.",
+      "Infraestructura open source para agentes de IA. Memoria hoy; el resto es visión.",
     primaryAction: "Explorar proyectos",
     secondaryAction: "Contribuir",
     note: "Laboratorio independiente. Open source. Evidencia antes que promesas.",

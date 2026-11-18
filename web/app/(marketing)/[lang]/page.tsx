@@ -42,7 +42,7 @@ export default async function Home({ params }: MarketingPageProps) {
       <div id="top">
         <Hero lang={lang} copy={c.hero} />
       </div>
-      <SectionTransition id="org-in" variant="chromatic" />
+      <SectionTransition id="org-in" variant="tear" height={360} />
       <Section id="org" className="nm2-statement-section nm2-section--paper">
         <div className="nm2-editorial">
           <SectionHeading title={h.statement.title} id="org-title" effect="assemble" />
@@ -54,7 +54,7 @@ export default async function Home({ params }: MarketingPageProps) {
         </div>
         <SystemStory copy={h.statement.system} caption={c.common.conceptual} />
       </Section>
-      <SectionTransition id="org-out" variant="dither" from="light" to="dark" />
+      <SectionTransition id="org-out" variant="tear" height={360} from="light" to="dark" />
       <Section
         id="work"
         className="nm2-work-section"
@@ -114,7 +114,7 @@ export default async function Home({ params }: MarketingPageProps) {
         <SectionHeading title={h.holons.title} effect="focus" />
         <HolonExplorer copy={h.holons} visionLabel={c.common.vision} caption={c.common.conceptual} />
       </Section>
-      <SectionTransition id="proof-in" variant="tear" />
+      <SectionTransition id="proof-in" variant="tear" height={360} />
       <Section id="proof" className="nm2-section--paper nm2-home-evidence">
         <span id="oss" className="nm2-anchor" aria-hidden="true" />
         <SectionHeading title={h.method.title} description={h.method.description} effect="trace" />
@@ -126,7 +126,7 @@ export default async function Home({ params }: MarketingPageProps) {
         />
         <ActionLink href={hrefFor(lang, "about")} variant="text">{h.method.methodAction}</ActionLink>
       </Section>
-      <SectionTransition id="proof-out" variant="blocks" from="light" to="dark" />
+      <SectionTransition id="proof-out" variant="tear" height={360} from="light" to="dark" />
       <Section id="faq" className="nm2-faq-section">
         <div className="nm2-editorial">
           <SectionHeading title={h.faqTitle} effect="assemble" />

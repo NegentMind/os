@@ -1,4 +1,6 @@
-/* Hero-owned composition. Functional colors inherit the foundation tokens. */
+/* Hero-owned composition. Functional colors inherit the foundation tokens.
+   Fullbleed is the shipped default; the lab's [data-fullbleed="false"]
+   re-applies the framed variant for side-by-side comparison. */
 .nm2-hero {
   position: relative;
   /* z-index keeps the signature's overhang painted above later siblings
@@ -10,11 +12,17 @@
      widen the page (the only non-visible value that allows this combo). */
   overflow-x: clip;
   overflow-y: visible;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  color: var(--nm2-text, #f1f3f5);
+  background: var(--nm2-surface, #0e1013);
+}
+
+.nm2-hero[data-fullbleed="false"] {
   width: calc(100% - 2 * var(--nm2-frame-gap));
   margin: var(--nm2-frame-gap) auto;
   border-radius: var(--nm2-radius-hero, 32px);
-  color: var(--nm2-text, #f1f3f5);
-  background: var(--nm2-surface, #0e1013);
 }
 
 .nm2-hero__content {
@@ -25,22 +33,32 @@
      The overhang is part of the hero's visual height: reserving it keeps
      the full wordmark above the fold instead of clipped by the viewport. */
   --nm2-hero-sign-h: 27svh;
-  --nm2-hero-sign-out: 0.4;
+  --nm2-hero-sign-out: 0.28;
   --nm2-hero-pad-b: clamp(44px, 5.5svh, 68px);
   --nm2-hero-sign-reserved: max(
     0px,
     var(--nm2-hero-sign-h) * var(--nm2-hero-sign-out) - var(--nm2-hero-pad-b)
   );
-  min-height: calc(100svh - 2 * var(--nm2-frame-gap) - var(--nm2-hero-sign-reserved));
+  min-height: calc(100svh - var(--nm2-hero-sign-reserved));
   padding: 104px clamp(32px, 4.5vw, 72px) var(--nm2-hero-pad-b);
 }
 
+.nm2-hero[data-fullbleed="false"] .nm2-hero__content {
+  min-height: calc(100svh - 2 * var(--nm2-frame-gap) - var(--nm2-hero-sign-reserved));
+}
+
+/* Asymmetric intro: the headline owns the full row, then the short support
+   line drifts to the right column while the actions stay anchored left. */
 .nm2-hero__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
+  column-gap: clamp(32px, 6vw, 120px);
+  align-items: end;
   width: 100%;
-  max-width: 760px;
 }
 
 .nm2-hero__title {
+  grid-column: 1 / -1;
   max-width: 14ch;
   margin: 0;
   font-family: var(--font-heading, var(--font-outfit)), sans-serif;
@@ -51,8 +69,21 @@
   text-wrap: balance;
 }
 
+/* One-line support copy: it sits off-axis, right of the actions. */
+.nm2-hero__lede {
+  grid-column: 2;
+  justify-self: end;
+  max-width: 26ch;
+  margin: 0 0 clamp(20px, 3svh, 36px);
+  color: var(--nm2-muted, #adb5c0);
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
 /* Orbital-lettered rotating word: SVG art sized in em so it tracks the
-   title across breakpoints. Decorative — the h1 carries the full text. */
+   title across breakpoints. Decorative — the h1 carries the full text.
+   Ink cycles through the approved spectrum via --nm2-rotor-ink. */
 .nm2-rotating-word {
   /* Grid stacking is what actually overlaps the AnimatePresence pair:
      the entering word shares the slot instead of rendering below it.
@@ -62,6 +93,8 @@
   grid-template-rows: 100%;
   height: 1.05em;
   margin-top: 0.14em;
+  color: var(--nm2-rotor-ink, var(--nm2-text, #f1f3f5));
+  transition: color 700ms ease;
 }
 
 .nm2-rotating-word__item {
@@ -76,39 +109,16 @@
   height: 100%;
   width: auto;
   overflow: visible;
-  color: var(--nm2-text, #f1f3f5);
-}
-
-/* Bottom band: description + actions sit right, aligned with the note. */
-.nm2-hero__meta {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: clamp(24px, 4vw, 72px);
-  margin-top: auto;
-}
-
-.nm2-hero__aside {
-  max-width: 46ch;
-  margin-left: auto;
-}
-
-.nm2-hero__description {
-  max-width: 46ch;
-  margin: 0;
-  color: var(--nm2-text, #f1f3f5);
-  font-size: clamp(1rem, 1.3vw, 1.125rem);
-  line-height: 1.65;
-  text-wrap: pretty;
+  color: inherit;
 }
 
 .nm2-hero__actions {
+  grid-column: 1;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: clamp(24px, 4svh, 44px);
 }
 
 .nm2-hero__actions > a {
@@ -119,9 +129,18 @@
   text-align: center;
 }
 
+/* Bottom band: only the quiet note, pushed to the trailing edge so the
+   composition stays asymmetric against the left-anchored intro. */
+.nm2-hero__meta {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
 .nm2-hero__note {
   max-width: 34ch;
   margin: 0;
+  text-align: right;
   color: var(--nm2-muted, #adb5c0);
   font-size: 0.8125rem;
   line-height: 1.55;
@@ -156,8 +175,7 @@
 .nm2-hero-art__poster,
 .nm2-hero-art__warp,
 .nm2-hero-art__grain,
-.nm2-hero-art__shade,
-.nm2-hero-art__field {
+.nm2-hero-art__shade {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -181,18 +199,6 @@
   height: 100%;
 }
 
-/* Lab field variants reuse the section field renderer over the poster;
-   a dim wash keeps the dotted field readable against the colorful poster. */
-.nm2-hero-art__field {
-  color: var(--nm2-structure, #a7b4c7);
-  background: color-mix(in srgb, #000000 55%, transparent);
-}
-
-.nm2-hero-art__field > * {
-  width: 100%;
-  height: 100%;
-}
-
 .nm2-hero-art__grain {
   background-image: url("/brand/orbital-grain.png");
   background-size: 192px 192px;
@@ -201,7 +207,6 @@
 }
 
 .nm2-hero-art:has(.nm2-hero-art__warp[data-art-ready="true"]) > .nm2-hero-art__grain,
-.nm2-hero-art:has(.nm2-hero-art__field) > .nm2-hero-art__grain,
 .nm2-hero-art-plate > .nm2-hero-art__grain {
   opacity: 0.2;
 }
@@ -212,13 +217,12 @@
     linear-gradient(100deg, rgb(7 8 9 / 94%) 1%, rgb(7 8 9 / 76%) 35%, rgb(7 8 9 / 8%) 76%);
 }
 
-/* Luminous lab variants (checks/edge/poster): a heavier scrim keeps the
-   light copy readable without inverting the hero's text tokens — the
+/* Luminous warp variants (checks/edge): a heavier scrim keeps the light
+   copy readable without inverting the hero's text tokens — the
    difference-blended signature already adapts on its own. */
 :is(
   .nm2-hero[data-art-variant="warp-checks"],
-  .nm2-hero[data-art-variant="warp-edge"],
-  .nm2-hero[data-art-variant="poster"]
+  .nm2-hero[data-art-variant="warp-edge"]
 ) .nm2-hero-art__shade {
   background:
     linear-gradient(0deg, rgb(7 8 9 / 92%) 0%, transparent 42%),
@@ -233,21 +237,6 @@
   overflow: hidden;
   isolation: isolate;
   background: #101c27;
-}
-
-/* Lab fullbleed variant: no frame, no radius, true viewport height. */
-.nm2-hero[data-fullbleed="true"] {
-  width: 100%;
-  margin: 0;
-  border-radius: 0;
-}
-
-.nm2-hero[data-fullbleed="true"] .nm2-hero-art {
-  border-radius: 0;
-}
-
-.nm2-hero[data-fullbleed="true"] .nm2-hero__content {
-  min-height: calc(100svh - var(--nm2-hero-sign-reserved));
 }
 
 /* Section-scoped warp mount (e.g. home invitation): absolute fill with a
@@ -292,7 +281,7 @@
     font-size: clamp(2.25rem, 4.2vw, 3.5rem);
   }
 
-  .nm2-hero__description {
+  .nm2-hero__lede {
     font-size: 0.9375rem;
     line-height: 1.5;
   }
@@ -309,9 +298,16 @@
 @media (max-width: 767px) {
   .nm2-hero__content {
     --nm2-hero-sign-h: 18svh;
-    --nm2-hero-sign-out: 0.36;
+    --nm2-hero-sign-out: 0.32;
     --nm2-hero-pad-b: 40px;
     padding: 104px 24px var(--nm2-hero-pad-b);
+  }
+
+  /* The asymmetric grid collapses to a single column in DOM order:
+     headline, support line, actions. */
+  .nm2-hero__intro {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
   }
 
   .nm2-hero__title {
@@ -319,18 +315,12 @@
     font-size: clamp(2.65rem, 8.3vw, 3.75rem);
   }
 
-  .nm2-hero__meta {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 2rem;
-  }
-
-  .nm2-hero__aside {
-    max-width: none;
-    margin-left: 0;
-  }
-
-  .nm2-hero__description {
+  .nm2-hero__lede {
+    grid-column: 1;
+    justify-self: start;
+    max-width: 32ch;
+    margin-top: 20px;
+    margin-bottom: 0;
     font-size: 1rem;
     line-height: 1.6;
   }
@@ -340,9 +330,14 @@
     margin-top: 20px;
   }
 
+  .nm2-hero__meta {
+    justify-content: flex-start;
+    margin-top: 2rem;
+  }
+
   .nm2-hero__note {
     max-width: 36ch;
-    margin-top: 20px;
+    text-align: left;
     font-size: 0.75rem;
   }
 
@@ -358,8 +353,7 @@
 
   :is(
     .nm2-hero[data-art-variant="warp-checks"],
-    .nm2-hero[data-art-variant="warp-edge"],
-    .nm2-hero[data-art-variant="poster"]
+    .nm2-hero[data-art-variant="warp-edge"]
   ) .nm2-hero-art__shade {
     background:
       linear-gradient(0deg, rgb(7 8 9 / 92%), transparent 42%),
@@ -369,12 +363,10 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .nm2-hero__intro > [data-hero-reveal],
-  .nm2-hero__meta > [data-hero-reveal],
-  .nm2-hero__meta > .nm2-hero__aside > [data-hero-reveal],
   .nm2-page-hero__content {
     animation: nm2-hero-arrive 1100ms cubic-bezier(.22,1,.36,1) both;
   }
-  .nm2-hero__description { animation-delay: 100ms; }
+  .nm2-hero__lede { animation-delay: 100ms; }
   .nm2-hero__actions { animation-delay: 180ms; }
   .nm2-hero__signature {
     animation: nm2-signature-arrive 1400ms ease-out both;

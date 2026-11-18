@@ -18,11 +18,6 @@ import {
   type TransitionParams,
   type TransitionVariant,
 } from "@/components/nm/v2/section-transition/variants";
-import {
-  HERO_BACKGROUNDS,
-  isHeroBackgroundVariant,
-  type HeroBackgroundVariant,
-} from "@/components/nm/v2/hero-preset";
 import type { HeadingEffect } from "@/components/nm/v2/animated-heading";
 
 export type BandConfig = {
@@ -33,10 +28,10 @@ export type BandConfig = {
   flip?: boolean;
 };
 
-/** Hero overrides owned by the lab: frame and animated background. */
+/** Hero overrides owned by the lab: only the frame toggle survives — the
+ *  background pool and the fullbleed default are shipped decisions. */
 export type HeroLabConfig = {
   fullbleed: boolean;
-  background: HeroBackgroundVariant;
 };
 
 /** Composition overrides owned by the lab: page scenes and heading effect. */
@@ -45,16 +40,18 @@ export type CompositionLabConfig = {
   orgArt: "orb" | "blueprint";
   /** Effect applied to every AnimatedHeading; null keeps each call site's. */
   heading: HeadingEffect | null;
+  /** Render section titles in Orbital lettering instead of type. */
+  orbitalHeadings: boolean;
 };
 
 const DEFAULT_HERO: HeroLabConfig = {
-  fullbleed: false,
-  background: "warp-stripes",
+  fullbleed: true,
 };
 
 const DEFAULT_COMPOSITION: CompositionLabConfig = {
   orgArt: "orb",
   heading: null,
+  orbitalHeadings: false,
 };
 
 const HEADING_EFFECTS: readonly { id: HeadingEffect; label: string }[] = [
@@ -64,7 +61,7 @@ const HEADING_EFFECTS: readonly { id: HeadingEffect; label: string }[] = [
   { id: "decode", label: "Decode" },
 ];
 
-type Band = { id: string; variant: TransitionVariant };
+type Band = { id: string; variant: TransitionVariant; height: number | null };
 type Overrides = Record<string, BandConfig>;
 
 type LabContextValue = {
@@ -76,7 +73,11 @@ type LabContextValue = {
   bands: readonly Band[];
   overrides: Overrides;
   resolve: (id: string) => BandConfig | undefined;
-  register: (id: string, variant: TransitionVariant) => () => void;
+  register: (
+    id: string,
+    variant: TransitionVariant,
+    height?: number | null,
+  ) => () => void;
   update: (patch: Partial<BandConfig>) => void;
   setVariant: (variant: TransitionVariant) => void;
   reset: () => void;
@@ -126,10 +127,8 @@ function toHeroConfig(value: unknown): HeroLabConfig {
   if (typeof value !== "object" || value === null) return DEFAULT_HERO;
   const record = value as Record<string, unknown>;
   return {
-    fullbleed: record.fullbleed === true,
-    background: isHeroBackgroundVariant(record.background)
-      ? record.background
-      : DEFAULT_HERO.background,
+    // Fullbleed is the shipped default; only an explicit false re-frames it.
+    fullbleed: record.fullbleed !== false,
   };
 }
 
@@ -143,6 +142,7 @@ function toCompositionConfig(value: unknown): CompositionLabConfig {
   return {
     orgArt: record.orgArt === "blueprint" ? "blueprint" : "orb",
     heading: isHeadingEffect(record.heading) ? record.heading : null,
+    orbitalHeadings: record.orbitalHeadings === true,
   };
 }
 
@@ -221,17 +221,39 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
     writeStored({ overrides, target, open, hero, composition });
   }, [hydrated, overrides, target, open, hero, composition]);
 
-  const register = useCallback((id: string, variant: TransitionVariant) => {
+  // Mirror the orbital-headings eval variant on <html> so any heading
+  // renderer (and CSS) can read it without the context.
+  useEffect(() => {
+    if (!enabled) return;
+    if (composition.orbitalHeadings) {
+      document.documentElement.dataset.headings = "orbital";
+    } else {
+      delete document.documentElement.dataset.headings;
+    }
+    return () => {
+      delete document.documentElement.dataset.headings;
+    };
+  }, [enabled, composition.orbitalHeadings]);
+
+  const register = useCallback((
+    id: string,
+    variant: TransitionVariant,
+    height: number | null = null,
+  ) => {
     setBands((prev) => prev.some((b) => b.id === id)
-      ? prev.map((b) => (b.id === id ? { id, variant } : b))
-      : [...prev, { id, variant }]);
+      ? prev.map((b) => (b.id === id ? { id, variant, height } : b))
+      : [...prev, { id, variant, height }]);
     return () => setBands((prev) => prev.filter((b) => b.id !== id));
   }, []);
 
   const defaultFor = useCallback((key: string): BandConfig => {
     const base = key === ALL ? bands[0] : bands.find((b) => b.id === key);
     const variant = base?.variant ?? "dither";
-    return { variant, params: DEFAULT_PARAMS[variant], height: null };
+    return {
+      variant,
+      params: DEFAULT_PARAMS[variant],
+      height: base?.height ?? null,
+    };
   }, [bands]);
 
   const currentFor = useCallback((key: string): BandConfig => {
@@ -295,10 +317,14 @@ export function TransitionLabProvider({ children }: { children: ReactNode }) {
 export function useTransitionOverride(
   id: string,
   variant: TransitionVariant,
+  height: number | null = null,
 ): BandConfig | undefined {
   const ctx = useContext(LabContext);
   const register = ctx?.register;
-  useEffect(() => register?.(id, variant), [register, id, variant]);
+  useEffect(
+    () => register?.(id, variant, height),
+    [register, id, variant, height],
+  );
   return ctx?.resolve(id);
 }
 
@@ -364,6 +390,7 @@ export function TransitionLab() {
   const regionId = useId();
   const [copied, setCopied] = useState<"idle" | "ok" | "error">("idle");
   const heroFullbleedId = useId();
+  const orbitalHeadingsId = useId();
   const flipId = useId();
   const open = ctx?.open ?? false;
   const bands = ctx?.bands ?? [];
@@ -527,19 +554,6 @@ export function TransitionLab() {
             onChange={(event) => setHero({ fullbleed: event.target.checked })}
           />
         </div>
-        <div className="nm2-transition-lab__variants" role="group" aria-label="Fondo del hero">
-          {HERO_BACKGROUNDS.map((bg) => (
-            <button
-              key={bg.id}
-              type="button"
-              className="nm2-transition-lab__button"
-              aria-pressed={hero.background === bg.id}
-              onClick={() => setHero({ background: bg.id })}
-            >
-              {bg.label}
-            </button>
-          ))}
-        </div>
 
         <p className="nm2-transition-lab__group">Composición</p>
         <div className="nm2-transition-lab__variants" role="group" aria-label="Arte de la sección org">
@@ -554,6 +568,17 @@ export function TransitionLab() {
               {art === "orb" ? "Orbe" : "Blueprint"}
             </button>
           ))}
+        </div>
+        <div className="nm2-transition-lab__row">
+          <label htmlFor={orbitalHeadingsId}>Titulares en Orbital</label>
+          <input
+            id={orbitalHeadingsId}
+            type="checkbox"
+            checked={composition.orbitalHeadings}
+            onChange={(event) =>
+              setComposition({ orbitalHeadings: event.target.checked })
+            }
+          />
         </div>
         <div className="nm2-transition-lab__variants" role="group" aria-label="Efecto de los titulares">
           <button

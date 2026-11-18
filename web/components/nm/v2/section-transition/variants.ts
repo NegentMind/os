@@ -43,7 +43,7 @@ export const VARIANTS: readonly {
 export const DEFAULT_PARAMS: Record<TransitionVariant, TransitionParams> = {
   dither: { intensity: 1, speed: 1, cell: 2, spectrum: 0 },
   blocks: { intensity: 1, speed: 1, cell: 3, spectrum: 0 },
-  tear: { intensity: 1, speed: 1, cell: 3, spectrum: 0 },
+  tear: { intensity: 1.5, speed: 2, cell: 3, spectrum: 0 },
   chromatic: { intensity: 1, speed: 1, cell: 3, spectrum: 0.55 },
   iridescent: { intensity: 1, speed: 1, cell: 3, spectrum: 1 },
 };

@@ -1,18 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
 import { OrbitalWord } from "@/components/nm/v2/orbital-glyphs";
+import { HERO_SPECTRUM_TEXT } from "@/components/nm/v2/hero-preset";
 
 const INTERVAL_MS = 2400;
 
 /**
- * Cycles Orbital-lettered words inside the hero title. Decorative: the h1
- * carries the full accessible text, so this block is aria-hidden and keeps a
- * stable first word without JS and under reduced/paused motion.
+ * Cycles Orbital-lettered words inside the hero title. Each step advances
+ * both the word and its ink through the approved spectrum (the two dark
+ * bookends are excluded; they are base, not ink). Decorative: the h1
+ * carries the full accessible text, so this block is aria-hidden and keeps
+ * a stable first word without JS and under reduced/paused motion.
  */
-export function RotatingWord({ words }: { words: readonly string[] }) {
+export function RotatingWord({
+  words,
+  palette = HERO_SPECTRUM_TEXT,
+}: {
+  words: readonly string[];
+  /** Ink colors cycled in sync with the word index. */
+  palette?: readonly string[];
+}) {
   const { canAnimate } = useSiteMotion();
   const [index, setIndex] = useState(0);
 
@@ -25,11 +35,18 @@ export function RotatingWord({ words }: { words: readonly string[] }) {
     return () => window.clearInterval(id);
   }, [canAnimate, words.length]);
 
-  const word = words[canAnimate ? index : 0] ?? words[0];
+  const step = canAnimate ? index : 0;
+  const word = words[step] ?? words[0];
   if (!word) return null;
+  const ink = palette.length > 0 ? palette[step % palette.length] : undefined;
 
   return (
-    <span className="nm2-rotating-word" aria-hidden="true" aria-live="off">
+    <span
+      className="nm2-rotating-word"
+      style={{ "--nm2-rotor-ink": ink } as CSSProperties}
+      aria-hidden="true"
+      aria-live="off"
+    >
       {/* Sync mode: entering and exiting words overlap (items are absolutely
           stacked in CSS), so the headline never shows an empty slot. */}
       <AnimatePresence initial={false}>

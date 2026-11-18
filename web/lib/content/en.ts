@@ -28,10 +28,10 @@ export const en = {
     builtOpen: "built in the open",
   } satisfies FooterCopy,
   hero: {
-    title: "What a model doesn't ship with:",
+    title: "Around the model:",
     titleWords: ["MEMORY", "SIGHT", "VOICE", "HANDS"],
     description:
-      "Open-source infrastructure for AI agents. Persistent memory today; perception, reasoning and verifiable action as our long-term direction.",
+      "Open-source infrastructure for AI agents. Memory today; the rest is vision.",
     primaryAction: "Explore projects",
     secondaryAction: "Contribute",
     note: "Independent lab. Open source. Evidence before promises.",

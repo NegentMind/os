@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { LOCALES, type Locale } from "@/lib/i18n";
@@ -36,26 +36,35 @@ function pageFromPath(pathname: string): PageId {
 
 function LangSwitch({ lang, copy }: { lang: Locale; copy: NavCopy }) {
   const pathname = usePathname();
+  const pillId = useId();
+  const { canAnimate } = useSiteMotion();
   const hrefForLocale = (l: Locale) =>
     pathname.replace(/^\/(en|es)(?=\/|$)/, `/${l}`) || `/${l}`;
   return (
+    // Pill toggle: a hairline structure-colored plate marks the active
+    // locale and slides between options, same grammar as the nav pill.
     <nav aria-label={copy.language} className="nm2-header__lang">
-      {LOCALES.map((l, i) => (
-        <Fragment key={l}>
-          {i > 0 && (
-            <span className="nm2-header__lang-sep" aria-hidden="true">
-              /
-            </span>
+      {LOCALES.map((l) => (
+        <Link
+          key={l}
+          href={hrefForLocale(l)}
+          hrefLang={l}
+          className="nm2-header__lang-link"
+          data-current={l === lang || undefined}
+          aria-current={l === lang ? "page" : undefined}
+        >
+          {l === lang && (
+            <motion.span
+              layoutId={`${pillId}-lang`}
+              className="nm2-header__lang-pill"
+              transition={canAnimate
+                ? { type: "spring", stiffness: 420, damping: 36 }
+                : { duration: 0 }}
+              aria-hidden="true"
+            />
           )}
-          <Link
-            href={hrefForLocale(l)}
-            hrefLang={l}
-            data-current={l === lang || undefined}
-            aria-current={l === lang ? "page" : undefined}
-          >
-            {l.toUpperCase()}
-          </Link>
-        </Fragment>
+          <span className="nm2-header__lang-label">{l.toUpperCase()}</span>
+        </Link>
       ))}
     </nav>
   );

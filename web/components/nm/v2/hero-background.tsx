@@ -9,8 +9,11 @@ import {
   type ReactNode,
 } from "react";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
-import { FieldCanvas, type FieldVariant } from "@/components/nm/v2/field-canvas";
-import { HERO_WARP_PRESETS } from "@/components/nm/v2/hero-preset";
+import {
+  HERO_WARP_IDS,
+  HERO_WARP_PRESETS,
+  type HeroWarpId,
+} from "@/components/nm/v2/hero-preset";
 import { useHeroLabConfig } from "@/components/nm/v2/section-transition/transition-lab";
 
 const HeroWarp = dynamic(
@@ -41,42 +44,33 @@ class ArtBoundary extends Component<
   }
 }
 
-const FIELD_VARIANTS = {
-  "wave-field": "wave",
-  "orbit-field": "orbit",
-  "network-field": "network",
-  "memory-field": "memory",
-} as const satisfies Record<string, FieldVariant>;
-
 export function HeroBackground({ className = "" }: { className?: string }) {
   const host = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   const [started, setStarted] = useState(false);
   const { canAnimate, reducedMotion } = useSiteMotion();
   const lab = useHeroLabConfig();
-  const background = lab?.background ?? "warp-stripes";
-  const warpPreset =
-    background in HERO_WARP_PRESETS
-      ? HERO_WARP_PRESETS[background as keyof typeof HERO_WARP_PRESETS]
-      : null;
-  const fieldVariant =
-    background in FIELD_VARIANTS
-      ? FIELD_VARIANTS[background as keyof typeof FIELD_VARIANTS]
-      : null;
+  // Picked after mount so SSR and the first client render agree; every page
+  // load re-rolls among the three approved warp patterns (no persistence).
+  const [warp, setWarp] = useState<HeroWarpId | null>(null);
+
+  useEffect(() => {
+    setWarp(HERO_WARP_IDS[Math.floor(Math.random() * HERO_WARP_IDS.length)]);
+  }, []);
 
   // The fullbleed toggle and the active art variant live on the section
   // itself so layout/legibility CSS never has to know about the lab.
+  // Fullbleed is the shipped default; the lab can pin the framed variant.
   useEffect(() => {
     const hero = host.current?.closest<HTMLElement>(".nm2-hero");
     if (!hero) return;
-    hero.dataset.artVariant = background;
-    if (lab?.fullbleed) hero.dataset.fullbleed = "true";
-    else delete hero.dataset.fullbleed;
+    if (warp) hero.dataset.artVariant = warp;
+    if (lab) hero.dataset.fullbleed = lab.fullbleed ? "true" : "false";
     return () => {
       delete hero.dataset.fullbleed;
       delete hero.dataset.artVariant;
     };
-  }, [lab?.fullbleed, background]);
+  }, [lab, warp]);
 
   useEffect(() => {
     const element = host.current;
@@ -100,11 +94,13 @@ export function HeroBackground({ className = "" }: { className?: string }) {
     setStarted(true);
   }, [canAnimate, inView, started]);
 
+  const warpPreset = warp ? HERO_WARP_PRESETS[warp] : null;
+
   return (
     <div
       ref={host}
       className={`nm2-hero-art ${className}`}
-      data-art-variant={background}
+      data-art-variant={warp ?? undefined}
       aria-hidden="true"
     >
       {/* This local poster is also the immediate SSR/no-JS/error surface. */}
@@ -117,15 +113,6 @@ export function HeroBackground({ className = "" }: { className?: string }) {
             preset={warpPreset}
           />
         </ArtBoundary>
-      )}
-      {started && !reducedMotion && fieldVariant && (
-        <div className="nm2-hero-art__field">
-          <FieldCanvas
-            variant={fieldVariant}
-            interactive
-            pointerHost=".nm2-hero"
-          />
-        </div>
       )}
       <div className="nm2-hero-art__grain" />
       <div className="nm2-hero-art__shade" />

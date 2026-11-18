@@ -4,6 +4,7 @@ import { MotionProvider } from "@/components/nm/v2/motion-provider";
 import { SiteHeader } from "@/components/nm/v2/site-header";
 import { SiteFooter } from "@/components/nm/v2/site-footer";
 import { PointerFeedback } from "@/components/nm/v2/pointer-feedback";
+import { SmoothScroll } from "@/components/nm/v2/smooth-scroll";
 import { ViewportFade } from "@/components/nm/v2/viewport-fade";
 import { getSiteCopy } from "@/lib/content";
 import { fontVarsV2 } from "@/lib/fonts";
@@ -35,6 +36,7 @@ export default async function LocaleLayout({
           <SiteFooter lang={lang} nav={copy.nav} copy={copy.footer} motionCopy={copy.hero} />
           <ViewportFade />
           <PointerFeedback />
+          <SmoothScroll />
           {process.env.NODE_ENV === "development" && (
             <div className="nm2-dev-gallery">
               <Link href={`/${lang}/design-system`}>{copy.common.gallery}</Link>
