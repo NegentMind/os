@@ -1,11 +1,12 @@
 "use client";
 
 import { useId, useState } from "react";
-import { motion } from "motion/react";
+import { ArtFigure } from "@/components/nm/v2/art-figure";
 import { BlueprintScene } from "@/components/nm/v2/blueprint-scene";
 import { CoreOrb } from "@/components/nm/v2/core-orb";
 import { ScrollScene } from "@/components/nm/v2/scroll-scene";
-import { useSiteMotion } from "@/components/nm/v2/motion-provider";
+import { StoryControl, StoryControls } from "@/components/nm/v2/story-controls";
+import { StoryDetail } from "@/components/nm/v2/story-detail";
 import { useCompositionLabConfig } from "@/components/nm/v2/section-transition/transition-lab";
 import type { SiteCopy } from "@/lib/content/en";
 
@@ -18,7 +19,6 @@ type SystemStoryProps = {
 
 export function SystemStory({ copy, caption, art = "orb" }: SystemStoryProps) {
   const [selected, setSelected] = useState(0);
-  const { canAnimate } = useSiteMotion();
   const id = useId();
   const current = copy.items[selected];
   // The TransitionLab composition toggle overrides the canonical orb.
@@ -28,47 +28,42 @@ export function SystemStory({ copy, caption, art = "orb" }: SystemStoryProps) {
   return (
     <div className="nm2-system-story" data-selected={selected}>
       <ScrollScene className="nm2-system-story__scene">
-        <figure>
-          {/* The orb is a real toggle (focusable), so the wrapper stays in
-              the a11y tree; BlueprintScene hides its own decorative SVG. */}
-          <div
-            className="nm2-system-story__art"
-            data-art={effectiveArt}
-          >
-            {effectiveArt === "orb" ? (
-              <CoreOrb actionLabel={copy.orbAction} />
-            ) : (
-              <BlueprintScene
-                variant="system"
-                labels={copy.items.map((item) => item.label)}
-                selected={selected}
-              />
-            )}
-          </div>
-          <figcaption>{caption}</figcaption>
-        </figure>
+        {/* The orb is a real toggle (focusable), so the frame stays in the
+            a11y tree; BlueprintScene hides its own decorative SVG. */}
+        <ArtFigure
+          caption={caption}
+          frameClassName="nm2-system-story__art"
+          decorative={false}
+          frameProps={{ "data-art": effectiveArt }}
+        >
+          {effectiveArt === "orb" ? (
+            <CoreOrb actionLabel={copy.orbAction} />
+          ) : (
+            <BlueprintScene
+              variant="system"
+              labels={copy.items.map((item) => item.label)}
+              selected={selected}
+            />
+          )}
+        </ArtFigure>
       </ScrollScene>
       <div className="nm2-system-story__reading" data-scroll-reveal="">
-        <div className="nm2-story-controls" role="group" aria-label={copy.controls}>
+        <StoryControls label={copy.controls}>
           {copy.items.map((item, index) => (
-            <motion.button
+            <StoryControl
               key={item.label}
-              type="button"
-              className="nm2-story-control"
-              aria-pressed={selected === index}
-              aria-controls={`${id}-detail`}
-              onClick={() => setSelected(index)}
-              whileTap={canAnimate ? { scale: 0.97 } : undefined}
-              transition={{ duration: canAnimate ? 0.18 : 0 }}
+              pressed={selected === index}
+              controlsId={`${id}-detail`}
+              onSelect={() => setSelected(index)}
             >
               {item.label}
-            </motion.button>
+            </StoryControl>
           ))}
-        </div>
-        <div id={`${id}-detail`} className="nm2-story-detail" aria-live="polite" aria-atomic="true">
+        </StoryControls>
+        <StoryDetail id={`${id}-detail`}>
           <h3>{current.label}</h3>
           <p>{current.body}</p>
-        </div>
+        </StoryDetail>
         <p className="nm2-story-boundary">{copy.boundary}</p>
       </div>
     </div>

@@ -1,9 +1,10 @@
 "use client";
 
 import { useId, useState } from "react";
-import { motion } from "motion/react";
+import { ArtFigure } from "@/components/nm/v2/art-figure";
 import { ScrollScene } from "@/components/nm/v2/scroll-scene";
-import { useSiteMotion } from "@/components/nm/v2/motion-provider";
+import { StoryControl, StoryControls } from "@/components/nm/v2/story-controls";
+import { StoryDetail } from "@/components/nm/v2/story-detail";
 import type { SiteCopy } from "@/lib/content/en";
 
 type MemoryDemoProps = {
@@ -89,41 +90,33 @@ function MemoryStack({
 
 export function MemoryDemo({ steps, controlsLabel, caption }: MemoryDemoProps) {
   const [selected, setSelected] = useState(0);
-  const { canAnimate } = useSiteMotion();
   const id = useId();
   const current = steps[selected];
 
   return (
     <div className="nm2-memory-demo" data-stage={selected}>
       <ScrollScene className="nm2-memory-demo__scene">
-        <figure>
-          <div className="nm2-memory-demo__art" aria-hidden="true">
-            <MemoryStack labels={steps.map((step) => step.title)} selected={selected} />
-          </div>
-          <figcaption>{caption}</figcaption>
-        </figure>
+        <ArtFigure caption={caption} frameClassName="nm2-memory-demo__art">
+          <MemoryStack labels={steps.map((step) => step.title)} selected={selected} />
+        </ArtFigure>
       </ScrollScene>
-      <div className="nm2-story-controls nm2-memory-demo__controls" role="group" aria-label={controlsLabel}>
+      <StoryControls label={controlsLabel} className="nm2-memory-demo__controls">
         {steps.map((step, index) => (
-          <motion.button
+          <StoryControl
             key={step.title}
-            type="button"
-            className="nm2-story-control"
-            aria-pressed={selected === index}
-            aria-controls={`${id}-detail`}
-            onClick={() => setSelected(index)}
-            whileTap={canAnimate ? { scale: 0.97 } : undefined}
-            transition={{ duration: canAnimate ? 0.18 : 0 }}
+            pressed={selected === index}
+            controlsId={`${id}-detail`}
+            onSelect={() => setSelected(index)}
           >
             {step.title}
-          </motion.button>
+          </StoryControl>
         ))}
-      </div>
-      <div id={`${id}-detail`} className="nm2-story-detail nm2-memory-demo__detail" aria-live="polite" aria-atomic="true">
+      </StoryControls>
+      <StoryDetail id={`${id}-detail`} className="nm2-memory-demo__detail">
         <h4>{current.title}</h4>
         <p>{current.body}</p>
         <p className="nm2-memory-demo__context">{current.detail}</p>
-      </div>
+      </StoryDetail>
     </div>
   );
 }

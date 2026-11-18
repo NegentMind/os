@@ -1,6 +1,6 @@
 /* English dictionary — canonical shape (Dict = typeof en). */
 
-import type { HalftoneKind } from "@/components/nm/HalftoneCanvas";
+import type { HalftoneKind } from "@/lib/marketing-types";
 import { ORG_URL, VANTADB_REPO, displayUrl } from "@/lib/site";
 
 type Cell = boolean | "partial";

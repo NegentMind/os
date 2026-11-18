@@ -39,8 +39,7 @@ web/
 │       └── app/page.tsx      # Gate notFound() + sesión obligatoria (redirect /login)
 ├── components/
 │   ├── nm/v2/                # Marca, secciones, acciones, proyectos, FAQ, shell y hero Orbital
-│   ├── nm/                   # Componentes V1 conservados; no usarlos para la nueva home
-│   └── ui/                   # shadcn — NO editar a mano; `npx shadcn add <x>`
+│   └── ui/                   # shadcn — NO editar a mano; `npx shadcn add <x>` (button/input/label/sheet)
 ├── lib/
 │   ├── site.ts               # URLs externas y flags (ver abajo)
 │   ├── site-routes.ts        # PageId, PUBLIC_PAGES, hrefFor(lang, page)
@@ -103,7 +102,7 @@ soporte también salen de este módulo. No exponer URLs privadas de Notion.
 | `section-heading.tsx`, `animated-heading.tsx` | Interfaz de titulares y animaciones Motion `assemble`/`focus`/`trace`/`decode`, visibles desde SSR |
 | `field-canvas.tsx`, `blueprint-scene.tsx`, `scroll-scene.tsx` | Campos Canvas 2D con fallback SVG, geometrías originales y relaciones GSAP/ScrollTrigger |
 | `core-orb.tsx` | Orbe-instrumento de `#org`: esfera de puntos en Canvas 2D con un punto espectral fijable; poster SVG como superficie SSR/reduced |
-| `section-transition/` | Bandas canvas entre tonos (`variants.ts` con 5 renderers puros), `section-transition.tsx` (prop `height` opcional) y `transition-lab.tsx` (herramienta dev) |
+| `section-transition/` | Bandas canvas entre tonos (`variants.ts` con 5 renderers puros), `section-transition.tsx` (prop `height` opcional) y el lab dev en dos piezas: `transition-lab.tsx` (contexto + provider + hooks, ligero) y `transition-lab-panel.tsx` (UI, chunk lazy `ssr:false`) |
 | `system-story.tsx`, `memory-demo.tsx`, `scope-study.tsx`, `capability-story.tsx`, `holon-explorer.tsx`, `evidence-workbench.tsx` | Historias interactivas de home; cada una compone ScrollScene + una sola gramática gráfica |
 | `art-mount.tsx` | Monta presets de arte (warp Paper o campos) en superficies no-hero, p. ej. la tarjeta de invitación |
 | `smooth-scroll.tsx` | Lenis dinámico solo con movimiento permitido; raf sincronizado con GSAP; anchors con `scroll-margin-top` |
@@ -174,7 +173,9 @@ de FPS, rendimiento o bundle.
 
 ## Compatibilidad y validación pendiente
 
-`globals.css`, `fontVars`, `lib/i18n/Dict` y los componentes V1 permanecen.
+`globals.css`, `fontVars` y `lib/i18n/Dict` permanecen; los componentes V1
+de `components/nm/` fueron eliminados (2026-11-18) tras mover su único
+import vivo (`HalftoneKind`) a `lib/marketing-types.ts`.
 Los assets nuevos se coordinan en `../brand/orbital/` y se copian a
 `public/brand/`, `app/icon.svg` y `public/og.png`; ni Remotion ni el perfil
 GitHub congelado cambian por esta migración. `../brand/orbital/font/`

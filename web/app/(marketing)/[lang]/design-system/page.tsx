@@ -7,6 +7,7 @@ import { HeroBackground } from "@/components/nm/v2/hero-background";
 import { ProjectCard } from "@/components/nm/v2/project-card";
 import { Section } from "@/components/nm/v2/section";
 import { SectionHeading } from "@/components/nm/v2/section-heading";
+import { SpecList } from "@/components/nm/v2/spec-list";
 import { StatusBadge } from "@/components/nm/v2/status-badge";
 import { Surface } from "@/components/nm/v2/surface";
 import { Button } from "@/components/ui/button";
@@ -126,6 +127,10 @@ export default async function DesignSystemPage({ params }: MarketingPageProps) {
             <p>{c.projects.scopegrain.body}</p>
           </ProjectCard>
         </div>
+      </Section>
+      <Section className="nm2-gallery-section">
+        <SectionHeading title={c.vantadb.facts.title} />
+        <SpecList className="nm2-facts" rows={c.vantadb.facts.rows} />
       </Section>
       <Section className="nm2-gallery-section">
         <SectionHeading title={g.faq} />

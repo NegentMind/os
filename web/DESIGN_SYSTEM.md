@@ -12,11 +12,14 @@ Este contrato describe código local con la ronda de navegador ya realizada y
 typecheck/build manuales pendientes, no un despliegue ni una auditoría de
 accesibilidad aprobada.
 
-`app/globals.css`, `lib/i18n/Dict`, las fuentes/componentes V1 y el contexto de
-producto se conservan para compatibilidad. **No sincronizar Orbital a
-`../media/remotion/src/tokens.ts` ni al perfil GitHub publicado/congelado.**
-Void/Bone/Pulse y Chakra Petch/Inter dejan de ser autoridad para marketing,
-no se borran ni se migran sus pipelines en esta fase.
+`app/globals.css`, `lib/i18n/Dict` y las fuentes V1 se conservan para la
+compatibilidad del contexto de producto; los **componentes V1 de
+`components/nm/` fueron eliminados** (quedaba un solo import vivo —el tipo
+`HalftoneKind`, ahora en `lib/marketing-types.ts`—). **No sincronizar
+Orbital a `../media/remotion/src/tokens.ts` ni al perfil GitHub
+publicado/congelado.** Void/Bone/Pulse y Chakra Petch/Inter dejan de ser
+autoridad para marketing, no se borran ni se migran sus pipelines en esta
+fase.
 
 ## Colores (`app/orbital.css`)
 
@@ -143,11 +146,29 @@ parcial de roles.
 ## Librería interna y primitivas
 
 `components/nm/v2/` contiene BrandMark, ActionLink, Surface, Section,
-SectionHeading/AnimatedHeading, PageHero, StatusBadge, ProjectCard, Faq,
-SiteHeader/SiteFooter, hero, FieldCanvas, BlueprintScene, CoreOrb,
+SectionHeading/AnimatedHeading, PageHero, PageCta, StatusBadge, ProjectCard,
+Faq, SiteHeader/SiteFooter, hero, FieldCanvas, BlueprintScene, CoreOrb,
 ScrollScene, MotionPreference, ViewportFade, PointerFeedback, SmoothScroll,
 SectionTransition/TransitionLab y las historias de home (SystemStory,
 MemoryDemo, ScopeStudy, CapabilityStory, HolonExplorer, EvidenceWorkbench).
+Patrones repetidos consolidados (2026-11-18):
+
+- `ArtFigure` (`art-figure.tsx`): `<figure>` + marco de arte + `<figcaption>`
+  de procedencia —antes inline en las seis historias de home. `decorative`
+  controla el `aria-hidden` del marco (`false` cuando el arte es
+  interactivo: orbe de SystemStory, mapa de HolonExplorer).
+- `StoryControls`/`StoryControl` (`story-controls.tsx`): el grupo
+  `role="group"` y el botón segmentado con contrato `aria-pressed` +
+  `aria-controls` + tap scale condicionado a `canAnimate` (SystemStory,
+  MemoryDemo, ScopeStudy).
+- `StoryDetail` (`story-detail.tsx`): la región viva `aria-live="polite"` +
+  `aria-atomic` que anuncia la selección (SystemStory, MemoryDemo,
+  EvidenceWorkbench, HolonExplorer).
+- `SpecList` (`spec-list.tsx`): la gramática `<dl>` → `<div>` → `<dt>`/`<dd>`
+  compartida por `nm2-facts` (VantaDB) y `nm2-principles` (About); la piel
+  divergente vive en la clase que pasa el call site. Adoptada en la galería;
+  la sustitución en las dos páginas queda pendiente del frente que las
+  trabaja.
 Las escenas SVG con
 etiquetas HTML posicionadas por porcentaje (`BlueprintScene`, conexiones de
 `HolonExplorer`) usan `preserveAspectRatio="none"` a propósito —un `meet`
@@ -160,9 +181,10 @@ Se compone sobre la base shadcn new-york en `components/ui/`:
 - Menú móvil mediante **Sheet** generado con shadcn/Radix; conservar sus
   comportamientos de foco, cierre y teclado.
 - FAQ con **`details/summary` nativo**; no requiere otra dependencia.
-- Conservar `button`, `card`, `input`, `label` y `sheet` sin personalización
-  manual en `components/ui/*`. Variantes, composición y tokens propios van
-  en `nm/v2`, no en la primitiva regenerable.
+- Conservar `button`, `input`, `label` y `sheet` sin personalización manual
+  en `components/ui/*` (`card` se eliminó: no tenía ningún import).
+  Variantes, composición y tokens propios van en `nm/v2`, no en la
+  primitiva regenerable.
 - Iconos de UI con `lucide-react`; marca con su geometría SVG original.
 - Header, skip link a `main#main-content` y footer compartidos por las cinco
   páginas. Estados de foco visibles en plata, no Pulse.
@@ -202,6 +224,14 @@ Una sola gramática visual gobierna diagramas, campos e historias:
 - Poster local desde SSR y fallback inmediato; canvas progresivo solo si
   permitido y visible. Pausa = `speed: 0`; oculto/fuera de viewport = pausa;
   reduced motion = poster estático y ninguna GPU.
+- El poster del hero (`/brand/orbital-poster.webp`, superficie LCP) es un
+  fondo CSS en `.nm2-hero-art__poster`; el layout de marketing precarga el
+  webp con `<link rel="preload" as="image" fetchPriority="high">` para
+  adelantar el fetch al del CSS. Coste conocido: la precarga es global al
+  grupo `(marketing)` —`/projects` no pinta el poster y lo descarga igual
+  (~690 KB)—; la mejora profunda pendiente en `hero-background.tsx` (fichero
+  de otro frente) es servirlo con `next/image` + `priority`/`fetchPriority`
+  o un preload con scope por ruta.
 - CSS posee la entrada del hero en primer render. Motion gestiona navegación,
   titulares y controles. GSAP gestiona reveals de sección y decor acotado en
   `ScrollScene` (trazo `top 90%` a `center 55%`, flotación `top bottom` a
@@ -236,7 +266,7 @@ El núcleo puro está en `variants.ts` (`renderVariant`). Cinco variantes, con s
 
 El scroll desplaza la frontera (±0,12·`intensity`) y el puntero fino la abomba con una gaussiana; el grano es un hash determinista, no `Math.random`. Home usa `tear` en las cuatro bandas (`org-in`, `org-out`, `proof-in`, `proof-out`) con `height={360}` — la altura es una prop opcional de `SectionTransition` que fija `--nm2-transition-h`; el lab sigue pudiendo sobreescribirla por banda. Las secciones adyacentes conservan solo `--nm2-band-space` de aire (ver la escala de ritmo).
 
-`TransitionLab` es una herramienta de desarrollo: solo aparece con `NODE_ENV=development` o `?transitions=1`, permite cambiar variante, parámetros y altura en vivo, invertir `from`/`to` por banda, reenmarcar el hero (`fullbleed: false` recupera la variante enmarcada para comparación; fullbleed es el default publicado), alternar el arte de `#org` (orbe ↔ blueprint), forzar un efecto de titulares y evaluar titulares en lettering Orbital (`data-headings="orbital"`); guarda la configuración en `localStorage` (`nm2-transition-lab`). No forma parte del diseño publicado.
+`TransitionLab` es una herramienta de desarrollo: solo aparece con `NODE_ENV=development` o `?transitions=1`, permite cambiar variante, parámetros y altura en vivo, invertir `from`/`to` por banda, reenmarcar el hero (`fullbleed: false` recupera la variante enmarcada para comparación; fullbleed es el default publicado), alternar el arte de `#org` (orbe ↔ blueprint), forzar un efecto de titulares y evaluar titulares en lettering Orbital (`data-headings="orbital"`); guarda la configuración en `localStorage` (`nm2-transition-lab`). No forma parte del diseño publicado ni del bundle público: `transition-lab.tsx` conserva solo contexto, provider, storage y los hooks que leen los componentes vivos; la UI del panel vive en `transition-lab-panel.tsx` tras un límite `next/dynamic` (`ssr: false`) que solo se descarga cuando el lab está activo.
 
 ## Accesibilidad y revisión pendiente
 

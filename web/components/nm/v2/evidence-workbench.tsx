@@ -3,9 +3,11 @@
 import { useId, useState } from "react";
 import { motion } from "motion/react";
 import { ActionLink } from "@/components/nm/v2/action-link";
+import { ArtFigure } from "@/components/nm/v2/art-figure";
 import { BlueprintScene } from "@/components/nm/v2/blueprint-scene";
 import { ScrollScene } from "@/components/nm/v2/scroll-scene";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
+import { StoryDetail } from "@/components/nm/v2/story-detail";
 import type { SiteCopy } from "@/lib/content/en";
 
 type EvidenceWorkbenchProps = {
@@ -48,21 +50,18 @@ export function EvidenceWorkbench({ copy, links, labels, caption }: EvidenceWork
       </div>
       <div className="nm2-evidence-workbench__study">
         <ScrollScene>
-          <figure>
-            <div className="nm2-evidence-workbench__art" aria-hidden="true">
-              <BlueprintScene
-                variant="evidence"
-                labels={entries.map((entry) => entry.label)}
-                selected={selected}
-              />
-            </div>
-            <figcaption>{caption}</figcaption>
-          </figure>
+          <ArtFigure caption={caption} frameClassName="nm2-evidence-workbench__art">
+            <BlueprintScene
+              variant="evidence"
+              labels={entries.map((entry) => entry.label)}
+              selected={selected}
+            />
+          </ArtFigure>
         </ScrollScene>
-        <div id={`${id}-detail`} className="nm2-story-detail" aria-live="polite" aria-atomic="true">
+        <StoryDetail id={`${id}-detail`}>
           <h3>{current.title}</h3>
           <p>{current.body}</p>
-        </div>
+        </StoryDetail>
       </div>
     </div>
   );

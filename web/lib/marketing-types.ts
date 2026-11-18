@@ -1,5 +1,16 @@
 export type ProjectState = "active" | "incubation" | "vision";
 
+/** Halftone instrument kinds of the retired V1 capability grid. Kept here
+ *  because `lib/i18n/en.ts` (`Dict["modules"]["items"]`) still types its
+ *  `kind` field with it after the V1 components were removed. */
+export type HalftoneKind =
+  | "runtime"
+  | "memory"
+  | "orchestration"
+  | "observability"
+  | "evaluations"
+  | "security";
+
 export type NavCopy = {
   home: string;
   projects: string;

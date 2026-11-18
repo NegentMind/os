@@ -1,4 +1,5 @@
 import { ActionLink } from "@/components/nm/v2/action-link";
+import { ArtFigure } from "@/components/nm/v2/art-figure";
 import { BlueprintScene } from "@/components/nm/v2/blueprint-scene";
 import { ScrollScene } from "@/components/nm/v2/scroll-scene";
 import type { SiteCopy } from "@/lib/content/en";
@@ -26,12 +27,13 @@ export function CapabilityStory({ copy, caption }: {
           <ActionLink href="#holons" variant="text">{copy.mapLink}</ActionLink>
         </article>
       </div>
-      <figure className="nm2-capability-story__figure">
-        <div className="nm2-capability-story__art" aria-hidden="true">
-          <BlueprintScene variant="memory" labels={copy.diagram} />
-        </div>
-        <figcaption>{caption}</figcaption>
-      </figure>
+      <ArtFigure
+        caption={caption}
+        className="nm2-capability-story__figure"
+        frameClassName="nm2-capability-story__art"
+      >
+        <BlueprintScene variant="memory" labels={copy.diagram} />
+      </ArtFigure>
     </ScrollScene>
   );
 }

@@ -28,6 +28,15 @@ export default async function LocaleLayout({
   return (
     <html lang={lang} className={fontVarsV2}>
       <body className="nm2-site">
+        {/* LCP: the hero poster is a CSS background on .nm2-hero-art__poster;
+            preloading here lets the browser fetch the webp while CSS still
+            resolves. React hoists this link to <head>. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/brand/orbital-poster.webp"
+          fetchPriority="high"
+        />
         <MotionProvider>
           <SiteHeader lang={lang} copy={copy.nav} />
           <main id="main-content" tabIndex={-1}>
