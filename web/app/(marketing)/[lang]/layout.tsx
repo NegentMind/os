@@ -26,8 +26,19 @@ export default async function LocaleLayout({
   if (!isLocale(lang)) notFound();
   const copy = getSiteCopy(lang);
   return (
-    <html lang={lang} className={fontVarsV2} data-headings="orbital">
+    <html lang={lang} className={fontVarsV2} data-headings="orbital" suppressHydrationWarning>
       <body className="nm2-site">
+        {/* Pre-hydration heading-mode restore: the lab persists
+            orbitalHeadings in localStorage (nm2-transition-lab) but only
+            mirrors it on <html> after hydration — headings painted in the
+            SSR default, then visibly swapped fonts seconds later. This
+            synchronous script applies the stored choice before first
+            paint. Keep in sync with transition-lab.tsx STORAGE_KEY. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var s=JSON.parse(localStorage.getItem("nm2-transition-lab"));if(s&&s.composition&&s.composition.orbitalHeadings===false)document.documentElement.dataset.headings="sans"}catch(e){}`,
+          }}
+        />
         {/* LCP: the hero poster is a CSS background on .nm2-hero-art__poster;
             preloading here lets the browser fetch the webp while CSS still
             resolves. React hoists this link to <head>. */}
