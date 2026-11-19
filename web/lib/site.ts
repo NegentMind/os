@@ -32,6 +32,8 @@ export const TRADEMARK_URL =
 export const SUPPORT_URL =
   "https://github.com/NegentMind/.github/blob/main/SUPPORT.md";
 export const VANTADB_DOCS = `${VANTADB_REPO}#readme`;
+/** Issue tracker — the destination for reproducible bug reports. */
+export const VANTADB_ISSUES = `${VANTADB_REPO}/issues`;
 export const FOUNDER_URL = "https://github.com/ness-e";
 
 

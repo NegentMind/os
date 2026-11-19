@@ -17,6 +17,17 @@ import { RotatingWord } from "@/components/nm/v2/rotating-word";
 export function Hero({ lang, copy }: { lang: Locale; copy: HeroCopy }) {
   return (
     <section className="nm2-hero" aria-labelledby="hero-heading">
+      {/* LCP: the hero poster is a CSS background on .nm2-hero-art__poster;
+          preloading lets the browser fetch the webp while CSS still
+          resolves. Scoped to this component so only the home route — the
+          one that paints the poster — pays for it. React hoists the link
+          to <head>. */}
+      <link
+        rel="preload"
+        as="image"
+        href="/brand/orbital-poster.webp"
+        fetchPriority="high"
+      />
       <HeroBackground />
       <HeroEntrance>
         <div className="nm2-hero__intro">

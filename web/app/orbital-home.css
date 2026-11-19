@@ -639,13 +639,12 @@ html[data-motion="off"] .nm2-memory-stack__side {
   margin-block-start: 1rem;
 }
 
-.nm2-home .nm2-home-holons {
-  background: var(--nm2-bg);
-}
-
+/* Same reading-zone fill as #work and #principles — one step above
+   pure black, not rgb(0,0,0). */
 .nm2-home .nm2-home-holons {
   position: relative;
   isolation: isolate;
+  background: var(--nm2-section);
 }
 
 .nm2-home .nm2-home-holons > .nm2-container {
@@ -1302,6 +1301,14 @@ html[data-motion="off"] .nm2-memory-stack__side {
   font-size: clamp(2rem, 3.5vw, 3.5rem);
 }
 
+/* Type ladder: hero (72-88px) > product display > section h2 (40px). The
+   flagship name lived at 79px — above the hero line at common viewports —
+   so it steps down one rung. Extra specificity because orbital-vanta.css
+   loads after this sheet and declares the same two-class selector. */
+.nm2-home .nm2-vanta .nm2-vanta__name {
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+}
+
 /* No perpetual CSS loops: transitions only respond to discrete controls.
    Motion and GSAP each own separate elements; provider pause is authoritative. */
 html:not([data-motion="on"]) .nm2-home *,
@@ -1323,19 +1330,22 @@ html:not([data-motion="on"]) .nm2-home *::after {
 
   .nm2-home .nm2-system-story__stage {
     top: clamp(4.5rem, 12svh, 6rem);
-    height: clamp(12.5rem, 30svh, 17rem);
+    height: clamp(12.5rem, 26svh, 16rem);
     border-radius: var(--nm2-radius-card);
   }
 
   .nm2-home .nm2-system-story__steps {
-    margin-block-start: calc(var(--nm2-block-gap) * 0.75);
+    margin-block-start: calc(var(--nm2-block-gap) * 0.5);
   }
 
+  /* Compact pacing on one-column viewports: 36svh still leaves ~150px of
+     air around each step's text while cutting the section below the
+     readable-scroll budget. */
   .nm2-home .nm2-system-story__step {
-    min-height: clamp(16rem, 55svh, 30rem);
+    min-height: clamp(14rem, 36svh, 22rem);
   }
 
-  /* The stage is a 30svh band: labelled chips would collide with the
+  /* The stage is a 26svh band: labelled chips would collide with the
      readout and caption, so nodes contract to dots on the orbit — the
      assembly still narrates, and the step text carries every label. */
   .nm2-home .nm2-system-story__art {
@@ -1463,13 +1473,15 @@ html:not([data-motion="on"]) .nm2-home *::after {
   }
 
   /* The art contracts to a top band: the scrim turns vertical so the
-     spectrum dissolves into the card surface where the copy begins. */
+     spectrum dissolves into the card surface where the copy begins. The
+     title sits inside the band (~20-95% of its height), so coverage is
+     already past 60% where its first line lands. */
   .nm2-home .nm2-home-invitation__art::after {
     background: linear-gradient(
       180deg,
-      color-mix(in srgb, var(--nm2-surface) 18%, transparent) 0%,
-      color-mix(in srgb, var(--nm2-surface) 58%, transparent) 62%,
-      var(--nm2-surface) 100%
+      color-mix(in srgb, var(--nm2-surface) 50%, transparent) 0%,
+      color-mix(in srgb, var(--nm2-surface) 78%, transparent) 50%,
+      var(--nm2-surface) 95%
     );
   }
 }

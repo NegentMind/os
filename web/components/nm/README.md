@@ -73,6 +73,7 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 - `motion-preference.tsx` — control global de pausa/reanudación en el footer.
 - `motion-provider.tsx` — estado compartido de movimiento + `html[data-motion]`.
 - `orbital-glyphs.tsx` — mapa de glifos SVG del lettering Orbital. **Fallback/biblioteca**: sin import vivo; la vía principal es la fuente woff2 y queda para glifos que la fuente no cubre (acentos, dígitos) y contextos sin webfont.
+- `orbit-sigil.tsx` — sello del laboratorio en `/about`: monograma NM dentro de un anillo orbital que respira con un punto espectral viajero; SVG+CSS puro, sin JS, animación solo bajo `html[data-motion="on"]` y anillo trazable con `data-draw`. Sustituible por `nm/ext/Orb` si el lead lo decide.
 - `page-cta.tsx` — cierre con llamada a la acción de páginas interiores.
 - `page-hero.tsx` — composición asimétrica compartida de héroes interiores.
 - `pointer-feedback.tsx` — anillo decorativo de puntero; nunca captura interacción ni sustituye el cursor.

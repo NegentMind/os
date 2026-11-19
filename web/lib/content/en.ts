@@ -70,7 +70,6 @@ export const en = {
     active: "Active",
     incubation: "In incubation",
     vision: "Vision",
-    flagship: "Current flagship",
     source: "Source code",
     readDocs: "Read the README",
     exploreVantadb: "Explore VantaDB",
@@ -135,7 +134,7 @@ export const en = {
         body: "Embedded persistent memory for AI agents — the one piece of this map that already exists as software.",
       },
       items: [
-        { name: "Cardinal", role: "Context and working memory", body: "The direction of Cardinal would be to organize context and working memory within a larger system. It is a design vision, not another name for VantaDB." },
+        { name: "Cardinal", role: "Context and working memory", body: "The direction of Cardinal would be to organize context and working memory within a larger system. It is a design vision, not an available product." },
         { name: "Iris", role: "Perception and ingestion", body: "The direction of Iris would be to address perception and ingestion as a distinct responsibility. No available ingestion pipeline is announced here." },
         { name: "Meta", role: "Verification and metacognition", body: "The direction of Meta would be to address verification and metacognition within a larger system. Its place on the map is not a claim of working verification software." },
         { name: "Execute", role: "Tool execution", body: "The direction of Execute would be to address tool execution as a bounded responsibility. This is not an available execution service." },
@@ -160,7 +159,7 @@ export const en = {
       items: [
         {
           title: "Start with an artifact",
-          body: "VantaDB's source and README are the starting point for understanding its implementation, installation and limitations.",
+          body: "VantaDB's source is the starting point for understanding its real implementation.",
         },
         {
           title: "Read the written context",
@@ -249,6 +248,12 @@ export const en = {
     diagram: {
       title: "Persist. Retrieve. Reuse.",
       description: "A conceptual view of how an application can carry context across sessions. This is a mechanism diagram, not a live demo.",
+      /* Strata plate labels — the .vanta artifact the mechanism acts on,
+         outer to inner; same names as the home work section. */
+      art: {
+        layers: ["Episodic", "Semantic", "Procedural"],
+        core: ".vanta",
+      },
       steps: [
         {
           title: "Persist",
@@ -286,7 +291,7 @@ export const en = {
       ],
     },
     facts: {
-      title: "What is concrete.",
+      title: "The concrete facts.",
       rows: [
         { term: "Core", detail: "Rust" },
         { term: "Bindings", detail: "Python and TypeScript, documented in the repository" },
@@ -349,16 +354,19 @@ export const en = {
         title: "Improve the documentation",
         body: "Find the paragraph that stopped you. Explain what you expected to understand and propose a more precise example or explanation.",
         evidence: "Include the page, the confusing passage and the correction.",
+        action: "Open the VantaDB README",
       },
       {
         title: "Report a reproducible bug",
         body: "Reduce the failure to the smallest useful case. Describe what happened and what you expected instead.",
         evidence: "Include the environment, version and steps needed to reproduce it.",
+        action: "Browse the open issues",
       },
       {
         title: "Contribute scoped code",
         body: "Start from a clear issue or discuss the change first. Keep the pull request focused, explain the trade-offs and include relevant tests.",
         evidence: "Show why the change works, not just that the code was generated.",
+        action: "Read the contribution guide",
       },
     ],
     expectations: {
@@ -398,6 +406,7 @@ export const en = {
     closing: {
       title: "Bring the next concrete change.",
       body: "The contribution guide explains the workflow; Discussions is where a question becomes a plan.",
+      note: "Prefer a task that is already queued?",
     },
   },
   gallery: {
@@ -429,6 +438,30 @@ export const en = {
     motionUnknown: "Animation stays off until preferences are known.",
     artwork: "Open the artwork renderer",
     liveScene: "Live scene",
+    demos: "Scenes / live demos",
+    demosNote:
+      "Real mounts at fixed dimensions. Canvases only run inside the viewport and every piece honors the site's motion preference.",
+    demosHeadings: "Animated headings",
+    demosHeadingsNote:
+      "The same phrase through all four entrance effects. Orbital Display ink by default; the transition lab can switch it to Outfit.",
+    demosFields: "Ambient fields",
+    demosBands: "Transition bands",
+    demosInstruments: "Instruments and plates",
+    demosComposed: "Page compositions",
+    demosComposedNote:
+      "These pieces mount inside the home style scope, exactly as they do in production.",
+    demosUi: "Product primitives",
+    uiCardTitle: "Product card",
+    uiCardNote:
+      "Card, Label, Input and an enabled Button — shadcn primitives without the Orbital layer.",
+    uiField: "Email",
+    uiPlaceholder: "name@domain.dev",
+    uiSubmit: "Send",
+    external: "Adapted external pieces",
+    externalNote:
+      "Stock from the React Bits and Aceternity registries, retokenized to --nm2-* and wired to the site motion gate. Library only — none of it is mounted in production routes yet.",
+    externalText: "Text animations",
+    externalScenes: "Backgrounds and surfaces",
     branding: "Brand assets",
     brandingNote:
       "Canonical files served from /brand plus the app icon set. Dimensions are each asset's intrinsic size; the GIFs are copied from github-profile/profile for inspection only.",

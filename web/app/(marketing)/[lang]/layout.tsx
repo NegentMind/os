@@ -39,25 +39,11 @@ export default async function LocaleLayout({
             __html: `try{var s=JSON.parse(localStorage.getItem("nm2-transition-lab"));if(s&&s.composition&&s.composition.orbitalHeadings===false)document.documentElement.dataset.headings="sans"}catch(e){}`,
           }}
         />
-        {/* LCP: the hero poster is a CSS background on .nm2-hero-art__poster;
-            preloading here lets the browser fetch the webp while CSS still
-            resolves. React hoists this link to <head>. */}
-        <link
-          rel="preload"
-          as="image"
-          href="/brand/orbital-poster.webp"
-          fetchPriority="high"
-        />
-        {/* Orbital Display is the default heading face; without this preload
-            the browser only discovers the woff2 through CSS and the swap
-            from the Outfit fallback is visible for seconds (FOUT). 3.4 KB. */}
-        <link
-          rel="preload"
-          as="font"
-          type="font/woff2"
-          href="/fonts/orbital-display.woff2"
-          crossOrigin="anonymous"
-        />
+        {/* No manual preloads live here: next/font already emits its own
+            preload for the hashed orbital-display woff2 (the literal
+            /fonts/orbital-display.woff2 URL was a wasted fetch), and the
+            hero poster preload moved into Hero so it only ships on the
+            home route that actually paints it. */}
         <MotionProvider>
           <SiteHeader lang={lang} copy={copy.nav} />
           <main id="main-content" tabIndex={-1}>

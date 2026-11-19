@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { ActionLink } from "@/components/nm/v2/action-link";
-import { BrandMark } from "@/components/nm/v2/brand-mark";
 import { FieldCanvas } from "@/components/nm/v2/field-canvas";
+import { OrbitSigil } from "@/components/nm/v2/orbit-sigil";
 import { PageCta } from "@/components/nm/v2/page-cta";
 import { PageHero } from "@/components/nm/v2/page-hero";
 import { Section } from "@/components/nm/v2/section";
@@ -33,7 +33,13 @@ export default async function AboutPage({ params }: MarketingPageProps) {
 
   return (
     <div className="nm2-page">
-      <PageHero title={a.title} description={a.description} variant="orbit" />
+      <PageHero title={a.title} description={a.description} variant="orbit">
+        <div className="nm2-actions">
+          <ActionLink href={hrefFor(lang, "projects")} variant="secondary">
+            {c.common.allProjects}
+          </ActionLink>
+        </div>
+      </PageHero>
       <Section className="nm2-mission-section">
         <div className="nm2-editorial">
           <SectionHeading title={a.mission.title} effect="focus" />
@@ -74,20 +80,23 @@ export default async function AboutPage({ params }: MarketingPageProps) {
             {HOLONS.map((name) => <li key={name}>{name}</li>)}
           </ul>
           <p className="nm2-holon-note">{a.vision.note}</p>
+          <ActionLink href={hrefFor(lang, "vantadb")} variant="text">
+            {c.common.exploreVantadb}
+          </ActionLink>
         </Surface>
       </Section>
       <SectionTransition id="about-paper" variant="iridescent" />
       <Section className="nm2-founder-section nm2-section--paper">
         <div className="nm2-editorial">
-          <SectionHeading title={a.founder.title} effect="focus" />
+          <div className="nm2-founder-lead">
+            <SectionHeading title={a.founder.title} effect="focus" />
+            <OrbitSigil className="nm2-founder-sigil" />
+          </div>
           <div className="nm2-founder">
-            <BrandMark variant="monogram" className="nm2-founder-mark" decorative />
-            <div>
-              <h3>{a.founder.name}</h3>
-              <p className="nm2-founder-role">{a.founder.role}</p>
-              <p>{a.founder.body}</p>
-              <ActionLink href={FOUNDER_URL} external variant="text">{a.founder.action}</ActionLink>
-            </div>
+            <h3>{a.founder.name}</h3>
+            <p className="nm2-founder-role">{a.founder.role}</p>
+            <p>{a.founder.body}</p>
+            <ActionLink href={FOUNDER_URL} external variant="text">{a.founder.action}</ActionLink>
           </div>
         </div>
         <PageCta

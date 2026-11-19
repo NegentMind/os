@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { ActionLink } from "@/components/nm/v2/action-link";
+import { ArtFigure } from "@/components/nm/v2/art-figure";
 import { FieldCanvas } from "@/components/nm/v2/field-canvas";
+import { HolonField } from "@/components/nm/v2/holon-field";
 import { PageCta } from "@/components/nm/v2/page-cta";
 import { PageHero } from "@/components/nm/v2/page-hero";
 import { ProjectCard } from "@/components/nm/v2/project-card";
@@ -11,7 +13,7 @@ import { StatusBadge } from "@/components/nm/v2/status-badge";
 import { getSiteCopy } from "@/lib/content";
 import { isLocale } from "@/lib/i18n";
 import { metadataForPage, type MarketingPageProps } from "@/lib/marketing-metadata";
-import { VANTADB_REPO } from "@/lib/site";
+import { DISCUSSIONS_URL, VANTADB_REPO } from "@/lib/site";
 import { hrefFor } from "@/lib/site-routes";
 
 export function generateMetadata({ params }: MarketingPageProps) {
@@ -63,6 +65,8 @@ export default async function ProjectsPage({ params }: MarketingPageProps) {
           summary={p.scopegrain.summary}
           status="incubation"
           statusLabel={c.common.incubation}
+          href={DISCUSSIONS_URL}
+          actionLabel={c.common.discussions}
           headingLevel={2}
           className="nm2-portfolio-prototype"
         >
@@ -75,7 +79,38 @@ export default async function ProjectsPage({ params }: MarketingPageProps) {
       <SectionTransition id="projects-paper" variant="blocks" />
       <Section className="nm2-vision-boundary nm2-section--paper">
         <div className="nm2-editorial">
-          <SectionHeading title={p.boundary.title} effect="trace" />
+          <div className="nm2-boundary-lead">
+            <SectionHeading title={p.boundary.title} effect="trace" />
+            {/* Read-only plate of the membrane map: the same HolonField the
+                home explorer drives, with the built piece selected and no
+                interactive seats. Names live in the legend below. */}
+            <ArtFigure
+              caption={c.common.conceptual}
+              className="nm2-boundary-map"
+              frameClassName="nm2-boundary-map__frame"
+            >
+              {/* VantaDB occupies the tenth seat of HOLON_LAYOUT (exported as
+                  VANTA_INDEX from the client module — a client reference can't
+                  be imported here, so the seat is pinned by index). */}
+              <HolonField selected={9} hovered={null} />
+            </ArtFigure>
+            <ol className="nm2-boundary-map__legend">
+              {c.home.holons.items.map((item, index) => (
+                <li key={item.name}>
+                  <span className="nm2-boundary-map__index" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {item.name}
+                </li>
+              ))}
+              <li data-built="">
+                <span className="nm2-boundary-map__index" aria-hidden="true">
+                  10
+                </span>
+                {c.home.holons.vanta.name}
+              </li>
+            </ol>
+          </div>
           <div className="nm2-prose">
             <p>{p.boundary.body}</p>
             <StatusBadge status="vision" label={c.common.vision} />

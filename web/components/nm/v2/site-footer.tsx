@@ -103,7 +103,7 @@ export function SiteFooter({
                   <Link href={hrefFor(lang, "vantadb")}>VantaDB</Link>
                 </li>
                 <li>
-                  <Link href={hrefFor(lang, "projects")}>ScopeGrain</Link>
+                  <Link href={hrefFor(lang, "projects")}>Scopegrain</Link>
                 </li>
               </ul>
             </nav>

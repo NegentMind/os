@@ -1,4 +1,3 @@
-import { ArrowRight, Database, Layers, Repeat2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { ActionLink } from "@/components/nm/v2/action-link";
 import { FieldCanvas } from "@/components/nm/v2/field-canvas";
@@ -8,6 +7,7 @@ import { Section } from "@/components/nm/v2/section";
 import { SectionHeading } from "@/components/nm/v2/section-heading";
 import { SectionTransition } from "@/components/nm/v2/section-transition/section-transition";
 import { StatusBadge } from "@/components/nm/v2/status-badge";
+import { VantaStrata } from "@/components/nm/v2/vanta-strata";
 import { getSiteCopy } from "@/lib/content";
 import { isLocale } from "@/lib/i18n";
 import { metadataForPage, type MarketingPageProps } from "@/lib/marketing-metadata";
@@ -17,8 +17,6 @@ import { hrefFor } from "@/lib/site-routes";
 export function generateMetadata({ params }: MarketingPageProps) {
   return metadataForPage(params, "vantadb");
 }
-
-const MECHANISM_ICONS = [Database, Layers, Repeat2];
 
 export default async function VantadbPage({ params }: MarketingPageProps) {
   const { lang } = await params;
@@ -50,22 +48,25 @@ export default async function VantadbPage({ params }: MarketingPageProps) {
         <p className="nm2-product-thesis">{v.intro}</p>
         <SectionHeading title={v.diagram.title} description={v.diagram.description} effect="decode" />
         <figure className="nm2-mechanism">
-          <ol className="nm2-mechanism-steps">
-            {v.diagram.steps.map((step, index) => {
-              const Icon = MECHANISM_ICONS[index];
-              return (
+          <div className="nm2-mechanism__composition">
+            {/* The artifact the steps act on: the .vanta strata plate,
+                same signature drawing the home work section carries. */}
+            <div className="nm2-mechanism-art">
+              <VantaStrata layers={v.diagram.art.layers} core={v.diagram.art.core} />
+            </div>
+            <ol className="nm2-mechanism-steps">
+              {v.diagram.steps.map((step, index) => (
                 <li key={step.title}>
-                  <div className="nm2-mechanism-symbol">
-                    {Icon && <Icon aria-hidden="true" />}
-                    <ArrowRight className="nm2-mechanism-arrow" aria-hidden="true" />
-                  </div>
+                  <span className="nm2-mechanism-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                   <h3>{step.title}</h3>
                   <p>{step.body}</p>
                   <p className="nm2-mechanism-detail">{step.detail}</p>
                 </li>
-              );
-            })}
-          </ol>
+              ))}
+            </ol>
+          </div>
           <figcaption>{v.diagram.note}</figcaption>
         </figure>
       </Section>

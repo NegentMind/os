@@ -227,7 +227,14 @@ html.lenis body {
   white-space: nowrap;
 }
 
-.nm2-header__link:hover,
+/* The pill marks the active item; hover gets the same affordance the
+   footer links use — underline on the resting ink, not a dead
+   re-assignment of the same color. */
+.nm2-header__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .nm2-header__link[data-active="true"] {
   color: var(--nm2-text);
 }
@@ -393,10 +400,17 @@ html.lenis body {
   }
 }
 
-/* SSR-visible headings; Motion owns the per-word reveal, CSS only shapes it. */
+/* SSR-visible headings; Motion owns the per-word reveal, CSS only shapes it.
+   A word wider than its line must break inside the heading — never widen
+   the document (long ES words pushed scrollWidth past 390px). */
 .nm2-animated-heading__mask,
 .nm2-animated-heading__word {
   display: inline-block;
+  max-width: 100%;
+}
+
+.nm2-animated-heading__word {
+  overflow-wrap: anywhere;
 }
 
 .nm2-animated-heading--assemble .nm2-animated-heading__mask {
@@ -411,8 +425,11 @@ html.lenis body {
   display: block;
 }
 
-.nm2-animated-heading--decode .nm2-animated-heading__word {
-  white-space: nowrap;
+/* Decode pins each word to its measured max-content width while glyphs
+   scramble (inline min-width); the mask clips what the line cannot fit
+   so the effect crops visually instead of pushing the page sideways. */
+.nm2-animated-heading--decode .nm2-animated-heading__mask {
+  overflow: clip;
 }
 
 /* Orbital headings (default; html[data-headings="orbital"]): the same
@@ -472,10 +489,10 @@ html.lenis body {
 }
 
 .nm2-page-hero__title {
-  max-width: 14ch;
+  max-width: 18ch;
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(2.75rem, 5.8vw, 5.5rem);
+  font-size: clamp(2.5rem, 4vw, 4rem);
   font-weight: 450;
   line-height: 1.06;
   letter-spacing: -0.03em;

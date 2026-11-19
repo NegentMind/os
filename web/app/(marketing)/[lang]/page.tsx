@@ -110,7 +110,7 @@ export default async function Home({ params }: MarketingPageProps) {
           <PrincipleRules items={h.principles.items} />
         </div>
       </Section>
-      <Section id="faq" className="nm2-faq-section">
+      <Section id="faq" className="nm2-faq-section nm2-section--paper">
         <div className="nm2-editorial">
           <SectionHeading title={h.faqTitle} effect="assemble" />
           <Faq items={h.faq} />

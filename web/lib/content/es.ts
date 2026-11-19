@@ -29,7 +29,7 @@ export const es: SiteCopy = {
   },
   hero: {
     title: "Software alrededor del modelo:",
-    titleWords: ["MEMORIA", "OJOS", "VOZ", "MANOS"],
+    titleWords: ["MEMORIA", "VISTA", "VOZ", "MANOS"],
     description:
       "Laboratorio de ingeniería open source. Construimos la capa que falta alrededor de los modelos de IA.",
     primaryAction: "Explorar proyectos",
@@ -70,7 +70,6 @@ export const es: SiteCopy = {
     active: "Activo",
     incubation: "En incubación",
     vision: "Visión",
-    flagship: "Proyecto principal actual",
     source: "Código fuente",
     readDocs: "Leer el README",
     exploreVantadb: "Conocer VantaDB",
@@ -85,7 +84,7 @@ export const es: SiteCopy = {
     statement: {
       title: "El modelo es un comienzo, no el sistema completo.",
       body: "Un agente necesita dónde guardar lo importante, cómo recuperar contexto y límites para lo que puede hacer. NEGENT MIND construye infraestructura alrededor de modelos para no rehacer esas capacidades en cada proyecto.",
-      aside: "Para desarrolladores independientes e ingenieros de agentes. Empieza por el software que existe; lee el resto como una dirección, no como una lista de funciones.",
+      aside: "Para desarrolladores independientes e ingenieros que construyen agentes. Empieza por el software que existe; lee el resto como una dirección, no como una lista de funciones.",
       system: {
         controls: "Explorar el sistema conceptual",
         orbAction: "Fijar o liberar el color de acento",
@@ -102,7 +101,7 @@ export const es: SiteCopy = {
     work: {
       title: "La memoria del agente, guardada en un solo archivo.",
       description:
-        "VantaDB es el primer producto del laboratorio: un motor embebido que gobierna el ciclo de vida de la memoria de agentes —conservar, recuperar, priorizar, actualizar, invalidar y auditar—.",
+        "VantaDB es el primer producto del laboratorio: un motor embebido que gobierna el ciclo de vida de la memoria de agentes —conservar, recuperar, priorizar, actualizar, invalidar y auditar.",
       vanta: {
         name: "VantaDB",
         tagline: "SQLite for AI Agents",
@@ -135,7 +134,7 @@ export const es: SiteCopy = {
         body: "Memoria persistente embebida para agentes de IA — la única pieza de este mapa que ya existe como software.",
       },
       items: [
-        { name: "Cardinal", role: "Contexto y memoria de trabajo", body: "La dirección de Cardinal sería organizar contexto y memoria de trabajo dentro de un sistema mayor. Es una visión de diseño, no otro nombre de VantaDB." },
+        { name: "Cardinal", role: "Contexto y memoria de trabajo", body: "La dirección de Cardinal sería organizar contexto y memoria de trabajo dentro de un sistema mayor. Es una visión de diseño, no un producto disponible." },
         { name: "Iris", role: "Percepción e ingesta", body: "La dirección de Iris sería abordar percepción e ingesta como una responsabilidad propia. Aquí no se anuncia un pipeline de ingesta disponible." },
         { name: "Meta", role: "Verificación y metacognición", body: "La dirección de Meta sería abordar verificación y metacognición dentro de un sistema mayor. Su lugar en el mapa no afirma que exista software de verificación operativo." },
         { name: "Execute", role: "Ejecución de herramientas", body: "La dirección de Execute sería abordar la ejecución de herramientas como una responsabilidad acotada. No es un servicio de ejecución disponible." },
@@ -160,7 +159,7 @@ export const es: SiteCopy = {
       items: [
         {
           title: "Empezar por un artefacto",
-          body: "El código y el README de VantaDB son el punto de partida para entender su implementación, instalación y limitaciones.",
+          body: "El código de VantaDB es el punto de partida para entender su implementación real.",
         },
         {
           title: "Leer el contexto escrito",
@@ -203,7 +202,7 @@ export const es: SiteCopy = {
     faq: [
       {
         question: "¿Cómo empiezo con VantaDB?",
-        answer: "Clona el repositorio y sigue el README: contiene la instalación, los bindings de Python y TypeScript y las limitaciones actuales. El README es la fuente mantenida; preferimos enlazarlo a reproducir un fragmento de API que puede quedar desactualizado.",
+        answer: "Clona el repositorio y sigue el README: contiene la instalación, los bindings de Python y TypeScript y las limitaciones actuales. El README es la fuente mantenida; preferimos enlazarlo en vez de reproducir un fragmento de API que puede quedar desactualizado.",
       },
       {
         question: "¿Bajo qué licencia está el código?",
@@ -234,7 +233,7 @@ export const es: SiteCopy = {
     },
     boundary: {
       title: "Un mapa de capacidades no es un catálogo de productos.",
-      body: "Los nueve holones describen una visión de largo plazo. No son nueve paquetes que puedes instalar. Cardinal forma parte de esa visión; no es otro nombre para VantaDB.",
+      body: "Los nueve holones describen una visión de largo plazo. No son nueve paquetes que puedes instalar. Cardinal forma parte de esa visión; no es otro nombre de VantaDB.",
       action: "Entender la dirección del laboratorio",
     },
     closing: {
@@ -249,6 +248,13 @@ export const es: SiteCopy = {
     diagram: {
       title: "Persistir. Recuperar. Reutilizar.",
       description: "Una vista conceptual de cómo una aplicación puede dar continuidad al contexto entre sesiones. Es un diagrama del mecanismo, no una demo en vivo.",
+      /* Etiquetas de la lámina de estratos — el artefacto .vanta sobre el
+         que actúa el mecanismo, de fuera hacia dentro; mismos nombres que
+         en la sección de trabajo del home. */
+      art: {
+        layers: ["Episódica", "Semántica", "Procedural"],
+        core: ".vanta",
+      },
       steps: [
         {
           title: "Persistir",
@@ -294,7 +300,7 @@ export const es: SiteCopy = {
         { term: "Operación", detail: "Embebida y local-first; sin servicio en la nube obligatorio" },
         { term: "Licencia del núcleo", detail: "Apache-2.0" },
       ],
-      boundary: "El repositorio es la fuente de verdad sobre el comportamiento admitido y las limitaciones actuales. Esta descripción no promete compatibilidad con cualquier modelo, framework o carga de trabajo.",
+      boundary: "El repositorio es la fuente de verdad sobre el comportamiento admitido y las limitaciones actuales. Esta descripción no promete compatibilidad con todos los modelos, frameworks o cargas de trabajo.",
     },
     start: {
       title: "Empieza por el código.",
@@ -328,7 +334,7 @@ export const es: SiteCopy = {
       note: "El proyecto activo es VantaDB. Cardinal no es VantaDB y este mapa no asigna productos actuales a holones futuros.",
     },
     founder: {
-      title: "Un laboratorio con un mantenedor al que puedes nombrar.",
+      title: "Un laboratorio lo bastante pequeño para que su mantenedor tenga nombre.",
       name: "Eros",
       role: "Fundador y mantenedor",
       body: "NEGENT MIND es actualmente un laboratorio independiente, aún no constituido como empresa. Eros mantiene el trabajo; las contribuciones y las conversaciones técnicas pasan por GitHub.",
@@ -349,16 +355,19 @@ export const es: SiteCopy = {
         title: "Mejorar la documentación",
         body: "Encuentra el párrafo que te frenó. Explica qué esperabas entender y propón un ejemplo o una explicación más precisa.",
         evidence: "Incluye la página, el pasaje confuso y la corrección.",
+        action: "Abrir el README de VantaDB",
       },
       {
         title: "Comunicar un fallo reproducible",
         body: "Reduce el fallo al caso útil más pequeño. Describe qué ocurrió y qué esperabas que ocurriera.",
         evidence: "Incluye el entorno, la versión y los pasos para reproducirlo.",
+        action: "Ver las incidencias abiertas",
       },
       {
         title: "Aportar código acotado",
         body: "Parte de una incidencia clara o conversa antes sobre el cambio. Centra la pull request, explica las decisiones e incluye las pruebas pertinentes.",
         evidence: "Muestra por qué funciona el cambio, no solo que se generó el código.",
+        action: "Leer la guía de contribución",
       },
     ],
     expectations: {
@@ -398,6 +407,7 @@ export const es: SiteCopy = {
     closing: {
       title: "Trae el próximo cambio concreto.",
       body: "La guía de contribución explica el flujo; Discussions es donde una pregunta se convierte en plan.",
+      note: "¿Prefieres una tarea que ya está pedida?",
     },
   },
   gallery: {
@@ -429,6 +439,30 @@ export const es: SiteCopy = {
     motionUnknown: "La animación permanece apagada hasta conocer las preferencias.",
     artwork: "Abrir el renderizador de arte",
     liveScene: "Escena en vivo",
+    demos: "Escenas / demos vivas",
+    demosNote:
+      "Montajes reales con dimensiones fijas. Los canvas solo se activan dentro del viewport y todas las piezas respetan la preferencia de movimiento del sitio.",
+    demosHeadings: "Titulares animados",
+    demosHeadingsNote:
+      "La misma frase recorrida por los cuatro efectos de entrada. La tinta es Orbital Display por defecto; el laboratorio de transición puede alternarla a Outfit.",
+    demosFields: "Campos ambientales",
+    demosBands: "Bandas de transición",
+    demosInstruments: "Instrumentos y láminas",
+    demosComposed: "Composiciones de página",
+    demosComposedNote:
+      "Estas piezas se montan dentro del ámbito de estilos del home, igual que en producción.",
+    demosUi: "Primitivas de producto",
+    uiCardTitle: "Ficha de producto",
+    uiCardNote:
+      "Card, Label, Input y Button habilitado: primitivas shadcn sin la capa Orbital.",
+    uiField: "Correo",
+    uiPlaceholder: "nombre@dominio.dev",
+    uiSubmit: "Enviar",
+    external: "Piezas externas adaptadas",
+    externalNote:
+      "Material de los registros React Bits y Aceternity, retokenizado a --nm2-* y conectado al gate de movimiento del sitio. Solo biblioteca — nada de esto está montado aún en rutas de producción.",
+    externalText: "Animaciones de texto",
+    externalScenes: "Fondos y superficie",
     branding: "Assets de marca",
     brandingNote:
       "Archivos canónicos servidos desde /brand más el set de iconos de la app. Las dimensiones son el tamaño intrínseco de cada asset; los GIFs se copian desde github-profile/profile solo para inspección.",

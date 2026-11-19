@@ -325,12 +325,77 @@
   border-block-start: 1px solid var(--nm2-line);
 }
 
+/* Boundary mini-map: a small, read-only plate of the membrane field —
+   the same HolonField the explorer drives, mounted with a locked
+   selection and no seats, plus a compact name legend underneath. */
+.nm2-boundary-map {
+  margin: 0;
+  max-width: 24rem;
+}
+
+.nm2-boundary-map__frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: clip;
+  border: 1px solid color-mix(in srgb, var(--nm2-line) 65%, transparent);
+  border-radius: var(--nm2-radius-card);
+  background: color-mix(in srgb, var(--nm2-surface) 72%, var(--nm2-bg));
+}
+
+.nm2-boundary-map figcaption {
+  margin-block-start: 0.75rem;
+  color: var(--nm2-muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.nm2-boundary-map__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem 1rem;
+  margin: 0.875rem 0 0;
+  padding: 0;
+  list-style: none;
+  max-width: 34rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--nm2-muted);
+}
+
+.nm2-boundary-map__legend li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.375rem;
+}
+
+.nm2-boundary-map__index {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--nm2-muted);
+}
+
+/* The built piece reads in text ink among the muted vision names. */
+.nm2-boundary-map__legend li[data-built] {
+  color: var(--nm2-text);
+}
+
+.nm2-boundary-map__legend li[data-built] .nm2-boundary-map__index {
+  color: var(--nm2-text);
+}
+
+/* Silver is a bright neutral on carbon; on the paper chapter it would
+   vanish, so the selected cell's tone remaps to a readable mid-silver. */
+.nm2-page .nm2-section--paper .nm2-holon-field {
+  --nm2-spectrum-silver: #76879c;
+}
+
 .nm2-product-intro > a {
   margin-block-end: 1.5rem;
 }
 
 .nm2-product-status {
-  margin-block: 1.5rem;
+  margin-block: 0;
 }
 
 .nm2-product-thesis {
@@ -351,6 +416,31 @@
   background: var(--nm2-surface);
 }
 
+/* Artifact + lifecycle: the .vanta strata plate faces the step list. */
+.nm2-mechanism__composition {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nm2-mechanism-art {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 26rem;
+  margin-inline: auto;
+  aspect-ratio: 1 / 1;
+  overflow: clip;
+  border: 1px solid color-mix(in srgb, var(--nm2-line) 65%, transparent);
+  border-radius: var(--nm2-radius-hero);
+  background: color-mix(in srgb, var(--nm2-surface) 72%, var(--nm2-bg));
+}
+
+.nm2-mechanism-art > :first-child {
+  width: 100%;
+  height: 100%;
+}
+
 .nm2-mechanism-steps {
   display: grid;
   gap: 2rem;
@@ -360,29 +450,20 @@
   min-width: 0;
 }
 
-.nm2-mechanism-symbol {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-block-end: 1.5rem;
-  color: var(--nm2-spectrum-ice);
+.nm2-mechanism-steps li + li {
+  padding-block-start: 2rem;
+  border-block-start: 1px solid var(--nm2-line);
 }
 
-.nm2-mechanism-symbol > svg:first-child {
-  width: 2.5rem;
-  height: 2.5rem;
-  stroke-width: 1.5;
-}
-
-.nm2-mechanism-symbol .nm2-mechanism-arrow {
-  width: 1.5rem;
-  height: 1.5rem;
-  transform: rotate(90deg);
+/* Step ordinals carry the sequence: mono index, same grammar as the
+   blueprint and memory-stack label indexes. */
+.nm2-mechanism-index {
+  display: block;
+  margin-block-end: 0.75rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
   color: var(--nm2-muted);
-}
-
-.nm2-mechanism-steps li:last-child .nm2-mechanism-arrow {
-  visibility: hidden;
 }
 
 .nm2-mechanism-steps p {
@@ -495,15 +576,86 @@
 }
 
 .nm2-founder {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  gap: 1.5rem;
+  min-width: 0;
 }
 
-.nm2-founder-mark {
-  width: 3rem;
-  height: 3rem;
+/* Orbit sigil — the lab's seal under the founder heading: the NM monogram
+   inside a breathing ring. SVG complete from SSR; the only motion lives
+   under html[data-motion="on"], so reduced motion, pause and no-JS all
+   render the same still plate. */
+.nm2-orbit-sigil {
+  position: relative;
+  width: clamp(10rem, 24vw, 15rem);
+  aspect-ratio: 1;
   color: var(--nm2-structure);
+}
+
+.nm2-founder-sigil {
+  margin-block-start: calc(var(--nm2-block-gap) * 0.25);
+}
+
+.nm2-orbit-sigil__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.nm2-orbit-sigil__ring {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.nm2-orbit-sigil__orbit {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.65;
+  opacity: 0.55;
+}
+
+.nm2-orbit-sigil__node {
+  fill: currentColor;
+}
+
+.nm2-orbit-sigil__halo {
+  fill: var(--nm2-spectrum-violet);
+  opacity: 0.28;
+}
+
+.nm2-orbit-sigil__dot {
+  fill: var(--nm2-spectrum-violet);
+}
+
+.nm2-orbit-sigil__mark {
+  position: absolute;
+  inset: 0;
+  width: 44%;
+  margin: auto;
+  color: var(--nm2-text);
+}
+
+.nm2-orbit-sigil__breath,
+.nm2-orbit-sigil__traveler {
+  transform-box: view-box;
+  transform-origin: 120px 120px;
+}
+
+@keyframes nm2-sigil-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
+}
+
+@keyframes nm2-sigil-travel {
+  to { transform: rotate(1turn); }
+}
+
+html[data-motion="on"] .nm2-orbit-sigil__breath {
+  animation: nm2-sigil-breathe 7s ease-in-out infinite;
+}
+
+html[data-motion="on"] .nm2-orbit-sigil__traveler {
+  animation: nm2-sigil-travel 32s linear infinite;
 }
 
 .nm2-founder h3 {
@@ -550,8 +702,31 @@
   margin-block-end: 0;
 }
 
+/* Evidence hint: a checklist cue, not body copy — mono, muted, marked by a
+   hollow checkbox in the structure ink. */
 .nm2-contribution-paths article .nm2-path-evidence {
-  color: var(--nm2-text);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  color: var(--nm2-muted);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+.nm2-contribution-paths article .nm2-path-evidence::before {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-block-start: 0.35em;
+  border: 1px solid var(--nm2-structure);
+  border-radius: 2px;
+}
+
+.nm2-contribution-paths article .nm2-path-action {
+  justify-self: start;
 }
 
 .nm2-safety {
@@ -791,14 +966,6 @@
 }
 
 @media (min-width: 48rem) {
-  .nm2-mechanism-steps {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .nm2-mechanism-symbol .nm2-mechanism-arrow {
-    transform: none;
-  }
-
   .nm2-principles > div {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
     gap: 3rem;
@@ -810,7 +977,8 @@
     row-gap: 0.75rem;
   }
 
-  .nm2-contribution-paths article .nm2-path-evidence {
+  .nm2-contribution-paths article .nm2-path-evidence,
+  .nm2-contribution-paths article .nm2-path-action {
     grid-column: 3;
   }
 
@@ -823,6 +991,38 @@
   .nm2-editorial {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
     gap: 5rem;
+  }
+
+  /* The flagship keeps the wider track; the incubation card takes the
+     measure its content actually needs instead of a second full row. */
+  .nm2-portfolio .nm2-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: stretch;
+  }
+
+  .nm2-portfolio .nm2-container > * {
+    min-width: 0;
+  }
+
+  /* Inside the narrower flagship column, prose and materials stack. */
+  .nm2-portfolio .nm2-project-detail-text {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nm2-portfolio-prototype {
+    margin-block-start: 0;
+  }
+
+  .nm2-mechanism__composition {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .nm2-mechanism-art {
+    margin-inline: 0;
+    max-width: none;
   }
 
   .nm2-project-detail {
@@ -958,7 +1158,11 @@
   border-radius: var(--nm2-radius-hero);
 }
 
-.nm2-page-cta__field {
+/* Scoped under .nm2-page like .nm2-backdrop-field: .nm2-field's own
+   position/aspect-ratio rules load later in orbital-scenes.css and would
+   otherwise win at equal specificity, leaving a 16:9 in-flow block that
+   pushes the copy below the fold of the card. */
+.nm2-page .nm2-page-cta__field {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -971,7 +1175,7 @@
   -webkit-mask-image: linear-gradient(to right, rgb(0 0 0 / 30%) 0%, rgb(0 0 0 / 55%) 45%, #000 100%);
 }
 
-.nm2-page-cta__field > * {
+.nm2-page .nm2-page-cta__field > * {
   inline-size: 100%;
   block-size: 100%;
 }
@@ -992,7 +1196,7 @@
 }
 
 @media (forced-colors: active) {
-  .nm2-page-cta__field {
+  .nm2-page .nm2-page-cta__field {
     display: none;
   }
 }

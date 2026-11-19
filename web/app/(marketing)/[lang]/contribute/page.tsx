@@ -13,7 +13,14 @@ import { getSiteCopy } from "@/lib/content";
 import { isLocale } from "@/lib/i18n";
 import { metadataForPage, type MarketingPageProps } from "@/lib/marketing-metadata";
 import {
-  CODE_OF_CONDUCT_URL, CONTRIBUTING_URL, DISCUSSIONS_URL, SECURITY_URL, SUPPORT_URL,
+  CODE_OF_CONDUCT_URL,
+  CONTRIBUTING_URL,
+  DISCUSSIONS_URL,
+  SECURITY_URL,
+  SUPPORT_URL,
+  VANTADB_DOCS,
+  VANTADB_ISSUES,
+  VANTADB_REPO,
 } from "@/lib/site";
 
 export function generateMetadata({ params }: MarketingPageProps) {
@@ -21,6 +28,9 @@ export function generateMetadata({ params }: MarketingPageProps) {
 }
 
 const PATH_ICONS = [BookOpen, Bug, GitPullRequest];
+/* Each path lands on its own destination: docs → the maintained README,
+   bug reports → the issue tracker, code → the contribution guide. */
+const PATH_LINKS = [VANTADB_DOCS, VANTADB_ISSUES, CONTRIBUTING_URL] as const;
 
 export default async function ContributePage({ params }: MarketingPageProps) {
   const { lang } = await params;
@@ -32,8 +42,8 @@ export default async function ContributePage({ params }: MarketingPageProps) {
     <div className="nm2-page">
       <PageHero title={p.title} description={p.description} variant="wave">
         <div className="nm2-actions">
-          <ActionLink href={DISCUSSIONS_URL} external>{c.common.discussions}</ActionLink>
-          <ActionLink href={CONTRIBUTING_URL} external variant="secondary">{c.common.contributionGuide}</ActionLink>
+          <ActionLink href={CONTRIBUTING_URL} external>{c.common.contributionGuide}</ActionLink>
+          <ActionLink href={VANTADB_REPO} external variant="secondary">{c.common.source}</ActionLink>
         </div>
       </PageHero>
       <Section
@@ -49,12 +59,23 @@ export default async function ContributePage({ params }: MarketingPageProps) {
         <div className="nm2-contribution-paths">
           {p.paths.map((path, index) => {
             const Icon = PATH_ICONS[index];
+            const href = PATH_LINKS[index];
             return (
               <article key={path.title}>
                 {Icon && <Icon className="nm2-path-icon" aria-hidden="true" />}
                 <h3>{path.title}</h3>
                 <p>{path.body}</p>
                 <p className="nm2-path-evidence">{path.evidence}</p>
+                {href ? (
+                  <ActionLink
+                    href={href}
+                    external
+                    variant="text"
+                    className="nm2-path-action"
+                  >
+                    {path.action}
+                  </ActionLink>
+                ) : null}
               </article>
             );
           })}
@@ -103,6 +124,14 @@ export default async function ContributePage({ params }: MarketingPageProps) {
           description={p.closing.body}
           action={{ href: CONTRIBUTING_URL, label: c.common.contributionGuide, external: true }}
           secondary={{ href: DISCUSSIONS_URL, label: c.common.discussions, external: true }}
+          note={{
+            text: p.closing.note,
+            link: {
+              href: VANTADB_ISSUES,
+              label: p.paths[1].action,
+              external: true,
+            },
+          }}
           variant="wave"
           effect="assemble"
         />

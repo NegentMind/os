@@ -219,8 +219,14 @@ html[data-headings="orbital"] .nm2-hero__title {
   left: 50%;
   bottom: calc(var(--nm2-hero-sign-h) * var(--nm2-hero-sign-out) * -1);
   display: block;
-  height: var(--nm2-hero-sign-h);
-  width: auto;
+  /* Span the signature slot, capped at the designed height: on narrower
+     viewports the whole lettering scales down in ratio instead of the
+     frame's overflow clip eating the first glyph ("EGENT MIND" at
+     1440px, "ENT M" at 390px). The bottom edge stays anchored, so the
+     straddle math above is untouched. */
+  width: 100%;
+  height: auto;
+  max-height: var(--nm2-hero-sign-h);
   overflow: visible;
   transform: translateX(-50%);
   color: rgb(255 255 255);
