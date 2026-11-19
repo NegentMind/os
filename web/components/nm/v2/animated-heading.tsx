@@ -9,7 +9,7 @@ export type HeadingEffect = "assemble" | "focus" | "trace" | "decode";
 
 const WORD = ".nm2-animated-heading__word";
 const GLYPHS = "▮▯░▒01/<>";
-const DECODE_MS = 700;
+const DECODE_MS = 1100;
 const GLYPH_STEP_MS = 55;
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -37,7 +37,10 @@ export function AnimatedHeading({
   effect?: HeadingEffect;
 }) {
   const [scope, animate] = useAnimate<HTMLSpanElement>();
-  const inView = useInView(scope, { once: true, amount: 0.2 });
+  // amount 0.5: the entrance only starts once half the heading is in view,
+  // so the animation plays while the user is actually looking at it —
+  // at 0.2 it finished before the scroll centered the title.
+  const inView = useInView(scope, { once: true, amount: 0.5 });
   const prepared = useRef(false);
   const played = useRef(false);
   const { canAnimate } = useSiteMotion();
@@ -103,18 +106,18 @@ export function AnimatedHeading({
     if (!inView) return;
     played.current = true;
 
-    const delay = stagger(Math.min(0.055, 0.35 / Math.max(1, words.length - 1)));
+    const delay = stagger(Math.min(0.075, 0.5 / Math.max(1, words.length - 1)));
     if (effective === "trace" && line) {
       controls = animate(
         line,
         { clipPath: "inset(0 0% 0 0)" },
-        { duration: 1.1, ease: EASE },
+        { duration: 1.45, ease: EASE },
       );
     } else if (effective === "focus") {
       controls = animate(
         words,
         { opacity: 1, filter: "blur(0px)" },
-        { duration: 1, delay, ease: EASE },
+        { duration: 1.3, delay, ease: EASE },
       );
     } else if (effective === "decode") {
       const originals = words.map((word) => word.dataset.text ?? "");
@@ -145,7 +148,7 @@ export function AnimatedHeading({
       controls = animate(
         words,
         { opacity: 1, y: 0 },
-        { duration: 0.85, delay, ease: EASE },
+        { duration: 1.15, delay, ease: EASE },
       );
     }
 
