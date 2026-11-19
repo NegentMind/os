@@ -37,6 +37,16 @@ export default async function LocaleLayout({
           href="/brand/orbital-poster.webp"
           fetchPriority="high"
         />
+        {/* Orbital Display is the default heading face; without this preload
+            the browser only discovers the woff2 through CSS and the swap
+            from the Outfit fallback is visible for seconds (FOUT). 3.4 KB. */}
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href="/fonts/orbital-display.woff2"
+          crossOrigin="anonymous"
+        />
         <MotionProvider>
           <SiteHeader lang={lang} copy={copy.nav} />
           <main id="main-content" tabIndex={-1}>
