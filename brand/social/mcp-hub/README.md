@@ -28,9 +28,9 @@
 Adapta por red (hilos auto-split X/Bluesky/Threads; dev/hashnode/medium/hn exigen
 title; reddit exige subreddit; IG/TikTok exigen asset). `social_run_due` publica
 vencidos con pausas anti-bloqueo por proveedor. Daemon: Task Scheduler cada
-5-15 min con `node C:\Users\Eros\Negent Mind\os\social\mcp-hub\dist\run-queue.js`.
+5-15 min con `node C:\Users\Eros\Negent Mind\os\brand\social\mcp-hub\dist\run-queue.js`.
 Keepalive sesion HN (headless, sin ventana): Task Scheduler 1 vez/dia con
-`node C:\Users\Eros\Negent Mind\os\social\mcp-hub\dist\keepalive.js`.
+`node C:\Users\Eros\Negent Mind\os\brand\social\mcp-hub\dist\keepalive.js`.
 Primer login HN (1 vez, ventana visible): `python mcp-hub/tools/hn-first-login.py`.
 
 ## Auth

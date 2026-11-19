@@ -20,7 +20,7 @@ reutilización y rediseño —no código muerto—; si se adoptan en una
 superficie Orbital hay que retokenizarlos a `--nm2-*`. El tipo
 `HalftoneKind` sigue en `lib/marketing-types.ts` como fuente única y
 `nm/v1/HalftoneCanvas.tsx` lo re-exporta. **No sincronizar Orbital a
-`../media/remotion/src/tokens.ts` ni al perfil GitHub
+`../brand/media/remotion/src/tokens.ts` ni al perfil GitHub
 publicado/congelado.** Void/Bone/Pulse y Chakra Petch/Inter dejan de ser
 autoridad para marketing, no se borran ni se migran sus pipelines en esta
 fase.

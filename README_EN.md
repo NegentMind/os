@@ -15,7 +15,7 @@ repos are **mirrors** of a folder in here: edit in `os/`, then sync (the founder
 
 | Repo | Visibility | What it is | Source in `os/` |
 |---|---|---|---|
-| [`NegentMind/os`](https://github.com/NegentMind/os) | private | Monorepo: specs, skills, brand, media, web, social + root docs | — |
+| [`NegentMind/os`](https://github.com/NegentMind/os) | private | Monorepo: specs, skills, brand (media, social), web + root docs | — |
 | [`NegentMind/.github`](https://github.com/NegentMind/.github) | public | Org profile + governance | mirror of [`github-profile/`](./github-profile/) |
 | [`ness-e/Vantadb`](https://github.com/ness-e/Vantadb) | public | **VantaDB v0.9.0** (flagship): embedded persistent memory and hybrid search for AI agents. Transfer to `NegentMind/vantadb` pending | own repo (not here) |
 

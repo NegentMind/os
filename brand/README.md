@@ -21,7 +21,7 @@ exactos en `../AGENTS.md` §Marca y `media/remotion/src/tokens.ts`.
 | `exports/` | PNG/GIF finales listos para subir (avatar 500px, hero, banners) |
 | Notion · 🎨 Marca | Plataforma de marca: concepto, voz y reglas (fuera del repo; valores en `../AGENTS.md` §Marca) |
 | `docs/profile-README-{EN,ES}.md` | Espejos del perfil publicado (se regeneran, no se editan) |
-| `../media/remotion/` | Proyecto Remotion propio para GIFs y PNGs de empresa/producto |
+| `media/remotion/` | Proyecto Remotion propio para GIFs y PNGs de empresa/producto |
 
 ## Reglas
 

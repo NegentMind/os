@@ -31,9 +31,9 @@ capacidades de largo plazo (visión)**, no productos publicados.
 | `github-profile/` | Perfil + gobernanza del org (fuente de `NegentMind/.github`). |
 | `skills/` | Skills del diagnóstico B2B — experimento congelado (carpeta interna; repo privado eliminado el 16-11-2026). |
 | `brand/` | Casa de la marca: tablero, exports, specimens. |
-| `media/` | Fábrica de imagen y video (Remotion, HyperFrames, OpenMontage). |
+| `brand/media/` | Fábrica de imagen y video (Remotion, HyperFrames, OpenMontage). |
 | `web/` | Sitio + app (Next.js + Supabase). Ver `web/README.md`. |
-| `social/` | Hub social (`mcp-hub`) + automatización (Postiz, n8n). Tooling, no canales de comunidad. |
+| `brand/social/` | Hub social (`mcp-hub`) + automatización (Postiz, n8n). Tooling, no canales de comunidad. |
 | `.tools/` | Scripts del workspace (`gen-skills.py`). |
 
 Lee primero **`AGENTS.md`**: es la única instrucción para agentes del workspace.

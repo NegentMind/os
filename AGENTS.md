@@ -24,9 +24,9 @@ para la orientación general. Las rutas sin prefijo son relativas a `os/`.
 | `github-profile/` | Perfil del org (`profile/`) + gobernanza | espejo → `NegentMind/.github` · público |
 | `skills/` | 5 skills del diagnóstico B2B — **experimento congelado** | interno en `os/` (repo privado eliminado 16-11-2026; respaldo en `C:\Users\Eros\Backups`) |
 | `brand/` | Casa de la marca: tablero, exports, specimens | versionado en `os/` |
-| `media/` | Fábrica de imagen y video (`remotion/` + `hyperframes/` + `openmontage/`) | versionado en `os/` |
+| `brand/media/` | Fábrica de imagen y video (`remotion/` + `hyperframes/` + `openmontage/`) | versionado en `os/` |
 | `web/` | Sitio + app (Next.js + Supabase; despliegue en Cloudflare Workers vía `@opennextjs/cloudflare`, ver `web/DEPLOY.md`) | versionado en `os/` |
-| `social/` | Hub social (`mcp-hub`) + automatización (`postiz/`, `n8n/`) + carpetas por red. **Tooling**, no canales de comunidad | versionado en `os/` (`.env` con secretos, nunca commitear) |
+| `brand/social/` | Hub social (`mcp-hub`) + automatización (`postiz/`, `n8n/`) + carpetas por red. **Tooling**, no canales de comunidad | versionado en `os/` (`.env` con secretos, nunca commitear) |
 | `.tools/` | Scripts: `gen-skills.py` (congelado) | versionado en `os/` |
 
 VantaDB **no vive aquí**: repo propio `ness-e/Vantadb` (v0.9.0; transferencia a
@@ -105,7 +105,7 @@ Los `README_ES.md` se tocan a mano.
 ## Comandos
 
 ```sh
-cd media/remotion
+cd brand/media/remotion
 npm install            # una vez; ya existe package-lock.json
 npm run studio         # vista previa
 npm run typecheck      # debe salir exit 0 (tsc --noEmit)
@@ -117,7 +117,7 @@ npm run dev            # desarrollo
 npm run typecheck      # debe salir exit 0 (tsc --noEmit)
 ```
 
-- Remoción de fondos GIF: receta chroma-key en `media/remotion/README.md` (120f/30fps/
+- Remoción de fondos GIF: receta chroma-key en `brand/media/remotion/README.md` (120f/30fps/
   960×240 → 60f/4s, `palettegen=max_colors=64`; `colorkey=0x08090C` dark, `0xEDEAE3` light).
 - ffmpeg/ffprobe NO están en PATH:
   `C:\Users\Eros\AppData\Local\hermes\tools\ffmpeg-9.0.1-win32-x64\bin\`.
@@ -142,7 +142,7 @@ Ni la marca propia de VantaDB ni el perfil ya publicado cambian implícitamente.
 ## Marca v1 (histórico / compatibilidad congelada)
 
 Concepto, misión y voz: **Notion · 🎨 Marca**. Valores: esta sección +
-`media/remotion/src/tokens.ts` + `brand/brand-sheet.html` (mesa visual).
+`brand/media/remotion/src/tokens.ts` + `brand/brand-sheet.html` (mesa visual).
 Espejos del perfil: `brand/docs/profile-README-{EN,ES}.md`.
 
 ```
@@ -170,7 +170,7 @@ Inter · técnico JetBrains Mono.
 - Convenciones de trabajo: commits en inglés; specimens en `brand/`; verificar con
   screenshots antes de dar algo visual por terminado.
 
-## Remotion (`media/remotion/`)
+## Remotion (`brand/media/remotion/`)
 
 GIF single-play dual-theme (retícula + lockup + punto Pulse) + stills
 (Mark/Avatar/Wordmark/Hero dark+light). 120f, 30fps, 960×240, loop-safe, GIF-safe
@@ -178,12 +178,12 @@ GIF single-play dual-theme (retícula + lockup + punto Pulse) + stills
 
 ---
 
-## Social (`social/` — reglas del hub)
+## Social (`brand/social/` — reglas del hub)
 
-0. `social/` es **tooling** (MCP, automatización), no la lista de canales. Canales de
+0. `brand/social/` es **tooling** (MCP, automatización), no la lista de canales. Canales de
    comunidad vigentes: GitHub + X (principal) + Reddit/HN en lanzamientos. **Discord
-   solo al llegar a 500 estrellas**; `social/discord/` no implica un canal abierto.
-1. MCP primario: `social-hub` (`mcp-hub/dist/index.js`). Config en `social/opencode.json`.
+   solo al llegar a 500 estrellas**; `brand/social/discord/` no implica un canal abierto.
+1. MCP primario: `social-hub` (`mcp-hub/dist/index.js`). Config en `brand/social/opencode.json`.
    No tocar `~/.config/opencode/opencode.json` ni otras carpetas.
 2. Legacy (`bluesky`, `linkedin`, `reddit`, `youtube-transcript`, `twitter-free`,
    `twitter-isteam`): `enabled: false`, solo fallback. `buffer` remoto activo como
