@@ -1,0 +1,41 @@
+/*
+ * Styles for the adapted external pieces in components/nm/ext/ plus their
+ * dev-only demo mounts on /design-system ("Externas adaptadas"). The card
+ * grammar (.nm2-demo*) lives in orbital-gallery.css; these are only the
+ * extras the registry pieces need. Tokens only.
+ */
+
+/* SpotlightCard grain overlay — feTurbulence noise tile, visible only while
+   the card's spotlight is lit (opacity is driven inline by the piece). */
+.nm2-ext-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Orb demo: square sizer so the shader reads as an orb, not a streak. */
+.nm2-ext-orb {
+  width: min(100%, 14rem);
+  aspect-ratio: 1;
+}
+
+/* Content floating above a full-bleed background piece (BackgroundBeams). */
+.nm2-ext-content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--nm2-text);
+  pointer-events: none;
+}
+
+/* Body copy inside the SpotlightCard demo. */
+.nm2-ext-card-text {
+  margin: 0;
+  text-align: left;
+  color: var(--nm2-muted);
+}

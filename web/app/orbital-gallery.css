@@ -239,3 +239,176 @@
     grid-column: span 2;
   }
 }
+
+/* ---- live demos ------------------------------------------------------------
+   Real mounts behind fixed plates: absolute-fill canvases (drift, holon
+   field, art mount) get an aspect-ratio mount; self-sized pieces (field,
+   transition, blueprint, orb) sit directly on the card. Mono ledger labels
+   name component + variant, same grammar as the inventory rows. */
+
+.nm2-demos {
+  display: grid;
+  gap: calc(var(--nm2-block-gap) * 1.25);
+}
+
+.nm2-demo-group {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.nm2-demo-group__title {
+  margin: 0;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nm2-muted);
+}
+
+.nm2-demo-note {
+  margin: 0;
+  max-width: 72ch;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--nm2-structure);
+}
+
+.nm2-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 1rem;
+}
+
+.nm2-demo-grid--headings {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+
+.nm2-demo-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.nm2-demo {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--nm2-line);
+  border-radius: var(--nm2-radius-card);
+  background: var(--nm2-surface);
+}
+
+.nm2-demo--wide {
+  grid-column: 1 / -1;
+}
+
+.nm2-demo__mount {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+}
+
+.nm2-demo__mount--heading {
+  display: grid;
+  place-items: center;
+  min-height: 9.5rem;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+}
+
+.nm2-demo__mount--plate {
+  aspect-ratio: 4 / 3;
+  overflow: clip;
+}
+
+/* Relative plates (vanta strata) also size to the mount; absolute-fill
+   pieces already cover it via inset: 0. */
+.nm2-demo__mount--plate > :first-child {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.nm2-demo__mount--orb {
+  display: grid;
+  place-items: center;
+  min-height: 15rem;
+}
+
+.nm2-demo__mount--word {
+  display: grid;
+  place-items: center;
+  min-height: 8rem;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+}
+
+/* ArtMount inherits its radius and fills the plate absolutely. */
+.nm2-demo__mount--art {
+  aspect-ratio: 21 / 9;
+  overflow: clip;
+  border-radius: var(--nm2-radius-card);
+}
+
+.nm2-demo__heading {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  color: var(--nm2-text);
+}
+
+.nm2-demo__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+  padding: 0.625rem 0.875rem;
+  border-block-start: 1px solid var(--nm2-line);
+}
+
+.nm2-demo__label code,
+.nm2-demo-tag code {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--nm2-muted);
+}
+
+.nm2-demo__label code:last-child,
+.nm2-demo-tag code {
+  color: var(--nm2-structure);
+}
+
+/* Composed pieces (nm2-home scope): bare mounts with a tag line above,
+   not the small card frame — their own surfaces carry the grammar. */
+.nm2-demo-home {
+  display: grid;
+  gap: calc(var(--nm2-block-gap) * 0.75);
+}
+
+.nm2-demo-block {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.nm2-demo-tag {
+  margin: 0;
+}
+
+.nm2-demo__art {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  border: 1px solid var(--nm2-line);
+  border-radius: var(--nm2-radius-card);
+  background: var(--nm2-surface);
+}
+
+.nm2-demo__ui-card {
+  max-width: 26rem;
+}

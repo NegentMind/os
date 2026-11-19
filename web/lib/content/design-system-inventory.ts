@@ -57,7 +57,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Titular con efectos assemble/focus/trace/decode; Orbital Display u Outfit.",
       en: "Heading with assemble/focus/trace/decode effects; Orbital Display or Outfit.",
     },
-    usedIn: ["section-heading", "page-hero", "page-cta", "transition-lab"],
+    usedIn: ["section-heading", "page-hero", "page-cta", "transition-lab", "/design-system"],
   },
   {
     name: "Surface",
@@ -212,7 +212,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Principios como manifiesto numerado: regla, marca geométrica y pie de comprobación.",
       en: "Principles as a numbered manifesto: rule, geometric mark and a check footnote.",
     },
-    usedIn: ["/"],
+    usedIn: ["/", "/design-system"],
   },
   {
     name: "StatusBadge",
@@ -262,7 +262,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Camino de evidencia: código → contexto escrito → conversación sobre un raíl trazado.",
       en: "Evidence path: code → written context → conversation on a drawn rail.",
     },
-    usedIn: ["/"],
+    usedIn: ["/", "/design-system"],
   },
   {
     name: "EvidenceWorkbench",
@@ -282,7 +282,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Bloque flagship de VantaDB: identidad, estratos, pipeline, ficha.",
       en: "VantaDB flagship block: identity, strata, pipeline, spec sheet.",
     },
-    usedIn: ["/"],
+    usedIn: ["/", "/design-system"],
   },
   // ---- nm/v2 · scenes -----------------------------------------------------
   {
@@ -343,7 +343,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Palabra rotativa del hero en Orbital Display con tinta espectral.",
       en: "Hero rotating word in Orbital Display with spectral ink.",
     },
-    usedIn: ["hero"],
+    usedIn: ["hero", "/design-system"],
   },
   {
     name: "FieldCanvas",
@@ -353,7 +353,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Campos Canvas 2D wave/orbit/network/memory con fallback SVG SSR.",
       en: "wave/orbit/network/memory Canvas 2D fields with SSR SVG fallback.",
     },
-    usedIn: ["/", "/about", "/contribute", "/projects", "/projects/vantadb", "site-footer", "page-cta", "page-hero", "core-orb", "drift-canvas", "holon-field", "vanta-strata"],
+    usedIn: ["/", "/about", "/contribute", "/projects", "/projects/vantadb", "/design-system", "site-footer", "page-cta", "page-hero", "core-orb", "drift-canvas", "holon-field", "vanta-strata"],
   },
   {
     name: "DriftCanvas",
@@ -363,7 +363,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Corrientes monocromáticas carbón→plata con cresta espectral.",
       en: "Monochrome carbon→silver currents with a spectral crest.",
     },
-    usedIn: ["system-story"],
+    usedIn: ["system-story", "/design-system"],
   },
   {
     name: "CoreOrb",
@@ -373,7 +373,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Orbe-instrumento de puntos en Canvas 2D con punto espectral fijable.",
       en: "Canvas-2D dot-sphere instrument with a pinable spectral point.",
     },
-    usedIn: ["system-story"],
+    usedIn: ["system-story", "/design-system"],
   },
   {
     name: "SystemStory",
@@ -383,7 +383,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Historia del sistema de home: stage sticky con ensamblaje GSAP.",
       en: "Home system story: sticky stage with GSAP assembly.",
     },
-    usedIn: ["/"],
+    usedIn: ["/", "/design-system"],
   },
   {
     name: "HolonExplorer",
@@ -400,10 +400,10 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
     file: "nm/v2/holon-field.tsx",
     category: "scenes",
     purpose: {
-      es: "Campo canvas tras la composición del explorador.",
-      en: "Canvas field behind the explorer composition.",
+      es: "Campo canvas tras la composición del explorador; en /projects monta la mini-lámina de solo lectura del boundary.",
+      en: "Canvas field behind the explorer composition; on /projects it mounts the boundary's read-only mini plate.",
     },
-    usedIn: ["holon-explorer"],
+    usedIn: ["holon-explorer", "/projects", "/design-system"],
   },
   {
     name: "VantaStrata",
@@ -413,7 +413,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Lámina canvas de estratos .vanta L1–L3 con tránsitos.",
       en: ".vanta strata canvas plate, L1–L3, with consolidation transits.",
     },
-    usedIn: ["vantadb-showcase"],
+    usedIn: ["vantadb-showcase", "/projects/vantadb", "/design-system"],
   },
   {
     name: "BlueprintScene",
@@ -423,7 +423,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Diagramas SVG semánticos con etiquetas HTML posicionadas.",
       en: "Semantic SVG diagrams with positioned HTML labels.",
     },
-    usedIn: ["system-story", "page-hero"],
+    usedIn: ["system-story", "page-hero", "/design-system"],
   },
   {
     name: "ArtFigure",
@@ -433,7 +433,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Lámina de arte con marco y figcaption de procedencia.",
       en: "Art plate with frame and a provenance figcaption.",
     },
-    usedIn: ["holon-explorer", "vantadb-showcase"],
+    usedIn: ["holon-explorer", "vantadb-showcase", "/projects", "/design-system"],
   },
   {
     name: "ArtMount",
@@ -443,7 +443,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Monta presets de arte en superficies no-hero.",
       en: "Mounts art presets on non-hero surfaces.",
     },
-    usedIn: ["/"],
+    usedIn: ["/", "/design-system"],
   },
   {
     name: "ScrollScene",
@@ -463,7 +463,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Bandas canvas entre tonos + laboratorio de transición solo-dev.",
       en: "Canvas bands between tones plus the dev-only transition lab.",
     },
-    usedIn: ["/", "/about", "/contribute", "/projects", "/projects/vantadb"],
+    usedIn: ["/", "/about", "/contribute", "/projects", "/projects/vantadb", "/design-system"],
   },
   {
     name: "MemoryDemo",
@@ -677,21 +677,21 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
     file: "ui/card.tsx",
     category: "ui",
     purpose: { es: "Tarjeta shadcn; se regenera, no se edita a mano.", en: "shadcn card; regenerated, never hand-edited." },
-    usedIn: [],
+    usedIn: ["/design-system"],
   },
   {
     name: "Input",
     file: "ui/input.tsx",
     category: "ui",
     purpose: { es: "Campo de texto base.", en: "Base text field." },
-    usedIn: ["/login"],
+    usedIn: ["/login", "/design-system"],
   },
   {
     name: "Label",
     file: "ui/label.tsx",
     category: "ui",
     purpose: { es: "Etiqueta Radix para formularios.", en: "Radix label for forms." },
-    usedIn: ["/login"],
+    usedIn: ["/login", "/design-system"],
   },
   {
     name: "Sheet",
@@ -699,6 +699,99 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
     category: "ui",
     purpose: { es: "Panel lateral Radix del menú móvil.", en: "Radix side panel for the mobile menu." },
     usedIn: ["site-header"],
+  },
+  // ---- ext/ · adapted registries --------------------------------------------
+  // Pieces ported from React Bits / Aceternity, retokenized to --nm2-* and wired
+  // to the site motion gate. Library stock mounted only in the gallery so far.
+  {
+    name: "DecryptedText",
+    file: "nm/ext/decrypted-text.tsx",
+    category: "content",
+    purpose: {
+      es: "Revelado de texto con scramble de glifos al entrar en vista (React Bits).",
+      en: "Text reveal via glyph scramble on view (React Bits).",
+    },
+    usedIn: ["/design-system"],
+  },
+  {
+    name: "BlurText",
+    file: "nm/ext/blur-text.tsx",
+    category: "content",
+    purpose: {
+      es: "Entrada escalonada por palabra o letra con blur (React Bits).",
+      en: "Staggered word/letter entrance with blur (React Bits).",
+    },
+    usedIn: ["/design-system"],
+  },
+  {
+    name: "ShinyText",
+    file: "nm/ext/shiny-text.tsx",
+    category: "content",
+    purpose: {
+      es: "Barrido de brillo animado sobre el texto (React Bits).",
+      en: "Animated shine sweep over text (React Bits).",
+    },
+    usedIn: ["/design-system"],
+  },
+  {
+    name: "TextType",
+    file: "nm/ext/text-type.tsx",
+    category: "content",
+    purpose: {
+      es: "Máquina de escribir en bucle sobre una lista de palabras (React Bits).",
+      en: "Looping typewriter over a word list (React Bits).",
+    },
+    usedIn: ["/design-system"],
+  },
+  {
+    name: "SpotlightCard",
+    file: "nm/ext/spotlight-card.tsx",
+    category: "scenes",
+    purpose: {
+      es: "Superficie de tarjeta con spotlight que sigue al cursor (React Bits).",
+      en: "Card surface with a cursor-following spotlight (React Bits).",
+    },
+    usedIn: ["/design-system"],
+  },
+  {
+    name: "Orb",
+    file: "nm/ext/orb.tsx",
+    category: "scenes",
+    purpose: {
+      es: "Orbe de shader animado; visual ambiental (React Bits).",
+      en: "Animated shader orb; ambient visual (React Bits).",
+    },
+    usedIn: ["/design-system"],
+  },
+  {
+    name: "Waves",
+    file: "nm/ext/waves.tsx",
+    category: "scenes",
+    purpose: {
+      es: "Fondo de líneas onduladas animadas (React Bits).",
+      en: "Animated wave-line background (React Bits).",
+    },
+    usedIn: ["/design-system"],
+  },
+  {
+    name: "BackgroundBeams",
+    file: "nm/ext/background-beams.tsx",
+    category: "scenes",
+    purpose: {
+      es: "Haces SVG animados de fondo (Aceternity).",
+      en: "Animated SVG background beams (Aceternity).",
+    },
+    usedIn: ["/design-system"],
+  },
+  {
+    name: "motion-gate",
+    file: "nm/ext/motion-gate.ts",
+    category: "scenes",
+    purpose: {
+      es: "Helpers de las piezas ext: gate de motion del sitio y resolución de tokens --nm2-* para canvas/WebGL.",
+      en: "Shared helpers for the ext pieces: site motion gate and --nm2-* token resolution for canvas/WebGL.",
+    },
+    usedIn: ["DecryptedText", "Orb", "ShinyText", "SpotlightCard", "Waves"],
   },
 ];
 

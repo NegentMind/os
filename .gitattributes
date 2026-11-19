@@ -1,0 +1,6 @@
+# Whitespace rules for files committed to the index with CRLF bytes
+# (i/crlf in `git ls-files --eol`, no text normalization, autocrlf=false).
+# Without cr-at-eol, `git diff --check` flags the \r of every added line
+# as trailing whitespace even though it is the line terminator.
+web/app/orbital-gallery.css whitespace=trailing-space,space-before-tab,cr-at-eol
+web/lib/content/design-system-inventory.ts whitespace=trailing-space,space-before-tab,cr-at-eol

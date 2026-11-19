@@ -8,6 +8,7 @@
 @import "./orbital-scenes.css";
 @import "./orbital-home.css";
 @import "./orbital-vanta.css";
+@import "./orbital-ext.css";
 /* Shared shell is last so cross-surface overrides are explicit. */
 @import "./orbital-shell.css";
 
