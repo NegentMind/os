@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useSceneActivity } from "@/components/nm/v2/field-canvas";
-import { HERO_ART_ALT, HERO_SPECTRUM_TEXT } from "@/components/nm/v2/hero-preset";
+import { HERO_ART_MONO, HERO_SPECTRUM_TEXT } from "@/components/nm/v2/hero-preset";
 
 /*
  * Drift canvas — slow monochrome currents for the system story stage:
@@ -70,7 +70,7 @@ function mixRgb(a: readonly number[], b: readonly number[], t: number): string {
 
 // The ramp is the approved monochrome hero variant, silver only — the two
 // carbon bookends are the base, never a crest.
-const MONO_COLORS: readonly string[] = HERO_ART_ALT.params.colors ?? [
+const MONO_COLORS: readonly string[] = HERO_ART_MONO.params.colors ?? [
   "#0a0c0f",
   "#1b2129",
   "#2e3641",

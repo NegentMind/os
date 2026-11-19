@@ -1,12 +1,13 @@
 import { notFound } from "next/navigation";
 import { ActionLink } from "@/components/nm/v2/action-link";
 import { ArtMount } from "@/components/nm/v2/art-mount";
-import { EvidenceWorkbench } from "@/components/nm/v2/evidence-workbench";
+import { EvidencePath } from "@/components/nm/v2/evidence-path";
 import { Faq } from "@/components/nm/v2/faq";
 import { FieldCanvas } from "@/components/nm/v2/field-canvas";
 import { Hero } from "@/components/nm/v2/hero";
-import { HERO_ART_ALT } from "@/components/nm/v2/hero-preset";
+import { HERO_ART_SECTION } from "@/components/nm/v2/hero-preset";
 import { HolonExplorer } from "@/components/nm/v2/holon-explorer";
+import { PrincipleRules } from "@/components/nm/v2/principle-rules";
 import { Section } from "@/components/nm/v2/section";
 import { SectionHeading } from "@/components/nm/v2/section-heading";
 import { SectionTransition } from "@/components/nm/v2/section-transition/section-transition";
@@ -14,7 +15,6 @@ import {
   TransitionLab,
   TransitionLabProvider,
 } from "@/components/nm/v2/section-transition/transition-lab";
-import { SpecList } from "@/components/nm/v2/spec-list";
 import { StatusBadge } from "@/components/nm/v2/status-badge";
 import { SystemStory } from "@/components/nm/v2/system-story";
 import { VantaShowcase } from "@/components/nm/v2/vantadb-showcase";
@@ -96,11 +96,10 @@ export default async function Home({ params }: MarketingPageProps) {
       <Section id="proof" className="nm2-section--paper nm2-home-evidence">
         <span id="oss" className="nm2-anchor" aria-hidden="true" />
         <SectionHeading title={h.method.title} description={h.method.description} effect="trace" />
-        <EvidenceWorkbench
+        <EvidencePath
           copy={h.method}
           links={{ repository: VANTADB_REPO, documentation: VANTADB_DOCS, discussions: DISCUSSIONS_URL }}
           labels={{ documentation: c.common.readDocs, discussions: c.common.discussions }}
-          caption={c.common.conceptual}
         />
         <ActionLink href={hrefFor(lang, "about")} variant="text">{h.method.methodAction}</ActionLink>
       </Section>
@@ -108,7 +107,7 @@ export default async function Home({ params }: MarketingPageProps) {
       <Section id="principles" className="nm2-principles-section">
         <div className="nm2-editorial">
           <SectionHeading title={h.principles.title} description={h.principles.description} effect="assemble" />
-          <SpecList rows={h.principles.items} className="nm2-principles" />
+          <PrincipleRules items={h.principles.items} />
         </div>
       </Section>
       <Section id="faq" className="nm2-faq-section">
@@ -119,7 +118,7 @@ export default async function Home({ params }: MarketingPageProps) {
       </Section>
       <Section id="contribute" className="nm2-invitation-section">
         <div className="nm2-home-invitation nm2-tone-dark">
-          <ArtMount preset={HERO_ART_ALT} className="nm2-home-invitation__art" />
+          <ArtMount preset={HERO_ART_SECTION} className="nm2-home-invitation__art" />
           <div className="nm2-home-invitation__copy">
             <SectionHeading title={h.invitation.title} description={h.invitation.body} effect="focus" />
             <div className="nm2-actions">

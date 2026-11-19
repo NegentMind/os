@@ -176,7 +176,10 @@ SectionHeading/AnimatedHeading, PageHero, PageCta, StatusBadge, ProjectCard,
 Faq, SiteHeader/SiteFooter, hero, FieldCanvas, BlueprintScene, CoreOrb,
 ScrollScene, MotionPreference, ViewportFade, PointerFeedback, SmoothScroll,
 SectionTransition/TransitionLab y las historias de home (SystemStory,
-MemoryDemo, ScopeStudy, CapabilityStory, HolonExplorer, EvidenceWorkbench).
+MemoryDemo, ScopeStudy, CapabilityStory, HolonExplorer, EvidencePath,
+PrincipleRules). `EvidenceWorkbench` queda como stock de biblioteca (su
+contrato de copy vive dentro de `home.method`) desde que `#proof` pasó al
+camino de evidencia.
 Patrones repetidos consolidados (2026-11-18):
 
 - `ArtFigure` (`art-figure.tsx`): `<figure>` + marco de arte + `<figcaption>`

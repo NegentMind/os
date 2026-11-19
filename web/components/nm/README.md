@@ -58,8 +58,9 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 - `brand-mark.tsx` — wordmark/monograma con la geometría vectorial Orbital original; nunca `font-family` ni sustitución por texto.
 - `vantadb-showcase.tsx` — bloque flagship de VantaDB en home (identidad, problema→cuerpo→CTAs, lámina de estratos L1–L3). El pipeline de recuperación y la ficha viven en `/projects/vantadb`.
 - `core-orb.tsx` — orbe-instrumento de `#org`: esfera de puntos en Canvas 2D con punto espectral fijable; poster SVG como superficie SSR.
-- `drift-canvas.tsx` — corrientes monocromáticas en Canvas 2D (ramp carbón→plata del preset `HERO_ART_ALT`): cintas ondulantes, partículas y una cresta espectral que viaja con `--nm2-system-progress`; poster CSS como superficie SSR/reduced-motion.
-- `evidence-workbench.tsx` — banco de evidencia de home.
+- `drift-canvas.tsx` — corrientes monocromáticas en Canvas 2D (ramp carbón→plata del preset `HERO_ART_MONO`): cintas ondulantes, partículas y una cresta espectral que viaja con `--nm2-system-progress`; poster CSS como superficie SSR/reduced-motion.
+- `evidence-path.tsx` — camino de evidencia de `#proof` en home: tres estaciones (código → contexto escrito → conversación) colgadas de un raíl que la `ScrollScene` de la sección traza en la entrada; cada estación enlaza al artefacto real. Componente server.
+- `evidence-workbench.tsx` — banco de evidencia por pestañas con lámina Blueprint y detalle vivo. **Biblioteca**: sin import vivo desde que `#proof` pasó a `evidence-path`; conserva su contrato de copy dentro de `home.method`.
 - `faq.tsx` — FAQ con `details/summary` nativo; accesible sin JS.
 - `field-canvas.tsx` — campos Canvas 2D (`wave`/`orbit`/`network`/`memory`) con fallback SVG SSR determinista.
 - `hero.tsx` — composición server del hero de home; hojas cliente para arte y palabra rotativa.
@@ -75,6 +76,7 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 - `page-cta.tsx` — cierre con llamada a la acción de páginas interiores.
 - `page-hero.tsx` — composición asimétrica compartida de héroes interiores.
 - `pointer-feedback.tsx` — anillo decorativo de puntero; nunca captura interacción ni sustituye el cursor.
+- `principle-rules.tsx` — principios del home como manifiesto numerado (regla 01–03 + marca geométrica de la gramática + pie «se comprueba en…»). Componente server; About conserva la piel `nm2-principles` de `SpecList`.
 - `project-card.tsx` — tarjeta de proyecto con estado honesto.
 - `rotating-word.tsx` — palabra rotativa del hero en Orbital Display real con tinta espectral (`--nm2-rotor-ink`).
 - `scope-study.tsx` — estudio Scopegrain (BlueprintScene `scope` + toggle acotado/explosionado). **Biblioteca**: sin uso actual; Scopegrain volvió al home como franja compacta dentro de `#work` (2026-11), sin el estudio, y el proyecto sigue en `/projects`. Su contrato de copy es propio (`ScopeStudyCopy`), no depende de `SiteCopy`.

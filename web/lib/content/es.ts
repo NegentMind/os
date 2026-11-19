@@ -154,6 +154,7 @@ export const es: SiteCopy = {
         code: "Código",
         context: "Contexto escrito",
         conversation: "Conversación",
+        conversationTitle: "Traer un caso concreto",
         conversationBody: "GitHub Discussions es un lugar para plantear una pregunta con contexto. Un enlace al trabajo relevante y un caso reproducible hacen más concreta esa conversación.",
       },
       items: [
@@ -176,14 +177,20 @@ export const es: SiteCopy = {
         {
           term: "Evidencia antes que marketing",
           detail: "El código y el README son la fuente. Lo que aún no existe se etiqueta como visión, nunca como producto.",
+          mark: "evidence",
+          check: "se comprueba en el código y el README",
         },
         {
           term: "Local-first",
           detail: "La capacidad vive junto a la aplicación: un archivo local, sin demonio y sin un servicio en la nube obligatorio.",
+          mark: "local",
+          check: "se comprueba en la instalación documentada",
         },
         {
           term: "Open core",
           detail: "El núcleo es abierto y auditable —VantaDB se publica bajo Apache-2.0— y la gobernanza del proyecto es pública.",
+          mark: "open",
+          check: "se comprueba en la licencia Apache-2.0",
         },
       ],
     },

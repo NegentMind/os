@@ -154,6 +154,7 @@ export const en = {
         code: "Source code",
         context: "Written context",
         conversation: "Conversation",
+        conversationTitle: "Bring a concrete case",
         conversationBody: "GitHub Discussions is a place to bring a question with context. A link to the relevant work and a reproducible case make that conversation more concrete.",
       },
       items: [
@@ -176,14 +177,20 @@ export const en = {
         {
           term: "Evidence before marketing",
           detail: "The code and the README are the source. What does not exist yet is labeled vision, never product.",
+          mark: "evidence",
+          check: "checkable in the source and the README",
         },
         {
           term: "Local-first",
           detail: "The capability lives next to the application: a local file, no daemon, no required cloud service.",
+          mark: "local",
+          check: "checkable in the documented install",
         },
         {
           term: "Open core",
           detail: "The core is open and auditable — VantaDB ships under Apache-2.0 — and project governance is public.",
+          mark: "open",
+          check: "checkable in the Apache-2.0 license",
         },
       ],
     },

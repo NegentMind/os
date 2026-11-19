@@ -45,10 +45,24 @@ export type HeroArtPreset = {
 };
 
 /**
- * Monochrome contrast variant for quiet sections (e.g. home #contribute):
- * same motion grammar, carbon-to-silver ramp, different base pattern.
+ * Full-spectrum section variant (e.g. home #contribute): the canonical
+ * hero palette and geometry with a slower drift — the invitation reads
+ * as the same material as the hero, quieted for a reading surface.
  */
-export const HERO_ART_ALT: HeroArtPreset = Object.freeze({
+export const HERO_ART_SECTION: HeroArtPreset = Object.freeze({
+  id: "orbital-strata-01--section",
+  params: {
+    ...HERO_ART.params,
+    speed: 0.3,
+  } satisfies WarpProps,
+});
+
+/**
+ * Monochrome contrast variant: carbon-to-silver ramp on a different base
+ * pattern. The approved quiet-section palette — DriftCanvas derives its
+ * crest tones from these colors.
+ */
+export const HERO_ART_MONO: HeroArtPreset = Object.freeze({
   id: "orbital-contrast-01",
   params: {
     ...HERO_ART.params,

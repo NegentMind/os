@@ -171,7 +171,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
     },
     usedIn: [
       "/", "/about", "/contribute", "/projects", "/projects/vantadb", "/design-system",
-      "hero", "page-cta", "project-card", "evidence-workbench", "vantadb-showcase",
+      "hero", "page-cta", "project-card", "evidence-path", "vantadb-showcase",
     ],
   },
   {
@@ -202,7 +202,17 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Gramática <dl> → <dt>/<dd> compartida (facts, principles).",
       en: "Shared <dl> → <dt>/<dd> grammar (facts, principles).",
     },
-    usedIn: ["vantadb-showcase", "/design-system"],
+    usedIn: ["/design-system"],
+  },
+  {
+    name: "PrincipleRules",
+    file: "nm/v2/principle-rules.tsx",
+    category: "content",
+    purpose: {
+      es: "Principios como manifiesto numerado: regla, marca geométrica y pie de comprobación.",
+      en: "Principles as a numbered manifesto: rule, geometric mark and a check footnote.",
+    },
+    usedIn: ["/"],
   },
   {
     name: "StatusBadge",
@@ -242,17 +252,27 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Región viva aria-live que anuncia la selección.",
       en: "aria-live region announcing the current selection.",
     },
-    usedIn: ["evidence-workbench", "holon-explorer"],
+    usedIn: ["holon-explorer"],
+  },
+  {
+    name: "EvidencePath",
+    file: "nm/v2/evidence-path.tsx",
+    category: "content",
+    purpose: {
+      es: "Camino de evidencia: código → contexto escrito → conversación sobre un raíl trazado.",
+      en: "Evidence path: code → written context → conversation on a drawn rail.",
+    },
+    usedIn: ["/"],
   },
   {
     name: "EvidenceWorkbench",
     file: "nm/v2/evidence-workbench.tsx",
     category: "content",
     purpose: {
-      es: "Banco de evidencia: código, contexto escrito, conversación.",
-      en: "Evidence bench: code, written context, conversation.",
+      es: "Banco de evidencia por pestañas; #proof pasó a evidence-path.",
+      en: "Tabbed evidence bench; #proof moved to evidence-path.",
     },
-    usedIn: ["/"],
+    usedIn: [],
   },
   {
     name: "VantaShowcase",
@@ -403,7 +423,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Diagramas SVG semánticos con etiquetas HTML posicionadas.",
       en: "Semantic SVG diagrams with positioned HTML labels.",
     },
-    usedIn: ["system-story", "evidence-workbench", "page-hero"],
+    usedIn: ["system-story", "page-hero"],
   },
   {
     name: "ArtFigure",
@@ -413,7 +433,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Lámina de arte con marco y figcaption de procedencia.",
       en: "Art plate with frame and a provenance figcaption.",
     },
-    usedIn: ["evidence-workbench", "holon-explorer", "vantadb-showcase"],
+    usedIn: ["holon-explorer", "vantadb-showcase"],
   },
   {
     name: "ArtMount",
@@ -433,7 +453,7 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       es: "Escena con trazo y flotación GSAP/ScrollTrigger.",
       en: "GSAP/ScrollTrigger trace-and-float scene.",
     },
-    usedIn: ["section", "evidence-workbench", "holon-explorer"],
+    usedIn: ["section", "holon-explorer"],
   },
   {
     name: "SectionTransition / TransitionLab",
