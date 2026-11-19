@@ -56,7 +56,7 @@ Contacto: `negent@negentmind.com` · `negentmind.com` (pendiente compra).
 GitHub renderiza **`profile/README.md`**, no el `README.md` de la raíz:
 
 - `profile/` → lo que se ve en github.com/NegentMind (banner GIF dual, proyectos, enlaces).
-  Los `src` relativos (`org-negentmind.gif`) resuelven dentro de `profile/`.
+  Los `src` relativos (`org-banner.gif`) resuelven dentro de `profile/`.
 - raíz → `CONTRIBUTING`, `SECURITY`, `CODE_OF_CONDUCT`, `CONTRIBUTORS`, `LICENSE`,
   `NOTICE`. Aplican a **todo** el org. El roadmap es **privado** (Notion): no se publica.
 - En `profile/`, enlaces a otros documentos con **URLs absolutas** a
@@ -135,7 +135,7 @@ compartidos. Sin pantalla de carga bloqueante; movimiento reducido y pausa
 para efectos continuos. Componentes internos sobre shadcn/Radix.
 
 Valores web: `web/app/orbital.css`; contexto técnico aprobado:
-`web/docs/dev/site-v2-design.md`. No duplicar los valores de la nueva web
+`web/docs/dev/_archive/site-v2-design.md`. No duplicar los valores de la nueva web
 en los tokens antiguos de Remotion: cambiaría los renders y el chroma-key.
 Ni la marca propia de VantaDB ni el perfil ya publicado cambian implícitamente.
 

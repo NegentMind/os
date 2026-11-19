@@ -16,7 +16,7 @@ exactos en `../AGENTS.md` §Marca y `media/remotion/src/tokens.ts`.
 
 | Ruta | Qué es |
 |---|---|
-| `brand-sheet.html` | Tablero de marca V3 (referencia visual vigente) |
+| `brand-sheet.html` | Tablero de marca V1 (histórico — la identidad vigente es Orbital v2, ver orbital/README.md) |
 | `specimens/` | Planchas y pruebas previas (wordmarks, avatares, capturas) |
 | `exports/` | PNG/GIF finales listos para subir (avatar 500px, hero, banners) |
 | Notion · 🎨 Marca | Plataforma de marca: concepto, voz y reglas (fuera del repo; valores en `../AGENTS.md` §Marca) |

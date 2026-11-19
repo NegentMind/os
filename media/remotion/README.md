@@ -18,10 +18,10 @@ npm run render:banner-light  # frames light (chroma Bone #EDEAE3)
 2. Convertir con ffmpeg (colorkey del fondo → alfa real, paleta 64, `-loop -1` = una sola reproducción):
 
 ```sh
-ffmpeg -y -framerate 15 -start_number 0 -i out/negentmind-frames/element-%02d.png -filter_complex "[0:v]scale=960:240:flags=lanczos,colorkey=0x08090C:0.03:0,split[a][b];[a]palettegen=max_colors=64:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=5" -loop -1 out/org-negentmind.gif
+ffmpeg -y -framerate 15 -start_number 0 -i out/negentmind-frames/element-%02d.png -filter_complex "[0:v]scale=960:240:flags=lanczos,colorkey=0x08090C:0.03:0,split[a][b];[a]palettegen=max_colors=64:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=5" -loop -1 out/negentmind-banner.gif
 ```
 
-Para light, fondo `#EDEAE3` y `colorkey=0xEDEAE3:0.03:0`. Verificar transparencia (índice alfa) y legibilidad en ambos temas antes de subir a `NegentMind/.github` (`profile/org-negentmind{,-light}.gif`).
+Para light, fondo `#EDEAE3` y `colorkey=0xEDEAE3:0.03:0`. Verificar transparencia (índice alfa) y legibilidad en ambos temas antes de subir a `NegentMind/.github` — los GIFs publicados hoy son `profile/org-banner{,-light}.gif` (Orbital v2, `../../brand/orbital/banner-final/`); esta receta v1 queda congelada como referencia.
 
 ## Stills
 
@@ -31,7 +31,7 @@ Composiciones `Mark*`, `Avatar*`, `Wordmark*`, `Hero*` (dark/light):
 npx remotion still MarkDark out/mark-dark.png
 ```
 
-Los PNG canónicos viven en `../brand/exports/` (+ copia del avatar en la raíz del workspace). Los SVG del mismo directorio son fuente editable.
+Los PNG canónicos viven en `../brand/exports/`. Los SVG del mismo directorio son fuente editable.
 
 ## Reglas de composición
 
