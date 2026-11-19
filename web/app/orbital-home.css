@@ -488,7 +488,6 @@
   visibility: hidden;
 }
 
-.nm2-home .nm2-home-scope > *,
 .nm2-home .nm2-system-story > *,
 .nm2-home .nm2-vanta > *,
 .nm2-home .nm2-holon-explorer__composition > *,
@@ -624,27 +623,6 @@ html[data-motion="off"] .nm2-memory-stack__side {
   font-size: 0.875rem;
 }
 
-.nm2-home .nm2-home-scope {
-  display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap: clamp(2rem, 6vw, 7rem);
-  align-items: center;
-  /* Standalone section now: the cadence lives on .nm2-scope-section in
-     orbital-vanta.css; the block itself carries no extra entry margin. */
-  padding-inline: clamp(0rem, 3vw, 3rem);
-}
-
-.nm2-home .nm2-home-scope__ledger {
-  display: grid;
-  gap: 1.5rem;
-  justify-items: start;
-  max-width: 46ch;
-}
-
-.nm2-home .nm2-home-scope__ledger :is(h2, h3) {
-  font-size: clamp(2rem, 3.25vw, 3rem);
-}
-
 .nm2-home .nm2-scope-study__art {
   aspect-ratio: 32 / 21;
 }
@@ -740,6 +718,10 @@ html[data-motion="off"] .nm2-memory-stack__side {
 .nm2-holon-field {
   position: absolute;
   inset: 0;
+  /* VantaDB's tone: bright silver, not one of the six vision hues — the
+     built piece reads as material. Scoped here so the canvas can resolve
+     --nm2-spectrum-silver from this element's computed style. */
+  --nm2-spectrum-silver: #dde6f2;
   color: var(--nm2-structure);
   pointer-events: none;
 }
@@ -802,6 +784,13 @@ html[data-motion="off"] .nm2-memory-stack__side {
 .nm2-holon-field [data-tone="rose"] { --hue: var(--nm2-spectrum-rose); }
 .nm2-holon-field [data-tone="amber"] { --hue: var(--nm2-spectrum-amber); }
 .nm2-holon-field [data-tone="ice"] { --hue: var(--nm2-spectrum-ice); }
+.nm2-holon-field [data-tone="silver"] { --hue: var(--nm2-spectrum-silver); }
+
+/* The built piece: a continuous boundary among permeable membranes. */
+.nm2-holon-field__cell[data-solid="true"] {
+  stroke-dasharray: none;
+  opacity: 0.68;
+}
 
 .nm2-holon-field__cell[data-active="true"] {
   stroke: var(--hue);
@@ -813,8 +802,9 @@ html[data-motion="off"] .nm2-memory-stack__side {
   opacity: 0.8;
 }
 
-/* Janus rings on the selected holon: the outer dashed ring's chevrons point
-   out (integration into the whole), the inner ring's point in (autonomy). */
+/* Janus rings on the selected holon: two counter-rotating dashed tracks —
+   outer for integration, inner for autonomy. No arrowheads: the two
+   particle lanes already carry the bidirectionality. */
 .nm2-holon-field__janus {
   fill: none;
   stroke: var(--hue);
@@ -830,9 +820,25 @@ html[data-motion="off"] .nm2-memory-stack__side {
   stroke-dasharray: 3 4;
 }
 
-.nm2-holon-field__chevron {
-  fill: var(--hue);
-  opacity: 0.9;
+/* Poster stand-in for the canvas current fill: the selected cell's
+   gradient is an inline fill (url(#…) can't resolve from a stylesheet),
+   its stops live here. --hue comes from data-tone on the gradient. */
+.nm2-holon-field__flow-base {
+  stop-color: var(--nm2-surface);
+}
+
+.nm2-holon-field__flow-silver {
+  stop-color: var(--nm2-structure);
+  stop-opacity: 0.5;
+}
+
+.nm2-holon-field__flow-tone {
+  stop-color: var(--hue);
+  stop-opacity: 0.9;
+}
+
+.nm2-holon-field__flow-tone--soft {
+  stop-opacity: 0.45;
 }
 
 .nm2-holon-field__nucleus {
@@ -890,6 +896,7 @@ html[data-motion="off"] .nm2-memory-stack__side {
 .nm2-home .nm2-holon-explorer__module-seat--6 { left: 21%; top: 67.2%; }
 .nm2-home .nm2-holon-explorer__module-seat--7 { left: 18.2%; top: 45.2%; }
 .nm2-home .nm2-holon-explorer__module-seat--8 { left: 28.5%; top: 25.5%; }
+.nm2-home .nm2-holon-explorer__module-seat--9 { left: 58.5%; top: 35%; }
 
 /* The label pill crosses its own membrane: surface fill keeps the name
    legible over channel strokes; selection inverts to the action pair. */
@@ -949,6 +956,11 @@ html[data-motion="off"] .nm2-memory-stack__side {
 .nm2-home .nm2-holon-explorer__detail .nm2-holon-explorer__role {
   color: var(--nm2-text);
   font-size: 1.125rem;
+}
+
+.nm2-home .nm2-holon-explorer__action {
+  justify-self: start;
+  margin-block-start: 0.75rem;
 }
 
 .nm2-home .nm2-holon-explorer__boundary {
@@ -1143,15 +1155,10 @@ html:not([data-motion="on"]) .nm2-home *::after {
 }
 
 @media (max-width: 44rem) {
-  .nm2-home .nm2-home-scope,
   .nm2-home .nm2-holon-explorer__intro,
   .nm2-home .nm2-evidence-workbench,
   .nm2-home .nm2-home-invitation {
     grid-template-columns: 1fr;
-  }
-
-  .nm2-home .nm2-home-scope {
-    padding-inline: 0;
   }
 
   .nm2-home .nm2-holon-explorer__intro {

@@ -109,27 +109,6 @@ export const es: SiteCopy = {
         problem:
           "La ventana de contexto es una mesa de trabajo que se vacía al cerrar la sesión, no un sistema de memoria: el contexto se pierde en el medio, cada token cuesta y nada gobierna lo que el agente conserva.",
         body: "VantaDB mantiene la memoria del agente dentro de la aplicación: un solo archivo .vanta, sin demonio y sin nube obligatoria. Tres capas estratifican lo que conviene conservar —un registro episódico append-only, un grafo semántico de hechos atómicos y un núcleo procedural protegido— mientras una consolidación asíncrona promueve lo que sobrevive.",
-        retrievalLabel: "Recuperación híbrida",
-        retrievalNote:
-          "Menos de 2 ms en p99 sobre 100k registros, con embeddings locales: ninguna llamada de red dentro del ciclo.",
-        pipeline: [
-          { name: "FastGate", detail: "filtro pre-LLM · <0,1 ms" },
-          { name: "BM25", detail: "coincidencia léxica" },
-          { name: "HNSW", detail: "vectores ONNX locales" },
-          { name: "RRF", detail: "fusión de rangos · k = 60" },
-          { name: "AS OF", detail: "filtro bitemporal" },
-        ],
-        specsLabel: "La ficha concreta",
-        specs: [
-          { term: "Artefacto", detail: "Un archivo .vanta · cero demonios" },
-          { term: "Núcleo", detail: "Rust · Fjall (LSM) + WAL" },
-          { term: "Capas", detail: "L1 episódica · L2 semántica + grafo causal · L3 procedural" },
-          { term: "Embeddings", detail: "ONNX locales · multilingual-e5-small / embeddinggemma" },
-          { term: "Interfaz", detail: "MCP stdio · Claude Code, Cursor, OpenCode, Goose" },
-          { term: "Bindings", detail: "Python · TypeScript/Node" },
-          { term: "Benchmarks", detail: "LongMemEval-S recall_all@5 ≥ 0,85 · LoCoMo" },
-          { term: "Estado", detail: "v0.9.0 activo · núcleo Apache-2.0" },
-        ],
         art: {
           layers: ["Episódica", "Semántica", "Procedural"],
           core: ".vanta",
@@ -140,19 +119,21 @@ export const es: SiteCopy = {
       scopegrainName: "Scopegrain",
       scopegrainSummary: "Un prototipo independiente, aún tomando forma.",
       scopegrainBody: "Scopegrain es trabajo público en curso. Sigue en incubación, sin un anuncio de lanzamiento como producto.",
-      scopeStudy: {
-        action: "Explorar el boceto",
-        bounded: "Una vista acotada de un prototipo independiente. Aquí no se demuestra funcionalidad de producto.",
-        exploded: "Los planos del encuadre se separan para examinar la composición. Es un estudio visual, no un adelanto de funciones anunciadas.",
-      },
     },
     holons: {
       title: "Una pieza por sí misma. Parte de algo mayor.",
       definition: "Un holón tiene una función propia y, al mismo tiempo, forma parte de un sistema mayor.",
       usage: "En NEGENT MIND usamos esta idea para ordenar capacidades que podrían colaborar sin perder una responsabilidad clara.",
       boundary: "Es un mapa de diseño a largo plazo, no nueve productos disponibles. Cardinal no es otro nombre de VantaDB.",
-      controls: "Explorar los nueve holones",
+      controls: "Explorar los nueve holones y VantaDB",
       whole: "el conjunto",
+      /* La pieza construida del mapa — ocupa el último asiento en el
+         explorador, no es un holón: membrana sólida entre permeables. */
+      vanta: {
+        name: "VantaDB",
+        tagline: "SQLite for AI Agents",
+        body: "Memoria persistente embebida para agentes de IA — la única pieza de este mapa que ya existe como software.",
+      },
       items: [
         { name: "Cardinal", role: "Contexto y memoria de trabajo", body: "La dirección de Cardinal sería organizar contexto y memoria de trabajo dentro de un sistema mayor. Es una visión de diseño, no otro nombre de VantaDB." },
         { name: "Iris", role: "Percepción e ingesta", body: "La dirección de Iris sería abordar percepción e ingesta como una responsabilidad propia. Aquí no se anuncia un pipeline de ingesta disponible." },
@@ -188,24 +169,46 @@ export const es: SiteCopy = {
       sourceAction: "Inspeccionar VantaDB en GitHub",
       methodAction: "Leer nuestros principios de trabajo",
     },
+    principles: {
+      title: "Principios antes que promesas.",
+      description: "Criterios de trabajo, no eslóganes. Cada uno se puede comprobar en el repositorio.",
+      items: [
+        {
+          term: "Evidencia antes que marketing",
+          detail: "El código y el README son la fuente. Lo que aún no existe se etiqueta como visión, nunca como producto.",
+        },
+        {
+          term: "Local-first",
+          detail: "La capacidad vive junto a la aplicación: un archivo local, sin demonio y sin un servicio en la nube obligatorio.",
+        },
+        {
+          term: "Open core",
+          detail: "El núcleo es abierto y auditable —VantaDB se publica bajo Apache-2.0— y la gobernanza del proyecto es pública.",
+        },
+      ],
+    },
     invitation: {
       title: "Trae una pregunta útil.",
       body: "No necesitas una gran pull request para contribuir. Un párrafo confuso, un fallo reproducible o un cambio bien acotado son buenos puntos de partida.",
       action: "Encuentra cómo participar",
     },
-    faqTitle: "Qué hay aquí y qué no.",
+    faqTitle: "Antes de abrir el repositorio.",
     faq: [
       {
-        question: "¿NEGENT MIND construye modelos?",
-        answer: "No. Construimos infraestructura y capacidades alrededor de modelos. VantaDB, nuestro proyecto principal actual, se centra en memoria persistente y recuperación híbrida para agentes de IA.",
+        question: "¿Cómo empiezo con VantaDB?",
+        answer: "Clona el repositorio y sigue el README: contiene la instalación, los bindings de Python y TypeScript y las limitaciones actuales. El README es la fuente mantenida; preferimos enlazarlo a reproducir un fragmento de API que puede quedar desactualizado.",
       },
       {
-        question: "¿Están disponibles los nueve holones?",
-        answer: "No. Los holones son una visión de capacidades a largo plazo, no nueve productos publicados. VantaDB está activo; Scopegrain es un prototipo independiente en incubación.",
+        question: "¿Bajo qué licencia está el código?",
+        answer: "El núcleo de VantaDB se publica bajo Apache-2.0. La licencia de cada repositorio manda; un nombre de proyecto no sustituye a su licencia.",
       },
       {
-        question: "¿VantaDB exige un servicio en la nube?",
-        answer: "No. VantaDB es embebido y local-first. Su repositorio contiene las instrucciones reales de instalación, los bindings documentados y las limitaciones actuales.",
+        question: "¿Puedo contribuir sin escribir código?",
+        answer: "Sí. Un fallo reproducible, una corrección de documentación o una pregunta con contexto en GitHub Discussions son contribuciones válidas. La página Contribuir detalla las tres vías y qué contexto incluir.",
+      },
+      {
+        question: "¿Qué relación tiene VantaDB con los holones?",
+        answer: "VantaDB es la primera capacidad del mapa que existe como software: memoria persistente como proyecto independiente. El resto de los holones sigue siendo una visión de diseño a largo plazo, no productos anunciados.",
       },
     ],
   },
@@ -418,5 +421,22 @@ export const es: SiteCopy = {
     motionReduced: "El sistema operativo solicita movimiento reducido.",
     motionUnknown: "La animación permanece apagada hasta conocer las preferencias.",
     artwork: "Abrir el renderizador de arte",
+    liveScene: "Escena en vivo",
+    branding: "Assets de marca",
+    brandingNote:
+      "Archivos canónicos servidos desde /brand más el set de iconos de la app. Las dimensiones son el tamaño intrínseco de cada asset; los GIFs se copian desde github-profile/profile solo para inspección.",
+    inventory: "Inventario de componentes",
+    inventoryNote:
+      "Auditoría viva de la biblioteca interna. «En uso» lista las rutas o componentes montados que importan cada pieza; «biblioteca» marca stock sin consumidor vivo.",
+    inUse: "En uso",
+    libraryOnly: "Biblioteca",
+    usedInLabel: "Montado por",
+    catLayout: "Estructura",
+    catChrome: "Chrome y movimiento",
+    catContent: "Contenido",
+    catScenes: "Escenas y canvas",
+    catLegacy: "Legado v1",
+    catUi: "Primitivas shadcn",
+    pieces: "piezas",
   },
 };

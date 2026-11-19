@@ -56,7 +56,7 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 - `art-mount.tsx` — monta presets de arte (warp Paper o campos) en superficies no-hero.
 - `blueprint-scene.tsx` — diagramas semánticos SVG con etiquetas HTML posicionadas por porcentaje (o sólidos decorativos sin etiquetas).
 - `brand-mark.tsx` — wordmark/monograma con la geometría vectorial Orbital original; nunca `font-family` ni sustitución por texto.
-- `vantadb-showcase.tsx` — bloque flagship de VantaDB en home (identidad, estratos L1–L3, pipeline de recuperación y ficha).
+- `vantadb-showcase.tsx` — bloque flagship de VantaDB en home (identidad, problema→cuerpo→CTAs, lámina de estratos L1–L3). El pipeline de recuperación y la ficha viven en `/projects/vantadb`.
 - `core-orb.tsx` — orbe-instrumento de `#org`: esfera de puntos en Canvas 2D con punto espectral fijable; poster SVG como superficie SSR.
 - `drift-canvas.tsx` — corrientes monocromáticas en Canvas 2D (ramp carbón→plata del preset `HERO_ART_ALT`): cintas ondulantes, partículas y una cresta espectral que viaja con `--nm2-system-progress`; poster CSS como superficie SSR/reduced-motion.
 - `evidence-workbench.tsx` — banco de evidencia de home.
@@ -68,16 +68,16 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 - `hero-preset.ts` — presets de arte Orbital/strata-01 (fuente única para arte en vivo y exports).
 - `hero-warp.tsx` — warp Paper Shaders del hero (pool de 3 variantes al azar).
 - `holon-explorer.tsx` — explorador interactivo del mapa de holones.
-- `memory-demo.tsx` — demo de memoria persistente de home.
+- `memory-demo.tsx` — demo de memoria persistente. **Biblioteca**: sin import vivo en el árbol de rutas actual.
 - `motion-preference.tsx` — control global de pausa/reanudación en el footer.
 - `motion-provider.tsx` — estado compartido de movimiento + `html[data-motion]`.
-- `orbital-glyphs.tsx` — mapa de glifos SVG del lettering Orbital. **Fallback/biblioteca**: la vía principal es la fuente woff2; queda para glifos que la fuente no cubre (acentos, dígitos) y contextos sin webfont.
+- `orbital-glyphs.tsx` — mapa de glifos SVG del lettering Orbital. **Fallback/biblioteca**: sin import vivo; la vía principal es la fuente woff2 y queda para glifos que la fuente no cubre (acentos, dígitos) y contextos sin webfont.
 - `page-cta.tsx` — cierre con llamada a la acción de páginas interiores.
 - `page-hero.tsx` — composición asimétrica compartida de héroes interiores.
 - `pointer-feedback.tsx` — anillo decorativo de puntero; nunca captura interacción ni sustituye el cursor.
 - `project-card.tsx` — tarjeta de proyecto con estado honesto.
 - `rotating-word.tsx` — palabra rotativa del hero en Orbital Display real con tinta espectral (`--nm2-rotor-ink`).
-- `scope-study.tsx` — estudio Scopegrain de home.
+- `scope-study.tsx` — estudio Scopegrain (BlueprintScene `scope` + toggle acotado/explosionado). **Biblioteca**: sin uso actual; Scopegrain volvió al home como franja compacta dentro de `#work` (2026-11), sin el estudio, y el proyecto sigue en `/projects`. Su contrato de copy es propio (`ScopeStudyCopy`), no depende de `SiteCopy`.
 - `scroll-scene.tsx` — escena con trazo y flotación GSAP/ScrollTrigger.
 - `section-heading.tsx` — encabezado de sección (título animado + descripción).
 - `section.tsx` — ritmo de sección (`--nm2-section-gap`, tonos).

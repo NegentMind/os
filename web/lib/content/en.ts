@@ -109,27 +109,6 @@ export const en = {
         problem:
           "The context window is a workbench that empties when the session ends, not a memory system: recall fades in the middle, every token has a cost, and nothing governs what the agent keeps.",
         body: "VantaDB keeps an agent's memory inside the application: one .vanta file, no daemon, no required cloud service. Three layers stratify what is worth keeping — an append-only episodic log, a semantic graph of atomic facts and a protected procedural core — while an asynchronous consolidation run promotes what survives.",
-        retrievalLabel: "Hybrid retrieval",
-        retrievalNote:
-          "Under 2 ms at p99 across 100k records, with local embeddings: no network call inside the loop.",
-        pipeline: [
-          { name: "FastGate", detail: "pre-LLM filter · <0.1 ms" },
-          { name: "BM25", detail: "lexical match" },
-          { name: "HNSW", detail: "local ONNX vectors" },
-          { name: "RRF", detail: "rank fusion · k = 60" },
-          { name: "AS OF", detail: "bitemporal filter" },
-        ],
-        specsLabel: "The concrete file",
-        specs: [
-          { term: "Artifact", detail: "One .vanta file · zero daemons" },
-          { term: "Core", detail: "Rust · Fjall (LSM) + WAL" },
-          { term: "Layers", detail: "L1 episodic · L2 semantic + causal graph · L3 procedural" },
-          { term: "Embeddings", detail: "Local ONNX · multilingual-e5-small / embeddinggemma" },
-          { term: "Interface", detail: "MCP stdio · Claude Code, Cursor, OpenCode, Goose" },
-          { term: "Bindings", detail: "Python · TypeScript/Node" },
-          { term: "Benchmarks", detail: "LongMemEval-S recall_all@5 ≥ 0.85 · LoCoMo" },
-          { term: "Status", detail: "v0.9.0 active · Apache-2.0 core" },
-        ],
         art: {
           layers: ["Episodic", "Semantic", "Procedural"],
           core: ".vanta",
@@ -140,19 +119,21 @@ export const en = {
       scopegrainName: "Scopegrain",
       scopegrainSummary: "A separate prototype, still taking shape.",
       scopegrainBody: "Scopegrain is public work in progress. It remains in incubation, without a product launch announcement.",
-      scopeStudy: {
-        action: "Explore the sketch",
-        bounded: "A bounded view of a separate prototype. No product functionality is demonstrated here.",
-        exploded: "The framing planes are separated to examine the composition. This is a visual study, not a preview of announced features.",
-      },
     },
     holons: {
       title: "A piece in its own right. Part of something larger.",
       definition: "A holon has a function of its own while also belonging to a larger system.",
       usage: "At NEGENT MIND, this idea organizes capabilities that could work together while keeping clear responsibilities.",
       boundary: "This is a long-term design map, not nine available products. Cardinal is not another name for VantaDB.",
-      controls: "Explore the nine holons",
+      controls: "Explore the nine holons and VantaDB",
       whole: "the whole",
+      /* The built piece of the map — seats last in the explorer, not a
+         holon: a solid membrane among permeable ones. */
+      vanta: {
+        name: "VantaDB",
+        tagline: "SQLite for AI Agents",
+        body: "Embedded persistent memory for AI agents — the one piece of this map that already exists as software.",
+      },
       items: [
         { name: "Cardinal", role: "Context and working memory", body: "The direction of Cardinal would be to organize context and working memory within a larger system. It is a design vision, not another name for VantaDB." },
         { name: "Iris", role: "Perception and ingestion", body: "The direction of Iris would be to address perception and ingestion as a distinct responsibility. No available ingestion pipeline is announced here." },
@@ -188,24 +169,46 @@ export const en = {
       sourceAction: "Inspect VantaDB on GitHub",
       methodAction: "Read our working principles",
     },
+    principles: {
+      title: "Principles before promises.",
+      description: "Working criteria, not slogans. Each one can be checked against the repository.",
+      items: [
+        {
+          term: "Evidence before marketing",
+          detail: "The code and the README are the source. What does not exist yet is labeled vision, never product.",
+        },
+        {
+          term: "Local-first",
+          detail: "The capability lives next to the application: a local file, no daemon, no required cloud service.",
+        },
+        {
+          term: "Open core",
+          detail: "The core is open and auditable — VantaDB ships under Apache-2.0 — and project governance is public.",
+        },
+      ],
+    },
     invitation: {
       title: "Bring a useful question.",
       body: "You do not need a large pull request to contribute. A confusing paragraph, a reproducible failure or a well-scoped change is a meaningful place to begin.",
       action: "Find your way in",
     },
-    faqTitle: "What is here, and what is not.",
+    faqTitle: "Before you open the repository.",
     faq: [
       {
-        question: "Does NEGENT MIND build models?",
-        answer: "No. We build infrastructure and capabilities around models. VantaDB, our current flagship, focuses on persistent memory and hybrid retrieval for AI agents.",
+        question: "How do I start with VantaDB?",
+        answer: "Clone the repository and follow the README: it holds the installation, the Python and TypeScript bindings and the current limitations. The README is the maintained source; we link to it rather than reproduce an API snippet that can drift.",
       },
       {
-        question: "Are all nine holons available?",
-        answer: "No. The holons are a long-term capability vision, not nine released products. VantaDB is active; Scopegrain is a separate prototype in incubation.",
+        question: "What license is the code under?",
+        answer: "VantaDB's core is released under Apache-2.0. Each repository's license governs; a project name is not a substitute for its license.",
       },
       {
-        question: "Does VantaDB require a cloud service?",
-        answer: "No. VantaDB is embedded and local-first. Its repository contains the real installation instructions, documented bindings and current limitations.",
+        question: "Can I contribute without writing code?",
+        answer: "Yes. A reproducible bug report, a documentation fix or a question with context in GitHub Discussions are all valid contributions. The Contribute page details the three paths and the context to include.",
+      },
+      {
+        question: "How does VantaDB relate to the holons?",
+        answer: "VantaDB is the first capability on the map that exists as software: persistent memory as a standalone project. The rest of the holons remain a long-term design vision, not announced products.",
       },
     ],
   },
@@ -418,6 +421,23 @@ export const en = {
     motionReduced: "The operating system requests reduced motion.",
     motionUnknown: "Animation stays off until preferences are known.",
     artwork: "Open the artwork renderer",
+    liveScene: "Live scene",
+    branding: "Brand assets",
+    brandingNote:
+      "Canonical files served from /brand plus the app icon set. Dimensions are each asset's intrinsic size; the GIFs are copied from github-profile/profile for inspection only.",
+    inventory: "Component inventory",
+    inventoryNote:
+      "Live audit of the internal library. “In use” lists the routes or mounted components that import each piece; “library” marks stock without a live consumer.",
+    inUse: "In use",
+    libraryOnly: "Library",
+    usedInLabel: "Mounted by",
+    catLayout: "Layout",
+    catChrome: "Chrome & motion",
+    catContent: "Content",
+    catScenes: "Scenes & canvas",
+    catLegacy: "Legacy v1",
+    catUi: "shadcn primitives",
+    pieces: "pieces",
   },
 };
 

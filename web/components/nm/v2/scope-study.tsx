@@ -5,10 +5,16 @@ import { ArtFigure } from "@/components/nm/v2/art-figure";
 import { BlueprintScene } from "@/components/nm/v2/blueprint-scene";
 import { ScrollScene } from "@/components/nm/v2/scroll-scene";
 import { StoryControl } from "@/components/nm/v2/story-controls";
-import type { SiteCopy } from "@/lib/content/en";
+
+/** Self-contained copy contract: the study lives in the library, not in a page dict. */
+export type ScopeStudyCopy = {
+  action: string;
+  bounded: string;
+  exploded: string;
+};
 
 export function ScopeStudy({ copy, caption }: {
-  copy: SiteCopy["home"]["work"]["scopeStudy"];
+  copy: ScopeStudyCopy;
   caption: string;
 }) {
   const [exploded, setExploded] = useState(false);

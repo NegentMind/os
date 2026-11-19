@@ -7,7 +7,6 @@ import { FieldCanvas } from "@/components/nm/v2/field-canvas";
 import { Hero } from "@/components/nm/v2/hero";
 import { HERO_ART_ALT } from "@/components/nm/v2/hero-preset";
 import { HolonExplorer } from "@/components/nm/v2/holon-explorer";
-import { ScopeStudy } from "@/components/nm/v2/scope-study";
 import { Section } from "@/components/nm/v2/section";
 import { SectionHeading } from "@/components/nm/v2/section-heading";
 import { SectionTransition } from "@/components/nm/v2/section-transition/section-transition";
@@ -15,6 +14,7 @@ import {
   TransitionLab,
   TransitionLabProvider,
 } from "@/components/nm/v2/section-transition/transition-lab";
+import { SpecList } from "@/components/nm/v2/spec-list";
 import { StatusBadge } from "@/components/nm/v2/status-badge";
 import { SystemStory } from "@/components/nm/v2/system-story";
 import { VantaShowcase } from "@/components/nm/v2/vantadb-showcase";
@@ -69,21 +69,13 @@ export default async function Home({ params }: MarketingPageProps) {
           links={{ product: hrefFor(lang, "vantadb"), repo: VANTADB_REPO }}
           labels={{ product: c.common.exploreVantadb, repo: displayUrl(VANTADB_REPO) }}
         />
-      </Section>
-      <Section id="scopegrain" className="nm2-scope-section">
-        <div className="nm2-home-scope">
-          <div className="nm2-home-scope__ledger nm2-tone-section" data-scroll-reveal="">
-            <div className="nm2-ledger-name">
-              <h2>{h.work.scopegrainName}</h2>
-              <StatusBadge status="incubation" label={c.common.incubation} />
-            </div>
-            <div className="nm2-prose">
-              <p className="nm2-ledger-summary">{h.work.scopegrainSummary}</p>
-              <p>{h.work.scopegrainBody}</p>
-            </div>
-            <ActionLink href={hrefFor(lang, "projects")} variant="text">{c.common.allProjects}</ActionLink>
+        <div id="scopegrain" className="nm2-anchor nm2-home-scope" data-scroll-reveal="">
+          <div className="nm2-ledger-name">
+            <h3>{h.work.scopegrainName}</h3>
+            <StatusBadge status="incubation" label={c.common.incubation} />
           </div>
-          <ScopeStudy copy={h.work.scopeStudy} caption={c.common.conceptual} />
+          <p className="nm2-home-scope__line">{h.work.scopegrainSummary} {h.work.scopegrainBody}</p>
+          <ActionLink href={hrefFor(lang, "projects")} variant="text">{c.common.allProjects}</ActionLink>
         </div>
       </Section>
       <Section
@@ -92,7 +84,13 @@ export default async function Home({ params }: MarketingPageProps) {
         backdrop={<FieldCanvas variant="orbit" className="nm2-backdrop-field nm2-backdrop-field--orbit" />}
       >
         <SectionHeading title={h.holons.title} effect="focus" />
-        <HolonExplorer copy={h.holons} visionLabel={c.common.vision} caption={c.common.conceptual} />
+        <HolonExplorer
+          copy={h.holons}
+          visionLabel={c.common.vision}
+          activeLabel={c.common.active}
+          vantaLink={{ href: hrefFor(lang, "vantadb"), label: c.common.exploreVantadb }}
+          caption={c.common.conceptual}
+        />
       </Section>
       <SectionTransition id="proof-in" variant="tear" height={360} />
       <Section id="proof" className="nm2-section--paper nm2-home-evidence">
@@ -107,6 +105,12 @@ export default async function Home({ params }: MarketingPageProps) {
         <ActionLink href={hrefFor(lang, "about")} variant="text">{h.method.methodAction}</ActionLink>
       </Section>
       <SectionTransition id="proof-out" variant="tear" height={360} from="light" to="dark" />
+      <Section id="principles" className="nm2-principles-section">
+        <div className="nm2-editorial">
+          <SectionHeading title={h.principles.title} description={h.principles.description} effect="assemble" />
+          <SpecList rows={h.principles.items} className="nm2-principles" />
+        </div>
+      </Section>
       <Section id="faq" className="nm2-faq-section">
         <div className="nm2-editorial">
           <SectionHeading title={h.faqTitle} effect="assemble" />

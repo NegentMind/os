@@ -4,6 +4,7 @@
 /* Page-level and hero styles live with their owners; this entry wires them. */
 @import "./orbital-hero.css";
 @import "./orbital-pages.css";
+@import "./orbital-gallery.css";
 @import "./orbital-scenes.css";
 @import "./orbital-home.css";
 @import "./orbital-vanta.css";

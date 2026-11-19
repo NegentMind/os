@@ -4,20 +4,23 @@ import { useEffect, useRef } from "react";
 import { useSceneActivity } from "@/components/nm/v2/field-canvas";
 
 /*
- * HolonField — the "membrane field" map of the nine holons: nine overlapping
- * cells with permeable (dashed) boundaries inside a mother membrane, each
- * exchanging bidirectional signal traffic with the system's nucleus.
+ * HolonField — the "membrane field" map of the nine holons plus VantaDB:
+ * nine overlapping cells with permeable (dashed) boundaries inside a mother
+ * membrane, each exchanging bidirectional signal traffic with the system's
+ * nucleus, and one solid membrane — the piece that is already built.
  *
  * Surfaces, same contract as FieldCanvas/CoreOrb:
  *  - SSR/no-JS/reduced-motion: the React SVG poster, complete and static,
- *    selection-aware (hue + Janus rings) via data attributes.
+ *    selection-aware (flow gradient + Janus rings) via data attributes.
  *  - Animated: canvas 2D, ~30fps scheduling target, breathing membranes,
  *    particles crossing the cells' boundaries and the mother membrane,
- *    and the dual Janus ring on the selected holon.
+ *    a monochrome current fill (hero-warp grammar, clipped to the blob)
+ *    on the selected holon, and the dual Janus ring around it.
  *
  * Cell seats for the interactive label buttons live in orbital-home.css
  * (`.nm2-holon-explorer__module-seat--N`) — keep them in sync with
- * HOLON_LAYOUT below.
+ * HOLON_LAYOUT below. The explorer appends VantaDB as seat
+ * `copy.items.length`, which must equal VANTA_INDEX.
  */
 
 const TAU = Math.PI * 2;
@@ -26,7 +29,9 @@ const CENTER = 0.5;
 const MOTHER = { rx: 0.472, ry: 0.462 };
 
 /** Spectrum token names — the base scene stays monochrome; only the
- *  selected holon is tinted with its assigned hue. */
+ *  selected holon is tinted with its assigned hue. VantaDB carries
+ *  "silver": a bright neutral, not one of the six vision hues, so the
+ *  built piece reads as material rather than spectrum. */
 export const HOLON_TONES = [
   "teal",
   "violet",
@@ -37,10 +42,13 @@ export const HOLON_TONES = [
   "violet",
   "teal",
   "amber",
+  "silver",
 ] as const;
 
 /** Normalized seats (0..1); `r` is a fraction of the frame on each axis —
- *  cells are ellipses in screen space, like the mother membrane. */
+ *  cells are ellipses in screen space, like the mother membrane.
+ *  The tenth seat is VantaDB: smaller, solid-membraned, grazing Cardinal's
+ *  context/memory zone without becoming a subset of it. */
 export const HOLON_LAYOUT = [
   { x: 0.5, y: 0.185, r: 0.13 },
   { x: 0.715, y: 0.255, r: 0.12 },
@@ -51,45 +59,54 @@ export const HOLON_LAYOUT = [
   { x: 0.21, y: 0.672, r: 0.135 },
   { x: 0.182, y: 0.452, r: 0.13 },
   { x: 0.285, y: 0.255, r: 0.118 },
+  { x: 0.585, y: 0.35, r: 0.07 },
 ] as const;
 
-type Point = { x: number; y: number };
+/** The built piece sits last in the layout — its seat index in the
+ *  explorer is `copy.items.length` (the nine vision holons come first). */
+export const VANTA_INDEX = HOLON_LAYOUT.length - 1;
 
-/** Small triangle on a ring around (cx, cy): tip `depth` units beyond the
- *  ring toward the center (inward) or away (outward); `span` radians of
- *  half-width at the base. Used by both the poster and the canvas loop. */
-function janusChevron(
-  cx: number,
-  cy: number,
-  rx: number,
-  ry: number,
-  ringScale: number,
-  theta: number,
-  outward: boolean,
-  depth: number,
-  span: number,
-): [Point, Point, Point] {
-  const at = (angle: number, scale: number): Point => ({
-    x: cx + rx * ringScale * scale * Math.cos(angle),
-    y: cy + ry * ringScale * scale * Math.sin(angle),
-  });
-  const tipScale = outward ? 1 + depth : 1 - depth;
-  const baseScale = outward ? 1 - depth : 1 + depth;
-  return [
-    at(theta, tipScale),
-    at(theta - span, baseScale),
-    at(theta + span, baseScale),
-  ];
-}
+/** The poster's selection gradient — a static stand-in for the canvas
+ *  flow. Stops are styled in orbital-home.css; `data-tone` on the
+ *  gradient element resolves `--hue` for the current selection. */
+const FLOW_GRADIENT_ID = "nm2-holon-flow";
 
-function pointsToPath(points: readonly Point[]): string {
-  const [tip, b1, b2] = points;
-  return `M${tip.x.toFixed(3)} ${tip.y.toFixed(3)}L${b1.x.toFixed(3)} ${b1.y.toFixed(3)}L${b2.x.toFixed(3)} ${b2.y.toFixed(3)}Z`;
-}
+/* Selected-cell current: the hero warp's grammar in miniature. Soft
+ * carbon base plus drifting bands clipped to the membrane — the holon's
+ * own tone carries the widest, brightest band while the silver
+ * currents stay subordinate. */
+const FLOW_ANGLE = -0.56; // ~ hero warp rotation (-32deg)
+const FLOW_BANDS = [
+  { hue: false, width: 0.2, peak: 0.34, speed: 0.21, drift: 0.12, phase: 0 },
+  { hue: true, width: 0.3, peak: 0.6, speed: 0.14, drift: 0.09, phase: 2.3 },
+  { hue: false, width: 0.16, peak: 0.26, speed: 0.3, drift: 0.17, phase: 4.4 },
+] as const;
 
 const JANUS_OUTER = 1.24;
 const JANUS_INNER = 0.55;
-const JANUS_ANGLES = [0.4, 0.4 + TAU / 3, 0.4 + (2 * TAU) / 3];
+
+/** "#rgb" | "#rrggbb" | "rgb(...)"/"rgba(...)" → rgba() at `alpha`.
+ *  Custom properties arrive as-authored (hex); computed colors arrive
+ *  as rgb(). Anything else is returned untouched. */
+function withAlpha(color: string, alpha: number): string {
+  const value = color.trim();
+  if (value.startsWith("#")) {
+    const hex = value.slice(1);
+    const channels =
+      hex.length === 3
+        ? [...hex].map((ch) => parseInt(ch + ch, 16))
+        : [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
+    if (channels.every((n) => Number.isFinite(n))) {
+      return `rgba(${channels[0]}, ${channels[1]}, ${channels[2]}, ${alpha})`;
+    }
+    return value;
+  }
+  const channels = value.match(/[\d.]+/g);
+  if (channels && channels.length >= 3) {
+    return `rgba(${channels[0]}, ${channels[1]}, ${channels[2]}, ${alpha})`;
+  }
+  return value;
+}
 
 function HolonPoster({
   selected,
@@ -110,6 +127,25 @@ function HolonPoster({
       aria-hidden="true"
       focusable="false"
     >
+      <defs>
+        {/* Static stand-in for the canvas flow: carbon edges, a silver
+            mid-band and the selected holon's dominant tone. data-tone on
+            the gradient element resolves --hue (stop-color: var(--hue)). */}
+        <linearGradient
+          id={FLOW_GRADIENT_ID}
+          x1="0"
+          y1="0"
+          x2="1"
+          y2="1"
+          data-tone={HOLON_TONES[selected]}
+        >
+          <stop className="nm2-holon-field__flow-base" offset="0" />
+          <stop className="nm2-holon-field__flow-silver" offset="0.3" />
+          <stop className="nm2-holon-field__flow-tone" offset="0.52" />
+          <stop className="nm2-holon-field__flow-tone nm2-holon-field__flow-tone--soft" offset="0.78" />
+          <stop className="nm2-holon-field__flow-base" offset="1" />
+        </linearGradient>
+      </defs>
       <ellipse
         className="nm2-holon-field__mother"
         cx="50"
@@ -136,9 +172,15 @@ function HolonPoster({
           cy={(cell.y * 100).toFixed(3)}
           rx={(cell.r * 100).toFixed(3)}
           ry={(cell.r * 100).toFixed(3)}
+          style={
+            selected === index
+              ? { fill: `url(#${FLOW_GRADIENT_ID})` }
+              : undefined
+          }
           data-tone={HOLON_TONES[index]}
           data-active={selected === index || undefined}
           data-hover={hovered === index || undefined}
+          data-solid={index === VANTA_INDEX || undefined}
         />
       ))}
       <g data-tone={HOLON_TONES[selected]} key={`janus-${selected}`}>
@@ -156,44 +198,6 @@ function HolonPoster({
           rx={innerR.x}
           ry={innerR.y}
         />
-        {JANUS_ANGLES.map((theta) => (
-          <path
-            key={`out-${theta}`}
-            className="nm2-holon-field__chevron"
-            d={pointsToPath(
-              janusChevron(
-                active.x * 100,
-                active.y * 100,
-                active.r * 100,
-                active.r * 100,
-                JANUS_OUTER,
-                theta,
-                true,
-                0.07,
-                0.09,
-              ),
-            )}
-          />
-        ))}
-        {JANUS_ANGLES.map((theta) => (
-          <path
-            key={`in-${theta}`}
-            className="nm2-holon-field__chevron"
-            d={pointsToPath(
-              janusChevron(
-                active.x * 100,
-                active.y * 100,
-                active.r * 100,
-                active.r * 100,
-                JANUS_INNER,
-                theta + 0.55,
-                false,
-                0.12,
-                0.14,
-              ),
-            )}
-          />
-        ))}
       </g>
       <circle className="nm2-holon-field__nucleus" cx="50" cy="50" r="1.6" />
       <ellipse
@@ -236,6 +240,7 @@ export function HolonField({
     let height = 0;
     let ink = "";
     let line = "";
+    let carbon = "";
     let hues: string[] = [];
     let resizeObserver: ResizeObserver | null = null;
     const context = surface.getContext("2d", { alpha: true });
@@ -330,7 +335,11 @@ export function HolonField({
         context.fill();
       }
 
-      // Cells: permeable dashed membranes, each breathing on its own phase.
+      // Cells: permeable dashed membranes, each breathing on its own
+      // phase — except VantaDB, the built piece, whose membrane is a
+      // continuous closed boundary. The selected cell fills with the
+      // hero's current grammar: a carbon base crossed by drifting
+      // monochrome bands where the holon's own tone dominates.
       context.lineWidth = 1.5;
       for (let index = 0; index < HOLON_LAYOUT.length; index += 1) {
         const cell = HOLON_LAYOUT[index];
@@ -339,27 +348,58 @@ export function HolonField({
         const ry = cell.r * height * breath;
         const isSel = sel === index;
         const isHov = hov === index;
-        traceBlob(
-          cell.x * width,
-          cell.y * height,
-          rx,
-          ry,
-          0.028,
-          index * 1.9 + t * 0.5,
-        );
-        context.setLineDash([4, 3]);
-        context.strokeStyle = isSel ? hues[index] ?? ink : ink;
-        context.fillStyle = context.strokeStyle;
-        context.globalAlpha = isSel ? 0.07 : 0.035;
-        context.fill();
-        context.globalAlpha = isSel ? 0.95 : isHov ? 0.8 : 0.55;
+        const isBuilt = index === VANTA_INDEX;
+        const ccx = cell.x * width;
+        const ccy = cell.y * height;
+        const hue = hues[index] ?? ink;
+        traceBlob(ccx, ccy, rx, ry, 0.028, index * 1.9 + t * 0.5);
+        if (isSel) {
+          // The clip path survives save/restore, so the same blob is
+          // stroked afterwards without tracing it twice.
+          context.save();
+          context.clip();
+          const reach = Math.max(rx, ry) * 1.5;
+          context.fillStyle = withAlpha(carbon || "#0e1013", 0.85);
+          context.fillRect(ccx - reach, ccy - reach, reach * 2, reach * 2);
+          for (const band of FLOW_BANDS) {
+            const angle =
+              FLOW_ANGLE + Math.sin(t * band.drift + band.phase) * 0.35;
+            const slide = 0.5 + 0.34 * Math.sin(t * band.speed + band.phase);
+            const dx = Math.cos(angle);
+            const dy = Math.sin(angle);
+            const gradient = context.createLinearGradient(
+              ccx - dx * reach,
+              ccy - dy * reach,
+              ccx + dx * reach,
+              ccy + dy * reach,
+            );
+            const color = band.hue ? hue : ink;
+            const from = Math.max(0, slide - band.width);
+            const to = Math.min(1, slide + band.width);
+            gradient.addColorStop(0, withAlpha(color, 0));
+            if (from > 0) gradient.addColorStop(from, withAlpha(color, 0));
+            gradient.addColorStop(slide, withAlpha(color, band.peak));
+            if (to < 1) gradient.addColorStop(to, withAlpha(color, 0));
+            gradient.addColorStop(1, withAlpha(color, 0));
+            context.fillStyle = gradient;
+            context.fillRect(ccx - reach, ccy - reach, reach * 2, reach * 2);
+          }
+          context.restore();
+        } else {
+          context.fillStyle = ink;
+          context.globalAlpha = 0.035;
+          context.fill();
+        }
+        context.setLineDash(isBuilt ? [] : [4, 3]);
+        context.strokeStyle = isSel ? hue : ink;
+        context.globalAlpha = isSel ? 0.95 : isHov ? 0.8 : isBuilt ? 0.66 : 0.55;
         context.stroke();
       }
 
-      // Janus rings on the selected holon: the outer ring's chevrons point
-      // away (the part integrates into the whole), the inner ring's point
-      // inward (the holon gathers and asserts its own autonomy). Counter-
-      // rotating dashes make the two vectors readable at a glance.
+      // Janus rings on the selected holon: two counter-rotating dashed
+      // tracks, outer for integration into the whole, inner for the
+      // holon's own autonomy. No arrowheads — the two particle lanes
+      // already carry the bidirectionality.
       if (sel >= 0 && sel < HOLON_LAYOUT.length) {
         const cell = HOLON_LAYOUT[sel];
         const hue = hues[sel] ?? ink;
@@ -368,7 +408,6 @@ export function HolonField({
         const srx = cell.r * width;
         const sry = cell.r * height;
         context.strokeStyle = hue;
-        context.fillStyle = hue;
         context.lineWidth = 1.5;
 
         context.globalAlpha = 0.85;
@@ -384,46 +423,6 @@ export function HolonField({
         context.stroke();
         context.setLineDash([]);
         context.lineDashOffset = 0;
-
-        context.globalAlpha = 0.9;
-        for (const theta of JANUS_ANGLES) {
-          const [tip, b1, b2] = janusChevron(
-            scx,
-            scy,
-            srx,
-            sry,
-            JANUS_OUTER,
-            theta + t * 0.35,
-            true,
-            0.07,
-            0.09,
-          );
-          context.beginPath();
-          context.moveTo(tip.x, tip.y);
-          context.lineTo(b1.x, b1.y);
-          context.lineTo(b2.x, b2.y);
-          context.closePath();
-          context.fill();
-        }
-        for (const theta of JANUS_ANGLES) {
-          const [tip, b1, b2] = janusChevron(
-            scx,
-            scy,
-            srx,
-            sry,
-            JANUS_INNER,
-            theta + 0.55 - t * 0.5,
-            false,
-            0.12,
-            0.14,
-          );
-          context.beginPath();
-          context.moveTo(tip.x, tip.y);
-          context.lineTo(b1.x, b1.y);
-          context.lineTo(b2.x, b2.y);
-          context.closePath();
-          context.fill();
-        }
       }
 
       // Signal traffic: two lanes per channel. Inbound (nucleus -> cell)
@@ -506,6 +505,7 @@ export function HolonField({
       const styles = getComputedStyle(element);
       ink = styles.color;
       line = styles.getPropertyValue("--nm2-line").trim() || ink;
+      carbon = styles.getPropertyValue("--nm2-surface").trim();
       hues = HOLON_TONES.map(
         (tone) =>
           styles.getPropertyValue(`--nm2-spectrum-${tone}`).trim() || ink,

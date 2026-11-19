@@ -13,6 +13,12 @@ import { Surface } from "@/components/nm/v2/surface";
 import { Button } from "@/components/ui/button";
 import { getSiteCopy } from "@/lib/content";
 import { MotionPreview } from "@/lib/content/design-system-preview";
+import {
+  BRAND_ASSETS,
+  COMPONENT_INVENTORY,
+  INVENTORY_CATEGORIES,
+  type InventoryCategory,
+} from "@/lib/content/design-system-inventory";
 import { isLocale } from "@/lib/i18n";
 import type { MarketingPageProps } from "@/lib/marketing-metadata";
 import { hrefFor } from "@/lib/site-routes";
@@ -40,12 +46,23 @@ export default async function DesignSystemPage({ params }: MarketingPageProps) {
   const c = getSiteCopy(lang);
   const g = c.gallery;
 
+  const categoryLabels: Record<InventoryCategory, string> = {
+    layout: g.catLayout,
+    chrome: g.catChrome,
+    content: g.catContent,
+    scenes: g.catScenes,
+    legacy: g.catLegacy,
+    ui: g.catUi,
+  };
+
   return (
     <>
       <Section className="nm2-page-intro">
         <SectionHeading as="h1" title={g.title} description={g.description} />
         <ActionLink href={`/${lang}/design-system/art`} variant="text">{g.artwork}</ActionLink>
       </Section>
+
+      {/* ---- foundations -------------------------------------------------- */}
       <Section className="nm2-gallery-section">
         <SectionHeading title={g.brand} />
         <Surface className="nm2-gallery-brand">
@@ -89,6 +106,8 @@ export default async function DesignSystemPage({ params }: MarketingPageProps) {
           <Surface tone="spectrum"><h3>{g.spectrumSurface}</h3><p>{g.bodySample}</p></Surface>
         </div>
       </Section>
+
+      {/* ---- components ---------------------------------------------------- */}
       <Section className="nm2-gallery-section">
         <SectionHeading title={g.actions} description={g.actionsNote} />
         <div className="nm2-actions">
@@ -136,12 +155,86 @@ export default async function DesignSystemPage({ params }: MarketingPageProps) {
         <SectionHeading title={g.faq} />
         <Faq items={c.contribute.faq} />
       </Section>
+
+      {/* ---- scenes --------------------------------------------------------- */}
       <Section className="nm2-gallery-section">
-        <SectionHeading title={g.motion} />
+        <SectionHeading title={g.liveScene} />
         <div className="nm2-gallery-art">
           <HeroBackground />
         </div>
+        <SectionHeading title={g.motion} className="nm2-gallery-subheading" />
         <MotionPreview copy={g} hero={c.hero} />
+      </Section>
+
+      {/* ---- branding -------------------------------------------------------- */}
+      <Section className="nm2-gallery-section">
+        <SectionHeading title={g.branding} description={g.brandingNote} />
+        <ul className="nm2-asset-grid">
+          {BRAND_ASSETS.map((asset) => (
+            <li key={asset.file} className="nm2-asset-card" data-wide={asset.wide || undefined}>
+              <div className="nm2-asset-card__preview">
+                {/* Plain <img>: the point is previewing the file itself, not a component. */}
+                <img src={asset.src} alt={asset.file} data-format={asset.format} loading="lazy" />
+              </div>
+              <div className="nm2-asset-card__meta">
+                <code className="nm2-asset-card__file">{asset.file}</code>
+                <span className="nm2-asset-card__dims">{asset.dims} · {asset.format}</span>
+                <p className="nm2-asset-card__use">{asset.use[lang]}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* ---- inventory -------------------------------------------------------- */}
+      <Section className="nm2-gallery-section">
+        <SectionHeading title={g.inventory} description={g.inventoryNote} />
+        <div className="nm2-inv">
+          {INVENTORY_CATEGORIES.map((category) => {
+            const entries = COMPONENT_INVENTORY.filter((entry) => entry.category === category);
+            return (
+              <div className="nm2-inv-group" key={category}>
+                <h3 className="nm2-inv-group__title">
+                  {categoryLabels[category]}
+                  <span className="nm2-inv-group__count">
+                    {entries.length} {g.pieces}
+                  </span>
+                </h3>
+                <ul className="nm2-inv-list">
+                  {entries.map((entry) => {
+                    const active = entry.usedIn.length > 0;
+                    return (
+                      <li className="nm2-inv-row" key={entry.file}>
+                        <div className="nm2-inv-id">
+                          <span className="nm2-inv-name">{entry.name}</span>
+                          <code className="nm2-inv-file">{entry.file}</code>
+                        </div>
+                        <div className="nm2-inv-body">
+                          <p className="nm2-inv-purpose">{entry.purpose[lang]}</p>
+                          <div className="nm2-inv-meta">
+                            <span
+                              className="nm2-inv-status"
+                              data-status={active ? "active" : "library"}
+                            >
+                              {active ? g.inUse : g.libraryOnly}
+                            </span>
+                            {active ? (
+                              <ul className="nm2-inv-used" aria-label={g.usedInLabel}>
+                                {entry.usedIn.map((consumer) => (
+                                  <li key={consumer}><code>{consumer}</code></li>
+                                ))}
+                              </ul>
+                            ) : null}
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
       </Section>
     </>
   );

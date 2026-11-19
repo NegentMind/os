@@ -2,6 +2,7 @@
 
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { motion } from "motion/react";
+import { ActionLink } from "@/components/nm/v2/action-link";
 import { ArtFigure } from "@/components/nm/v2/art-figure";
 import { HolonField } from "@/components/nm/v2/holon-field";
 import { ScrollScene } from "@/components/nm/v2/scroll-scene";
@@ -10,9 +11,11 @@ import { StoryDetail } from "@/components/nm/v2/story-detail";
 import { useSiteMotion } from "@/components/nm/v2/motion-provider";
 import type { SiteCopy } from "@/lib/content/en";
 
-export function HolonExplorer({ copy, visionLabel, caption }: {
+export function HolonExplorer({ copy, visionLabel, activeLabel, vantaLink, caption }: {
   copy: SiteCopy["home"]["holons"];
   visionLabel: string;
+  activeLabel: string;
+  vantaLink: { href: string; label: string };
   caption: string;
 }) {
   const [selected, setSelected] = useState(0);
@@ -20,7 +23,13 @@ export function HolonExplorer({ copy, visionLabel, caption }: {
   const { canAnimate } = useSiteMotion();
   const id = useId();
   const groupRef = useRef<HTMLDivElement>(null);
-  const current = copy.items[selected];
+  // VantaDB seats after the nine vision holons; its cell is the solid
+  // membrane, last in HOLON_LAYOUT (holon-field.tsx) — keep them in sync.
+  const vantaIndex = copy.items.length;
+  const isVanta = selected === vantaIndex;
+  const current = isVanta
+    ? { name: copy.vanta.name, role: copy.vanta.tagline, body: copy.vanta.body }
+    : copy.items[selected];
 
   // Arrow keys rove the membrane seats like a radio group: the field has no
   // meaningful spatial reading order for cursor keys, so they cycle the map.
@@ -28,7 +37,7 @@ export function HolonExplorer({ copy, visionLabel, caption }: {
     event: KeyboardEvent<HTMLButtonElement>,
     index: number,
   ) => {
-    const count = copy.items.length;
+    const count = copy.items.length + 1;
     let next: number | null = null;
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
       next = (index + 1) % count;
@@ -99,14 +108,52 @@ export function HolonExplorer({ copy, visionLabel, caption }: {
                   </motion.button>
                 </div>
               ))}
+              {/* The built piece joins the same seat grammar; data-built
+                  marks the solid membrane's control for styling. */}
+              <div
+                className={`nm2-holon-explorer__module-seat nm2-holon-explorer__module-seat--${vantaIndex}`}
+                data-built=""
+              >
+                <motion.button
+                  type="button"
+                  className="nm2-holon-explorer__module"
+                  aria-pressed={isVanta}
+                  aria-controls={`${id}-detail`}
+                  onClick={() => setSelected(vantaIndex)}
+                  onKeyDown={(event) => onModuleKeyDown(event, vantaIndex)}
+                  onPointerEnter={() => setHovered(vantaIndex)}
+                  onPointerLeave={() => setHovered(null)}
+                  onFocus={() => setHovered(vantaIndex)}
+                  onBlur={() => setHovered(null)}
+                  whileTap={canAnimate ? { scale: 0.97 } : undefined}
+                  transition={{ duration: canAnimate ? 0.18 : 0 }}
+                >
+                  <span className="nm2-holon-explorer__module-index" aria-hidden="true">
+                    {String(vantaIndex + 1).padStart(2, "0")}
+                  </span>
+                  <span>{copy.vanta.name}</span>
+                </motion.button>
+              </div>
             </div>
           </ArtFigure>
         </ScrollScene>
         <StoryDetail id={`${id}-detail`} className="nm2-holon-explorer__detail">
-          <StatusBadge status="vision" label={visionLabel} />
+          <StatusBadge
+            status={isVanta ? "active" : "vision"}
+            label={isVanta ? activeLabel : visionLabel}
+          />
           <h3>{current.name}</h3>
           <p className="nm2-holon-explorer__role">{current.role}</p>
           <p>{current.body}</p>
+          {isVanta ? (
+            <ActionLink
+              href={vantaLink.href}
+              variant="text"
+              className="nm2-holon-explorer__action"
+            >
+              {vantaLink.label}
+            </ActionLink>
+          ) : null}
         </StoryDetail>
       </div>
       <p className="nm2-story-boundary nm2-holon-explorer__boundary">{copy.boundary}</p>
