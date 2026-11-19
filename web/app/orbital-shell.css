@@ -163,10 +163,15 @@ html.lenis body {
   pointer-events: none;
 }
 
+/* Three equal tracks: brand / nav / right. The nav group's own box stays
+   centered on the bar — and therefore on the viewport — regardless of how
+   wide the brand or right clusters grow. Below 64rem the nav is hidden and
+   the middle track collapses to zero, leaving brand left and controls right. */
 .nm2-header__bar {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: 0.75rem;
+  column-gap: 0.75rem;
   width: 100%;
   margin-inline: auto;
   min-height: 72px;
@@ -195,8 +200,8 @@ html.lenis body {
 .nm2-header__brand {
   display: inline-flex;
   align-items: center;
+  justify-self: start;
   color: var(--nm2-text);
-  flex: none;
 }
 
 .nm2-header__brand .nm2-brandmark {
@@ -206,8 +211,8 @@ html.lenis body {
 .nm2-header__nav {
   display: none;
   align-items: center;
+  justify-self: center;
   gap: 0.125rem;
-  margin-inline: auto;
 }
 
 .nm2-header__link {
@@ -238,8 +243,8 @@ html.lenis body {
 .nm2-header__right {
   display: flex;
   align-items: center;
+  justify-self: end;
   gap: 0.625rem;
-  margin-left: auto;
 }
 
 /* Locale pill toggle: hairline container, the active option carries the
@@ -423,7 +428,10 @@ html.lenis body {
   text-transform: uppercase;
 }
 
-/* Inner-page opener: text and actions remain independent of decorative art. */
+/* Inner-page opener: text and actions remain independent of decorative art.
+   The background reuses the hero container's carbon-and-silver material —
+   corner depth plus film grain — so interior heroes read as the same
+   surface family as the home hero and the invitation card. */
 .nm2-page-hero {
   position: relative;
   isolation: isolate;
@@ -436,8 +444,25 @@ html.lenis body {
   margin: var(--nm2-frame-gap) auto;
   padding: 104px clamp(24px, 5vw, 80px) 48px;
   border-radius: var(--nm2-radius-hero);
-  background: var(--nm2-section);
+  background:
+    radial-gradient(120% 90% at 18% 8%, rgb(46 54 65 / 55%) 0%, transparent 52%),
+    radial-gradient(110% 100% at 86% 90%, rgb(27 33 41 / 60%) 0%, transparent 55%),
+    var(--nm2-section);
   overflow: clip;
+}
+
+/* Film grain under the field and copy, same finish as the hero art. */
+.nm2-page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background-image: url("/brand/orbital-grain.png");
+  background-size: 192px 192px;
+  opacity: 0.14;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
 }
 
 .nm2-page-hero__content {
@@ -519,7 +544,9 @@ html.lenis body {
   opacity: 0.75;
 }
 
-/* Quiet card footer: statement left, link columns right, base line below. */
+/* Quiet card footer: statement left, link columns right, base line below.
+   Same carbon-and-silver material as the hero container — the page's
+   closing surface mirrors the opening one. */
 .nm2-footer {
   position: relative;
   isolation: isolate;
@@ -528,8 +555,25 @@ html.lenis body {
   margin: 0 auto var(--nm2-frame-gap);
   border-radius: var(--nm2-radius-hero);
   border-top: 1px solid var(--nm2-line);
-  background: var(--nm2-section);
+  background:
+    radial-gradient(120% 90% at 82% 8%, rgb(46 54 65 / 45%) 0%, transparent 52%),
+    radial-gradient(110% 100% at 14% 96%, rgb(27 33 41 / 55%) 0%, transparent 55%),
+    var(--nm2-section);
   padding-block: var(--nm2-section-gap) 1.5rem;
+}
+
+/* Grain sits in the negative layer with the field: above the background,
+   below the copy. */
+.nm2-footer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url("/brand/orbital-grain.png");
+  background-size: 192px 192px;
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
 }
 
 .nm2-footer__field {

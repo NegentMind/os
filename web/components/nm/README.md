@@ -56,8 +56,9 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 - `art-mount.tsx` — monta presets de arte (warp Paper o campos) en superficies no-hero.
 - `blueprint-scene.tsx` — diagramas semánticos SVG con etiquetas HTML posicionadas por porcentaje (o sólidos decorativos sin etiquetas).
 - `brand-mark.tsx` — wordmark/monograma con la geometría vectorial Orbital original; nunca `font-family` ni sustitución por texto.
-- `capability-story.tsx` — historia de capacidad de home (Scopegrain).
+- `vantadb-showcase.tsx` — bloque flagship de VantaDB en home (identidad, estratos L1–L3, pipeline de recuperación y ficha).
 - `core-orb.tsx` — orbe-instrumento de `#org`: esfera de puntos en Canvas 2D con punto espectral fijable; poster SVG como superficie SSR.
+- `drift-canvas.tsx` — corrientes monocromáticas en Canvas 2D (ramp carbón→plata del preset `HERO_ART_ALT`): cintas ondulantes, partículas y una cresta espectral que viaja con `--nm2-system-progress`; poster CSS como superficie SSR/reduced-motion.
 - `evidence-workbench.tsx` — banco de evidencia de home.
 - `faq.tsx` — FAQ con `details/summary` nativo; accesible sin JS.
 - `field-canvas.tsx` — campos Canvas 2D (`wave`/`orbit`/`network`/`memory`) con fallback SVG SSR determinista.
@@ -88,7 +89,8 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 - `story-controls.tsx` — selectores segmentados `aria-pressed` + `aria-controls`.
 - `story-detail.tsx` — región viva `aria-live="polite"` que anuncia la selección.
 - `surface.tsx` — elevación por relleno + espaciado; borde secundario.
-- `system-story.tsx` — historia del sistema (`#org`) de home.
+- `system-story.tsx` — historia del sistema (`#org`) de home: stage sticky de corrientes (DriftCanvas + CoreOrb) con ensamblaje scroll-driven de nodos/spokes vía GSAP/ScrollTrigger.
+- `vanta-strata.tsx` — lámina canvas del archivo `.vanta`: estratos L1–L3 concéntricos, cabezal append-only y tránsitos de consolidación; poster SVG SSR/reduced-motion.
 - `viewport-fade.tsx` — borde óptico inferior de capas de blur enmascaradas; oculto bajo el hero.
 - `section-transition/` — bandas canvas entre tonos: `section-transition.tsx`, `variants.ts` (5 renderers puros), `transition-lab.tsx` (contexto/provider/hooks) + `transition-lab-panel.tsx` (UI lazy `ssr:false`, solo dev).
 

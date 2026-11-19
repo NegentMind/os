@@ -47,14 +47,30 @@
   min-height: calc(100svh - 2 * var(--nm2-frame-gap) - var(--nm2-hero-sign-reserved));
 }
 
-/* Asymmetric intro: the headline owns the full row, then the short support
-   line drifts to the right column while the actions stay anchored left. */
+/* Asymmetric intro: the headline owns the full row, then the actions anchor
+   the left column and the short support line closes the same row off-axis.
+   Past ~1600px the block stops widening so the support copy never drifts
+   into a second island a full screen away from the headline. */
 .nm2-hero__intro {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
   column-gap: clamp(32px, 6vw, 120px);
   align-items: end;
   width: 100%;
+}
+
+@media (min-width: 100rem) {
+  .nm2-hero__intro {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 24rem);
+    max-width: 88rem;
+  }
+
+  /* The quiet note shares the lede's right edge instead of drifting to the
+     frame's far side on very wide viewports. */
+  .nm2-hero__meta {
+    width: 100%;
+    max-width: 88rem;
+  }
 }
 
 .nm2-hero__title {
@@ -80,12 +96,13 @@ html[data-headings="orbital"] .nm2-hero__title {
   letter-spacing: 0.02em;
 }
 
-/* One-line support copy: it sits off-axis, right of the actions. */
+/* Support copy: right column, same row as the actions — its margin box
+   shares their baseline instead of floating a full row above them. */
 .nm2-hero__lede {
   grid-column: 2;
   justify-self: end;
   max-width: 26ch;
-  margin: 0 0 clamp(20px, 3svh, 36px);
+  margin: 0;
   color: var(--nm2-muted, #adb5c0);
   font-size: clamp(1rem, 1.3vw, 1.125rem);
   line-height: 1.6;
@@ -134,17 +151,37 @@ html[data-headings="orbital"] .nm2-hero__title {
   grid-column: 1;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-end;
+  gap: 12px clamp(20px, 2.5vw, 36px);
   margin-top: clamp(24px, 4svh, 44px);
 }
 
-.nm2-hero__actions > a {
+/* Each action is a small stack: the pill first, then the route it resolves
+   to in mono — the technical micro-label doubles as the destination hint. */
+.nm2-hero__action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.nm2-hero__action > a {
   max-width: 100%;
   min-height: 48px;
   height: auto;
   white-space: normal;
   text-align: center;
+}
+
+.nm2-hero__action-path {
+  padding-inline-start: 0.25rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: var(--nm2-muted, #adb5c0);
+  white-space: nowrap;
 }
 
 /* Bottom band: only the quiet note, pushed to the trailing edge so the
@@ -321,8 +358,9 @@ html[data-headings="orbital"] .nm2-hero__title {
     padding: 104px 24px var(--nm2-hero-pad-b);
   }
 
-  /* The asymmetric grid collapses to a single column in DOM order:
-     headline, support line, actions. */
+  /* The asymmetric grid collapses to a single column. DOM order keeps the
+     actions before the lede for the shared desktop row; `order` restores
+     the reading sequence here: headline, support line, actions. */
   .nm2-hero__intro {
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
@@ -344,7 +382,8 @@ html[data-headings="orbital"] .nm2-hero__title {
   }
 
   .nm2-hero__actions {
-    gap: 10px;
+    order: 1;
+    gap: 10px 20px;
     margin-top: 20px;
   }
 

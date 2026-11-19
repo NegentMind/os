@@ -1,8 +1,9 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { motion } from "motion/react";
 import { ArtFigure } from "@/components/nm/v2/art-figure";
+import { HolonField } from "@/components/nm/v2/holon-field";
 import { ScrollScene } from "@/components/nm/v2/scroll-scene";
 import { StatusBadge } from "@/components/nm/v2/status-badge";
 import { StoryDetail } from "@/components/nm/v2/story-detail";
@@ -15,9 +16,36 @@ export function HolonExplorer({ copy, visionLabel, caption }: {
   caption: string;
 }) {
   const [selected, setSelected] = useState(0);
+  const [hovered, setHovered] = useState<number | null>(null);
   const { canAnimate } = useSiteMotion();
   const id = useId();
+  const groupRef = useRef<HTMLDivElement>(null);
   const current = copy.items[selected];
+
+  // Arrow keys rove the membrane seats like a radio group: the field has no
+  // meaningful spatial reading order for cursor keys, so they cycle the map.
+  const onModuleKeyDown = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number,
+  ) => {
+    const count = copy.items.length;
+    let next: number | null = null;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      next = (index + 1) % count;
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      next = (index - 1 + count) % count;
+    } else if (event.key === "Home") {
+      next = 0;
+    } else if (event.key === "End") {
+      next = count - 1;
+    }
+    if (next === null) return;
+    event.preventDefault();
+    setSelected(next);
+    groupRef.current
+      ?.querySelectorAll<HTMLButtonElement>("button")
+      [next]?.focus();
+  };
 
   return (
     <div className="nm2-holon-explorer">
@@ -27,42 +55,47 @@ export function HolonExplorer({ copy, visionLabel, caption }: {
       </div>
       <div className="nm2-holon-explorer__composition">
         <ScrollScene className="nm2-holon-explorer__scene">
-          {/* The module seats are real buttons, so the map frame stays in
-              the a11y tree; only the connectors SVG is decorative. */}
+          {/* The membrane seats are real buttons, so the map frame stays in
+              the a11y tree; the HolonField art is decorative. */}
           <ArtFigure
             caption={caption}
             frameClassName="nm2-holon-explorer__map"
             decorative={false}
+            frameProps={{ "data-float": "" }}
           >
-            <svg className="nm2-holon-explorer__connections" viewBox="0 0 660 450" preserveAspectRatio="none" fill="none" aria-hidden="true">
-              {[
-                "M110 75H330", "M330 75H550", "M550 75V225",
-                "M110 225V75", "M330 225H550", "M550 225V375",
-                "M110 375V225", "M330 375H110", "M550 375H330",
-              ].map((path, index) => (
-                <path
-                  key={path}
-                  data-draw=""
-                  data-active={selected === index}
-                  d={path}
-                />
-              ))}
-            </svg>
-            <div className="nm2-holon-explorer__modules" role="group" aria-label={copy.controls}>
+            <HolonField selected={selected} hovered={hovered} />
+            <span className="nm2-holon-explorer__whole" aria-hidden="true">
+              {copy.whole}
+            </span>
+            <div
+              ref={groupRef}
+              className="nm2-holon-explorer__modules"
+              role="group"
+              aria-label={copy.controls}
+            >
               {copy.items.map((item, index) => (
-                <div key={item.name} data-float="" className="nm2-holon-explorer__module-seat">
+                <div
+                  key={item.name}
+                  className={`nm2-holon-explorer__module-seat nm2-holon-explorer__module-seat--${index}`}
+                >
                   <motion.button
                     type="button"
                     className="nm2-holon-explorer__module"
                     aria-pressed={selected === index}
                     aria-controls={`${id}-detail`}
                     onClick={() => setSelected(index)}
+                    onKeyDown={(event) => onModuleKeyDown(event, index)}
+                    onPointerEnter={() => setHovered(index)}
+                    onPointerLeave={() => setHovered(null)}
+                    onFocus={() => setHovered(index)}
+                    onBlur={() => setHovered(null)}
                     whileTap={canAnimate ? { scale: 0.97 } : undefined}
                     transition={{ duration: canAnimate ? 0.18 : 0 }}
                   >
-                    <span className="nm2-holon-explorer__module-mark" aria-hidden="true" />
+                    <span className="nm2-holon-explorer__module-index" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     <span>{item.name}</span>
-                    <span className="nm2-holon-explorer__module-state">{visionLabel}</span>
                   </motion.button>
                 </div>
               ))}

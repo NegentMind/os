@@ -199,9 +199,60 @@
   color: color-mix(in srgb, var(--nm2-on-action) 65%, transparent);
 }
 
+/* Drift backdrop — the system story's monochrome currents. The CSS
+   gradient poster is the SSR/no-JS/reduced surface; the canvas paints the
+   flowing carbon→silver ribbons over it once motion is allowed. */
+.nm2-drift {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #070809;
+}
+
+.nm2-drift__poster {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(85% 42% at 24% 22%, rgb(74 84 98 / 45%) 0%, transparent 62%),
+    radial-gradient(90% 48% at 76% 58%, rgb(104 115 127 / 30%) 0%, transparent 64%),
+    radial-gradient(110% 55% at 50% 92%, rgb(46 54 65 / 55%) 0%, transparent 70%);
+}
+
+/* Same grain treatment as the hero and art mounts, over either layer. */
+.nm2-drift::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("/brand/orbital-grain.png");
+  background-size: 192px 192px;
+  opacity: 0.18;
+  mix-blend-mode: soft-light;
+}
+
+.nm2-drift__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+}
+
+.nm2-drift__canvas[hidden] {
+  display: none;
+}
+
+.nm2-drift[data-rendered="true"] > .nm2-drift__poster {
+  visibility: hidden;
+}
+
 @media (forced-colors: active) {
   .nm2-field,
-  .nm2-blueprint {
+  .nm2-blueprint,
+  .nm2-holon-field,
+  .nm2-drift {
     display: none;
   }
 }

@@ -1,0 +1,318 @@
+/*
+ * VantaDB flagship section (home #work). Imported by orbital.css after
+ * orbital-home.css; tokens and shared grammar live there. All values ride
+ * the nm2 rhythm scale — no stray section spacing.
+ */
+
+/* The flagship gets its own reading zone: --nm2-section (one step above
+   pure black), the memory lattice behind the composition. */
+.nm2-home .nm2-vanta-section {
+  position: relative;
+  isolation: isolate;
+  background: var(--nm2-section);
+}
+
+.nm2-home .nm2-vanta-section > .nm2-container {
+  position: relative;
+  z-index: 1;
+}
+
+.nm2-home .nm2-backdrop-field--memory {
+  inset-block: 0;
+  block-size: 100%;
+  opacity: 0.45;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+
+/* Composition: copy ledger left, strata plate right; the bottom ledger
+   (pipeline + specs) spans the full width so each group reads as one view. */
+.nm2-home .nm2-vanta {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: var(--nm2-block-gap) clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.nm2-home .nm2-vanta__lead {
+  display: grid;
+  gap: 1.75rem;
+  justify-items: start;
+  min-width: 0;
+}
+
+.nm2-home .nm2-vanta__identity {
+  display: grid;
+  gap: 1.125rem;
+  justify-items: start;
+}
+
+.nm2-home .nm2-vanta__name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--nm2-text);
+}
+
+/* The official product tagline is a real title, not a mono costume. */
+.nm2-home .nm2-vanta__tagline {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.0625rem, 1.5vw, 1.3rem);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--nm2-structure);
+}
+
+.nm2-home .nm2-vanta__figure {
+  min-width: 0;
+  margin: 0;
+}
+
+/* The strata plate is the flagship's canvas: a quiet surface tile that
+   holds the live drawing; elevation is declared once (fill + hairline). */
+.nm2-home .nm2-vanta__art {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: clip;
+  border: 1px solid color-mix(in srgb, var(--nm2-line) 65%, transparent);
+  border-radius: var(--nm2-radius-hero);
+  background: color-mix(in srgb, var(--nm2-surface) 72%, var(--nm2-bg));
+}
+
+.nm2-home .nm2-vanta__art > :first-child {
+  width: 100%;
+  height: 100%;
+}
+
+.nm2-vanta-strata {
+  position: relative;
+  color: var(--nm2-structure);
+  pointer-events: none;
+}
+
+.nm2-vanta-strata__poster,
+.nm2-vanta-strata__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.nm2-vanta-strata__canvas[hidden] {
+  display: none;
+}
+
+/* The SVG is the SSR/reduced-motion surface until the canvas paints. */
+.nm2-vanta-strata[data-rendered="true"] > .nm2-vanta-strata__poster {
+  visibility: hidden;
+}
+
+.nm2-vanta-strata__core {
+  fill: var(--nm2-text);
+}
+
+.nm2-vanta-strata__core-halo {
+  fill: var(--nm2-structure);
+}
+
+/* Ring labels ride the same grammar as blueprint/memory-stack labels:
+   mono index + sans name, bare on the plate, never hit targets. */
+.nm2-vanta-strata__labels {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.nm2-vanta-strata__label {
+  position: absolute;
+  left: 50%;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  transform: translate(-50%, -50%);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: var(--nm2-muted);
+  white-space: nowrap;
+}
+
+.nm2-vanta-strata__label--l1 { top: 17.5%; }
+.nm2-vanta-strata__label--l2 { top: 27.4%; }
+.nm2-vanta-strata__label--l3 { top: 36.4%; }
+.nm2-vanta-strata__label--core { top: 56%; }
+
+.nm2-vanta-strata__index {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--nm2-muted);
+}
+
+.nm2-vanta-strata__label--core .nm2-vanta-strata__index {
+  color: var(--nm2-text);
+}
+
+/* Bottom ledger: retrieval pipeline next to the spec sheet. */
+.nm2-home .nm2-vanta__ledger {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: calc(var(--nm2-block-gap) * 0.75) clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  padding-block-start: calc(var(--nm2-block-gap) * 0.5);
+  border-block-start: 1px solid var(--nm2-line);
+}
+
+/* Group labels are diagram indexes, not kickers: mono micro-label on a
+   h4 so heading order stays h2 → h3 → h4. */
+.nm2-home .nm2-vanta__label {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nm2-muted);
+}
+
+.nm2-home .nm2-vanta__pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Node grammar: surface fill + line border; the 1.5-weight connector joins
+   stages without arrows — the flow direction is the reading order. */
+.nm2-home .nm2-vanta__pipeline li {
+  position: relative;
+  display: grid;
+  gap: 0.2rem;
+  align-content: start;
+  min-width: 0;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--nm2-line);
+  border-radius: var(--nm2-radius-sm);
+  background: var(--nm2-surface);
+}
+
+.nm2-home .nm2-vanta__pipeline li:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 50%;
+  width: 1.5rem;
+  height: 1.5px;
+  background: var(--nm2-line);
+}
+
+.nm2-home .nm2-vanta__pipe-index {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--nm2-muted);
+}
+
+.nm2-home .nm2-vanta__pipe-name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--nm2-text);
+}
+
+/* Measurements and identifiers take the mono micro-label grammar. */
+.nm2-home .nm2-vanta__pipe-detail {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--nm2-muted);
+}
+
+.nm2-home .nm2-vanta__note {
+  margin: 1.25rem 0 0;
+  max-width: 60ch;
+  font-size: 0.9375rem;
+  color: var(--nm2-muted);
+}
+
+.nm2-home .nm2-vanta__specs {
+  min-width: 0;
+}
+
+/* The repo URL is an identifier: it wears mono like the version strings. */
+.nm2-home .nm2-vanta__repo {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+}
+
+/* Scopegrain keeps its block; as a standalone section it gets a quieter
+   cadence — block-gap of air on top, full section-gap below. */
+.nm2-home .nm2-scope-section {
+  padding-block: calc(var(--nm2-block-gap) * 1.25) var(--nm2-section-gap);
+}
+
+.nm2-home .nm2-scope-section .nm2-home-scope {
+  margin-block-start: 0;
+}
+
+.nm2-home .nm2-home-scope__ledger h2 {
+  font-size: clamp(2rem, 3.25vw, 3rem);
+}
+
+@media (max-width: 56rem) {
+  .nm2-home .nm2-vanta__pipeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  /* Connectors only make sense while the row stays horizontal. */
+  .nm2-home .nm2-vanta__pipeline li:not(:first-child)::before {
+    display: none;
+  }
+}
+
+@media (max-width: 44rem) {
+  .nm2-home .nm2-vanta,
+  .nm2-home .nm2-vanta__ledger {
+    grid-template-columns: 1fr;
+  }
+
+  .nm2-home .nm2-vanta__figure {
+    max-width: 34rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .nm2-home .nm2-vanta__pipeline {
+    grid-template-columns: 1fr;
+  }
+
+  .nm2-vanta-strata__label {
+    font-size: 0.75rem;
+  }
+
+  .nm2-vanta-strata__index {
+    font-size: 0.625rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .nm2-home .nm2-backdrop-field--memory,
+  .nm2-vanta-strata {
+    display: none;
+  }
+}
