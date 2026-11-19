@@ -4,9 +4,9 @@ Actualizado: 2026-11-18.
 
 Marketing Orbital bilingüe, organización primero, con cinco páginas por locale.
 Stack: Next.js 15 App Router, React 19, Tailwind 4, shadcn/Radix, Motion y GSAP;
-Paper Shaders para el fondo progresivo del hero. La superficie de producto
-(`/app`, `/login`, magic link Supabase) permanece **desactivada**
-(`NEXT_PUBLIC_APP_ENABLED=false` → 404).
+Paper Shaders para el fondo progresivo del hero. La antigua superficie de
+producto (`/app`, `/login`, Supabase) fue retirada: hoy el paquete es solo
+el sitio marketing.
 
 ## Rutas
 
@@ -29,7 +29,7 @@ metadata propia y forman el sitemap bilingüe. Las galerías
 
 Todas las URLs y flags viven en `lib/site.ts` (`SITE_URL`, `ORG_URL`,
 `VANTADB_REPO`, `VANTADB_DOCS`, enlaces de comunidad/gobernanza, `HANDBOOK_URL`,
-`APP_ENABLED`, `CONTACT_EMAIL`, `CONTACT_EMAIL_ENABLED`). No hardcodear URLs en
+`CONTACT_EMAIL`, `CONTACT_EMAIL_ENABLED`). No hardcodear URLs en
 componentes ni diccionarios. Handbook sigue en `null` y el email público tras
 flag `false`; no implicar que esos canales están habilitados. `.env.local`
 nunca se commitea.
@@ -41,19 +41,19 @@ nunca se commitea.
   `SiteHeader`, `main#main-content` y `SiteFooter`.
 - `app/orbital.css`: entrada de tokens y estilos compartidos. Importa, en orden, `orbital-hero.css`, `orbital-pages.css`, `orbital-scenes.css`, `orbital-home.css` y `orbital-shell.css`; shell cierra las reglas entre superficies.
 - `components/nm/v2/`: composición interna sobre `components/ui/` (shadcn),
-  incluidas las historias de home (SystemStory, MemoryDemo, ScopeStudy,
-  CapabilityStory, HolonExplorer, EvidenceWorkbench), `section-transition/`
-  (bandas + TransitionLab) y `smooth-scroll.tsx` (Lenis).
+  incluidas las historias de home (SystemStory, HolonExplorer, EvidencePath,
+  PrincipleRules, VantaShowcase), `section-transition/` (bandas + TransitionLab)
+  y `smooth-scroll.tsx` (Lenis).
 - `lib/content/`: copy EN/ES; `lib/site-routes.ts`: cinco `PageId` y enlaces;
   `lib/marketing-metadata.ts`: metadata por página.
-- `app/(product)/` `/login` y `/app` (gate `notFound()` si `APP_ENABLED` es false).
 - `app/robots.ts`, `app/sitemap.ts`, `app/icon.svg`, `public/og.png` (1200×630).
 - `../brand/orbital/`: assets coordinados; copias para web en `public/brand/`.
   El wordmark y el monograma son lettering SVG original; además existe
   **Orbital Display v0.2** (A–Z + a–z) en `../brand/orbital/font/` para
   momentos display (palabra rotativa, eval `data-headings="orbital"`).
-- `app/globals.css`, `lib/i18n/` y los componentes NM anteriores: V1 conservada
-  para producto/compatibilidad, no autoridad visual del marketing Orbital.
+- `lib/i18n/` conserva solo el contrato de locale (`LOCALES`, `isLocale`,
+  `Locale`, `Dict` para la biblioteca `nm/v1`); el copy real vive en
+  `lib/content/`.
 
 La migración web no cambia Remotion ni el perfil GitHub publicado/congelado.
 Ver `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `PRODUCT.md` y `DESIGN.md`.
@@ -110,12 +110,12 @@ Ronda de consistencia 2026-11-18: escala de ritmo única (`--nm2-section-gap`/`-
 Siguen pendientes `npm run typecheck` y `npm run build`, que ejecuta manualmente el usuario. Esta ronda no acredita despliegue, auditoría WCAG completa ni rendimiento medido. Las fotos de
 `../brand/specimens/out/redesign-before/` son baseline V1, no evidencia de Orbital.
 
-- Dirección aprobada: [`docs/dev/site-v2-design.md`](docs/dev/site-v2-design.md).
-- Plan: [`docs/dev/plans/2026-11-16-orbital-site-v2.md`](docs/dev/plans/2026-11-16-orbital-site-v2.md).
+- Dirección aprobada: [`docs/dev/_archive/site-v2-design.md`](docs/dev/_archive/site-v2-design.md).
+- Plan: [`docs/dev/_archive/plans/2026-11-16-orbital-site-v2.md`](docs/dev/_archive/plans/2026-11-16-orbital-site-v2.md).
 - Los apartados de diagnóstico previo de esos registros describen el punto de
   partida; los contratos locales de esta carpeta describen el código Orbital.
 
 ## Deploy
 
 Ver `DEPLOY.md` para el procedimiento de OpenNext/Cloudflare, dominio,
-variables, Supabase y flags. No se ha desplegado como parte de esta tarea.
+variables y flags. No se ha desplegado como parte de esta tarea.

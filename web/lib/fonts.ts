@@ -1,36 +1,5 @@
 import localFont from "next/font/local";
-import {
-  Chakra_Petch,
-  DM_Sans,
-  Inter,
-  JetBrains_Mono,
-  Outfit,
-} from "next/font/google";
-
-/*
- * v1 fonts (Void/Bone site). The product surface still imports `fontVars`
- * from its own layout and globals.css resolves the literal family names;
- * keep these instances so the frozen pages keep their real typefaces.
- */
-export const display = Chakra_Petch({
-  weight: "700",
-  subsets: ["latin"],
-  variable: "--font-display",
-});
-
-export const sans = Inter({
-  weight: ["400", "500", "600"],
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-export const mono = JetBrains_Mono({
-  weight: ["400", "500"],
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
-
-export const fontVars = `${display.variable} ${sans.variable} ${mono.variable}`;
+import { DM_Sans, JetBrains_Mono, Outfit } from "next/font/google";
 
 /*
  * v2 (Orbital) fonts. Unique variable names so both systems can coexist;

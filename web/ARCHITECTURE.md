@@ -20,9 +20,8 @@ web/
 │   ├── orbital-scenes.css    # FieldCanvas y geometrías SVG originales
 │   ├── orbital-home.css      # Composiciones y controles de historias de home
 │   ├── orbital-shell.css     # Shell compartido; último import entre superficies
-│   ├── globals.css           # V1 conservada para producto/compatibilidad
 │   ├── icon.svg              # Favicon Orbital coordinado con brand/orbital
-│   ├── robots.ts             # /robots.txt (Disallow /app, /login)
+│   ├── robots.ts             # /robots.txt (allow all + sitemap)
 │   ├── sitemap.ts            # Cinco páginas × dos locales; sin galerías
 │   ├── (marketing)/[lang]/
 │   │   ├── layout.tsx        # Root <html lang>; orbital.css + fontVarsV2 + shell compartido
@@ -32,11 +31,6 @@ web/
 │   │   ├── about/page.tsx    # Laboratorio
 │   │   ├── contribute/page.tsx
 │   │   └── design-system/    # page.tsx + art/page.tsx: solo development, noindex
-│   └── (product)/            # Superficie de producto — DESACTIVADA en lanzamiento
-│       ├── layout.tsx        # Root lang="en"; globals.css + fontVars V1; noindex
-│       ├── login/page.tsx    # Gate server: notFound() si !APP_ENABLED
-│       ├── login/login-form.tsx  # Client Component (magic link)
-│       └── app/page.tsx      # Gate notFound() + sesión obligatoria (redirect /login)
 ├── components/
 │   ├── nm/README.md          # Biblioteca interna: nm/v1 legado, nm/v2 activa, ui shadcn
 │   ├── nm/v1/                # Biblioteca legado V1 (restaurada 2026-11-18; reutilizable, fuera de producción)
@@ -49,10 +43,8 @@ web/
 │   ├── marketing-types.ts    # Contratos compartidos de copy y estados de proyecto
 │   ├── content/              # Nuevo copy: EN canónico, ES con la misma forma; getSiteCopy
 │   ├── i18n/                 # Contrato vivo (LOCALES/isLocale/Locale/Dict); contenido de diccionarios retirado → copy real en lib/content/
-│   ├── fonts.ts              # next/font: fontVarsV2 (Outfit, DM Sans, JetBrains, Orbital Display local) y fontVars V1 independientes
-│   ├── utils.ts              # cn()
-│   ├── supabaseClient.ts     # Browser client
-│   └── supabaseServer.ts     # Server client (cookies)
+│   ├── fonts.ts              # next/font: fontVarsV2 (Outfit, DM Sans, JetBrains, Orbital Display local)
+│   └── utils.ts              # cn()
 ├── public/brand/             # Copias de assets Orbital locales, incluido poster
 ├── public/fonts/             # orbital-display.woff2 (servido vía next/font/local)
 ├── public/og.png             # OG Orbital 1200×630
@@ -84,7 +76,6 @@ y con `notFound()` fuera de `NODE_ENV === "development"`.
 |---|---|---|
 | `SITE_URL` | `NEXT_PUBLIC_SITE_URL` | `https://negentmind.com` |
 | `HANDBOOK_URL` | `NEXT_PUBLIC_HANDBOOK_URL` | `null` → texto sin enlace |
-| `APP_ENABLED` | `NEXT_PUBLIC_APP_ENABLED === "true"` | `false` → `/app`, `/login` 404 |
 | `CONTACT_EMAIL_ENABLED` | `NEXT_PUBLIC_CONTACT_EMAIL_ENABLED === "true"` | `false` → sin `mailto` |
 | `VANTADB_REPO` | constante | `https://github.com/ness-e/Vantadb` (transferencia pendiente) |
 | `VANTADB_DOCS` | derivada del repositorio | README del proyecto; no host inventado |
@@ -106,7 +97,7 @@ soporte también salen de este módulo. No exponer URLs privadas de Notion.
 | `field-canvas.tsx`, `blueprint-scene.tsx`, `scroll-scene.tsx` | Campos Canvas 2D con fallback SVG, geometrías originales y relaciones GSAP/ScrollTrigger |
 | `core-orb.tsx` | Orbe-instrumento de `#org`: esfera de puntos en Canvas 2D con un punto espectral fijable; poster SVG como superficie SSR/reduced |
 | `section-transition/` | Bandas canvas entre tonos (`variants.ts` con 5 renderers puros), `section-transition.tsx` (prop `height` opcional) y el lab dev en dos piezas: `transition-lab.tsx` (contexto + provider + hooks, ligero) y `transition-lab-panel.tsx` (UI, chunk lazy `ssr:false`) |
-| `system-story.tsx`, `memory-demo.tsx`, `scope-study.tsx`, `capability-story.tsx`, `holon-explorer.tsx`, `evidence-workbench.tsx` | Historias interactivas de home; cada una compone ScrollScene + una sola gramática gráfica |
+| `system-story.tsx`, `holon-explorer.tsx`, `evidence-path.tsx`, `principle-rules.tsx`, `vantadb-showcase.tsx` | Historias interactivas de home; cada una compone ScrollScene + una sola gramática gráfica |
 | `art-mount.tsx` | Monta presets de arte (warp Paper o campos) en superficies no-hero, p. ej. la tarjeta de invitación |
 | `smooth-scroll.tsx` | Lenis dinámico solo con movimiento permitido; raf sincronizado con GSAP; anchors con `scroll-margin-top` |
 | `motion-preference.tsx`, `viewport-fade.tsx`, `pointer-feedback.tsx` | Control global en footer y efectos decorativos sin capturar interacción; el fade se oculta bajo el hero |
@@ -143,9 +134,7 @@ de FPS, rendimiento o bundle.
 
 1. **Server Components por defecto.** `"use client"` solo donde haya interactividad.
    Un gate (`notFound()`) nunca vive en un Client Component: se separa en `page.tsx`
-   server + componente cliente (patrón de `/login`).
-2. **Auth en el servidor.** `/app/*` verifica sesión con `lib/supabaseServer.ts` y
-   redirige a `/login` si no hay usuario. Nunca confiar en checks solo-cliente.
+   server + componente cliente.
 3. **URLs centralizadas.** Ningún `https://github.com/...` ni email literal fuera de `lib/site.ts`.
 4. **Copy separado de presentación.** Marketing usa `lib/content/`, con ES
    siguiendo la forma de EN. `lib/i18n/Dict` sigue disponible para V1; no
@@ -167,7 +156,6 @@ de FPS, rendimiento o bundle.
 | Decisión | Por qué | Prohibido |
 |---|---|---|
 | Next.js App Router con route groups | Dos root layouts: marketing con `lang` dinámico, producto aparte | `pages/`, `getServerSideProps` |
-| Supabase Auth magic link (desactivado al lanzar) | Sin passwords que custodiar | Auth casera con JWT propio |
 | Tailwind v4 (`@theme`) | Tokens como utilidades | tailwind.config.js, hex sueltos |
 | shadcn new-york | Primitivas accesibles copiadas al repo | Editar `components/ui/*` a mano |
 | Orbital aislado de V1 | Nuevo marketing sin migrar producto, Remotion ni perfil publicado | Sincronizar nuevos colores al pipeline congelado |
@@ -176,7 +164,7 @@ de FPS, rendimiento o bundle.
 
 ## Compatibilidad y validación pendiente
 
-`globals.css`, `fontVars` y `lib/i18n/Dict` permanecen. Los componentes V1
+`lib/i18n/Dict` permanece (tipo de la biblioteca V1). Los componentes V1
 eliminados en `2281bb9` fueron restaurados como **biblioteca legado en
 `components/nm/v1/`** (2026-11-18): conservados para reutilización y
 rediseño, fuera del bundle de producción al no tener imports vivos.

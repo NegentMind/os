@@ -15,7 +15,6 @@ se **incrustan en build**: cambiar un flag exige un nuevo build/deploy.
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | `https://negentmind.com` | `metadataBase`, canonical, `robots.txt`, `sitemap.xml` |
 | `NEXT_PUBLIC_HANDBOOK_URL` | vacío | Footer muestra "Handbook — publishing December 2026" sin enlace |
-| `NEXT_PUBLIC_APP_ENABLED` | `false` | `/app` y `/login` devuelven 404 (código intacto) |
 | `NEXT_PUBLIC_CONTACT_EMAIL_ENABLED` | `false` | Email como texto "(available once negentmind.com is live)" + enlace a GitHub; sin `mailto` |
 
 Todos se leen en un único módulo: `lib/site.ts`.
@@ -72,58 +71,11 @@ no en runtime:
 ```env
 NEXT_PUBLIC_SITE_URL=https://negentmind.com
 NEXT_PUBLIC_HANDBOOK_URL=
-NEXT_PUBLIC_APP_ENABLED=false
 NEXT_PUBLIC_CONTACT_EMAIL_ENABLED=false
-# Solo cuando APP_ENABLED=true:
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 ```
-
-`service_role` de Supabase nunca va en estas variables.
 
 ## 5. Dominio personalizado
 
 Worker → Settings → Domains & Routes → Add → Custom domain → `negentmind.com`
 (y `www.negentmind.com` con redirección 301 a apex, vía Redirect Rule).
 Verificar: `https://negentmind.com/robots.txt` y `/sitemap.xml` muestran el dominio final.
-
-## 6. Supabase (solo al activar el producto)
-
-Supabase → Authentication → URL Configuration:
-
-- **Site URL:** `https://negentmind.com`
-- **Redirect URLs:** `https://negentmind.com/app`, `http://localhost:3000/app`
-  (y la URL `*.workers.dev` si se prueba allí).
-
-Luego `NEXT_PUBLIC_APP_ENABLED=true` + rebuild. `/app` y `/login` siguen con
-`Disallow` en `robots.txt` y `noindex` en su layout.
-
-## 7. Activar el correo (después del dominio)
-
-1. Configurar el buzón de `negent@negentmind.com` (p. ej. Cloudflare Email Routing → destino real)
-   y enviar un correo de prueba de ida y vuelta.
-2. `NEXT_PUBLIC_CONTACT_EMAIL_ENABLED=true` + rebuild/deploy.
-3. Resultado: sección de contacto y footer muestran el `mailto:`.
-
-## 8. Tras transferir VantaDB a la org
-
-Editar una sola constante en `lib/site.ts`:
-
-```ts
-export const VANTADB_REPO = "https://github.com/NegentMind/vantadb";
-```
-
-Los textos visibles (`github.com/…`, `ctaRepo`) se derivan de la constante. Rebuild/deploy.
-
-## 9. Tras publicar el Public Handbook
-
-`NEXT_PUBLIC_HANDBOOK_URL=<url pública>` + rebuild/deploy. El footer pasa de texto a enlace.
-Revisar también la FAQ, que menciona "publishing December 2026" en texto fijo (`lib/i18n/*.ts`).
-
-## Checklist post-deploy
-
-- [ ] `/` redirige a `/en` o `/es` según `Accept-Language`
-- [ ] `/en` y `/es` cargan; `<link rel="alternate" hreflang>` incluye `en`, `es`, `x-default`
-- [ ] `/app` y `/login` → 404 (con `APP_ENABLED=false`)
-- [ ] `/robots.txt`, `/sitemap.xml` con el dominio final
-- [ ] Favicon (`/icon.svg`) y OG (`/og.png`) visibles (validar con un inspector de OG)

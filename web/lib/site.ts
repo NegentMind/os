@@ -41,9 +41,6 @@ export const FOUNDER_URL = "https://github.com/ness-e";
 export const HANDBOOK_URL: string | null =
   process.env.NEXT_PUBLIC_HANDBOOK_URL || null;
 
-/** Product surface (/app, /login). Disabled at launch: both routes 404. */
-export const APP_ENABLED = process.env.NEXT_PUBLIC_APP_ENABLED === "true";
-
 /** Contact inbox. Not deliverable until negentmind.com is registered. */
 export const CONTACT_EMAIL = "negent@negentmind.com";
 

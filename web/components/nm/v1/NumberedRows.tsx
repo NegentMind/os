@@ -5,7 +5,7 @@
  * fades in and every text layer flips to the page background.
  * Retokenized for the dark-first site: the fill is Bone and the text
  * inverts to Void. Rows are content-only <div>s (not links), focusable
- * for keyboard parity; styles live in app/globals.css (.numbered-rows-*).
+ * for keyboard parity; styles were defined in the retired V1 globals.css.
  */
 
 export interface NumberedRowItem {

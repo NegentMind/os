@@ -1,47 +1,26 @@
-# DATA_MODELS.md — tipos, esquemas y contratos de API
+# DATA_MODELS.md — tipos y contratos
 
-> **Estado:** las rutas de producto (`/login`, `/app`) están **desactivadas en el
-> lanzamiento** (`NEXT_PUBLIC_APP_ENABLED=false` → `notFound()`). Estos contratos
-> aplican cuando se activen; ver `DEPLOY.md` §6 para Site URL / Redirect URLs.
+> **Estado:** la antigua superficie de producto (`/login`, `/app`, Supabase
+> Auth) fue **retirada del paquete** (2026-11). Si vuelve un producto con
+> backend (p. ej. VantaDB Studio), este documento se reescribe con sus
+> contratos. Lo que sigue describe los tipos vivos del sitio marketing.
 
 ## Fuente de verdad
 
-Supabase Postgres. Tipos generados con `supabase gen types` cuando haya tablas
-propias (hoy solo `auth.users`). Mientras tanto, estos tipos mandan:
+No hay backend ni base de datos: el sitio es estático/SSR de marketing.
+Los contratos vivos son de contenido:
 
-```ts
-/** Usuario autenticado (Supabase Auth, magic link passwordless). */
-type SessionUser = {
-  id: string;      // auth.users.id (UUID)
-  email: string;
-};
-
-/** Perfil público futuro (tabla `profiles`, FK auth.users.id). */
-type Profile = {
-  id: string;      // = auth.users.id
-  handle: string;  // único, [a-z0-9_], 3–24
-  created_at: string; // ISO 8601
-};
-```
-
-## Contratos
-
-| Flujo | Método | Entrada | Salida | Notas |
-|---|---|---|---|---|
-| Login | `supabase.auth.signInWithOtp({ email })` | email válido | `{ error }` / email enviado | `emailRedirectTo: ${origin}/app` |
-| Sesión (server) | `supabase.auth.getUser()` | cookies | `{ user } \| null` | Sin usuario → `redirect("/login")` |
-| Logout | `supabase.auth.signOut()` | — | — | Limpiar y redirigir a `/` |
-
-## Mock data
-
-Sin backend propio todavía: para desarrollar UI sin Supabase, mocks co-ubicados
-(`*.mock.ts` junto al componente) con la **misma forma** de los tipos de arriba.
-Borrar el mock cuando el dato real exista. Prohibido inventar campos fuera de
-estos tipos.
+- `lib/content/{en,es}.ts` — copy bilingüe; `SiteCopy = typeof en` fuerza la
+  paridad de forma ES↔EN en typecheck.
+- `lib/marketing-types.ts` — contratos compartidos (`NavCopy`,
+  `ProjectState`, `HalftoneKind` para la biblioteca `nm/v1`, etc.).
+- `lib/site-routes.ts` — `PageId`, `PUBLIC_PAGES`, `hrefFor(lang, page)`.
+- `lib/i18n/` — `LOCALES`, `isLocale`, `Locale`; `Dict` solo como tipo de la
+  biblioteca `nm/v1` (su contenido está retirado).
 
 ## Reglas
 
-- `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` solo en `.env.local`
-  (nunca commitear). `service_role` jamás en cliente.
-- Sin `any` en tipos de datos. Validar en el borde (forms, Route Handlers).
-- RLS activado en toda tabla futura; políticas versionadas en `supabase/` cuando exista.
+- Sin `any` en tipos de datos.
+- URLs externas solo en `lib/site.ts`; copy solo en `lib/content/`.
+- Estados honestos: `ProjectState` ("active" | "incubation" | "vision") se
+  escribe, no se infiere de color ni de decoración.

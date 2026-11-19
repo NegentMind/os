@@ -235,16 +235,6 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
     usedIn: ["/projects", "/design-system"],
   },
   {
-    name: "StoryControls / StoryControl",
-    file: "nm/v2/story-controls.tsx",
-    category: "content",
-    purpose: {
-      es: "Selectores segmentados aria-pressed; solo los montan memory-demo y scope-study, ambas sin uso.",
-      en: "aria-pressed segmented controls; only mounted by memory-demo and scope-study, both unused.",
-    },
-    usedIn: [],
-  },
-  {
     name: "StoryDetail",
     file: "nm/v2/story-detail.tsx",
     category: "content",
@@ -263,16 +253,6 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       en: "Evidence path: code → written context → conversation on a drawn rail.",
     },
     usedIn: ["/", "/design-system"],
-  },
-  {
-    name: "EvidenceWorkbench",
-    file: "nm/v2/evidence-workbench.tsx",
-    category: "content",
-    purpose: {
-      es: "Banco de evidencia por pestañas; #proof pasó a evidence-path.",
-      en: "Tabbed evidence bench; #proof moved to evidence-path.",
-    },
-    usedIn: [],
   },
   {
     name: "VantaShowcase",
@@ -464,26 +444,6 @@ export const COMPONENT_INVENTORY: InventoryEntry[] = [
       en: "Canvas bands between tones plus the dev-only transition lab.",
     },
     usedIn: ["/", "/about", "/contribute", "/projects", "/projects/vantadb", "/design-system"],
-  },
-  {
-    name: "MemoryDemo",
-    file: "nm/v2/memory-demo.tsx",
-    category: "scenes",
-    purpose: {
-      es: "Demo de memoria persistente: stack de placas con detalle vivo.",
-      en: "Persistent-memory demo: plate stack with a live detail.",
-    },
-    usedIn: [],
-  },
-  {
-    name: "ScopeStudy",
-    file: "nm/v2/scope-study.tsx",
-    category: "scenes",
-    purpose: {
-      es: "Estudio Scopegrain acotado/explosionado; la sección salió del home.",
-      en: "Bounded/exploded Scopegrain study; the section left the home.",
-    },
-    usedIn: [],
   },
   {
     name: "OrbitalWord",

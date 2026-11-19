@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 /**
  * Único marquee de la página: ticker mono con reloj UTC vivo.
- * Pausado con prefers-reduced-motion (ver globals.css).
+ * Pausado con prefers-reduced-motion (antes en la retirada V1 globals.css).
  */
 export function Ticker({ items }: { items: readonly string[] }) {
   const [now, setNow] = useState("--:--:--");

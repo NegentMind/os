@@ -60,7 +60,6 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 - `core-orb.tsx` — orbe-instrumento de `#org`: esfera de puntos en Canvas 2D con punto espectral fijable; poster SVG como superficie SSR.
 - `drift-canvas.tsx` — corrientes monocromáticas en Canvas 2D (ramp carbón→plata del preset `HERO_ART_MONO`): cintas ondulantes, partículas y una cresta espectral que viaja con `--nm2-system-progress`; poster CSS como superficie SSR/reduced-motion.
 - `evidence-path.tsx` — camino de evidencia de `#proof` en home: tres estaciones (código → contexto escrito → conversación) colgadas de un raíl que la `ScrollScene` de la sección traza en la entrada; cada estación enlaza al artefacto real. Componente server.
-- `evidence-workbench.tsx` — banco de evidencia por pestañas con lámina Blueprint y detalle vivo. **Biblioteca**: sin import vivo desde que `#proof` pasó a `evidence-path`; conserva su contrato de copy dentro de `home.method`.
 - `faq.tsx` — FAQ con `details/summary` nativo; accesible sin JS.
 - `field-canvas.tsx` — campos Canvas 2D (`wave`/`orbit`/`network`/`memory`) con fallback SVG SSR determinista.
 - `hero.tsx` — composición server del hero de home; hojas cliente para arte y palabra rotativa.
@@ -69,7 +68,6 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 - `hero-preset.ts` — presets de arte Orbital/strata-01 (fuente única para arte en vivo y exports).
 - `hero-warp.tsx` — warp Paper Shaders del hero (pool de 3 variantes al azar).
 - `holon-explorer.tsx` — explorador interactivo del mapa de holones.
-- `memory-demo.tsx` — demo de memoria persistente. **Biblioteca**: sin import vivo en el árbol de rutas actual.
 - `motion-preference.tsx` — control global de pausa/reanudación en el footer.
 - `motion-provider.tsx` — estado compartido de movimiento + `html[data-motion]`.
 - `orbital-glyphs.tsx` — mapa de glifos SVG del lettering Orbital. **Fallback/biblioteca**: sin import vivo; la vía principal es la fuente woff2 y queda para glifos que la fuente no cubre (acentos, dígitos) y contextos sin webfont.
@@ -80,16 +78,14 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 - `principle-rules.tsx` — principios del home como manifiesto numerado (regla 01–03 + marca geométrica de la gramática + pie «se comprueba en…»). Componente server; About conserva la piel `nm2-principles` de `SpecList`.
 - `project-card.tsx` — tarjeta de proyecto con estado honesto.
 - `rotating-word.tsx` — palabra rotativa del hero en Orbital Display real con tinta espectral (`--nm2-rotor-ink`).
-- `scope-study.tsx` — estudio Scopegrain (BlueprintScene `scope` + toggle acotado/explosionado). **Biblioteca**: sin uso actual; Scopegrain volvió al home como franja compacta dentro de `#work` (2026-11), sin el estudio, y el proyecto sigue en `/projects`. Su contrato de copy es propio (`ScopeStudyCopy`), no depende de `SiteCopy`.
 - `scroll-scene.tsx` — escena con trazo y flotación GSAP/ScrollTrigger.
 - `section-heading.tsx` — encabezado de sección (título animado + descripción).
 - `section.tsx` — ritmo de sección (`--nm2-section-gap`, tonos).
 - `site-footer.tsx` — footer compartido: monograma, enlaces, campo, línea base.
 - `site-header.tsx` — navegación fija/flotante, cambio de idioma, menú móvil Sheet.
 - `smooth-scroll.tsx` — Lenis solo con movimiento permitido; raf en el ticker de GSAP.
-- `spec-list.tsx` — gramática `<dl>` → `<dt>`/`<dd>` compartida (facts VantaDB, principles About).
+- `spec-list.tsx` — gramática `<dl>` → `<dt>`/`<dd>` compartida. **Biblioteca**: sin import vivo; la monta la galería design-system.
 - `status-badge.tsx` — estado como texto primero; el punto de color solo apoya.
-- `story-controls.tsx` — selectores segmentados `aria-pressed` + `aria-controls`.
 - `story-detail.tsx` — región viva `aria-live="polite"` que anuncia la selección.
 - `surface.tsx` — elevación por relleno + espaciado; borde secundario.
 - `system-story.tsx` — historia del sistema (`#org`) de home: stage sticky de corrientes (DriftCanvas + CoreOrb) con ensamblaje scroll-driven de nodos/spokes vía GSAP/ScrollTrigger.
@@ -100,7 +96,7 @@ Todos los que dibujan respetan `prefers-reduced-motion` en su propio código.
 ## `../ui/` — primitivas shadcn (no tocar a mano)
 
 - `button.tsx` — botón base con variantes `cva`.
-- `card.tsx` — tarjeta shadcn (restaurada con la biblioteca; sin import vivo aún).
+- `card.tsx` — tarjeta shadcn; demo en la galería design-system.
 - `input.tsx` — campo de texto base.
 - `label.tsx` — etiqueta Radix para formularios.
 - `sheet.tsx` — panel lateral Radix del menú móvil.
