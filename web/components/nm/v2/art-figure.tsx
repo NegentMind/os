@@ -33,7 +33,8 @@ export function ArtFigure({
    *  illustration and the caption carries its meaning. */
   decorative?: boolean;
   /** Extra props for the art frame (data-* hooks, labels, styling refs). */
-  frameProps?: ComponentPropsWithoutRef<"div">;
+  frameProps?: ComponentPropsWithoutRef<"div"> &
+    Record<`data-${string}`, string>;
 }) {
   return (
     <figure className={className}>
