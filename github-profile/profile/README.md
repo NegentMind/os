@@ -1,10 +1,7 @@
-﻿<a href="https://www.apache.org/licenses/LICENSE-2.0"><img align="right" src="https://img.shields.io/badge/license-Apache--2.0-8B7CFF?style=flat-square" alt="License: Apache-2.0"></a>
+﻿<a href="https://www.apache.org/licenses/LICENSE-2.0"><img align="right" src="https://img.shields.io/badge/license-Apache--2.0-5BADA0?style=flat-square" alt="License: Apache-2.0"></a>
 <div align="left">English | <a href="https://github.com/NegentMind/.github/blob/main/profile/README_ES.md">Español</a></div>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="org-negentmind.gif">
-  <img src="org-negentmind-light.gif" alt="Negent Mind wordmark animating into place" width="960">
-</picture>
+<img src="org-banner.gif" alt="NEGENT MIND — wordmark over the Orbital warp spectrum" width="960">
 
 <p align="center"><strong>Applied AI Research &amp; Product Engineering</strong> — infrastructure for persistent, controllable, efficient and trustworthy agentic AI.</p>
 
