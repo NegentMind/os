@@ -31,7 +31,7 @@ def shot(page, a, w, h, out, **kw):
     page.goto(url(a, w=w, h=h, **kw))
     page.wait_for_function("document.body.dataset.ready==='1'")
     page.wait_for_timeout(120)
-    page.screenshot(path=out)
+    page.screenshot(path=out, omit_background=True)
 
 
 def main():
@@ -51,12 +51,12 @@ def main():
     subprocess.run([
         FFMPEG, "-y", "-v", "error", "-framerate", "12",
         "-i", os.path.join(FRAMES, "l-%03d.png"),
-        "-vf", "scale=960:240:flags=lanczos,palettegen=max_colors=48:reserve_transparent=0",
+        "-vf", "scale=960:240:flags=lanczos,palettegen=max_colors=48:reserve_transparent=1",
         palette, "-frames:v", "1"], check=True)
     subprocess.run([
         FFMPEG, "-y", "-v", "error", "-framerate", "12",
         "-i", os.path.join(FRAMES, "l-%03d.png"), "-i", palette,
-        "-lavfi", "scale=960:240:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=3",
+        "-lavfi", "scale=960:240:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=3:alpha_threshold=128",
         os.path.join(HERE, "banner-light.gif")], check=True)
     print("done:", os.path.getsize(os.path.join(HERE, "banner-light.gif")), "bytes")
 

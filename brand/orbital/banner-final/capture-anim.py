@@ -31,7 +31,7 @@ def shot(page, a, theme, w, h, out, **kw):
     page.goto(url(a, theme, w=w, h=h, **kw))
     page.wait_for_function("document.body.dataset.ready==='1'")
     page.wait_for_timeout(120)
-    page.screenshot(path=out)
+    page.screenshot(path=out, omit_background=True)
 
 
 def frames(page, theme, prefix):
@@ -49,12 +49,12 @@ def encode(frames_dir, prefix, out):
     subprocess.run([
         FFMPEG, "-y", "-v", "error", "-framerate", "12",
         "-i", os.path.join(frames_dir, f"{prefix}-%03d.png"),
-        "-vf", "scale=960:240:flags=lanczos,palettegen=max_colors=48:reserve_transparent=0",
+        "-vf", "scale=960:240:flags=lanczos,palettegen=max_colors=48:reserve_transparent=1",
         pal, "-frames:v", "1"], check=True)
     subprocess.run([
         FFMPEG, "-y", "-v", "error", "-framerate", "12",
         "-i", os.path.join(frames_dir, f"{prefix}-%03d.png"), "-i", pal,
-        "-lavfi", "scale=960:240:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=3",
+        "-lavfi", "scale=960:240:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=3:alpha_threshold=128",
         out], check=True)
     print(out, os.path.getsize(out), "bytes", flush=True)
 
