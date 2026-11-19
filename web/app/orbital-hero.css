@@ -69,6 +69,17 @@
   text-wrap: balance;
 }
 
+/* Orbital Display headings (the shipped default): the fixed hero line
+   joins the rotating word in the real face — positive tracking and
+   regular weight, since the bevel skeleton reads wide and light. The
+   lab's "Titulares sans" toggle drops data-headings and this rule no
+   longer applies, restoring Outfit above. */
+html[data-headings="orbital"] .nm2-hero__title {
+  font-family: var(--font-orbital-display), var(--font-outfit), system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
 /* One-line support copy: it sits off-axis, right of the actions. */
 .nm2-hero__lede {
   grid-column: 2;
