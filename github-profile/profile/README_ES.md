@@ -1,7 +1,10 @@
 ﻿<a href="https://www.apache.org/licenses/LICENSE-2.0"><img align="right" src="https://img.shields.io/badge/license-Apache--2.0-5BADA0?style=flat-square" alt="Licencia: Apache-2.0"></a>
 <div align="left"><a href="https://github.com/NegentMind/.github/blob/main/profile/README.md">English</a> | Español</div>
 
-<img src="org-banner.gif" alt="NEGENT MIND — wordmark sobre el espectro warp Orbital" width="960">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="org-banner.gif">
+  <img src="org-banner-light.gif" alt="NEGENT MIND — wordmark sobre el espectro warp Orbital" width="960">
+</picture>
 
 <p align="center"><strong>Applied AI Research &amp; Product Engineering</strong> — infraestructura para IA agéntica persistente, controlable, eficiente y confiable.</p>
 
