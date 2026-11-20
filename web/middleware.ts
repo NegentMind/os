@@ -11,7 +11,11 @@ export function middleware(req: NextRequest) {
     .trim()
     .toLowerCase();
   const locale = primary.startsWith("es") ? "es" : "en";
-  return NextResponse.redirect(new URL(`/${locale}`, req.url));
+  const res = NextResponse.redirect(new URL(`/${locale}`, req.url));
+  // The redirect varies on the request language: without Vary a shared
+  // cache could pin every visitor to whichever locale was cached first.
+  res.headers.set("Vary", "Accept-Language");
+  return res;
 }
 
 export const config = { matcher: "/" };

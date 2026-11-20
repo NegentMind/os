@@ -52,7 +52,7 @@ nunca se commitea.
   **Orbital Display v0.2** (A–Z + a–z) en `../brand/orbital/font/` para
   momentos display (palabra rotativa, eval `data-headings="orbital"`).
 - `lib/i18n/` conserva solo el contrato de locale (`LOCALES`, `isLocale`,
-  `Locale`, `Dict` para la biblioteca `nm/v1`); el copy real vive en
+  `Locale`, `Dict` para la biblioteca `_archive/nm-v1`); el copy real vive en
   `lib/content/`.
 
 La migración web no cambia Remotion ni el perfil GitHub publicado/congelado.

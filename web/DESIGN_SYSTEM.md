@@ -15,11 +15,11 @@ accesibilidad aprobada.
 `app/globals.css`, `lib/i18n/Dict` y las fuentes V1 se conservan para la
 compatibilidad del contexto de producto. Los componentes V1, eliminados en
 `2281bb9`, fueron **restaurados como biblioteca legado reutilizable en
-`components/nm/v1/`** (2026-11-18): fuera de producción, conservados para
+`_archive/nm-v1/`** (archivada 2026-11-20): fuera de producción, conservada para
 reutilización y rediseño —no código muerto—; si se adoptan en una
 superficie Orbital hay que retokenizarlos a `--nm2-*`. El tipo
 `HalftoneKind` sigue en `lib/marketing-types.ts` como fuente única y
-`nm/v1/HalftoneCanvas.tsx` lo re-exporta. **No sincronizar Orbital a
+`_archive/nm-v1/HalftoneCanvas.tsx` lo re-exporta. **No sincronizar Orbital a
 `../brand/media/remotion/src/tokens.ts` ni al perfil GitHub
 publicado/congelado.** Void/Bone/Pulse y Chakra Petch/Inter dejan de ser
 autoridad para marketing, no se borran ni se migran sus pipelines en esta
@@ -167,7 +167,7 @@ parcial de roles.
 ## Librería interna y primitivas
 
 La biblioteca interna está documentada pieza a pieza en
-`components/nm/README.md`: `nm/v1/` (legado reutilizable), `nm/v2/`
+`components/nm/README.md`: `nm/v1/` → `_archive/nm-v1/` (legado archivado), `nm/v2/`
 (activa) y `components/ui/` (shadcn). Regla vigente: todo elemento de la
 página vive en la biblioteca para reutilizarse.
 

@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { MotionProvider } from "@/components/nm/v2/motion-provider";
 import { SiteHeader } from "@/components/nm/v2/site-header";
@@ -23,7 +23,9 @@ export default async function LocaleLayout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  if (!isLocale(lang)) notFound();
+  // Unknown first segment (e.g. /foo) resolves as an invalid locale:
+  // send it back through the middleware, which negotiates /en or /es.
+  if (!isLocale(lang)) redirect("/");
   const copy = getSiteCopy(lang);
   return (
     <html lang={lang} className={fontVarsV2} data-headings="orbital" suppressHydrationWarning>

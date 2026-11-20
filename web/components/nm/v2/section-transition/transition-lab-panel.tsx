@@ -150,12 +150,12 @@ export function TransitionLabPanel() {
       <section
         id={regionId}
         role="region"
-        aria-label="Laboratorio de transiciones"
+        aria-label="Transition lab"
         className="nm2-transition-lab__panel"
         onKeyDown={onKeyDown}
       >
         <div className="nm2-transition-lab__head">
-          <strong>Laboratorio de transiciones</strong>
+          <strong>Transition lab</strong>
           <button
             type="button"
             className="nm2-transition-lab__button"
@@ -234,8 +234,8 @@ export function TransitionLabPanel() {
           />
         </div>
 
-        <p className="nm2-transition-lab__group">Composición</p>
-        <div className="nm2-transition-lab__variants" role="group" aria-label="Arte de la sección org">
+        <p className="nm2-transition-lab__group">Composition</p>
+        <div className="nm2-transition-lab__variants" role="group" aria-label="Org section art">
           {(["orb", "blueprint"] as const).map((art) => (
             <button
               key={art}
@@ -284,7 +284,7 @@ export function TransitionLabPanel() {
         <p className="nm2-transition-lab__readout">{readout}</p>
         <div className="nm2-transition-lab__actions">
           <button type="button" className="nm2-transition-lab__button" onClick={reset}>
-            Restablecer
+            Reset
           </button>
           <button type="button" className="nm2-transition-lab__button" onClick={copy}>
             Copiar config

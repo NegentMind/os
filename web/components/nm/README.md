@@ -8,15 +8,15 @@ Tres capas:
 
 | Capa | Estado | Qué es |
 |---|---|---|
-| `nm/v1/` | Legado reutilizable | Componentes de la generación anterior (Void/Bone/Pulse). Fuera de producción; se conservan para reutilización y rediseño, no están muertos. |
+| `_archive/nm-v1/` | Legado archivado | Componentes de la generación anterior (Void/Bone/Pulse). Fuera de `components/` desde 2026-11-20; se conservan como referencia reutilizable. |
 | `nm/v2/` | Activa | Componentes del sitio Orbital actual (carbón/plata). Es lo que el marketing sirve. |
 | `../ui/` | Base | Primitivas shadcn new-york. Nunca se editan a mano: `npx shadcn add <x>`; la personalización vive en `nm/` vía `cva` + tokens. |
 
 El copy que consume la biblioteca v2 vive en `lib/content/{es,en}.ts`.
 `lib/i18n/` aporta el contrato `Locale`/`Dict`; el contenido de sus
-diccionarios está retirado y solo lo tipan los componentes v1.
+diccionarios está retirado y solo lo tipan los componentes v1 archivados.
 
-## `nm/v1/` — biblioteca legado (restaurada 2026-11-18)
+## `nm/v1/` — biblioteca legado (archivada 2026-11-20 en `_archive/nm-v1/`)
 
 Eliminados en `2281bb9` como dead code y restaurados a petición del usuario
 para conservarlos como material reutilizable. Tokens V1 (Bone/Pulse/Fog); si

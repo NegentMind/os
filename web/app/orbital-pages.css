@@ -1200,3 +1200,15 @@ html[data-motion="on"] .nm2-orbit-sigil__traveler {
     display: none;
   }
 }
+
+/* Error boundaries (404 / 500 / loading) — big mono code over the
+   SectionHeading block, same voice as the technical labels. */
+.nm2-nf-code {
+  margin: 0 0 1rem;
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--nm2-ink);
+}

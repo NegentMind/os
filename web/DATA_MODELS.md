@@ -13,10 +13,10 @@ Los contratos vivos son de contenido:
 - `lib/content/{en,es}.ts` — copy bilingüe; `SiteCopy = typeof en` fuerza la
   paridad de forma ES↔EN en typecheck.
 - `lib/marketing-types.ts` — contratos compartidos (`NavCopy`,
-  `ProjectState`, `HalftoneKind` para la biblioteca `nm/v1`, etc.).
+  `ProjectState`, `HalftoneKind` para la biblioteca archivada `_archive/nm-v1`, etc.).
 - `lib/site-routes.ts` — `PageId`, `PUBLIC_PAGES`, `hrefFor(lang, page)`.
 - `lib/i18n/` — `LOCALES`, `isLocale`, `Locale`; `Dict` solo como tipo de la
-  biblioteca `nm/v1` (su contenido está retirado).
+  biblioteca `_archive/nm-v1` (su contenido está retirado).
 
 ## Reglas
 

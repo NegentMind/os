@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Sculpture } from "@/components/nm/v1/sculpture";
+import { Sculpture } from "@/_archive/nm-v1/sculpture";
 import type { Dict } from "@/lib/i18n";
 
 /*

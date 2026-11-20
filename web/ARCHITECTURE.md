@@ -33,7 +33,7 @@ web/
 │   │   └── design-system/    # page.tsx + art/page.tsx: solo development, noindex
 ├── components/
 │   ├── nm/README.md          # Biblioteca interna: nm/v1 legado, nm/v2 activa, ui shadcn
-│   ├── nm/v1/                # Biblioteca legado V1 (restaurada 2026-11-18; reutilizable, fuera de producción)
+│   ├── nm/v1/                # (retirada 2026-11-20 → _archive/nm-v1/)
 │   ├── nm/v2/                # Marca, secciones, acciones, proyectos, FAQ, shell y hero Orbital
 │   └── ui/                   # shadcn — NO editar a mano; `npx shadcn add <x>` (button/card/input/label/sheet)
 ├── lib/
@@ -48,7 +48,7 @@ web/
 ├── public/brand/             # Copias de assets Orbital locales, incluido poster
 ├── public/fonts/             # orbital-display.woff2 (servido vía next/font/local)
 ├── public/og.png             # OG Orbital 1200×630
-└── hooks/
+└── _archive/hooks/   # hooks de la biblioteca V1 archivada
 ```
 
 ## Routing, shell y SEO
@@ -166,10 +166,10 @@ de FPS, rendimiento o bundle.
 
 `lib/i18n/Dict` permanece (tipo de la biblioteca V1). Los componentes V1
 eliminados en `2281bb9` fueron restaurados como **biblioteca legado en
-`components/nm/v1/`** (2026-11-18): conservados para reutilización y
+`_archive/nm-v1/`** (archivada 2026-11-20): conservada para referencia y
 rediseño, fuera del bundle de producción al no tener imports vivos.
 `HalftoneKind` sigue en `lib/marketing-types.ts` como fuente única y
-`nm/v1/HalftoneCanvas.tsx` lo re-exporta. La regla del proyecto —todo
+`_archive/nm-v1/HalftoneCanvas.tsx` lo re-exporta. La regla del proyecto —todo
 elemento vive en la biblioteca interna— está en `components/nm/README.md`.
 Los assets nuevos se coordinan en `../brand/orbital/` y se copian a
 `public/brand/`, `app/icon.svg` y `public/og.png`; ni Remotion ni el perfil

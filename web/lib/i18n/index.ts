@@ -1,10 +1,10 @@
 /*
  * Locale contract of the live site (`LOCALES`, `isLocale`, `Locale`) plus the
- * `Dict` type kept for the restored V1 library (`components/nm/v1/`).
- * `en.ts` survives ONLY as the `Dict` type source — its content is dead.
+ * `Dict` type kept for the restored V1 library (`_archive/nm-v1/`).
+ * `Dict` is sourced from the archived V1 dictionary (`_archive/nm-v1/en.ts`).
  * The copy served by the site lives in `lib/content/{es,en}.ts`.
  */
-import type { Dict } from "./en";
+import type { Dict } from "@/_archive/nm-v1/en";
 
 export const LOCALES = ["en", "es"] as const;
 export type Locale = (typeof LOCALES)[number];

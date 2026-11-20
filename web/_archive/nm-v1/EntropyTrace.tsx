@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { usePrefersReducedMotion } from "@/_archive/hooks/usePrefersReducedMotion";
 
 /**
  * Trazado de osciloscopio de la entropía medida (0–8 bits, escala Shannon
