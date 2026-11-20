@@ -1,5 +1,17 @@
 # social-hub — MCP autonomo (dentro de `social/`)
 
+## 0. Bootstrap (obligatorio antes de usar)
+
+```powershell
+cd os/brand/social/mcp-hub
+npm install
+npm run build   # genera dist/ — sin el, opencode no levanta social-hub
+npm test        # los tests importan desde ../dist
+```
+
+`opencode.json` apunta a `dist/index.js` con `enabled:true`: sin build el MCP no arranca.
+
+
 17 redes full leer+interactuar+publicar + scheduler + inbox + media + compose + tests (`npm test`).
 
 ## Tools (19)

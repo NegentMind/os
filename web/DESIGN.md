@@ -138,8 +138,9 @@ Orbital es lettering vectorial original, no la fuente de la interfaz. Los títul
 revisión visual final y typecheck/build del usuario pendientes. Los valores
 proceden de `app/orbital.css` y sus hojas de hero, páginas, escenas, home y shell;
 las fuentes, de `lib/fonts.ts` (`fontVarsV2`). No acredita despliegue.
-V1 queda en `globals.css` y su código de compatibilidad; Remotion y el perfil
-GitHub publicado/congelado no se migran con esta ficha.
+V1 se archivó en `web/_archive/nm-v1/` (2026-11-20); `globals.css` se eliminó
+con la superficie de producto. Remotion y el perfil GitHub publicado/congelado
+no se migran con esta ficha.
 
 ## Colors
 
@@ -185,8 +186,10 @@ El estado de proyecto siempre tiene etiqueta, no solo un punto de color.
 **Code Font:** JetBrains Mono, con fallback ui-monospace/monospace.
 
 Outfit y DM Sans aportan curvas abiertas y lectura editorial sin imponer
-la composición del wordmark a cada título. Orbital es geometría SVG, no un
-`font-face` ni una cuarta familia de interfaz.
+la composición del wordmark a cada título. Orbital existe en dos formas: la
+fuente real `orbital-display.woff2` (compilada desde los glifos SVG,
+display-only) que `lib/fonts.ts` sirve como `font-face` para titulares, y
+`components/nm/v2/orbital-glyphs` como fallback SVG.
 
 ### Hierarchy
 

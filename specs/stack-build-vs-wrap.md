@@ -50,7 +50,7 @@ relevante: **Langfuse gana en sovereignty** porque los demás son SaaS atado a s
 
 > **Esto no significa construir un clon de Langfuse.** Significa que Meta **envuelve** a
 > Langfuse y añade lo que él no tiene: bitácora de decisiones con secuencia legal,
-> umbral de escalamiento a humano, y el formato de prueba que un auditor Asking fizz en
+> umbral de escalamiento a humano, y el formato de prueba que un auditor haria en
 > Venezuela entendería.
 
 ---

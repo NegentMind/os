@@ -30,9 +30,11 @@ capacidades de largo plazo (visión)**, no productos publicados.
 | `specs/` | Especificación de arquitectura (carpeta interna; el repo público espejo se eliminó el 16-11-2026). |
 | `github-profile/` | Perfil + gobernanza del org (fuente de `NegentMind/.github`). |
 | `skills/` | Skills del diagnóstico B2B — experimento congelado (carpeta interna; repo privado eliminado el 16-11-2026). |
+| `adr/` | Decisiones de arquitectura del monorepo (ADR-001…). |
+| `ROADMAP.md` | Hitos H1–H7 con condición de cierre (espejo operativo de Notion). |
 | `brand/` | Casa de la marca: tablero, exports, specimens. |
 | `brand/media/` | Fábrica de imagen y video (Remotion, HyperFrames, OpenMontage). |
-| `web/` | Sitio + app (Next.js + Supabase). Ver `web/README.md`. |
+| `web/` | Sitio marketing (Next.js). Ver `web/README.md`. |
 | `brand/social/` | Hub social (`mcp-hub`) + automatización (Postiz, n8n). Tooling, no canales de comunidad. |
 | `.tools/` | Scripts del workspace (`gen-skills.py`). |
 

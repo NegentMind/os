@@ -1,3 +1,5 @@
+> **SNAPSHOT OBSOLETO (assets V1).** El perfil publicado usa los GIFs Orbital de `../orbital/banner-final/`. Referencia historica; la fuente viva es `github-profile/profile/`.
+
 ﻿<a href="https://www.apache.org/licenses/LICENSE-2.0"><img align="right" src="https://img.shields.io/badge/license-Apache--2.0-8B7CFF?style=flat-square" alt="Licencia: Apache-2.0"></a>
 <div align="left"><a href="https://github.com/NegentMind/.github/blob/main/profile/README.md">English</a> | Español</div>
 

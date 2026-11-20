@@ -25,7 +25,7 @@ para la orientación general. Las rutas sin prefijo son relativas a `os/`.
 | `skills/` | 5 skills del diagnóstico B2B — **experimento congelado** | interno en `os/` (repo privado eliminado 16-11-2026; respaldo en `C:\Users\Eros\Backups`) |
 | `brand/` | Casa de la marca: tablero, exports, specimens | versionado en `os/` |
 | `brand/media/` | Fábrica de imagen y video (`remotion/` + `hyperframes/` + `openmontage/`) | versionado en `os/` |
-| `web/` | Sitio + app (Next.js + Supabase; despliegue en Cloudflare Workers vía `@opennextjs/cloudflare`, ver `web/DEPLOY.md`) | versionado en `os/` |
+| `web/` | Sitio + app (Next.js; despliegue previsto en Cloudflare Workers vía `@opennextjs/cloudflare`, ver `web/DEPLOY.md`) | versionado en `os/` |
 | `brand/social/` | Hub social (`mcp-hub`) + automatización (`postiz/`, `n8n/`) + carpetas por red. **Tooling**, no canales de comunidad | versionado en `os/` (`.env` con secretos, nunca commitear) |
 | `.tools/` | Scripts: `gen-skills.py` (congelado) | versionado en `os/` |
 

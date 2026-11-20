@@ -2,13 +2,13 @@
 @import "tw-animate-css";
 
 /* Page-level and hero styles live with their owners; this entry wires them. */
-@import "./orbital-hero.css";
-@import "./orbital-pages.css";
-@import "./orbital-scenes.css";
-@import "./orbital-home.css";
-@import "./orbital-vanta.css";
+@import "./orbital-hero.css" layer(components);
+@import "./orbital-pages.css" layer(components);
+@import "./orbital-scenes.css" layer(components);
+@import "./orbital-home.css" layer(components);
+@import "./orbital-vanta.css" layer(components);
 /* Shared shell is last so cross-surface overrides are explicit. */
-@import "./orbital-shell.css";
+@import "./orbital-shell.css" layer(components);
 
 /*
  * Orbital v2 — carbon & silver.

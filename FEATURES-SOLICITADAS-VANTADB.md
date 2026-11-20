@@ -1,6 +1,6 @@
 # Funciones ausentes en VantaDB — catálogo para verificar
 
-> **Snapshot 2026-10-01 (pre-v0.9.0).** Pendiente de re-verificar contra v0.9.0; migrar a GitHub Issues de VantaDB (tarea en Notion).
+> **ANEXO HISTORICO - snapshot 2026-10-01 (pre-v0.9.0).** Los 42 items estan sin verificar; el backlog real vive en GitHub Issues de VantaDB (migracion pendiente, tarea en Notion). No anadir items nuevos aqui: este documento queda como referencia del analisis, no como backlog vivo.
 
 > Análisis profundo del árbol `C:\Users\Eros\VantaDB Proyect\VantaDB` (lectura) + releases publicadas.
 > Solo funciones/capacidades que HOY no existen o no están completas. Cada una: explicación, ejemplo de uso esperado, dónde verificar y línea de resultado.

@@ -14,7 +14,7 @@ Visitantes que evalúan Negent Mind: desarrolladores y líderes técnicos que tr
 
 ## Product Purpose
 
-Sitio marketing bilingüe (EN/ES) de un laboratorio de ingeniería independiente. Organización primero: explicar qué construye Negent Mind alrededor de los modelos y ofrecer una entrada al trabajo verificable mediante VantaDB, flagship activo. Éxito = entender organización, estado de los proyectos y siguiente acción (explorar proyectos, consultar el repositorio o contribuir). Cinco páginas por locale, no una home que concentre toda la información. La app con login existe en código pero sigue desactivada.
+Sitio marketing bilingüe (EN/ES) de un laboratorio de ingeniería independiente. Organización primero: explicar qué construye Negent Mind alrededor de los modelos y ofrecer una entrada al trabajo verificable mediante VantaDB, flagship activo. Éxito = entender organización, estado de los proyectos y siguiente acción (explorar proyectos, consultar el repositorio o contribuir). Cinco páginas por locale, no una home que concentre toda la información. La app con login que existía en código se retiró (2026-11-20): el sitio es solo marketing.
 
 ## Positioning
 
@@ -24,7 +24,7 @@ Negent Mind desarrolla infraestructura y arquitecturas alrededor de los modelos;
 
 Next.js 15 App Router + React 19 + Tailwind 4, shadcn/Radix, Motion, GSAP y Paper Shaders. `/` → `/en` | `/es` por middleware. Marketing en `app/(marketing)/[lang]` tiene home, `/projects`, `/projects/vantadb`, `/about` (Laboratorio) y `/contribute` bajo ambos locales. `lib/site-routes.ts` centraliza cinco `PageId`; `lib/marketing-metadata.ts` genera metadata propia y el sitemap incluye las cinco rutas bilingües.
 
-Dos root layouts independientes: marketing con `orbital.css`, `fontVarsV2`, `MotionProvider`, header, `main#main-content`, footer, `ViewportFade` y `SmoothScroll` (Lenis, solo con movimiento permitido); producto con su compatibilidad V1. `/login` y `/app` siguen gated/desactivadas (`NEXT_PUBLIC_APP_ENABLED=false` → 404); Supabase Auth magic link y sesión server continúan en código. URLs/flags en `lib/site.ts`, copy nuevo en `lib/content/`, `lib/i18n/Dict` conservado para V1. Cloudflare Workers vía `@opennextjs/cloudflare` es la vía documentada, no evidencia de despliegue del rediseño. Sin CI; la práctica general de Git está en AGENTS.
+Un único root layout vive en `app/(marketing)/[lang]/layout.tsx`: `orbital.css`, `fontVarsV2`, `MotionProvider`, header, `main#main-content`, footer, `ViewportFade` y `SmoothScroll` (Lenis, solo con movimiento permitido). La superficie de producto (`/login`, `/app`, Supabase Auth, `APP_ENABLED`) se eliminó por completo; la biblioteca de componentes V1 se archivó en `web/_archive/nm-v1/`. Boundaries propios (`not-found`, `error`, `loading`) dentro del shell localizado. URLs/flags en `lib/site.ts`, copy en `lib/content/`. Cloudflare Workers vía `@opennextjs/cloudflare` es la vía documentada en `DEPLOY.md`, aún no ejecutada: no hay adaptador ni despliegue del rediseño. Sin CI; la práctica general de Git está en AGENTS.
 
 ## Capabilities and Constraints
 

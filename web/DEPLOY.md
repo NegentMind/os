@@ -1,6 +1,10 @@
 # DEPLOY.md — puesta en producción de `web/`
 
-Runbook para el fundador. Ningún paso lo ejecuta un agente. Los `NEXT_PUBLIC_*`
+Runbook para el fundador. Ningún paso lo ejecuta un agente.
+
+> **ESTADO: NO EJECUTADO.** El adaptador `@opennextjs/cloudflare` no está
+> instalado, no existe `wrangler.jsonc` y ningún deploy se ha hecho.
+> Este documento es el plan, no un registro de pasos ya dados. Los `NEXT_PUBLIC_*`
 se **incrustan en build**: cambiar un flag exige un nuevo build/deploy.
 
 > **Corrección de premisa:** `@opennextjs/cloudflare` despliega en **Cloudflare
