@@ -88,8 +88,9 @@ GitHub renderiza **`profile/README.md`**, no el `README.md` de la raíz:
 ## Git: la práctica real
 
 - Commits **directos a `main`**, un solo autor, **Conventional Commits en inglés**.
-- `.github/CONTRIBUTING.md` documenta fork → rama → PR. **Es aspiracional.** No hay CI
-  (las plantillas de issue/PR viven en `github-profile/`). Los merges del monorepo son `git subtree`, no merges de PR.
+- `.github/CONTRIBUTING.md` documenta fork → rama → PR. **Es aspiracional en parte:** hay CI mínimo (typecheck + build de `web/`
+  en `.github/workflows/ci.yml`, desde 2026-11-20) pero sin tests ni lint;
+  las plantillas de issue/PR viven en `github-profile/`. Los merges del monorepo son `git subtree`, no merges de PR.
 
 ## Convención de idiomas (público)
 
